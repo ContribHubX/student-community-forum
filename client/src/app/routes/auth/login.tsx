@@ -1,3 +1,7 @@
 export const LoginRoute = () => {
-  return <div>login</div>;
+  return (
+    <section className="bg-background">
+      <p>asdasd</p>
+    </section>
+  );
 };

@@ -1,9 +1,12 @@
+import { ThemeContextProvider } from "../providers/theme";
 import { AppRouter } from "./router";
 
 const AppProvider = () => {
   return (
     <>
-      <AppRouter />
+      <ThemeContextProvider>
+        <AppRouter />
+      </ThemeContextProvider>
     </>
   );
 };

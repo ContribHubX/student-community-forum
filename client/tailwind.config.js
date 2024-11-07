@@ -11,8 +11,8 @@ export default {
         },
         accent: {
           DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)"
-        }
+          foreground: "var(--accent-foreground)",
+        },
       },
     },
   },

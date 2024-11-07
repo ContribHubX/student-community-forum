@@ -16,6 +16,10 @@ const createAppRouter = () =>
             return { Component: LoginRoute };
           },
         },
+        // {
+        //   path: "sign-up",
+        //   lazy: async () => {},
+        // },
       ],
     },
     {

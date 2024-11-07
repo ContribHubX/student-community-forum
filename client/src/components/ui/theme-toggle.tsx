@@ -1,18 +1,7 @@
-import { useState } from "react";
-import { setDarkMode } from "../../utils/theme";
+import { useTheme } from "../../providers/theme";
 
 export const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(() => {
-    const mode = localStorage.getItem("dark") === "1";
-    setDarkMode(mode);
-    return mode;
-  });
-
-  const toggleMode = () => {
-    const mode = !isDark;
-    setIsDark(mode);
-    setDarkMode(mode);
-  };
+  const { toggleMode } = useTheme();
 
   return (
     <button
