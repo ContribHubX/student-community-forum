@@ -1,5 +1,6 @@
 cd client
 npm run lint
+npx prettier . --write
 
 # && npm run test:ui
 

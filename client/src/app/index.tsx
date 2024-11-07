@@ -1,9 +1,9 @@
-import { ToggleMode } from "../components/ui/toggle-btn"
+import AppProvider from "./main-provider";
 
-export default function App () {
+const App = () => {
   return (
-    <div className="h-screen bg-background">
-        <ToggleMode />
-    </div>
+    <AppProvider />
   )
 }
+
+export default App;

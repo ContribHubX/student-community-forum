@@ -4,8 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)"
-       
+        background: "var(--background)",
+        primary: {
+          DEFAULT: "var(--primary)"
+          // foreground
+        }
       }
     },
   },
