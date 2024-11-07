@@ -7,8 +7,12 @@ export default {
         background: "var(--background)",
         primary: {
           DEFAULT: "var(--primary)",
-          // foreground
+          foreground: "var(--primary-foreground)",
         },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)"
+        }
       },
     },
   },
