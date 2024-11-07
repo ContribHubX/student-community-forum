@@ -6,10 +6,10 @@ export default {
       colors: {
         background: "var(--background)",
         primary: {
-          DEFAULT: "var(--primary)"
+          DEFAULT: "var(--primary)",
           // foreground
-        }
-      }
+        },
+      },
     },
   },
   plugins: [],

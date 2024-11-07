@@ -1,9 +1,7 @@
 import AppProvider from "./main-provider";
 
 const App = () => {
-  return (
-    <AppProvider />
-  )
-}
+  return <AppProvider />;
+};
 
 export default App;

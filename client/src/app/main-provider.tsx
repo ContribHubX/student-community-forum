@@ -1,12 +1,11 @@
 import { AppRouter } from "./router";
 
 const AppProvider = () => {
-    
-    return (
-        <>
-            <AppRouter />
-        </>
-    )
-}
+  return (
+    <>
+      <AppRouter />
+    </>
+  );
+};
 
 export default AppProvider;
