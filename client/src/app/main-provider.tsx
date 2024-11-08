@@ -1,12 +1,15 @@
 import { ThemeContextProvider } from "../providers/theme";
 import { AppRouter } from "./router";
+import AuthContextComponent from "@/providers/auth/component";
 
 const AppProvider = () => {
   return (
     <>
-      <ThemeContextProvider>
-        <AppRouter />
-      </ThemeContextProvider>
+      <AuthContextComponent>
+        <ThemeContextProvider>
+          <AppRouter />
+        </ThemeContextProvider>
+      </AuthContextComponent>
     </>
   );
 };

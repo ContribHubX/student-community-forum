@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthRoot from "./routes/auth/root";
 import AppRoot from "./routes/app/root";
 import { useMemo } from "react";
+import { ProtectedRoute } from "@/lib/auth";
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -16,6 +17,13 @@ const createAppRouter = () =>
             return { Component: LoginRoute };
           },
         },
+        {
+          path: "callback/:provider",
+          lazy: async () => {
+            const { OAuthCallback } = await import("./routes/auth/callback");
+            return { Component: OAuthCallback };
+          },
+        },
         // {
         //   path: "sign-up",
         //   lazy: async () => {},
@@ -24,7 +32,11 @@ const createAppRouter = () =>
     },
     {
       path: "/",
-      element: <AppRoot />,
+      element: (
+        <ProtectedRoute>
+          <AppRoot />
+        </ProtectedRoute>
+      ),
       children: [
         {
           index: true,

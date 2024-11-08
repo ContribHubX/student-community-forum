@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { createContext, PropsWithChildren, useState } from "react";
 import { setDarkMode } from "../utils/theme";
 
 type ThemeContextType = {
@@ -6,7 +6,7 @@ type ThemeContextType = {
   toggleMode: () => void;
 };
 
-const ThemeContext = createContext<ThemeContextType>({
+export const ThemeContext = createContext<ThemeContextType>({
   isDark: false,
   toggleMode: () => {},
 });
@@ -29,14 +29,4 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
       {children}
     </ThemeContext.Provider>
   );
-};
-
-export const useTheme = () => {
-  const theme = useContext(ThemeContext);
-
-  if (!theme) {
-    throw new Error("Theme context not wrapped.");
-  }
-
-  return theme;
 };
