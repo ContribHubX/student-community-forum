@@ -6,6 +6,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { LuGithub } from "react-icons/lu";
 import { z } from "zod";
+import { loginSocialProvider } from "../api/useSocialLogin";
 
 const loginFormSchema = z.object({
   email: z.string().email("Invalid email address"), // Validates email format// Ensures email is not empty
@@ -99,11 +100,17 @@ export const LoginForm = () => {
           Log in
         </Button>
 
-        <Button className="font-light bg-[#F0F0F0] text-black" type="submit">
+        <Button 
+          className="font-light bg-[#F0F0F0] text-black" type="submit"
+          onClick={() => loginSocialProvider("google")}
+        >
           <FcGoogle />
           <span>Log in with Google</span>
         </Button>
-        <Button className="font-light bg-[#333333]" type="submit">
+        <Button className="font-light bg-[#333333]" 
+          type="submit"
+          onClick={() => loginSocialProvider("github")}
+        >
           <LuGithub />
           <span>Log in with GitHub</span>
         </Button>

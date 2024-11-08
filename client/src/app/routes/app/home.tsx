@@ -4,7 +4,7 @@ export const HomeRoute = () => {
   return (
     <HomeLayout>
       <section className="text-primary-foreground">
-        <p>asdasd</p>
+        <p>Home</p>
       </section>
     </HomeLayout>
   );

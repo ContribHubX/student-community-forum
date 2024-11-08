@@ -48,17 +48,13 @@
       "compositePrimaryKeys": {
         "users_table_id": {
           "name": "users_table_id",
-          "columns": [
-            "id"
-          ]
+          "columns": ["id"]
         }
       },
       "uniqueConstraints": {
         "users_table_email_unique": {
           "name": "users_table_email_unique",
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "checkConstraint": {}
