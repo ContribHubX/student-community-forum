@@ -14,16 +14,14 @@ export const Navbar = () => {
       <div className="flex iterms-center gap-4">
         <div className="flex gap-2">
           <ThemeToggle />
-          <div className="h-10 w-10 rounded-full bg-red-600">{/* Profile */}</div>
+          <div className="h-10 w-10 rounded-full bg-red-600">
+            {/* Profile */}
+          </div>
         </div>
-        
+
+        <div></div>
         <div>
-        
-        </div>
-        <div>
-          <Avatar
-            className="p-[4px] bg-accent"
-          >
+          <Avatar className="p-[4px] bg-accent">
             <AvatarImage
               src={authState.user?.attachment}
               className="rounded-full "

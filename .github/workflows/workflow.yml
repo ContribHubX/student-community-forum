@@ -27,11 +27,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: ./client/package-lock.json  
-
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm run lint
-    # - run: npm test
+    
+    # Install dependencies and run lint for client
+    - name: Install and lint client
+      working-directory: ./client
+      run: |
+        npm ci
+        npm run lint
 
     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
     - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"

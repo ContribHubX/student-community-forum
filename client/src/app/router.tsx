@@ -15,15 +15,15 @@ const createAppRouter = () =>
           lazy: async () => {
             const { LoginRoute } = await import("./routes/auth/login");
             return { Component: LoginRoute };
-          }
+          },
         },
         {
           path: "callback/:provider",
           lazy: async () => {
             const { OAuthCallback } = await import("./routes/auth/callback");
             return { Component: OAuthCallback };
-          }
-        }
+          },
+        },
         // {
         //   path: "sign-up",
         //   lazy: async () => {},
@@ -32,9 +32,11 @@ const createAppRouter = () =>
     },
     {
       path: "/",
-      element: <ProtectedRoute>
-                <AppRoot />
-               </ProtectedRoute>,
+      element: (
+        <ProtectedRoute>
+          <AppRoot />
+        </ProtectedRoute>
+      ),
       children: [
         {
           index: true,

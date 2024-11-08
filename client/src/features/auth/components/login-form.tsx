@@ -100,14 +100,16 @@ export const LoginForm = () => {
           Log in
         </Button>
 
-        <Button 
-          className="font-light bg-[#F0F0F0] text-black" type="submit"
+        <Button
+          className="font-light bg-[#F0F0F0] text-black"
+          type="submit"
           onClick={() => loginSocialProvider("google")}
         >
           <FcGoogle />
           <span>Log in with Google</span>
         </Button>
-        <Button className="font-light bg-[#333333]" 
+        <Button
+          className="font-light bg-[#333333]"
           type="submit"
           onClick={() => loginSocialProvider("github")}
         >
