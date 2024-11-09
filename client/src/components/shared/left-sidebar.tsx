@@ -90,14 +90,14 @@ const popularGroupsData = [
 export const LeftSidebar = () => {
   return (
     <SidebarLayout
-      className="hidden flex-col gap-6 shadow-slate-400 shadow-md
+      className="hidden flex-col gap-6
       lg:flex"
       width={250}
       position="left-50"
     >
       <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 
-      shadow-slate-400 shadow-md"
+        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md"
+        id="sidebar"
       >
         <SideBarItem
           title="Newest and Recent"
@@ -120,8 +120,8 @@ export const LeftSidebar = () => {
       </div>
 
       <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 
-      shadow-slate-400 shadow-md"
+        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md"
+        id="sidebar"
       >
         <h1>Popular Topics</h1>
 
@@ -140,7 +140,8 @@ export const LeftSidebar = () => {
 
       <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 
-      shadow-slate-400 shadow-md"
+        shadow-slate-400 shadow-lg"
+        id="sidebar"
       >
         <h1>Explore Groups</h1>
 
@@ -195,8 +196,8 @@ const SideBarItem = ({
         </div>
 
         <div>
-          <p className="text-base">{truncateText(title, 23)}</p>
-          <p className="text-sm text-gray-300">
+          <p className="text-sm">{truncateText(title, 23)}</p>
+          <p className="text-xs text-gray-300">
             {truncateText(description, 22)}
           </p>
         </div>

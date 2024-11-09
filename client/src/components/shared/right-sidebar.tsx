@@ -1,5 +1,4 @@
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
-import React from "react";
 
 export const RightSidebar = () => {
   return (
