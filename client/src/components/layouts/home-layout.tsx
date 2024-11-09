@@ -1,5 +1,5 @@
+import { Navbar } from "@/components/shared/navbar";
 import { PropsWithChildren } from "react";
-import { Navbar } from "../shared/navbar";
 
 export const HomeLayout = ({ children }: PropsWithChildren) => {
   return (
