@@ -17,7 +17,7 @@ export const SidebarLayout = ({
 }: SidebarLayoutProps) => {
   return (
     <aside
-      className={`fixed overflow-y-scroll ${position} ${className}`}
+      className={`fixed overflow-y-auto ${position} ${className} rounded-2xl`}
       id="sidebar-container"
       style={{
         height: height ? height : "calc(100vh - 8rem)",

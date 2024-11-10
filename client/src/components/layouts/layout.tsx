@@ -5,7 +5,7 @@ import { RightSidebar } from "@/components/shared/right-sidebar";
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className="py-20">
+    <div className="pt-20">
       <Navbar />
 
       <main className="flex flex-col bg-background p-6 gap-6">
