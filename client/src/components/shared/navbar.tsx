@@ -41,7 +41,7 @@ export const Navbar = () => {
             </Avatar>
           </div>
         </div>
-        
+
         {/*
         if not logged in
          <div className="bg-accent px-10 flex items-center justify-center rounded-md cursor-pointer text-accent-foreground">
