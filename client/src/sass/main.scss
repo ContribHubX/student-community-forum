@@ -11,13 +11,11 @@
 
 html.dark {
   #sidebar {
-    box-shadow: none;
+    @apply dark:shadow-gray-900;
   }
 
   #sidebar-container {
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
+    @apply dark:shadow-gray-900;
   }
 }
 
@@ -96,4 +94,57 @@ html.dark {
   + .toggle-switch-background
   .toggle-switch-handle {
   transform: translateX(20px);
+}
+
+// quill.scss
+.quill > * {
+  color: inherit !important;
+}
+
+.quill > .ql-toolbar {
+  /* border radius of the toolbar */
+  border-radius: 10px 10px 0 0;
+  @apply dark:border-gray-500;
+}
+
+.quill > .ql-container {
+  /* border radius of the container and for font size */
+  font-size: inherit;
+  border-radius: 0 0 10px 10px;
+  min-height: 120px;
+  @apply dark:border-gray-500;
+}
+
+.ql-toolbar.ql-snow .ql-picker-label {
+  color: inherit !important;
+  opacity: 0.76;
+}
+
+.ql-snow .ql-picker {
+  color: inherit !important;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  /* for placeholder */
+  color: inherit;
+}
+
+.ql-snow.ql-toolbar button svg {
+  opacity: 0.76;
+  color: currentColor;
+}
+
+.ql-snow .ql-stroke {
+  /* for the border of the editor */
+  stroke: currentColor !important;
+}
+
+.ql-snow .ql-fill {
+  /* for the bg color */
+  fill: currentColor !important;
+}
+
+.ql-picker-item {
+  /* for dropdown */
+  color: #444 !important;
 }

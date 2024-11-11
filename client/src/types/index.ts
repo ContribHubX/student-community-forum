@@ -11,3 +11,18 @@ export type User = Entity<{
   email: string;
   attachment: string;
 }>;
+
+export type Thread = Entity<{
+  title: string;
+  content: string;
+  attachment: string;
+  createdBy: User;
+}>;
+
+export type Community = Entity<{
+  name: string;
+  description: string;
+  banner: string;
+  profilePicture: string;
+  createdBy: User;
+}>;

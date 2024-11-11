@@ -10,7 +10,7 @@ dotenv.config();
 export default ({ app }: { app: Application }) => {
   /**
    * Health check endpoints
-   * @TODO 
+   * @TODO
    */
   app.get("/status", (req: Request, res: Response) => {
     res.status(200).json({ message: "healthy" }).end();
@@ -19,14 +19,13 @@ export default ({ app }: { app: Application }) => {
     res.status(200).end();
   });
 
-
   /**
    * Init middlewares
    */
   app.use(
     cors({
       origin: "http://localhost:5173",
-      credentials: true
+      credentials: true,
     }),
   );
   app.use(express.json());

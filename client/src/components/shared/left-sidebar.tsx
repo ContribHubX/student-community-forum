@@ -96,7 +96,7 @@ export const LeftSidebar = () => {
       position="left-50"
     >
       <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md"
+        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
         <SideBarItem
@@ -120,7 +120,7 @@ export const LeftSidebar = () => {
       </div>
 
       <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md"
+        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
         <h1>Popular Topics</h1>
@@ -140,7 +140,7 @@ export const LeftSidebar = () => {
 
       <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 
-        shadow-slate-400 shadow-lg"
+        shadow-slate-400 shadow-lg dark:shadow-gray-900"
         id="sidebar"
       >
         <h1>Explore Groups</h1>
@@ -197,7 +197,7 @@ const SideBarItem = ({
 
         <div>
           <p className="text-sm">{truncateText(title, 23)}</p>
-          <p className="text-xs text-gray-300">
+          <p className="text-xs text-muted-foreground">
             {truncateText(description, 22)}
           </p>
         </div>

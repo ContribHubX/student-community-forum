@@ -1,11 +1,16 @@
 import { MainLayout } from "@/components/layouts/layout";
-import { ThreadCard } from "@/features/thread/components/thread-card";
+import { Threads } from "@/features/thread/components";
+import { useAuth } from "@/hooks/use-auth";
 
 export const HomeRoute = () => {
+  const { authState } = useAuth();
+
+  if (!authState?.user?.id) return <p>Loading...</p>;
+
   return (
     <MainLayout>
-      <section className="text-primary-foreground ">
-        <ThreadCard />
+      <section className="text-primary-foreground">
+        <Threads userId={authState.user.id} />
       </section>
     </MainLayout>
   );
