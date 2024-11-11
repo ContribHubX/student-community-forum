@@ -7,7 +7,7 @@ export const ThreadCard = () => {
   return (
     <div
       className="w-full bg-primary rounded-xl p-5 flex gap-5 relative flex-col
-    xl:flex-row"
+    xl:flex-row shadow-slate-400 shadow-md dark:shadow-gray-900"
     >
       <div
         className={`absolute top-5 right-5 bg-[#EFF5F8] h-8 w-8 cursor-pointer
@@ -18,7 +18,7 @@ export const ThreadCard = () => {
       </div>
 
       <img
-        className="border border-black rounded-xl flex-shrink-0 w-full mt-10
+        className=" rounded-xl flex-shrink-0 w-full mt-10
             xl:w-[200px] xl:mt-0"
         src="https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png"
         alt=""

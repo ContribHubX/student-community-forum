@@ -30,7 +30,7 @@ export default {
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          foreground: "var(--muted-foreground)",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -56,18 +56,18 @@ export default {
   },
   plugins: [
     require("tailwindcss-animate"),
-    function ({addUtilities}) {
+    function ({ addUtilities }) {
       const newUtilities = {
         ".no-scrollbar::--webkit-scrollbar": {
           display: "none",
         },
         ".no-scrollbar": {
           "-ms-overflow-style": "none",
-          "scrollbar-width": "none"
-        }
-      }
+          "scrollbar-width": "none",
+        },
+      };
 
       addUtilities(newUtilities);
-    }
+    },
   ],
 };

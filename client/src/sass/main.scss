@@ -11,13 +11,11 @@
 
 html.dark {
   #sidebar {
-    box-shadow: none;
+    @apply dark:shadow-gray-900;
   }
 
   #sidebar-container {
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
+    @apply dark:shadow-gray-900;
   }
 }
 

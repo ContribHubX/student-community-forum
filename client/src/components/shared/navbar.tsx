@@ -17,7 +17,7 @@ export const Navbar = () => {
         <div className="bg-background  rounded-xl py-2 pl-4 pr-1 flex relative items-center justify-between gap-2">
           <input
             type="text"
-            className="bg-background outline-none text-sm font-light "
+            className="bg-background outline-none text-sm font-light"
             placeholder="Type to search"
           />
 

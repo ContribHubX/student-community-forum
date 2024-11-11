@@ -6,11 +6,11 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { LuGithub } from "react-icons/lu";
 import { z } from "zod";
-import { loginSocialProvider } from "../api/useSocialLogin";
+import { loginSocialProvider } from "../api/use-social-login";
 
 const loginFormSchema = z.object({
-  email: z.string().email("Invalid email address"), // Validates email format// Ensures email is not empty
-  password: z.string().min(6, "Password must be at least 6 characters"), // Password length validation
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export const LoginForm = () => {
