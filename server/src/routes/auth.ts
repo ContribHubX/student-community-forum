@@ -11,4 +11,4 @@ export default (app: Router) => {
   router.get("/google/callback", authController.googleAuthCallback);
   router.get("/github/callback", authController.githubAuthCallback);
   router.get("/me", authController.getMyDetails);
-}
+};

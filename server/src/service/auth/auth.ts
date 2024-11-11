@@ -10,7 +10,7 @@ class AuthService {
 
   constructor() {
     this.strategies = {
-      GOOGLE: Container.get(GoogleAuthService), 
+      GOOGLE: Container.get(GoogleAuthService),
       GITHUB: Container.get(GithubAuthService),
     };
   }
@@ -29,13 +29,17 @@ class AuthService {
   }
 
   /**
-   * 
-   * @param provider 
-   * @param code 
-   * @param state 
-   * @returns 
+   *
+   * @param provider
+   * @param code
+   * @param state
+   * @returns
    */
-  public async handleCallback(provider: AuthProvider, code: string, state: string) {
+  public async handleCallback(
+    provider: AuthProvider,
+    code: string,
+    state: string,
+  ) {
     const strategy = this.strategies[provider];
     if (!strategy) {
       throw new Error("Unsupported provider");
@@ -44,10 +48,10 @@ class AuthService {
   }
 
   /**
-   * 
-   * @param provider 
-   * @param accessToken 
-   * @returns 
+   *
+   * @param provider
+   * @param accessToken
+   * @returns
    */
   public async getMyDetails(provider: AuthProvider, accessToken: string) {
     const strategy = this.strategies[provider];

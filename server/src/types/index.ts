@@ -6,3 +6,5 @@ export type AuthResponse = {
 };
 
 export type AuthProvider = "GOOGLE" | "GITHUB";
+
+export type UPLOAD_TYPE = "thread" | "comment";

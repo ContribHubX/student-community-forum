@@ -15,6 +15,13 @@
       "when": 1730981534301,
       "tag": "0001_fresh_echo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1731134469951,
+      "tag": "0002_icy_blackheart",
+      "breakpoints": true
     }
   ]
 }

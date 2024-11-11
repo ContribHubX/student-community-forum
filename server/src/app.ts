@@ -9,6 +9,7 @@ import {
 
 async function startServer() {
   const app = express();
+  const port = process.env.PORT || 3000;
   let serverListener: ServerListener<
     typeof IncomingMessage,
     typeof ServerResponse
@@ -17,10 +18,10 @@ async function startServer() {
   (await import("./loaders/express")).default({ app });
 
   serverListener = app
-    .listen(3000, () => {
+    .listen(port, () => {
       Logger.info(`
             ################################################
-                🛡️  Server listening on port: ${3000} 🛡️
+                🛡️  Server listening on port: ${port} 🛡️
             ################################################      
         `);
     })
