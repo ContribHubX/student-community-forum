@@ -16,5 +16,6 @@ export default (app: Router) => {
     validateRequest(threadSchema),
     threadController.createThreadHandler,
   );
+  router.get("/", verifyAuth, threadController.getAllThreadsHandler);
   router.get("/:threadId", verifyAuth, threadController.getSingleThreadHandler);
 };

@@ -50,4 +50,23 @@ export default {
       next(new AppError(error.message, 500));
     }
   },
+
+  /**
+   * Handler to retrieve a threads.
+   * 
+   * @route GET /thread/:threadId
+   */
+  async getAllThreadsHandler(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const threadService = Container.get(ThreadService);
+      const response = await threadService.getAllThread();
+      res.status(200).json(response);
+    } catch (error: any) {
+      next(new AppError(error.message, 500));
+    }
+  },
 };

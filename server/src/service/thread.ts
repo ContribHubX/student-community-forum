@@ -2,6 +2,7 @@ import { IThread, IThreadDto } from "@/domain/interfaces/IThread";
 import ThreadRepository from "@/domain/repository/thread";
 import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
+import EventManager from "@/sockets/event-manager";
 
 /**
  * Service responsible for handling thread-related operations.
@@ -10,6 +11,9 @@ import { Inject, Service } from "typedi";
 class ThreadService {
   @Inject(() => ThreadRepository)
   private threadRepo!: ThreadRepository;
+
+  @Inject(() => EventManager)
+  private eventManager!: EventManager;  
 
   /**
    * Creates a new thread.
@@ -20,7 +24,9 @@ class ThreadService {
    */
   public async createThread(dto: IThreadDto): Promise<IThread | undefined> {
     try {
-      return await this.threadRepo.create(dto);
+      const thread = await this.threadRepo.create(dto);
+      this.eventManager.newThread(thread);
+      return thread;
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Create thread error");
@@ -41,6 +47,20 @@ class ThreadService {
       if (error instanceof AppError) throw error;
       throw new AppError("Error getting thread");
     }
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  public async getAllThread(): Promise<IThread[] | undefined> {
+    try {
+       return await this.threadRepo.getAll();
+    } catch (error: any) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error getting threads");
+    }
+    
   }
 }
 

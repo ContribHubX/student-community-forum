@@ -8,3 +8,5 @@ export type AuthResponse = {
 export type AuthProvider = "GOOGLE" | "GITHUB";
 
 export type UPLOAD_TYPE = "thread" | "comment";
+
+export type ClientEventCallback = (data: object) => void;
