@@ -7,7 +7,7 @@ export const HomeRoute = () => {
 
   if (!authState?.user?.id) return <p>Loading...</p>;
   console.log(authState.user);
-  
+
   return (
     <MainLayout>
       <section className="text-primary-foreground">

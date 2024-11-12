@@ -2,8 +2,7 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { CreateThreadForm } from "./create-thread-form";
 import { ThreadCardList } from "./thread-card-list";
 import { useAuth } from "@/hooks/use-auth";
-import { IoMdClose } from "react-icons/io";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 
 interface ThreadsProp {
@@ -12,7 +11,7 @@ interface ThreadsProp {
 
 export const Threads = ({ userId }: ThreadsProp) => {
   const { authState } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleThreadFormModal = () => {
     setIsModalOpen(!isModalOpen);
