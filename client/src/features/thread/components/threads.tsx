@@ -31,7 +31,7 @@ export const Threads = ({ userId }: ThreadsProp) => {
             className="h-full text-sm w-full font-light px-5 bg-background text-primary-foreground rounded-md
             outline-none focus:border-red-600"
             placeholder="Lets share what's going on your mind.."
-            onFocus={handleThreadFormModal}
+            onFocus={handleThreadFormModal} 
           />
         </div>
         <button
