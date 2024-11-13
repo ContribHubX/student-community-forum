@@ -38,8 +38,6 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
       ...data,
     }));
 
-    console.log(data);
-
     // Update form values
     if (data.content) setValue("content", data.content);
     setValue("attachment", data.attachment || null);

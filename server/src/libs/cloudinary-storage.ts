@@ -14,7 +14,7 @@ const getCloudinaryFolder = (type: UPLOAD_TYPE) => {
       return "uploads";
   }
 };
-
+    
 const createStorage = (uploadType: UPLOAD_TYPE) => {
   return new CloudinaryStorage({
     cloudinary: cloudinary,

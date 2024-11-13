@@ -6,6 +6,9 @@ import {
   type IncomingMessage,
   type ServerResponse,
 } from "http";
+import { Server as IOServer } from "socket.io";
+import socketHandler from "@/loaders/socket";
+import { corsConfig } from "@/config/cors";
 
 async function startServer() {
   const app = express();
@@ -24,6 +27,9 @@ async function startServer() {
                 🛡️  Server listening on port: ${port} 🛡️
             ################################################      
         `);
+
+      // initSocket
+      socketHandler(new IOServer(serverListener, corsConfig));
     })
     .on("error", (err) => {
       Logger.error(err.message);

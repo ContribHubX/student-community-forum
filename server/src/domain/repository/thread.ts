@@ -2,7 +2,7 @@ import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import { IThreadDto, IThread } from "../interfaces/IThread";
 import { ThreadTable, UserTable as user } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
 
@@ -64,8 +64,6 @@ class ThreadRepository {
       // After insert, query the thread data to retrieve the full record
       const threadId = insertResult[0].id;
 
-      console.log("thread: ", threadId);
-
       const threadCreated = await this.db.query.ThreadTable.findFirst({
         where: eq(ThreadTable.id, threadId),
         with: {
@@ -93,6 +91,21 @@ class ThreadRepository {
     }
   }
   
+  /**
+   * 
+   * @returns 
+   */
+  public async getAll(): Promise<IThread[]> { 
+    const result = await this.db.query.ThreadTable.findMany({
+      with: {
+        user: true,
+      },
+      orderBy: [desc(ThreadTable.createdAt)]
+    });
+
+    return result.map(thread => this.threadTransformer(thread));
+  }
+
   /**
    * Transform raw thread into {IThread} 
    * 

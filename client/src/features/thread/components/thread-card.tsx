@@ -1,7 +1,12 @@
+import { Thread } from "@/types";
 import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
-export const ThreadCard = () => {
+interface ThreadCardProp {
+  thread: Thread;
+}
+
+export const ThreadCard = ({ thread }: ThreadCardProp) => {
   const [isLiked, setIsLiked] = useState(false);
 
   return (
@@ -26,7 +31,7 @@ export const ThreadCard = () => {
 
       <div className="w-full gap-10 flex flex-col">
         <div className="space-y-4 text-xl">
-          <p>Learn machine learning 2024</p>
+          <p>{thread.title}</p>
           <div className="flex gap-2 text-xs text-accent-foreground font-light">
             {/* tags */}
             <div className="bg-accent py-2 px-3 rounded-2xl">finance</div>
