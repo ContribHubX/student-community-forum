@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
 interface ThreadCardProp {
-  thread: Thread
+  thread: Thread;
 }
 
 export const ThreadCard = ({ thread }: ThreadCardProp) => {

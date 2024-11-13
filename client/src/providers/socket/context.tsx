@@ -1,51 +1,60 @@
 import { Thread } from "@/types";
-import { Socket } from "socket.io-client"
+import { Socket } from "socket.io-client";
 import { QueryClient } from "@tanstack/react-query";
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
 import { createContext } from "react";
 
 export type SocketContextState = {
-    socket: Socket | undefined;
-}
+  socket: Socket | undefined;
+};
 
 export const defaultSocketContextState: SocketContextState = {
-    socket: undefined, 
-}
+  socket: undefined,
+};
 
 export enum OPERATION {
-    UPDATE_SOCKET,
-    ADD_NEW_THREAD
+  UPDATE_SOCKET,
+  ADD_NEW_THREAD,
 }
 
-type Actions = { type: OPERATION.ADD_NEW_THREAD, payload: ({thread: Thread, queryClient: QueryClient}) }
-            |  { type: OPERATION.UPDATE_SOCKET, payload: Socket };
-
-export const socketReducer = (state: SocketContextState, action: Actions): SocketContextState => {
-    
-    switch(action.type) {
-        case OPERATION.UPDATE_SOCKET: 
-            return {...state, socket: action.payload}
-        case OPERATION.ADD_NEW_THREAD: {
-            const {thread, queryClient}  = action.payload 
-            queryClient.setQueryData(getThreadsQueryOptions().queryKey, (oldThreads: Thread[] | undefined) => {
-                return oldThreads ? [thread, ...oldThreads] : undefined;
-            })
-            return {...state}
-        }
-        default:
-            return {...state}
+type Actions =
+  | {
+      type: OPERATION.ADD_NEW_THREAD;
+      payload: { thread: Thread; queryClient: QueryClient };
     }
-}
+  | { type: OPERATION.UPDATE_SOCKET; payload: Socket };
+
+export const socketReducer = (
+  state: SocketContextState,
+  action: Actions,
+): SocketContextState => {
+  switch (action.type) {
+    case OPERATION.UPDATE_SOCKET:
+      return { ...state, socket: action.payload };
+    case OPERATION.ADD_NEW_THREAD: {
+      const { thread, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getThreadsQueryOptions().queryKey,
+        (oldThreads: Thread[] | undefined) => {
+          return oldThreads ? [thread, ...oldThreads] : undefined;
+        },
+      );
+      return { ...state };
+    }
+    default:
+      return { ...state };
+  }
+};
 
 export type SocketContextType = {
-    socketState: SocketContextState,
-    socketDispatch: React.Dispatch<Actions>
-}
+  socketState: SocketContextState;
+  socketDispatch: React.Dispatch<Actions>;
+};
 
 export const SocketContext = createContext<SocketContextType>({
-    socketState: defaultSocketContextState,
-    socketDispatch: () => {}
-})
+  socketState: defaultSocketContextState,
+  socketDispatch: () => {},
+});
 
 export const SocketContextConsumer = SocketContext.Consumer;
 export const SocketContextProvider = SocketContext.Provider;

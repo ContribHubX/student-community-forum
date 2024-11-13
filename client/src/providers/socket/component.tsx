@@ -1,84 +1,91 @@
-import { PropsWithChildren, useEffect, useReducer } from "react"
+import { PropsWithChildren, useEffect, useReducer } from "react";
 import { defaultSocketContextState, OPERATION, socketReducer } from "./context";
 import { useSocket } from "@/hooks/use-socket";
 import { SocketContextProvider } from "./context";
 import { useQueryClient } from "@tanstack/react-query";
 
-const SocketContextComponent = ({children}: PropsWithChildren) => {
-    const [socketState, socketDispatch] = useReducer(socketReducer, defaultSocketContextState);
-    const queryClient = useQueryClient();
+const SocketContextComponent = ({ children }: PropsWithChildren) => {
+  const [socketState, socketDispatch] = useReducer(
+    socketReducer,
+    defaultSocketContextState,
+  );
+  const queryClient = useQueryClient();
 
-    const socket = useSocket('http://localhost:3000', {
-        autoConnect: false,
-        reconnectionDelay: 5000,
-        reconnectionAttempts: 5,
-        withCredentials: true
-    })
+  const socket = useSocket("http://localhost:3000", {
+    autoConnect: false,
+    reconnectionDelay: 5000,
+    reconnectionAttempts: 5,
+    withCredentials: true,
+  });
 
-    useEffect(() => {
-        if (socket) {
-            /** Connect to the web socket **/
-            socket.connect();   
-    
-            socket.on('connect', () => {
-                console.log('Socket connected:', socket.id);
-            });
-    
-            /** Update socket state **/
-            socketDispatch({ type: OPERATION.UPDATE_SOCKET, payload: socket });
-    
-            /** Start the event listener **/
-            startListeners();
-    
-            /** Send the handshake **/
-            sendHandShake();
-        }
-    }, [socket])
+  useEffect(() => {
+    if (socket) {
+      /** Connect to the web socket **/
+      socket.connect();
 
-    const startListeners = () => {
-        if (!socket) return;
+      socket.on("connect", () => {
+        console.log("Socket connected:", socket.id);
+      });
 
-        /** Default event listeners that socket-io provides  **/
-        
-        /** Reconnect event **/
-        socket.io.on('reconnect', (attempt) => {
-            console.info(`Reconnected on attempt: ${attempt}`);
-        })
+      /** Update socket state **/
+      socketDispatch({ type: OPERATION.UPDATE_SOCKET, payload: socket });
 
-        /** Reconnect event **/
-        socket.io.on('reconnect_attempt', (attempt) => {
-            console.info(`Reconnection attempt: ${attempt}`);
-        })
+      /** Start the event listener **/
+      startListeners();
 
-        /** Reconnection error **/
-        socket.io.on('reconnect_error', (attempt) => {
-            console.info(`Reconnection error: ${attempt}`);
-        })
-
-        /** Reconnection failed **/
-        socket.io.on('reconnect_failed', () => {
-            console.info(`Reconnection failture`);
-            alert(`We are unable to connect you to the web socket.`)
-        })
+      /** Send the handshake **/
+      sendHandShake();
     }
+  }, [socket]);
 
-    const sendHandShake = () => {
-        if (!socket) return;
+  const startListeners = () => {
+    if (!socket) return;
 
-        /** Listen on socket events **/
-        socket.on('recv', (data) => {
-            switch(data.type) {
-                case 'thread--new':
-                    socketDispatch({ type: OPERATION.ADD_NEW_THREAD, payload: {thread: data, queryClient} })
-                    break;
-            }
-        })
-            
-    }
+    /** Default event listeners that socket-io provides  **/
 
-    return <SocketContextProvider value={{ socketState, socketDispatch }}>
-            { children }
-           </SocketContextProvider>
-}
+    /** Reconnect event **/
+    socket.io.on("reconnect", (attempt) => {
+      console.info(`Reconnected on attempt: ${attempt}`);
+    });
+
+    /** Reconnect event **/
+    socket.io.on("reconnect_attempt", (attempt) => {
+      console.info(`Reconnection attempt: ${attempt}`);
+    });
+
+    /** Reconnection error **/
+    socket.io.on("reconnect_error", (attempt) => {
+      console.info(`Reconnection error: ${attempt}`);
+    });
+
+    /** Reconnection failed **/
+    socket.io.on("reconnect_failed", () => {
+      console.info(`Reconnection failture`);
+      alert(`We are unable to connect you to the web socket.`);
+    });
+  };
+
+  const sendHandShake = () => {
+    if (!socket) return;
+
+    /** Listen on socket events **/
+    socket.on("recv", (data) => {
+      switch (data.type) {
+        case "thread--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_THREAD,
+            payload: { thread: data, queryClient },
+          });
+          break;
+      }
+    });
+  };
+
+  return (
+    <SocketContextProvider value={{ socketState, socketDispatch }}>
+      {children}
+    </SocketContextProvider>
+  );
+};
 
 export default SocketContextComponent;
