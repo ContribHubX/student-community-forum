@@ -48,13 +48,11 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <div>
-          <input
-            {...register("title")}
-            className="w-full px-4 py-3 rounded-[10px]  outline-none focus:border-accent bg-background border-[1px] border-gray-300 dark:border-gray-500"
-            placeholder="Title"
-          />
-        </div>
+        <input
+          {...register("title")}
+          className="w-full px-4 py-3 rounded-[10px]  outline-none focus:border-accent bg-background border-[1px] border-gray-300 dark:border-gray-500"
+          placeholder="Title"
+        />
       </div>
 
       <div className="pt-3">
@@ -68,7 +66,7 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
       <div className="mt-4 flex items-center justify-end">
         <button
           type="submit"
-          className="bg-accent text-white py-2 mb-3 px-3 text-sm rounded-lg"
+          className="shrink-0 w-40 bg-accent text-accent-foreground p-3 text-sm rounded-md"
         >
           Create Thread
         </button>
