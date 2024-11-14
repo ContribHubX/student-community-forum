@@ -29,3 +29,19 @@ export const threadReactionSchema = Joi.object({
     "string.empty": "type is required",
   }),
 });
+
+
+export const threadCommentSchema = Joi.object({
+  content: Joi.string().min(1).required().messages({
+    "string.empty": "content is required",
+    "string.min": "content cannot be empty",
+  }),
+  createdBy: Joi.string().required().messages({
+    "string.empty": "createdBy is required",
+    "string.min": "createdBy cannot be empty",
+  }),
+  threadId: Joi.string().required().messages({
+    "string.empty": "threadId is required",
+    "string.min": "threadId cannot be empty",
+  }),
+});

@@ -15,8 +15,8 @@ class EventManager {
      * @param client 
      * @param data 
      */
-    newThread(data: any, client?: Client): void {
-        this.emit("thread--new", data, client);
+    publish<T>(identifier: string, data: T | undefined, client?: Client): void {
+        this.emit(identifier, data, client);
     } 
 
     /**

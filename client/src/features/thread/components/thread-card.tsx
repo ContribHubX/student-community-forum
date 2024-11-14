@@ -52,7 +52,7 @@ export const ThreadCard = ({ thread }: ThreadCardProp) => {
           <div className="flex gap-3 text-sm">
             <p className="cursor-pointer">652,324 views</p>
 
-            <p className="cursor-pointer">36,654 likes</p>
+            <p className="cursor-pointer">{thread.likeCount} likes</p>
 
             <p className="cursor-pointer">56 comments</p>
           </div>

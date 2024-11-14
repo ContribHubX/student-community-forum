@@ -1,4 +1,4 @@
-import { IThread, IThreadDto } from "@/domain/interfaces/IThread";
+import { IThreadFull, IThreadDto } from "@/domain/interfaces/IThread";
 import ThreadRepository from "@/domain/repository/thread";
 import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
@@ -19,13 +19,13 @@ class ThreadService {
    * Creates a new thread.
    *
    * @param {IThreadDto} dto - The data transfer object containing the information to create a thread.
-   * @returns {Promise<IThread | undefined>} - The created thread object or undefined if an error occurs.
+   * @returns {Promise<IThreadFull | undefined>} - The created thread object or undefined if an error occurs.
    * @throws {AppError} - Throws an error if the thread creation fails.
    */
-  public async createThread(dto: IThreadDto): Promise<IThread | undefined> {
+  public async createThread(dto: IThreadDto): Promise<IThreadFull | undefined> {
     try {
       const thread = await this.threadRepo.create(dto);
-      this.eventManager.newThread(thread);
+      this.eventManager.publish<IThreadFull>("thread--new", thread);
       return thread;
     } catch (error: any) {
       if (error instanceof AppError) throw error;
@@ -37,10 +37,10 @@ class ThreadService {
    * Retrieves a thread by its ID.
    *
    * @param {string} threadId - The unique identifier of the thread to retrieve.
-   * @returns {Promise<IThread | undefined>} - The thread object with the given ID or undefined if not found.
+   * @returns {Promise<IThreadFull | undefined>} - The thread object with the given ID or undefined if not found.
    * @throws {AppError} - Throws an error if the retrieval of the thread fails.
    */
-  public async getThreadById(threadId: string): Promise<IThread | undefined> {
+  public async getThreadById(threadId: string): Promise<IThreadFull | undefined> {
     try {
       return await this.threadRepo.findOneById(threadId);
     } catch (error: any) {
@@ -53,7 +53,7 @@ class ThreadService {
    * 
    * @returns 
    */
-  public async getAllThread(): Promise<IThread[] | undefined> {
+  public async getAllThread(): Promise<IThreadFull[] | undefined> {
     try {
        return await this.threadRepo.getAll();
     } catch (error: any) {

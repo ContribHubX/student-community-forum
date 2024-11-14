@@ -24,4 +24,21 @@ export default {
           next(new AppError(error.message, 500));
         }
     },
+
+    /**
+     * Handler to create reaction to a thread.
+     *
+     * @route POST /thread/comment
+     */
+    async commentThreadHandler(req: Request, res: Response, next: NextFunction) {
+      const body = req.body;
+
+      try {
+        const threadService = Container.get(ThreadInteractionService);
+        const comment = await threadService.createComment(body);
+        res.status(201).json({ message: "Comment successful", comment });
+      } catch (error: any) {
+        next(new AppError(error.message, 500));
+      }
+    },
 }
