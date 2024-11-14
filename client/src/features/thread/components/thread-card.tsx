@@ -1,18 +1,25 @@
 import { Thread } from "@/types";
 import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 interface ThreadCardProp {
   thread: Thread;
 }
 
 export const ThreadCard = ({ thread }: ThreadCardProp) => {
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
+  const handleCardClick = () => {
+    navigate(`/thread/${thread.id}`);
+  };
+  
   return (
     <div
-      className="w-full bg-primary rounded-xl p-5 flex gap-5 relative flex-col
+      className="w-full bg-primary rounded-xl p-5 flex gap-5 relative flex-col cursor-pointer
     xl:flex-row shadow-slate-400 shadow-md dark:shadow-gray-900"
+      onClick={handleCardClick}
     >
       <div
         className={`absolute top-5 right-5 bg-[#EFF5F8] h-8 w-8 cursor-pointer

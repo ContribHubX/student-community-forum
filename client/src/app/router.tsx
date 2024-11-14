@@ -45,6 +45,13 @@ const createAppRouter = () =>
             return { Component: HomeRoute };
           },
         },
+        {
+          path: "thread/:id",
+          lazy: async () => {
+            const { ThreadRoute } = await import("./routes/app/thread-route");
+            return { Component: ThreadRoute };
+          },
+        },
       ],
     },
   ]);

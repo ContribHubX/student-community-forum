@@ -5,6 +5,7 @@ export const RightSidebar = () => {
     <SidebarLayout
       position="right-6"
       width={250}
+      height={"full"}
       className="bg-primary shadow-slate-400 shadow-md hidden
       md:block"
     >

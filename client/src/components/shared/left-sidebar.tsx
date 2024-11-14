@@ -93,6 +93,7 @@ export const LeftSidebar = () => {
       className="hidden flex-col gap-6
       lg:flex"
       width={250}
+      height={"full"}
       position="left-50"
     >
       <div
