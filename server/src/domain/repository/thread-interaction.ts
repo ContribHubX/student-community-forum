@@ -1,10 +1,12 @@
-import { MySql2Database } from "drizzle-orm/mysql2";
+import { MySql2Database, } from "drizzle-orm/mysql2";
 import { Service, Container } from "typedi";
 import * as schema from "@/database/schema";
 import { IThreadReaction, IThreadReactionDto } from "../interfaces/IThread";
 import { AppError } from "@/libs/app-error";
 import { eq } from "drizzle-orm";
 import { IComment, ICommentDto } from "../interfaces/IComment";
+import { IUser } from "../interfaces/IUser";
+import thread from "@/api/thread";
 
 @Service()
 class ThreadInteractionRepository {
@@ -72,6 +74,31 @@ class ThreadInteractionRepository {
                 });
 
             return this.commentTransformer(createdComment);
+        } catch(error: any) {
+            throw new AppError(error.messsage, 500);
+        }
+    } 
+
+    /**
+     * Get's user details base on threadId
+     * 
+     * @param threadId
+     * @returns Promise<IUser>
+     */
+    public async getUserByThreadId(threadId: string): Promise<IUser> {
+        try {
+            const result = await this.db
+                .query
+                .ThreadTable 
+                .findFirst({
+                    where: eq(schema.ThreadTable.id, threadId),
+                    with: { user: true }
+                })
+            
+            if (!result?.user) 
+                throw new AppError("Invalid user", 500);
+
+            return result.user
         } catch(error: any) {
             throw new AppError(error.messsage, 500);
         }

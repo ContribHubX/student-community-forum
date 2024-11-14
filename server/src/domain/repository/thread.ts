@@ -147,7 +147,11 @@ class ThreadRepository {
         SELECT COUNT(*) FROM thread_reaction 
         WHERE thread_reaction.thread_id = ${ThreadTable.id} 
         AND thread_reaction.type = 'DISLIKE'
-      )`.as("dislike_count")
+      )`.as("dislike_count"),
+      commentCount: sql<number>`(
+        SELECT COUNT(*) FROM comment
+        WHERE thread_id = ${ThreadTable.id} 
+      )`.as("comment_count")
     };
   }
 }

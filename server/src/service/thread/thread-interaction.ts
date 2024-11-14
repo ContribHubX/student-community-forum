@@ -4,11 +4,18 @@ import ThreadInteractionRepository from "@/domain/repository/thread-interaction"
 import { AppError } from "@/libs/app-error";
 import EventManager from "@/sockets/event-manager";
 import { Inject, Service } from "typedi";
+import NotificationService from "../notification";
+import { NotificationType } from "@/types";
+
+// TODO get user id  base on thread id 
 
 @Service()
 class ThreadInteractionService {
     @Inject(() => ThreadInteractionRepository)
     private threadInteractionRepo!: ThreadInteractionRepository;
+
+    @Inject(() => NotificationService)
+    private notifService!: NotificationService;
 
     @Inject(() => EventManager)
     private eventManager!: EventManager;
@@ -41,12 +48,23 @@ class ThreadInteractionService {
         try {
             const result = await this.threadInteractionRepo.comment(dto);
             this.eventManager.publish<IComment>("comment--new", result);
+
+            // create notification
+            const user = await this.threadInteractionRepo.getUserByThreadId(dto.threadId);
+            await this.notifService.createNotification({ 
+                entityId: dto.threadId,  
+                entityType: "thread",
+                type: "comment" as NotificationType,
+                createdBy: dto.createdBy,
+                receiveBy: user.id
+            });
+
             return result;
         } catch(error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError("Create thread error");
         }
     }
-}
+} 
 
 export default ThreadInteractionService;

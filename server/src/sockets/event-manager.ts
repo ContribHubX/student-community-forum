@@ -1,6 +1,8 @@
 import { Service } from "typedi";
 import Client from "./client";
 
+// TODO implement notif pub/sub
+
 @Service()
 class EventManager {
     private readonly clients: Set<Client> = new Set();
