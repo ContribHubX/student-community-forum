@@ -1,9 +1,15 @@
 import { IUser } from "@/domain/interfaces/IUser";
+import type Client from "@/sockets/client";
 
 export type AuthResponse = {
   user: IUser;
   accessToken: string;
 };
+
+export type ClientEventOptions = { 
+  userId: string,
+  client: Client
+}
 
 export type AuthProvider = "GOOGLE" | "GITHUB";
 

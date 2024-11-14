@@ -1,4 +1,4 @@
-import { IRawNotificationDto, INotificationDto } from "@/domain/interfaces/INotification";
+import { IRawNotificationDto, INotificationDto, INotification } from "@/domain/interfaces/INotification";
 import NotificationRepository from "@/domain/repository/notification";
 import { AppError } from "@/libs/app-error";
 import { TaskNotificationType, ThreadNotificationType } from "@/types";
@@ -42,6 +42,24 @@ class NotificationService {
         }
     }
 
+    /**
+     * Fetche user notications
+     * 
+     * @param userId 
+     * @returns {Promise<INotification[] | undefined>}
+     */
+    public async getNotifications(userId: string): Promise<INotification[] | undefined> {
+        try {
+            return await this.notificationRepo.getAll(userId);
+        } catch(error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError("Error fetching notifications"); 
+        }
+    }
+
+    /**
+     * Utility function
+     */
     private getThreadNotificationMessage(actionType: ThreadNotificationType): string {
         switch (actionType) {
             case 'like':
@@ -57,6 +75,9 @@ class NotificationService {
         }
     }
 
+    /**
+     * Utility function
+     */
     private getTaskNotificationMessage(actionType: TaskNotificationType): string {
         switch (actionType) {
             case 'assigned':

@@ -2,8 +2,9 @@ import { MySql2Database } from "drizzle-orm/mysql2";
 import { Service, Container} from "typedi";
 import * as schema from "@/database/schema";
 import { AppError } from "@/libs/app-error";
-import { INotificationDto } from "../interfaces/INotification";
+import { INotification, INotificationDto } from "../interfaces/INotification";
 import { NotificationTable } from "@/database/schema/notification";
+import { eq } from "drizzle-orm";
 
 @Service()
 class NotificationRepository {
@@ -24,10 +25,32 @@ class NotificationRepository {
             await this.db
                 .insert(NotificationTable)
                 .values({...dto})
-        } catch (error: any) {
+        } catch(error: any) {
             throw new AppError(error.messsage, 500);
         }
     }
+
+    /**
+     * Get's user notifications
+     * 
+     * @param dto 
+     * @returns {Promise<INotification[] | undefined>}
+     */
+    public async getAll(userId: string): Promise<INotification[] | undefined> {
+        try {
+            const result = await this.db
+                .query
+                .NotificationTable
+                .findMany({
+                    where: eq(NotificationTable.receiveBy, userId),
+                    with: { createdBy: true }
+                })
+
+            return (result as unknown as INotification[]);
+        } catch(error: any) {
+            throw new AppError(error.messsage, 500);
+        }
+    } 
 }
 
 export default NotificationRepository;

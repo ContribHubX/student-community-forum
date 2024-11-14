@@ -29,4 +29,4 @@ export default (app: Router) => {
   )
   router.get("/", verifyAuth, threadController.getAllThreadsHandler);
   router.get("/:threadId", verifyAuth, threadController.getSingleThreadHandler);
-};
+} ;

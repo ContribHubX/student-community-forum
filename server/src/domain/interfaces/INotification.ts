@@ -1,4 +1,5 @@
 import { NotificationType } from "@/types"
+import { IUser } from "./IUser"
 
 export interface INotification {
     id: string,
@@ -9,7 +10,7 @@ export interface INotification {
     type: NotificationType,
     link: string,
     isRead: boolean,
-    createdBy: string,
+    createdBy: IUser | string,
     receiveBy: string
 }
 
