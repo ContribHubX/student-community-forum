@@ -47,6 +47,12 @@ const createAppRouter = () =>
         },
         {
           path: "thread/:id",
+          // loader: ({ params }) => {
+          //   if (!params.id) {
+          //     throw new Error("params id is null");
+          //   }
+          //   return getThreadById(params.id);
+          // },
           lazy: async () => {
             const { ThreadRoute } = await import("./routes/app/thread-route");
             return { Component: ThreadRoute };

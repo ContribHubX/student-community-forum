@@ -12,7 +12,11 @@ export const HomeRoute = () => {
 
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
-      <section className="text-primary-foreground">
+      <section
+        className="bg-background border-3 border-black
+        md:mr-[17.5rem] lg:mx-[17.5rem]
+        "
+      >
         <Threads userId={authState.user.id} />
       </section>
     </MainLayout>

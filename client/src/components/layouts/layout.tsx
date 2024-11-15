@@ -22,13 +22,7 @@ export const MainLayout = ({
       >
         <LeftSidebar />
 
-        <div
-          className="bg-background border-3 border-black
-        md:mr-[17.5rem] lg:mx-[17.5rem]
-        "
-        >
-          {children}
-        </div>
+        {children}
 
         <RightSidebar />
       </main>

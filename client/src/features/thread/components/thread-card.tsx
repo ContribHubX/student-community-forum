@@ -14,7 +14,7 @@ export const ThreadCard = ({ thread }: ThreadCardProp) => {
   const handleCardClick = () => {
     navigate(`/thread/${thread.id}`);
   };
-  
+
   return (
     <div
       className="w-full bg-primary rounded-xl p-5 flex gap-5 relative flex-col cursor-pointer
