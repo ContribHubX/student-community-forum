@@ -18,11 +18,10 @@ export type Thread = Entity<{
   attachment: string;
   createdBy: User;
 
-  likeCount: number,
-  dislikeCount: number,
-  commentCount: number
+  likeCount: number;
+  dislikeCount: number;
+  commentCount: number;
 }>;
-
 
 export type Community = Entity<{
   name: string;

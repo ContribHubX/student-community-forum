@@ -30,6 +30,20 @@ class ThreadInteractionService {
     public async reactToThread(dto: IThreadReactionDto): Promise<IThreadReaction | undefined> {
         try {
             const result = await this.threadInteractionRepo.react(dto);
+            this.eventManager.publishToMany<IThreadReaction>(`${dto.type.toLowerCase()}--new`, result);
+
+            if (!result) throw new AppError("Invalid reaction");
+            
+            // notify user who created the thread
+            const user = await this.threadInteractionRepo.getUserByThreadId(dto.threadId);
+            await this.notifService.createNotification({
+                entityId: dto.threadId,
+                entityType: "thread",
+                type: dto.type.toLowerCase() as NotificationType,
+                createdBy: dto.userId,
+                receiveBy: user.id
+            });
+
             return result;
         } catch(error: any) {
             if (error instanceof AppError) throw error;
@@ -47,9 +61,9 @@ class ThreadInteractionService {
     public async createComment(dto: ICommentDto): Promise<IComment | undefined> {
         try {
             const result = await this.threadInteractionRepo.comment(dto);
-            this.eventManager.publish<IComment>("comment--new", result);
+            this.eventManager.publishToMany<IComment>("comment--new", result);
 
-            // create notification
+            // notify user who created the thread
             const user = await this.threadInteractionRepo.getUserByThreadId(dto.threadId);
             await this.notifService.createNotification({ 
                 entityId: dto.threadId,  

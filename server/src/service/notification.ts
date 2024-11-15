@@ -1,6 +1,7 @@
 import { IRawNotificationDto, INotificationDto, INotification } from "@/domain/interfaces/INotification";
 import NotificationRepository from "@/domain/repository/notification";
 import { AppError } from "@/libs/app-error";
+import EventManager from "@/sockets/event-manager";
 import { TaskNotificationType, ThreadNotificationType } from "@/types";
 import { Inject, Service } from "typedi";
 
@@ -11,13 +12,16 @@ class NotificationService {
     @Inject(() => NotificationRepository)
     private notificationRepo!: NotificationRepository;
     
+    @Inject(() => EventManager)
+    private eventManager!: EventManager;
+
     /**
      * Create notication
      * 
      * @param dto 
      * @returns {Promise<void>}
      */
-    public async createNotification(dto: IRawNotificationDto): Promise<void> {
+    public async createNotification(dto: IRawNotificationDto): Promise<INotification | undefined> {
         let message;
         let link;
 
@@ -35,10 +39,17 @@ class NotificationService {
         const fDto: INotificationDto = {...dto, message, link};
 
         try {
-            return await this.notificationRepo.create(fDto);
-        } catch (error) {
+            const notif = await this.notificationRepo.create(fDto);
+            
+            if (!notif) 
+                throw new AppError("Create notification error"); 
+
+            this.eventManager.publishToOne<INotification>("notification--new", notif, notif.receiveBy);
+            
+            return notif;
+        } catch (error: any) {
             if (error instanceof AppError) throw error;
-            throw new AppError("Create notification error"); 
+            throw new AppError(error.message); 
         }
     }
 

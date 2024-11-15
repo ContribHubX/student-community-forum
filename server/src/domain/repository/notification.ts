@@ -18,13 +18,20 @@ class NotificationRepository {
      * Inserts notification into db
      * 
      * @param dto 
-     * @returns {Promise<void>}
+     * @returns {Promise<INotification[] | undefined>}
      */
-    public async create(dto: INotificationDto): Promise<void> {
+    public async create(dto: INotificationDto): Promise<INotification | undefined> {
         try {
-            await this.db
+            const result = await this.db
                 .insert(NotificationTable)
                 .values({...dto})
+                .$returningId();
+
+            const notifId = result[0].id;
+            
+            // return back created notif
+            return this.getNotifById(notifId);
+            
         } catch(error: any) {
             throw new AppError(error.messsage, 500);
         }
@@ -51,6 +58,28 @@ class NotificationRepository {
             throw new AppError(error.messsage, 500);
         }
     } 
+
+    /**
+     * Get's notification details
+     * 
+     * @param notifId 
+     * @returns {Promise<INotification | undefined>}
+     */
+    public async getNotifById(notifId: string): Promise<INotification | undefined> {
+        try {
+            const result = await this.db
+                .query
+                .NotificationTable
+                .findFirst({
+                    where: eq(NotificationTable.id, notifId),
+                    with: { createdBy: true }
+                })
+
+            return (result as unknown as INotification);
+        } catch(error: any) {
+            throw new AppError(error.messsage, 500);
+        }
+    }
 }
 
 export default NotificationRepository;

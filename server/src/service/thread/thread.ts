@@ -25,7 +25,7 @@ class ThreadService {
   public async createThread(dto: IThreadDto): Promise<IThreadFull | undefined> {
     try {
       const thread = await this.threadRepo.create(dto);
-      this.eventManager.publish<IThreadFull>("thread--new", thread);
+      this.eventManager.publishToMany<IThreadFull>("thread--new", thread);
       return thread;
     } catch (error: any) {
       if (error instanceof AppError) throw error;

@@ -22,10 +22,10 @@ class Client {
      * @param identifier Packet type identifier
      * @param data Data to send to the client
      */
-    send(identifier: string, data: object = {}): void {
+    send<T>(identifier: string, data: T): void {
         this.socket.emit("recv", {
             ...data,
-            type: identifier 
+            eventType: identifier 
         })
     }
 

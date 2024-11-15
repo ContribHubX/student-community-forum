@@ -1,6 +1,8 @@
 import { Service } from "typedi";
 import Client from "./client";
 import { ClientEventOptions } from "@/types";
+import { Container } from "typedi";
+import { type Logger } from "winston";
 
 // TODO implement notif pub/sub
 // TODO revise publish to publishToOne and publishToMany
@@ -8,20 +10,43 @@ import { ClientEventOptions } from "@/types";
 @Service()
 class EventManager {
     private readonly clients: Map<string, Client> = new Map();
-    
+    private logger: Logger;
+
+    constructor() { this.logger = Container.get("logger") }
+
     connect(socketClient: ClientEventOptions) {
         // add client 
-        this.clients.set(socketClient.userId, socketClient.client); 
+        this.clients.set(socketClient.userId, socketClient.client);
     }
 
     /**
      * Publish an event to the connected clients
      * 
-     * @param client 
+     * @param identifier 
      * @param data 
+     * @param client 
      */
-    publish<T>(identifier: string, data: T | undefined, client?: Client): void {
+    publishToMany<T>(identifier: string, data: T | undefined, client?: Client[]): void {
         this.emit(identifier, data, client);
+    } 
+    
+    /**
+     * Publish an event to a specific clients
+     * 
+     * @param identifier 
+     * @param data 
+     * @param clientId 
+     */
+    publishToOne<T>(identifier: string, data: T, clientId: string): void {
+        const client = this.clients.get(clientId)
+        
+        if (!client) {
+            this.logger.error("Client socket not found");
+            return; 
+        }
+
+        this.emit(identifier, data, 
+            Array.from(this.clients.values().filter(socket => !client.is(socket)))); 
     } 
 
     /**
@@ -31,11 +56,11 @@ class EventManager {
      * @param data Data to send to the clients
      * @param ignore Client not to send the packet to
      */
-    emit(identifier: string, data: any = {}, ignore?: Client): void {
+    emit(identifier: string, data: any = {}, ignore?: Client[]): void {
         const ignoredClient = ignore;
 
         const filteredClients = ignoredClient 
-                            ? Array.from(this.clients.values()).filter(client => !client.is(ignoredClient))
+                            ? Array.from(this.clients.values()).filter(client => !ignoredClient.some(ignore => client.is(ignore)))
                             : Array.from(this.clients.values());
 
         filteredClients.forEach(client => client.send(identifier, data));

@@ -3,12 +3,14 @@ import { defaultSocketContextState, OPERATION, socketReducer } from "./context";
 import { useSocket } from "@/hooks/use-socket";
 import { SocketContextProvider } from "./context";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/use-auth";
 
 const SocketContextComponent = ({ children }: PropsWithChildren) => {
   const [socketState, socketDispatch] = useReducer(
     socketReducer,
     defaultSocketContextState,
   );
+  const { authState } = useAuth();
   const queryClient = useQueryClient();
 
   const socket = useSocket("http://localhost:3000", {
@@ -16,6 +18,9 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
     reconnectionDelay: 5000,
     reconnectionAttempts: 5,
     withCredentials: true,
+    auth: {
+      userId: authState?.user?.id,
+    },
   });
 
   useEffect(() => {
@@ -70,7 +75,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
 
     /** Listen on socket events **/
     socket.on("recv", (data) => {
-      switch (data.type) {
+      switch (data.eventType) {
         case "thread--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_THREAD,

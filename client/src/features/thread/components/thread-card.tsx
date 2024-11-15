@@ -54,7 +54,7 @@ export const ThreadCard = ({ thread }: ThreadCardProp) => {
 
             <p className="cursor-pointer">{thread.likeCount} likes</p>
 
-            <p className="cursor-pointer">56 comments</p>
+            <p className="cursor-pointer">{thread.commentCount} comments</p>
           </div>
         </div>
       </div>

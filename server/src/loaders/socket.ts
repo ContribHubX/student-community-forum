@@ -18,7 +18,7 @@ export default(io: Server) => {
  * Middleware to authenticate socket and assign userId.
  */
 function authenticateSocket(socket: Socket, next: (err?: Error) => void): void {
-    const userId = socket.handshake.auth.userId as string;
+    const userId = (socket.handshake.auth.userId || socket.handshake.headers.user_id) as string;
 
     if (!userId) {
         return next(new Error("Authentication error: User ID is missing"));
