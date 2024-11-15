@@ -14,7 +14,7 @@ const upcomingEventsData = [
     icon: uc,
     date: "7",
     month: "FEB",
-    tags: ["university", "intrams", "cebu"]
+    tags: ["university", "intrams", "cebu"],
   },
   {
     title: "Aquaintance 2024",
@@ -22,7 +22,7 @@ const upcomingEventsData = [
     icon: csps,
     date: "3",
     month: "FEB",
-    tags: ["university", "aquaintance", "seaside"]
+    tags: ["university", "aquaintance", "seaside"],
   },
   {
     title: "Halloween 2024",
@@ -30,72 +30,70 @@ const upcomingEventsData = [
     icon: uc,
     date: "5",
     month: "FEB",
-    tags: ["university", "halloween", "seaside"]
-  }
-]
+    tags: ["university", "halloween", "seaside"],
+  },
+];
 
 const recentThreadData = [
   {
-    title: "Selling a Business and Scaling", 
-    author: "Micheal Hanson", 
-    icon: csps
+    title: "Selling a Business and Scaling",
+    author: "Micheal Hanson",
+    icon: csps,
   },
-  { title: "Mental health as a founder", 
-    author: "James McKeown", 
-    icon: csps 
+  { title: "Mental health as a founder", author: "James McKeown", icon: csps },
+  {
+    title: "Growing to 88.5k MRR in 1 year",
+    author: "Mahfuzul Nabil",
+    icon: csps,
   },
-  { title: "Growing to 88.5k MRR in 1 year", 
-    author: "Mahfuzul Nabil", 
-    icon: csps },
-  { title: "Mental Health and Bootstrapping", 
-    author: "Dr. J.Abedi", 
-    icon: csps },
-  { title: "Money, Happiness, and Productivity", 
-    author: "Jesse Hanley", 
-    icon: csps 
-  }
-]
+  {
+    title: "Mental Health and Bootstrapping",
+    author: "Dr. J.Abedi",
+    icon: csps,
+  },
+  {
+    title: "Money, Happiness, and Productivity",
+    author: "Jesse Hanley",
+    icon: csps,
+  },
+];
 
 export const RightSidebar = () => {
   return (
     <SidebarLayout
-      className="flex-col gap-6 rg:flex"
+      className="flex flex-col gap-6 rg:flex"
       width={250}
       position="right-6"
     >
-      <div 
+      <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
-      > 
+      >
         <Link to="">
-          <div className="flex items-center mb-4">        
+          <div className="flex items-center mb-4">
             <h1>Upcoming Events</h1>
-            <img src={arrowbutton} alt="" className="h-6"/>
+            <img src={arrowbutton} alt="" className="h-6" />
           </div>
         </Link>
-        
+
         {upcomingEventsData.map((event, index) => {
-          return (
-            <UpcomingEvent key={index} {...event}/>
-          );
+          return <UpcomingEvent key={index} {...event} />;
         })}
       </div>
 
-      <div 
+      <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-lg dark:shadow-gray-900"
         id="sidebar"
       >
         <Link to="">
-          <div className="flex items-center mb-4">        
+          <div className="flex items-center mb-4">
             <h1>Recent Threads</h1>
-            <img src={arrowbutton} alt="" className="h-6"/>
+            <img src={arrowbutton} alt="" className="h-6" />
           </div>
         </Link>
 
         {recentThreadData.map((event, index) => {
-          return (
-            <RecentThread key={index} iconBgcolor="#EFF5F8" {...event}/>
-          );
+          return <RecentThread key={index} iconBgcolor="#EFF5F8" {...event} />;
         })}
       </div>
     </SidebarLayout>
@@ -115,7 +113,14 @@ const truncateText = (text: string, maxLength: number) => {
   return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
 };
 
-const UpcomingEvent = ({ title, location, icon, date, month, tags }: UpcomingEventProps) => {
+const UpcomingEvent = ({
+  title,
+  location,
+  icon,
+  date,
+  month,
+  tags,
+}: UpcomingEventProps) => {
   return (
     <Link to="">
       <div className="flex gap-4 mb-4">
@@ -130,14 +135,16 @@ const UpcomingEvent = ({ title, location, icon, date, month, tags }: UpcomingEve
           </div>
           <div className="flex flex-items-center gap-2">
             <img src={icon} alt="" className="h-5 w-5 rounded-full" />
-            <p className="text-xs text-muted-foreground mb-2">{truncateText(location, 22)}</p>
+            <p className="text-xs text-muted-foreground mb-2">
+              {truncateText(location, 22)}
+            </p>
           </div>
 
           <div className="flex flex-wrap gap-1">
             {tags.map((tag, index) => (
               <p
                 className="bg-container text-muted-foreground text-xs px-2 py-0.5 rounded-full"
-                key={index}    
+                key={index}
               >
                 {tag}
               </p>
@@ -156,22 +163,26 @@ interface RecentThreadProps {
   iconBgcolor: string;
 }
 
-const RecentThread = ({ title, author, icon, iconBgcolor}: RecentThreadProps) => {
+const RecentThread = ({
+  title,
+  author,
+  icon,
+  iconBgcolor,
+}: RecentThreadProps) => {
   return (
     <div className="flex flex-items-start gap-2">
-      <div 
+      <div
         className={`rounded-xl h-10 w-10 flex items-center justify-center`}
         style={{ backgroundColor: iconBgcolor }}
       >
         <img src={icon} alt="" className="h-5 w-5" />
       </div>
-      
 
       <div className="flex-1">
-          <p className="text-sm">{truncateText(title, 23)}</p>
-          <p className="text-xs text-muted-foreground">
-            by {truncateText(author, 22)}
-          </p>
+        <p className="text-sm">{truncateText(title, 23)}</p>
+        <p className="text-xs text-muted-foreground">
+          by {truncateText(author, 22)}
+        </p>
       </div>
 
       <Link to="">
