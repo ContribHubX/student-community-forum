@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master", "development" ]
+    branches: ["master", "development"]
   pull_request:
-    branches: [ "master", "development" ]
+    branches: ["master", "development"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,29 +19,29 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: ./client/package-lock.json  
-    
-    # Install dependencies and run lint for client
-    - name: Install and lint client
-      working-directory: ./client
-      run: |
-        npm ci
-        npm run lint
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: ./client/package-lock.json
 
-    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-    - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-    - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-    - name: Check out repository code
-      uses: actions/checkout@v4
-    - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-    - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-    - name: List files in the repository
-      run: |
-        ls ${{ github.workspace }}
-    - run: echo "🍏 This job's status is ${{ job.status }}."
+      # Install dependencies and run lint for client
+      - name: Install and lint client
+        working-directory: ./client
+        run: |
+          npm ci
+          npm run lint
+
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."

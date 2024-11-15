@@ -15,7 +15,10 @@ export default {
           foreground: "var(--accent-foreground)",
         },
         foreground: "hsl(var(--foreground))",
-
+        container: {
+          DEFAULT: "var(--container)",
+          foreground: "var(--container-foreground)",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
