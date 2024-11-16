@@ -1,8 +1,8 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
-import { IThreadDto, IThread } from "../interfaces/IThread";
+import { IThreadDto, IThreadFull } from "../interfaces/IThread";
 import { ThreadTable, UserTable as user } from "@/database/schema";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
 
@@ -21,10 +21,13 @@ class ThreadRepository {
    * @returns {Promise<IThread | undefined>} - A promise that resolves to the thread object if found, or undefined if not.
    * @throws {AppError} - Throws an AppError if the thread is not found or a database error occurs.
    */
-  public async findOneById(threadId: string): Promise<IThread | undefined> {
+  public async findOneById(threadId: string): Promise<IThreadFull | undefined> {
     try {
       const result = await this.db.query.ThreadTable.findFirst({
         where: eq(ThreadTable.id, threadId),
+        extras: {
+          ...this.threadReactionExtras()
+        },
         with: {
           user: true,
         },
@@ -38,6 +41,7 @@ class ThreadRepository {
     }
   }
 
+
   /**
    * Creates a new thread in the database.
    *
@@ -45,7 +49,7 @@ class ThreadRepository {
    * @returns {Promise<IThread | undefined>} - A promise that resolves to the created thread object.
    * @throws {AppError} - Throws an AppError if there is an issue inserting the thread or if the 'createdBy' user does not exist.
    */
-  public async create(dto: IThreadDto): Promise<IThread | undefined> {
+  public async create(dto: IThreadDto): Promise<IThreadFull | undefined> {
     const { title, content, attachment, createdBy } = dto;
 
     try {
@@ -68,6 +72,9 @@ class ThreadRepository {
         where: eq(ThreadTable.id, threadId),
         with: {
           user: true,
+        },
+        extras: {
+          ...this.threadReactionExtras()
         },
       });
 
@@ -95,8 +102,11 @@ class ThreadRepository {
    * 
    * @returns 
    */
-  public async getAll(): Promise<IThread[]> { 
-    const result = await this.db.query.ThreadTable.findMany({
+  public async getAll(): Promise<IThreadFull[]> { 
+    const result = await this.db.query.ThreadTable.findMany({  
+      extras: {
+        ...this.threadReactionExtras()
+      },
       with: {
         user: true,
       },
@@ -113,14 +123,37 @@ class ThreadRepository {
    * @param rawResult 
    * @returns {IThread}
    */
-  private threadTransformer(rawResult: any): IThread {
+  private threadTransformer(rawResult: any): IThreadFull {
     const { user, ...threadData } = rawResult;
 
     return {
       ...threadData,
       createdBy: user,
-    } as unknown as IThread;
+    } as unknown as IThreadFull;
   } 
+  
+  /**
+   * Helper function to generate additional columns for like and dislike counts.
+   * @returns {Record<string, any>} - The extras configuration for like and dislike counts.
+   */
+  private threadReactionExtras() {
+    return {
+      likeCount: sql<number>`(
+        SELECT COUNT(*) FROM thread_reaction 
+        WHERE thread_reaction.thread_id = ${ThreadTable.id} 
+        AND thread_reaction.type = 'LIKE'
+      )`.as("like_count"),
+      dislikeCount: sql<number>`(
+        SELECT COUNT(*) FROM thread_reaction 
+        WHERE thread_reaction.thread_id = ${ThreadTable.id} 
+        AND thread_reaction.type = 'DISLIKE'
+      )`.as("dislike_count"),
+      commentCount: sql<number>`(
+        SELECT COUNT(*) FROM comment
+        WHERE thread_id = ${ThreadTable.id} 
+      )`.as("comment_count")
+    };
+  }
 }
 
 export default ThreadRepository;

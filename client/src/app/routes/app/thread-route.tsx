@@ -9,7 +9,6 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { IoMdHeart } from "react-icons/io";
 import { BiDislike } from "react-icons/bi";
 import { MdInsertComment } from "react-icons/md";
-import { useState } from "react";
 
 export const ThreadRoute = () => {
   const { id } = useParams();
@@ -36,18 +35,18 @@ export const ThreadRoute = () => {
               />
             </Avatar>
             <div>
-              <p className="text-sm">{thread?.createdBy.name}</p>
+              <p className="text-primary-foreground">{thread?.createdBy.name}</p>
               <p>{thread?.createdBy.createdAt?.toDateString()}</p>
-              <p className="text-[#808080] text-xs">18 hours ago</p>
+              <p className="text-muted-foreground text-xs">18 hours ago</p>
             </div>
           </div>
 
           <div className="">
             {" "}
             {/* Content */}
-            <h1 className="text-base">{thread?.title}</h1>
+            <h1 className="text-base text-primary-foreground">{thread?.title}</h1>
             <div
-              className="ql-editor text-[#535353]"
+              className="ql-editor text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: thread?.content }}
             />
           </div>
@@ -102,7 +101,7 @@ const RightSidebar = () => {
         <p className="">Programming Community</p>
       </div>
 
-      <p className="text-justify text-[#888484]">
+      <p className="text-justify text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium,
         suscipit quaerat consequatur ipsam minus, beatae vel aut odio dolore
         magni iste provident consectetur sit facilis recusandae, dolorem ipsum

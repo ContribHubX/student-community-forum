@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "@/libs/app-error";
 import Container from "typedi";
-import ThreadService from "@/service/thread";
+import ThreadService from "@/service/thread/thread";
 
 /**
  * Controller for handling thread-related HTTP requests.

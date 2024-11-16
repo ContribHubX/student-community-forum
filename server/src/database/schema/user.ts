@@ -5,7 +5,7 @@ import { ThreadTable } from "./thread";
 export const UserTable = mysqlTable("user", {
   id: varchar("id", { length: 255 }).primaryKey(),
   name: varchar({ length: 255 }).notNull(),
-  email: varchar({ length: 255 }).notNull().unique(),
+  email: varchar({ length: 255 }).notNull(),
   attachment: varchar({ length: 255 }),
 });
 

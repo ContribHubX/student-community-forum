@@ -17,6 +17,7 @@ class AuthService {
 
   /**
    * Login using selected provider
+   * 
    * @param provider Provider
    * @returns Promise<string>
    */
@@ -29,6 +30,7 @@ class AuthService {
   }
 
   /**
+   * Handle OAuth callback
    *
    * @param provider
    * @param code

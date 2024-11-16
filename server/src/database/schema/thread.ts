@@ -2,6 +2,7 @@ import { mysqlTable, timestamp, varchar, text } from "drizzle-orm/mysql-core";
 import { UserTable } from "./user";
 import { relations } from "drizzle-orm";
 import { CommunityTable } from "./community";
+import { ThreadReaction as ThreadReactionTable, CommentTable } from "./";
 import { v4 as uuidv4 } from "uuid";
 
 export const ThreadTable = mysqlTable("thread", {
@@ -18,7 +19,7 @@ export const ThreadTable = mysqlTable("thread", {
   ),
 });
 
-export const threadRelations = relations(ThreadTable, ({ one }) => ({
+export const threadRelations = relations(ThreadTable, ({ one, many }) => ({
   user: one(UserTable, {
     fields: [ThreadTable.createdBy],
     references: [UserTable.id],
@@ -27,4 +28,6 @@ export const threadRelations = relations(ThreadTable, ({ one }) => ({
     fields: [ThreadTable.communityId],
     references: [CommunityTable.id],
   }),
+  reactions: many(ThreadReactionTable),
+  comments: many(CommentTable)
 }));

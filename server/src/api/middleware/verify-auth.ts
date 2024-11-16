@@ -36,7 +36,7 @@ export async function verifyAuth(
 
     if (!response.ok) {
       const errorBody: any = await response.json();
-      logger.error(errorBody.message);
+      logger.error(errorBody.error);
       throw new AppError("Invalid or expired access token", 401);
     }
 

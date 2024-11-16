@@ -9,13 +9,13 @@ const AppProvider = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <SocketContextComponent>
-          <AuthContextComponent>
+        <AuthContextComponent>
+          <SocketContextComponent>
             <ThemeContextProvider>
               <AppRouter />
             </ThemeContextProvider>
-          </AuthContextComponent>
-        </SocketContextComponent>
+          </SocketContextComponent>
+        </AuthContextComponent>
       </QueryClientProvider>
     </>
   );
