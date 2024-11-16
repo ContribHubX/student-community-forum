@@ -41,4 +41,21 @@ export default {
         next(new AppError(error.message, 500));
       }
     },
+
+    /**
+     * Handler to get comments to a thread.
+     *
+     * @route GET /thread/comment/:threadId
+     */
+    async getCommentsHandler(req: Request, res: Response, next: NextFunction) {
+      const threadId = req.params.threadId;
+
+      try {
+        const threadService = Container.get(ThreadInteractionService);
+        const comments = await threadService.getComments(threadId);
+        res.status(200).json(comments);
+      } catch (error: any) {
+        next(new AppError(error.message, 500));
+      }
+    },
 }

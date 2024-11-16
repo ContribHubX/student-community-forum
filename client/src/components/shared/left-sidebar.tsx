@@ -93,6 +93,7 @@ export const LeftSidebar = () => {
       className="hidden flex-col gap-6
       lg:flex"
       width={250}
+      height={"full"}
       position="left-50"
     >
       <div
@@ -140,7 +141,7 @@ export const LeftSidebar = () => {
 
       <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 
-        shadow-slate-400 shadow-lg dark:shadow-gray-900"
+        shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
         <h1>Explore Groups</h1>

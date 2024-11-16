@@ -18,7 +18,7 @@ export const Threads = ({ userId }: ThreadsProp) => {
   };
   return (
     <div>
-      <div className="flex p-6 gap-6 rounded-xl bg-primary relative mb-6">
+      <div className="flex p-6 gap-6 rounded-xl bg-primary relative mb-6 shadow-slate-400 shadow-md dark:shadow-gray-900">
         <div className="w-full flex gap-4 items-center">
           <Avatar className="h-10 w-10">
             <AvatarImage
@@ -37,7 +37,7 @@ export const Threads = ({ userId }: ThreadsProp) => {
         <button
           onClick={handleThreadFormModal}
           type="submit"
-          className="shrink-0 w-40 bg-accent text-accent-foreground p-3 text-sm rounded-md"
+          className="shrink-0 w-40 bg-accent text-accent-foreground p-3 text-sm rounded-md "
         >
           Create Thread
         </button>

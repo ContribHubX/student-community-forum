@@ -55,7 +55,7 @@ class ThreadInteractionService {
      * Adds a comment to a thread
      * 
      * @param dto 
-     * @returns Promise<IComment | undefined> - Created thread reaction object or undefined if an error occurs.
+     * @returns {Promise<IComment | undefined>} - Created thread reaction object or undefined if an error occurs.
      * @throws {AppError} 
      */
     public async createComment(dto: ICommentDto): Promise<IComment | undefined> {
@@ -77,6 +77,22 @@ class ThreadInteractionService {
         } catch(error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError("Create thread error");
+        }
+    }
+
+    /**
+     * Fetches comments in specific a thread
+     * 
+     * @param threadId 
+     * @returns {Promise<IComment[] | undefined>} - Created thread reaction object or undefined if an error occurs.
+     * @throws {AppError} 
+     */
+    public async getComments(threadId: string): Promise<IComment[] | undefined> {
+        try {
+            return this.threadInteractionRepo.getAll(threadId);
+        } catch(error) {
+            if (error instanceof AppError) throw error;
+            throw new AppError("Error fetching comments");
         }
     }
 } 

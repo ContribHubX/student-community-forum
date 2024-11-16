@@ -17,16 +17,23 @@ export default (app: Router) => {
     validateRequest(threadSchema),
     threadController.createThreadHandler,
   );
+
   router.post("/react", 
     verifyAuth,
     validateRequest(threadReactionSchema),
     threadReactionController.reactThreadHandler
   );
+
   router.post("/comment", 
     verifyAuth,
     validateRequest(threadCommentSchema),
     threadReactionController.commentThreadHandler
   )
+
   router.get("/", verifyAuth, threadController.getAllThreadsHandler);
+
   router.get("/:threadId", verifyAuth, threadController.getSingleThreadHandler);
+
+  router.get("/comment/:threadId", verifyAuth, threadReactionController.getCommentsHandler);
+  
 } ;

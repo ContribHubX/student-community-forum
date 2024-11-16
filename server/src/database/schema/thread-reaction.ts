@@ -11,7 +11,7 @@ export const ThreadReaction = mysqlTable('thread_reaction', {
     type: ReactionType.notNull(),
     createdAt: timestamp("created_at").defaultNow(),
     userId: varchar("user_id", { length: 255 }).notNull().references(() => UserTable.id),
-    threadId: varchar("thread_id", { length: 255 }).notNull().references(() => ThreadTable.id) 
+    threadId: varchar("thread_id", { length: 255 }).notNull().references(() => ThreadTable.id)
 })
 
 export const ThreadReactionRelations = relations(ThreadReaction, ({ one }) => ({

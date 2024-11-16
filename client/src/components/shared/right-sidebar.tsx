@@ -63,7 +63,9 @@ export const RightSidebar = () => {
     <SidebarLayout
       className="flex flex-col gap-6 rg:flex"
       width={250}
+      height={"full"}
       position="right-6"
+      
     >
       <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
@@ -82,7 +84,7 @@ export const RightSidebar = () => {
       </div>
 
       <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-lg dark:shadow-gray-900"
+        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
         <Link to="">

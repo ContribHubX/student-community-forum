@@ -28,7 +28,7 @@ async function startServer() {
             ################################################      
         `);
 
-      // initSocket
+      // init socket
       socketHandler(new IOServer(serverListener, corsConfig));
     })
     .on("error", (err) => {

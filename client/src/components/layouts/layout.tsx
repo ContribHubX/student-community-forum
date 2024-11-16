@@ -1,9 +1,17 @@
-import { PropsWithChildren } from "react";
+import { ReactNode } from "react";
 import { Navbar } from "../shared/navbar";
-import { LeftSidebar } from "@/components/shared/left-sidebar";
-import { RightSidebar } from "@/components/shared/right-sidebar";
 
-export const MainLayout = ({ children }: PropsWithChildren) => {
+interface LayoutProps {
+  LeftSidebar: React.ComponentType;
+  RightSidebar: React.ComponentType;
+  children?: ReactNode;
+}
+
+export const MainLayout = ({
+  LeftSidebar,
+  RightSidebar,
+  children,
+}: LayoutProps) => {
   return (
     <div className="pt-[5.5rem]">
       <Navbar />
@@ -14,13 +22,7 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
       >
         <LeftSidebar />
 
-        <div
-          className="bg-background border-3 border-black
-        md:mr-[17.5rem] lg:mx-[17.5rem]
-        "
-        >
-          {children}
-        </div>
+        {children}
 
         <RightSidebar />
       </main>

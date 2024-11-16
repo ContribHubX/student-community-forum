@@ -16,7 +16,7 @@ class EventManager {
 
     connect(socketClient: ClientEventOptions) {
         // add client 
-        this.clients.set(socketClient.userId, socketClient.client);
+        this.clients.set(socketClient.userId, socketClient.client);  
     }
 
     /**
