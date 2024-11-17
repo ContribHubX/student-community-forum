@@ -46,13 +46,13 @@ class ThreadInteractionService {
       const user = await this.threadInteractionRepo.getUserByThreadId(
         dto.threadId,
       );
-      await this.notifService.createNotification({
-        entityId: dto.threadId,
-        entityType: "thread",
-        type: dto.type.toLowerCase() as NotificationType,
-        createdBy: dto.userId,
-        receiveBy: "106734239908393657304",
-      });
+      // await this.notifService.createNotification({
+      //   entityId: dto.threadId,
+      //   entityType: "thread",
+      //   type: dto.type.toLowerCase() as NotificationType,
+      //   createdBy: dto.userId,
+      //   receiveBy: "106734239908393657304",
+      // });
 
       return result;
     } catch (error: any) {
@@ -77,13 +77,13 @@ class ThreadInteractionService {
       const user = await this.threadInteractionRepo.getUserByThreadId(
         dto.threadId,
       );
-      await this.notifService.createNotification({
-        entityId: dto.threadId,
-        entityType: "thread",
-        type: "comment" as NotificationType,
-        createdBy: dto.createdBy,
-        receiveBy: "106734239908393657304",
-      });
+      // await this.notifService.createNotification({
+      //   entityId: dto.threadId,
+      //   entityType: "thread",
+      //   type: "comment" as NotificationType,
+      //   createdBy: dto.createdBy,
+      //   receiveBy: "106734239908393657304",
+      // });
 
       return result;
     } catch (error: any) {

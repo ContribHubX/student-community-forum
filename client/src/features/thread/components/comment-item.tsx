@@ -2,13 +2,11 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Comment } from "@/types";
 import "react-quill/dist/quill.snow.css";
 
-
 interface CommentItemProps {
   comment: Comment;
 }
 
 export const CommentItem = ({ comment }: CommentItemProps) => {
-
   return (
     <div className="bg-primary rounded-xl text-primary-foreground">
       <div className={`p-4 flex flex-col"}`}>

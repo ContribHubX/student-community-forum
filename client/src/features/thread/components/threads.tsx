@@ -46,7 +46,7 @@ export const Threads = ({ userId }: ThreadsProp) => {
       <Modal
         isOpen={isModalOpen}
         onClose={handleThreadFormModal}
-        className="p-5 w-[1000px] max-h-[600px] bg-primary"
+        className="p-5 w-[1000px] max-h-[600px]"
       >
         <CreateThreadForm userId={userId} />
       </Modal>

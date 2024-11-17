@@ -7,7 +7,8 @@
     "lint": "eslint",
     "dev": "tsc --noEmit && tsx --watch src/app.ts",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate"
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:update": "npx drizzle-kit push"
   },
   "keywords": [],
   "author": "",

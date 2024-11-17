@@ -13,7 +13,7 @@ interface ThreadViewProps {
 export const ThreadView = ({ thread }: ThreadViewProps) => {
   const navigate = useNavigate();
 
-  console.log(thread);
+  console.log("thread: ", thread);
 
   return (
     <div className="bg-primary p-5 rounded-xl">

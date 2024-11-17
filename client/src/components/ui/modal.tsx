@@ -12,8 +12,8 @@ export const Modal = ({ className, isOpen, onClose, children }: ModalProps) => {
   return isOpen ? (
     <div
       id="thread-form-modal-container"
-      className={`z-50 top-0 left-0 fixed h-screen w-screen bg-black 
-        transition-opacity duration-300 bg-opacity-95 grid place-content-center`}
+      className={`z-50 top-0 left-0 fixed h-screen w-screen bg-[#00000080]
+        transition-opacity duration-300 bg-opacity-80 grid place-content-center`}
       style={{ transition: "opacity 0.3s ease" }}
     >
       <div

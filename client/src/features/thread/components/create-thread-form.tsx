@@ -46,11 +46,12 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="text-primary-foreground">
       <div>
         <input
           {...register("title")}
-          className="w-full px-4 py-3 rounded-[10px]  outline-none focus:border-accent bg-background border-[1px] border-gray-300 dark:border-gray-500"
+          className="w-full px-4 py-3 rounded-[10px]  outline-none focus:border-accent bg-background 
+          border-[1px] border-gray-300 dark:border-gray-500"
           placeholder="Title"
         />
       </div>
@@ -58,7 +59,7 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
       <div className="pt-3">
         <TextEditor handleChange={handleContentChange} />
       </div>
-      
+
       {/* register hidden inputs */}
       <input type="hidden" {...register("content")} />
       <input type="hidden" {...register("attachment")} />

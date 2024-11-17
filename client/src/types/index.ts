@@ -40,8 +40,7 @@ export type Community = Entity<{
 
 export type CommunityWithMembers = Community & {
   members: {
-    joinedAt: Date,
-    user: User
-  }
-}
-
+    joinedAt: Date;
+    user: User;
+  };
+};
