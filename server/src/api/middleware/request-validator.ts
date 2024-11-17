@@ -6,8 +6,8 @@ export function validateRequest(schema: ObjectSchema) {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error } = schema.validate(req.body, { abortEarly: false });
     if (error) {
-      const details = error.details.map((detail) => detail.message);
-      next(new AppError("Validation error", 400, details.join(",")));
+      const details = error.details.map((detail) => detail.message.split('\'')[0].replaceAll("\"", ""));
+      next(new AppError("Validation error", 400, details));
     } else {
       next();
     }

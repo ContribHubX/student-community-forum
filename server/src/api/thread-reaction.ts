@@ -21,7 +21,7 @@ export default {
           const thread = await threadService.reactToThread(body);
           res.status(201).json({ message: "Reaction successful", thread });
         } catch (error: any) {
-          next(new AppError(error.message, 500));
+          next(new AppError(error, 500));
         }
     },
 
@@ -38,7 +38,7 @@ export default {
         const comment = await threadService.createComment(body);
         res.status(201).json({ message: "Comment successful", comment });
       } catch (error: any) {
-        next(new AppError(error.message, 500));
+        next(new AppError(error, 500));
       }
     },
 
@@ -55,7 +55,7 @@ export default {
         const comments = await threadService.getComments(threadId);
         res.status(200).json(comments);
       } catch (error: any) {
-        next(new AppError(error.message, 500));
+        next(new AppError(error, 500));
       }
     },
 }

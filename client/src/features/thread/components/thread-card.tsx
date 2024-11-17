@@ -27,7 +27,9 @@ export const ThreadCard = ({ thread }: ThreadCardProp) => {
           rounded-full grid place-content-center ${isLiked ? "text-accent" : "text-[#E0E0E0]"}`}
         onClick={() => setIsLiked(!isLiked)}
       >
-        <FaHeart className={`text-lg ${!isLiked && 'dark:text-muted-foreground'} `} />
+        <FaHeart
+          className={`text-lg ${!isLiked && "dark:text-muted-foreground"} `}
+        />
       </div>
 
       <img
@@ -51,12 +53,12 @@ export const ThreadCard = ({ thread }: ThreadCardProp) => {
         <div className="w-full flex text-muted-foreground items-center font-light justify-between">
           <div className="flex gap-2 text-sm">
             <Avatar>
-              <AvatarImage 
-                  src={thread.createdBy.attachment}
-              />
+              <AvatarImage src={thread.createdBy.attachment} />
             </Avatar>
             <div className="">
-              <p className="text-primary-foreground ">{thread.createdBy.name}</p>
+              <p className="text-primary-foreground ">
+                {thread.createdBy.name}
+              </p>
               <p className="font-light text-xs">3 Weeks ago</p>
             </div>
           </div>

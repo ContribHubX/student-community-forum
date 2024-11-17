@@ -18,7 +18,7 @@ class NotificationRepository {
      * Inserts notification into db
      * 
      * @param dto 
-     * @returns {Promise<INotification[] | undefined>}
+     * @returns {Promise<INotification | undefined>}
      */
     public async create(dto: INotificationDto): Promise<INotification | undefined> {
         try {
@@ -33,7 +33,7 @@ class NotificationRepository {
             return this.getNotifById(notifId);
             
         } catch(error: any) {
-            throw new AppError(error.messsage, 500);
+            throw new AppError(error, 500);
         }
     }
 
@@ -55,7 +55,7 @@ class NotificationRepository {
 
             return (result as unknown as INotification[]);
         } catch(error: any) {
-            throw new AppError(error.messsage, 500);
+            throw new AppError(error, 500);
         }
     } 
 
@@ -77,7 +77,7 @@ class NotificationRepository {
 
             return (result as unknown as INotification);
         } catch(error: any) {
-            throw new AppError(error.messsage, 500);
+            throw new AppError(error, 500);
         }
     }
 }

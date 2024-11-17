@@ -44,5 +44,5 @@ export const threadCommentSchema = Joi.object({
     "string.empty": "threadId is required",
     "string.min": "threadId cannot be empty",
   }),
-  parentId: Joi.string().optional()
+  parentId: Joi.optional()
 });

@@ -13,7 +13,7 @@ export type ClientEventOptions = {
 
 export type AuthProvider = "GOOGLE" | "GITHUB";
 
-export type UPLOAD_TYPE = "thread" | "comment";
+export type UPLOAD_TYPE = "thread" | "comment" | "community";
 
 export type ClientEventCallback = (data: object) => void;
 

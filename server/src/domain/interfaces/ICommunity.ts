@@ -5,7 +5,7 @@ export interface ICommunity {
   name: string;
   description: string;
   banner: string;
-  profilePicture: string;
+  icon: string;
   createdBy: IUser;
 }
 
@@ -13,8 +13,13 @@ export interface ICommunityDto {
   name: string;
   description: string;
   banner: string;
-  profilePicture: string;
-  createdBy: IUser;
+  icon: string;
+  createdBy: string;
+}
+
+export interface IJoinCommunityDto {
+  userId: string, 
+  communityId: string
 }
 
 export interface ICommunityRule {

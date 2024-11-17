@@ -24,7 +24,6 @@ export interface IThreadReaction {
 }
 
 
-
 export interface IThreadDto {
   title: string;
   content: string;
