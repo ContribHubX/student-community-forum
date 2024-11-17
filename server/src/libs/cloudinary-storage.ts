@@ -12,6 +12,8 @@ const getCloudinaryFolder = (type: UPLOAD_TYPE) => {
       return "comments";
     case "community":
       return "community";
+    case "topic":
+      return "topics";
     default:
       return "uploads";
   }
@@ -46,3 +48,4 @@ export const uploadCommunity = multer({ storage: createStorage("community") })
                                   { name: "banner", maxCount: 1 }, 
                                   { name: "icon", maxCount: 1 }, 
                                 ]);
+export const uploadTopic = multer({ storage: createStorage("topic") });                          

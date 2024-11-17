@@ -3,10 +3,9 @@ import { Service, Container } from "typedi";
 import * as schema from "@/database/schema";
 import { IThreadReaction, IThreadReactionDto } from "../interfaces/IThread";
 import { AppError } from "@/libs/app-error";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { IComment, ICommentDto } from "../interfaces/IComment";
 import { IUser } from "../interfaces/IUser";
-import thread from "@/api/thread";
 
 @Service()
 class ThreadInteractionRepository {
