@@ -1,7 +1,7 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import { IThreadDto, IThreadFull } from "../interfaces/IThread";
-import { ThreadTable, UserTable as user } from "@/database/schema";
+import { ThreadTable } from "@/database/schema";
 import { desc, eq, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
@@ -37,7 +37,7 @@ class ThreadRepository {
 
       return this.threadTransformer(result);
     } catch (error: any) {
-      throw new AppError(error.message || "Database error", 500);
+      throw new AppError(error || "Database error", 500);
     }
   }
 
@@ -99,8 +99,9 @@ class ThreadRepository {
   }
   
   /**
+   * Fetch all threads
    * 
-   * @returns 
+   * @returns {Promise<IThreadFull[]> }
    */
   public async getAll(): Promise<IThreadFull[]> { 
     const result = await this.db.query.ThreadTable.findMany({  

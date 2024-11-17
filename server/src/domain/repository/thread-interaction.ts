@@ -42,7 +42,7 @@ class ThreadInteractionRepository {
 
             return createdReaction as IThreadReaction;
         } catch (error: any) {
-            throw new AppError(error.messsage, 500);
+            throw new AppError(error, 500);
         }
     }
     
@@ -53,7 +53,8 @@ class ThreadInteractionRepository {
      * @returns {IComment | undefined}
      */
     public async comment(dto: ICommentDto): Promise<IComment | undefined> {
-        try {
+        try {   
+
             const result = await this.db
                 .insert(schema.CommentTable)
                 .values({...dto})
@@ -75,7 +76,8 @@ class ThreadInteractionRepository {
 
             return createdComment as unknown as IComment;
         } catch(error: any) {
-            throw new AppError(error.messsage, 500);
+            // console.log(JSON.stringify(error,null, 2))
+            throw new AppError(error, 500);
         }
     } 
 
@@ -94,6 +96,7 @@ class ThreadInteractionRepository {
                 .CommentTable
                 .findMany({
                     where: eq(schema.CommentTable.threadId, threadId),
+                    with: { createdBy: true }
                 });
 
             // attach replies on each comment
@@ -102,7 +105,8 @@ class ThreadInteractionRepository {
                     .query
                     .CommentTable
                     .findMany({
-                        where: eq(schema.CommentTable.parentId, comment.id)
+                        where: eq(schema.CommentTable.parentId, comment.id),
+                        with: { createdBy: true }
                     });
 
                 (comment as any).replies = replies
@@ -110,7 +114,7 @@ class ThreadInteractionRepository {
 
             return topLevelComments as unknown as IComment[];
         } catch(error:any) {
-            throw new AppError(error.messsage, 500);
+            throw new AppError(error, 500);
         }
     }
 
@@ -135,7 +139,7 @@ class ThreadInteractionRepository {
 
             return result.user
         } catch(error: any) {
-            throw new AppError(error.messsage, 500);
+            throw new AppError(error, 500);
         }
     } 
 

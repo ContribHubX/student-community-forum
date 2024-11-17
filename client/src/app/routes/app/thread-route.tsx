@@ -35,7 +35,9 @@ export const ThreadRoute = () => {
               />
             </Avatar>
             <div>
-              <p className="text-primary-foreground">{thread?.createdBy.name}</p>
+              <p className="text-primary-foreground">
+                {thread?.createdBy.name}
+              </p>
               <p>{thread?.createdBy.createdAt?.toDateString()}</p>
               <p className="text-muted-foreground text-xs">18 hours ago</p>
             </div>
@@ -44,7 +46,9 @@ export const ThreadRoute = () => {
           <div className="">
             {" "}
             {/* Content */}
-            <h1 className="text-base text-primary-foreground">{thread?.title}</h1>
+            <h1 className="text-base text-primary-foreground">
+              {thread?.title}
+            </h1>
             <div
               className="ql-editor text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: thread?.content }}

@@ -49,7 +49,7 @@ class NotificationService {
             return notif;
         } catch (error: any) {
             if (error instanceof AppError) throw error;
-            throw new AppError(error.message); 
+            throw new AppError(error); 
         }
     }
 

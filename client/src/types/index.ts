@@ -23,17 +23,25 @@ export type Thread = Entity<{
 }>;
 
 export type Comment = Entity<{
-  content: string,
-  parentId: string | null,
-  createdAt: Date,
-  createdBy: User,
-  replies: Comment[]
-}>
+  content: string;
+  parentId: string | null;
+  createdAt: Date;
+  createdBy: User;
+  replies: Comment[];
+}>;
 
 export type Community = Entity<{
   name: string;
   description: string;
   banner: string;
-  profilePicture: string;
+  icon: string;
   createdBy: User;
 }>;
+
+export type CommunityWithMembers = Community & {
+  members: {
+    joinedAt: Date,
+    user: User
+  }
+}
+
