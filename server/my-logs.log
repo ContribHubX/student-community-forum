@@ -3550,259 +3550,472 @@
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:10:30.566Z info: ✌️ Dependencies injected into container
 2024-11-16T10:10:30.683Z info: 
+=======
+2024-11-16T13:07:38.136Z info: ✌️ Dependencies injected into container
+2024-11-16T13:07:38.163Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:10:37.671Z info: ✌️ Dependencies injected into container
 2024-11-16T10:10:37.679Z info: 
+=======
+2024-11-16T13:09:36.772Z info: ✌️ Dependencies injected into container
+2024-11-16T13:09:36.794Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:11:26.869Z info: ✌️ Dependencies injected into container
 2024-11-16T10:11:26.960Z info: 
+=======
+2024-11-16T14:02:56.043Z info: ✌️ Dependencies injected into container
+2024-11-16T14:02:56.060Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:17:42.586Z info: ✌️ Dependencies injected into container
 2024-11-16T10:17:42.592Z info: 
+=======
+2024-11-16T14:03:40.621Z info: ✌️ Dependencies injected into container
+2024-11-16T14:03:40.634Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:19:46.772Z info: ✌️ Dependencies injected into container
 2024-11-16T10:19:46.778Z info: 
+=======
+2024-11-16T14:04:42.221Z info: ✌️ Dependencies injected into container
+2024-11-16T14:04:42.240Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:21:17.031Z info: ✌️ Dependencies injected into container
 2024-11-16T10:21:17.038Z info: 
+=======
+2024-11-16T14:04:49.510Z info: ✌️ Dependencies injected into container
+2024-11-16T14:04:49.524Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:24:09.085Z info: ✌️ Dependencies injected into container
 2024-11-16T10:24:09.092Z info: 
+=======
+2024-11-16T14:09:28.188Z info: ✌️ Dependencies injected into container
+2024-11-16T14:09:28.204Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:24:26.444Z info: ✌️ Dependencies injected into container
 2024-11-16T10:24:26.450Z info: 
+=======
+2024-11-16T14:09:39.259Z info: ✌️ Dependencies injected into container
+2024-11-16T14:09:39.273Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:24:43.676Z info: ✌️ Dependencies injected into container
 2024-11-16T10:24:43.683Z info: 
+=======
+2024-11-16T14:09:52.298Z info: ✌️ Dependencies injected into container
+2024-11-16T14:09:52.317Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:26:10.982Z info: ✌️ Dependencies injected into container
 2024-11-16T10:26:10.991Z info: 
+=======
+2024-11-16T14:10:24.026Z info: ✌️ Dependencies injected into container
+2024-11-16T14:10:24.041Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:42:58.628Z info: ✌️ Dependencies injected into container
 2024-11-16T10:42:58.635Z info: 
+=======
+2024-11-16T14:15:17.776Z info: ✌️ Dependencies injected into container
+2024-11-16T14:15:17.792Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:43:02.982Z error: Client socket not found
 2024-11-16T10:46:22.672Z info: ✌️ Dependencies injected into container
 2024-11-16T10:46:22.680Z info: 
+=======
+2024-11-16T14:16:07.210Z info: ✌️ Dependencies injected into container
+2024-11-16T14:16:07.225Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T10:46:25.609Z error: Client socket not found
 2024-11-16T10:48:08.964Z error: Client socket not found
 2024-11-16T14:20:21.816Z info: ✌️ Dependencies injected into container
 2024-11-16T14:20:21.823Z info: 
+=======
+2024-11-16T14:16:48.691Z info: ✌️ Dependencies injected into container
+2024-11-16T14:16:48.707Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:20:26.933Z info: ✌️ Dependencies injected into container
 2024-11-16T14:20:26.939Z info: 
+=======
+2024-11-16T14:17:00.461Z info: ✌️ Dependencies injected into container
+2024-11-16T14:17:00.481Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:21:39.347Z info: ✌️ Dependencies injected into container
 2024-11-16T14:21:39.354Z info: 
+=======
+2024-11-16T14:17:51.508Z info: ✌️ Dependencies injected into container
+2024-11-16T14:17:51.522Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:21:48.408Z info: ✌️ Dependencies injected into container
 2024-11-16T14:21:48.414Z info: 
+=======
+2024-11-16T14:22:29.497Z info: ✌️ Dependencies injected into container
+2024-11-16T14:22:29.512Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:24:06.536Z info: ✌️ Dependencies injected into container
 2024-11-16T14:24:06.542Z info: 
+=======
+2024-11-16T14:23:21.587Z info: ✌️ Dependencies injected into container
+2024-11-16T14:23:21.601Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:24:23.293Z info: ✌️ Dependencies injected into container
 2024-11-16T14:24:23.301Z info: 
+=======
+2024-11-16T14:25:17.707Z info: ✌️ Dependencies injected into container
+2024-11-16T14:25:17.721Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:24:46.632Z info: ✌️ Dependencies injected into container
 2024-11-16T14:24:46.638Z info: 
+=======
+2024-11-16T14:25:51.746Z info: ✌️ Dependencies injected into container
+2024-11-16T14:25:51.772Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:26:27.947Z info: ✌️ Dependencies injected into container
 2024-11-16T14:26:27.953Z info: 
+=======
+2024-11-16T14:25:59.355Z info: ✌️ Dependencies injected into container
+2024-11-16T14:25:59.368Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T14:56:44.474Z error: Client socket not found
 2024-11-16T15:00:19.465Z info: ✌️ Dependencies injected into container
 2024-11-16T15:00:19.472Z info: 
+=======
+2024-11-16T14:26:12.815Z info: ✌️ Dependencies injected into container
+2024-11-16T14:26:12.839Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:01:37.700Z info: ✌️ Dependencies injected into container
 2024-11-16T15:01:37.706Z info: 
+=======
+2024-11-16T14:27:11.011Z info: ✌️ Dependencies injected into container
+2024-11-16T14:27:11.027Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:19:57.667Z info: ✌️ Dependencies injected into container
 2024-11-16T15:19:57.674Z info: 
+=======
+2024-11-16T14:27:34.459Z info: ✌️ Dependencies injected into container
+2024-11-16T14:27:34.484Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:20:24.970Z info: ✌️ Dependencies injected into container
 2024-11-16T15:20:24.976Z info: 
+=======
+2024-11-16T14:28:04.823Z info: ✌️ Dependencies injected into container
+2024-11-16T14:28:04.842Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:20:29.590Z info: ✌️ Dependencies injected into container
 2024-11-16T15:20:29.596Z info: 
+=======
+2024-11-16T14:28:17.501Z info: ✌️ Dependencies injected into container
+2024-11-16T14:28:17.517Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:20:52.692Z info: ✌️ Dependencies injected into container
 2024-11-16T15:20:52.699Z info: 
+=======
+2024-11-16T14:28:27.392Z info: ✌️ Dependencies injected into container
+2024-11-16T14:28:27.405Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:21:37.336Z info: ✌️ Dependencies injected into container
 2024-11-16T15:21:37.345Z info: 
+=======
+2024-11-16T14:28:40.196Z info: ✌️ Dependencies injected into container
+2024-11-16T14:28:40.211Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:24:14.039Z info: ✌️ Dependencies injected into container
 2024-11-16T15:24:14.045Z info: 
+=======
+2024-11-16T14:31:08.440Z info: ✌️ Dependencies injected into container
+2024-11-16T14:31:08.454Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:24:49.173Z info: ✌️ Dependencies injected into container
 2024-11-16T15:24:49.179Z info: 
+=======
+2024-11-16T14:31:24.853Z info: ✌️ Dependencies injected into container
+2024-11-16T14:31:24.881Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:25:00.640Z info: ✌️ Dependencies injected into container
 2024-11-16T15:25:00.646Z info: 
+=======
+2024-11-16T14:31:33.155Z info: ✌️ Dependencies injected into container
+2024-11-16T14:31:33.201Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-16T15:25:02.313Z error: Client socket not found
 2024-11-17T07:48:38.199Z info: ✌️ Dependencies injected into container
 2024-11-17T07:48:38.211Z info: 
+=======
+2024-11-16T14:31:48.812Z info: ✌️ Dependencies injected into container
+2024-11-16T14:31:48.827Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T07:48:43.038Z info: ✌️ Dependencies injected into container
 2024-11-17T07:48:43.046Z info: 
+=======
+2024-11-16T14:32:46.173Z info: ✌️ Dependencies injected into container
+2024-11-16T14:32:46.190Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T07:50:49.467Z info: ✌️ Dependencies injected into container
 2024-11-17T07:50:49.473Z info: 
+=======
+2024-11-16T14:33:09.896Z info: ✌️ Dependencies injected into container
+2024-11-16T14:33:09.912Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T07:53:45.569Z info: ✌️ Dependencies injected into container
 2024-11-17T07:53:45.575Z info: 
+=======
+2024-11-16T14:34:30.167Z error: Client socket not found
+2024-11-16T14:34:53.456Z error: Client socket not found
+2024-11-16T14:35:05.215Z error: Client socket not found
+2024-11-16T15:02:20.856Z info: ✌️ Dependencies injected into container
+2024-11-16T15:02:20.881Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:01:33.089Z info: ✌️ Dependencies injected into container
 2024-11-17T08:01:33.096Z info: 
+=======
+2024-11-16T15:02:28.716Z info: ✌️ Dependencies injected into container
+2024-11-16T15:02:28.729Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:01:41.608Z info: ✌️ Dependencies injected into container
 2024-11-17T08:01:41.615Z info: 
+=======
+2024-11-16T15:04:58.032Z info: ✌️ Dependencies injected into container
+2024-11-16T15:04:58.046Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:09:42.365Z info: ✌️ Dependencies injected into container
 2024-11-17T08:09:42.371Z info: 
+=======
+2024-11-16T15:05:04.889Z info: ✌️ Dependencies injected into container
+2024-11-16T15:05:04.903Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:13:17.279Z info: ✌️ Dependencies injected into container
 2024-11-17T08:13:17.285Z info: 
+=======
+2024-11-17T08:35:45.383Z info: ✌️ Dependencies injected into container
+2024-11-17T08:35:45.399Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:15:09.197Z info: ✌️ Dependencies injected into container
 2024-11-17T08:15:09.204Z info: 
+=======
+2024-11-17T08:35:53.392Z info: ✌️ Dependencies injected into container
+2024-11-17T08:35:53.407Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:15:17.856Z info: ✌️ Dependencies injected into container
 2024-11-17T08:15:17.863Z info: 
+=======
+2024-11-17T08:36:31.780Z info: ✌️ Dependencies injected into container
+2024-11-17T08:36:31.796Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:16:25.597Z info: ✌️ Dependencies injected into container
 2024-11-17T08:16:25.606Z info: 
+=======
+2024-11-17T08:59:07.693Z info: ✌️ Dependencies injected into container
+2024-11-17T08:59:07.707Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+<<<<<<< Updated upstream
 2024-11-17T08:16:57.394Z info: ✌️ Dependencies injected into container
 2024-11-17T08:16:57.400Z info: 
+=======
+2024-11-17T09:30:56.854Z info: ✌️ Dependencies injected into container
+2024-11-17T09:30:56.879Z info: 
+>>>>>>> Stashed changes
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
@@ -3888,6 +4101,12 @@
         
 2024-11-17T08:52:31.047Z info: ✌️ Dependencies injected into container
 2024-11-17T08:52:31.053Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-17T11:59:13.843Z info: ✌️ Dependencies injected into container
+2024-11-17T11:59:13.870Z info: 
             ################################################
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      

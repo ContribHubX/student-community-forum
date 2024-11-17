@@ -14,7 +14,7 @@ const toolbarOptions = [
   ["clean"],
 ];
 
-const modules = {
+export const modules = {
   toolbar: toolbarOptions,
 };
 

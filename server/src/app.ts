@@ -16,7 +16,7 @@ async function startServer() {
   let serverListener: ServerListener<
     typeof IncomingMessage,
     typeof ServerResponse
-  >;
+  >; 
 
   (await import("./loaders/express")).default({ app });
 

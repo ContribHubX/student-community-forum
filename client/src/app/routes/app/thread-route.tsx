@@ -5,10 +5,9 @@ import { useParams } from "react-router-dom";
 import { FaBirthdayCake } from "react-icons/fa";
 import communityLogo from "@/assets/thread-route/community-logo.svg";
 import { useGetThreadByID } from "@/features/thread/api/get-thread";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { IoMdHeart } from "react-icons/io";
-import { BiDislike } from "react-icons/bi";
-import { MdInsertComment } from "react-icons/md";
+import { ThreadView } from "@/features/thread/components/thread-view";
+import { CommentList } from "@/features/thread/components/comment-list";
+import { CommentForm } from "@/features/thread/components/comment-form";
 
 export const ThreadRoute = () => {
   const { id } = useParams();
@@ -21,73 +20,15 @@ export const ThreadRoute = () => {
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section
-        className="bg-primary
-                  md:mr-[340px] p-5 rounded-xl
+        className="
+                  md:mr-[340px]
                   lg:ml-[270px] "
       >
-        {/* User */}
-        <div className="space-y-5">
-          <div className="flex items-center gap-2">
-            <Avatar className="">
-              <AvatarImage
-                src={thread?.createdBy?.attachment}
-                className="rounded-full h-10"
-              />
-            </Avatar>
-            <div>
-              <p className="text-primary-foreground">
-                {thread?.createdBy.name}
-              </p>
-              <p>{thread?.createdBy.createdAt?.toDateString()}</p>
-              <p className="text-muted-foreground text-xs">18 hours ago</p>
-            </div>
-          </div>
-
-          <div className="">
-            {" "}
-            {/* Content */}
-            <h1 className="text-base text-primary-foreground">
-              {thread?.title}
-            </h1>
-            <div
-              className="ql-editor text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: thread?.content }}
-            />
-          </div>
-
-          {/* Reactions */}
-          <div className="flex gap-6">
-            <Reaction
-              icon={<IoMdHeart className="text-accent" />}
-              count={325}
-            />
-            <Reaction icon={<BiDislike />} count={57} />
-            <Reaction icon={<MdInsertComment />} count={325} />
-          </div>
-        </div>
+        <ThreadView thread={thread} />
+        <CommentList threadId={thread.id} />
+        <CommentForm threadId={thread.id} />
       </section>
     </MainLayout>
-  );
-};
-
-interface ReactionProps {
-  count: number;
-  icon: JSX.Element;
-  onClick?: () => void;
-}
-
-const Reaction = ({ count, icon, onClick }: ReactionProps) => {
-  return (
-    <div
-      className="cursor-pointer flex items-center gap-1 text-[#808080] text-base"
-      onClick={onClick}
-    >
-      <div className="border border-[#505050] px-4 py-2 rounded-[40px]">
-        {icon}
-      </div>
-
-      <p className="font-light text-sm">{count}</p>
-    </div>
   );
 };
 

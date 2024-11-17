@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 
 export const HomeRoute = () => {
   const { authState } = useAuth();
-
+  
   if (!authState?.user?.id) return <p>Loading...</p>;
   console.log(authState.user);
 

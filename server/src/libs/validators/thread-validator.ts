@@ -30,7 +30,6 @@ export const threadReactionSchema = Joi.object({
   }),
 });
 
-
 export const threadCommentSchema = Joi.object({
   content: Joi.string().min(1).required().messages({
     "string.empty": "content is required",

@@ -28,6 +28,8 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
       }
     });
 
+    console.log(formData);
+
     // TODO final layer validation
     createThread(formData);
   };
@@ -56,7 +58,7 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
       <div className="pt-3">
         <TextEditor handleChange={handleContentChange} />
       </div>
-
+      
       {/* register hidden inputs */}
       <input type="hidden" {...register("content")} />
       <input type="hidden" {...register("attachment")} />

@@ -21,7 +21,7 @@ export default {
       if (file) {
         body.attachment = file.path;
       }
-      
+
       const threadService = Container.get(ThreadService);
       const thread = await threadService.createThread(body);
       res.status(201).json({ message: "Insert successful", thread });
@@ -53,14 +53,10 @@ export default {
 
   /**
    * Handler to retrieve a threads.
-   * 
+   *
    * @route GET /thread/:threadId
    */
-  async getAllThreadsHandler(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
+  async getAllThreadsHandler(req: Request, res: Response, next: NextFunction) {
     try {
       const threadService = Container.get(ThreadService);
       const response = await threadService.getAllThread();

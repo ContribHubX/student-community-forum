@@ -82,6 +82,12 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: { thread: data, queryClient },
           });
           break;
+        case "comment--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_COMMENT,
+            payload: { comment: data, queryClient },
+          });
+          break;
       }
     });
   };
