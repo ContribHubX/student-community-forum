@@ -39,6 +39,12 @@ export type Community = Entity<{
   createdBy: User;
 }>;
 
+export type Reaction = Entity<{
+  type: "LIKE" | "DISLIKE";
+  userId: string;
+  threadId: string;
+}>;
+
 export type CommunityWithMembers = Community & {
   members: {
     joinedAt: Date;

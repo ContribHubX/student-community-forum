@@ -132,7 +132,7 @@ export const CommentForm = ({
         </motion.div>
       ) : (
         <div
-          className="w-full p-2 border rounded-md
+          className="w-full rounded-md
         px-2 pb-2 "
         >
           <input

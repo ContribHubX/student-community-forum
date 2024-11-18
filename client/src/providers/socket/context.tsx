@@ -1,8 +1,9 @@
-import { Comment, Thread } from "@/types";
+import { Comment, Reaction, Thread } from "@/types";
 import { Socket } from "socket.io-client";
 import { QueryClient } from "@tanstack/react-query";
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
 import { createContext } from "react";
+import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -16,6 +17,7 @@ export enum OPERATION {
   UPDATE_SOCKET,
   ADD_NEW_THREAD,
   ADD_NEW_COMMENT,
+  ADD_NEW_REACTION,
 }
 
 type Actions =
@@ -26,6 +28,10 @@ type Actions =
   | {
       type: OPERATION.ADD_NEW_COMMENT;
       payload: { comment: Comment; queryClient: QueryClient };
+    }
+  | {
+      type: OPERATION.ADD_NEW_REACTION;
+      payload: { reaction: Reaction; queryClient: QueryClient };
     }
   | { type: OPERATION.UPDATE_SOCKET; payload: Socket };
 
@@ -73,6 +79,26 @@ export const socketReducer = (
           },
         );
       }
+      return { ...state };
+    }
+
+    case OPERATION.ADD_NEW_REACTION: {
+      const { reaction, queryClient } = action.payload;
+      console.log(reaction);
+      queryClient.setQueryData(
+        getThreadByIdQueryOptions(reaction.threadId).queryKey,
+        (thread: Thread | undefined) => {
+          console.log("thread: ", thread);
+          if (thread) {
+            // Return a new thread object with the incremented likeCount
+            if (reaction.type === "LIKE") {
+              return { ...thread, likeCount: thread.likeCount + 1 };
+            }
+            return { ...thread, dislikeCount: thread.dislikeCount + 1 };
+          }
+          return thread;
+        },
+      );
       return { ...state };
     }
 
