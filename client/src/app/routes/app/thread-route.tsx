@@ -7,13 +7,13 @@ import communityLogo from "@/assets/thread-route/community-logo.svg";
 import { useGetThreadByID } from "@/features/thread/api/get-thread";
 import { ThreadView } from "@/features/thread/components/thread-view";
 import { CommentList } from "@/features/thread/components/comment-list";
-import { CommentForm } from "@/features/thread/components/comment-form";
 
 export const ThreadRoute = () => {
   const { id } = useParams();
 
-  const { data: thread } = useGetThreadByID(id, {});
-  if (!thread) {
+  const { data: thread, isFetching } = useGetThreadByID(id, {});
+
+  if (!thread || isFetching) {
     return <div>Loading...</div>;
   }
 
@@ -24,9 +24,10 @@ export const ThreadRoute = () => {
                   md:mr-[340px]
                   lg:ml-[270px] "
       >
-        <ThreadView thread={thread} />
-        <CommentList threadId={thread.id} />
-        <CommentForm threadId={thread.id} />
+        <div className="space-y-4">
+          <ThreadView thread={thread} />
+          <CommentList threadId={thread.id} />
+        </div>
       </section>
     </MainLayout>
   );

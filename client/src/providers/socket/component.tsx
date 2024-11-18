@@ -88,6 +88,20 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: { comment: data, queryClient },
           });
           break;
+
+        case "like--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_REACTION,
+            payload: { reaction: data, queryClient },
+          });
+          break;
+
+        case "dislike--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_REACTION,
+            payload: { reaction: data, queryClient },
+          });
+          break;
       }
     });
   };
