@@ -5,6 +5,8 @@ import { IoMdHeart } from "react-icons/io";
 import { MdInsertComment } from "react-icons/md";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useCreateReaction } from "@/features/thread/api/create-reaction";
+import { useAuth } from "@/hooks/use-auth";
 
 interface ThreadViewProps {
   thread: Thread;
@@ -12,8 +14,17 @@ interface ThreadViewProps {
 
 export const ThreadView = ({ thread }: ThreadViewProps) => {
   const navigate = useNavigate();
+  const { authState } = useAuth();
+  const { mutate: addReaction } = useCreateReaction({});
 
-  console.log("thread: ", thread);
+  const onSubmitReaction = (type: string) => {
+    const data = {
+      threadId: thread.id,
+      userId: authState.user?.id,
+      type: type,
+    };
+    addReaction(data);
+  };
 
   return (
     <div className="bg-primary p-5 rounded-xl">
@@ -21,7 +32,7 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
         className="mb-4 text-xl text-accent cursor-pointer"
         onClick={() => navigate("/")}
       />
-      <div className="space-y-5">
+      <div className="space-y-6">
         <div className="flex items-center gap-2">
           <Avatar className="">
             <AvatarImage
@@ -38,15 +49,22 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
 
         <div className="">
           <h1 className="text-base text-primary-foreground">{thread?.title}</h1>
-          <div
-            className="ql-editor text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: thread?.content }}
-          />
+          <div className="text-muted-foreground">
+            <p dangerouslySetInnerHTML={{ __html: thread?.content }}></p>
+          </div>
         </div>
 
         <div className="flex gap-6">
-          <Reaction icon={<IoMdHeart className="text-accent" />} count={325} />
-          <Reaction icon={<BiDislike />} count={57} />
+          <Reaction
+            icon={<IoMdHeart className="text-accent" />}
+            count={thread.likeCount}
+            onClick={() => onSubmitReaction("LIKE")}
+          />
+          <Reaction
+            icon={<BiDislike />}
+            count={thread.dislikeCount}
+            onClick={() => onSubmitReaction("DISLIKE")}
+          />
           <Reaction icon={<MdInsertComment />} count={325} />
         </div>
       </div>
@@ -57,7 +75,7 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
 interface ReactionProps {
   count: number;
   icon: JSX.Element;
-  onClick?: () => void;
+  onClick?: (data: any) => void;
 }
 
 const Reaction = ({ count, icon, onClick }: ReactionProps) => {

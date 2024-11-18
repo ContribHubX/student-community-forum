@@ -27,6 +27,7 @@ export type Comment = Entity<{
   parentId: string | null;
   createdAt: Date;
   createdBy: User;
+  threadId: string;
   replies: Comment[];
 }>;
 
@@ -36,6 +37,12 @@ export type Community = Entity<{
   banner: string;
   icon: string;
   createdBy: User;
+}>;
+
+export type Reaction = Entity<{
+  type: "LIKE" | "DISLIKE";
+  userId: string;
+  threadId: string;
 }>;
 
 export type CommunityWithMembers = Community & {
