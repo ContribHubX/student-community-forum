@@ -1,6 +1,8 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Comment } from "@/types";
 import "react-quill/dist/quill.snow.css";
+import { CommentReplyList } from "./comment-reply-list";
+import { CommentForm } from "@/features/thread/components/comment-form";
 
 interface CommentItemProps {
   comment: Comment;
@@ -22,17 +24,25 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
             <p>{new Date(comment.createdAt).toDateString()}</p>
           </div>
 
-          <p className="">{comment.content}</p>
+          <div>
+            <p
+              className=""
+              dangerouslySetInnerHTML={{ __html: comment?.content }}
+            />
+          </div>
         </div>
-
-        {/* <p className="self-end text-sm font-light text-gray-500">
-          {comment.replies.length} replies
-        </p> */}
       </div>
 
-      {/* <CommentReplyList replies={comment?.replies} />
+      {comment.replies.length > 0 && (
+        <CommentReplyList replies={comment?.replies} />
+      )}
 
-      <form
+      <CommentForm
+        threadId={comment.threadId}
+        parentId={comment.id}
+        placeholder="Write your reply here"
+      />
+      {/* <form
         action=""
         className="p-4 border-t border-opacity-25 border-slate-600 flex flex-col gap-4"
         onSubmit={onSubmit}

@@ -13,15 +13,13 @@ interface ThreadViewProps {
 export const ThreadView = ({ thread }: ThreadViewProps) => {
   const navigate = useNavigate();
 
-  console.log("thread: ", thread);
-
   return (
     <div className="bg-primary p-5 rounded-xl">
       <IoArrowBackOutline
         className="mb-4 text-xl text-accent cursor-pointer"
         onClick={() => navigate("/")}
       />
-      <div className="space-y-5">
+      <div className="space-y-6">
         <div className="flex items-center gap-2">
           <Avatar className="">
             <AvatarImage
@@ -38,10 +36,9 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
 
         <div className="">
           <h1 className="text-base text-primary-foreground">{thread?.title}</h1>
-          <div
-            className="ql-editor text-muted-foreground"
-            dangerouslySetInnerHTML={{ __html: thread?.content }}
-          />
+          <div className="text-muted-foreground">
+            <p dangerouslySetInnerHTML={{ __html: thread?.content }}></p>
+          </div>
         </div>
 
         <div className="flex gap-6">

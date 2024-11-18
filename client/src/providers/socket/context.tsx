@@ -38,6 +38,7 @@ export const socketReducer = (
       return { ...state, socket: action.payload };
     case OPERATION.ADD_NEW_THREAD: {
       const { thread, queryClient } = action.payload;
+
       queryClient.setQueryData(
         getThreadsQueryOptions().queryKey,
         (oldThreads: Thread[] | undefined) => {
@@ -48,14 +49,30 @@ export const socketReducer = (
     }
     case OPERATION.ADD_NEW_COMMENT: {
       const { comment, queryClient } = action.payload;
-      console.log(comment);
-      queryClient.setQueryData(
-        ["comments"],
-
-        (oldComments: Comment[] | undefined) => {
-          return oldComments ? [comment, ...oldComments] : undefined;
-        },
-      );
+      comment.replies = [];
+      if (comment.parentId) {
+        queryClient.setQueryData(
+          ["comments", comment.threadId],
+          (oldComments: Comment[] | undefined) => {
+            return oldComments?.map((existingComment) => {
+              if (existingComment.id === comment.parentId) {
+                return {
+                  ...existingComment,
+                  replies: [...existingComment.replies, comment],
+                };
+              }
+              return existingComment;
+            });
+          },
+        );
+      } else {
+        queryClient.setQueryData(
+          ["comments", comment.threadId],
+          (oldComments: Comment[] | undefined) => {
+            return oldComments ? [comment, ...oldComments] : undefined;
+          },
+        );
+      }
       return { ...state };
     }
 

@@ -1,62 +1,150 @@
-import { modules } from "@/components/shared/text-editor";
-import { Button } from "@/components/ui/button";
-import { useCreateComment } from "@/features/thread/api/create-comment";
+import { TextEditor } from "@/components/shared/text-editor";
+import {
+  CreateThreadType,
+  useCreateComment,
+} from "@/features/thread/api/create-comment";
 import { useAuth } from "@/hooks/use-auth";
 import { FormEvent, useState } from "react";
-import ReactQuill from "react-quill";
+
+import { motion } from "framer-motion";
 
 interface CommentFormProps {
   threadId: string | undefined;
+  parentId?: string | undefined;
+  placeholder: string;
+  isComment?: boolean;
 }
 
-export const CommentForm = ({ threadId }: CommentFormProps) => {
+export const CommentForm = ({
+  threadId,
+  parentId,
+  placeholder,
+  isComment = false,
+}: CommentFormProps) => {
+  const [isFocused, setIsFocused] = useState(false);
   const { authState } = useAuth();
-  const [content, setContent] = useState("");
+
+  const [commentData, setCommentData] = useState<CreateThreadType>({
+    content: "",
+    createdBy: "",
+  });
 
   const { mutate: createComment } = useCreateComment({});
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const data = {
-      content: content,
+      content: commentData.content,
       createdBy: authState.user?.id,
       threadId: threadId,
-      parentId: null,
+      parentId: parentId ? parentId : null,
     };
-    console.log(data);
     createComment(data);
+    setCommentData({
+      content: "",
+      createdBy: "",
+    });
+    console.log(commentData);
+  };
+
+  const handleCancel = () => {
+    setIsFocused(!isFocused);
+  };
+
+  const handleContentChange = (data: Partial<CreateThreadType>) => {
+    setCommentData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
   };
 
   return (
     <form
       action=""
-      className="text-primary-foreground bg-primary p-4 border border-opacity-25 border-slate-600 flex flex-col gap-4 mt-4
-      rounded-xl"
+      className="text-primary-foreground bg-primary rounded-xl"
       onSubmit={onSubmit}
     >
-      <ReactQuill
-        theme="snow"
-        value={content}
-        onChange={setContent}
-        modules={modules}
-        className="max-h-[200px] overflow-y-auto bg-primary"
-        placeholder="Write a comment here"
-      />
-
-      <div className="space-x-2 self-end">
-        <Button className="font-light text-sm bg-background border border-opacity-25 border-slate-600">
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          disabled={content === "" || content === "<p><br></p>"}
-          className="px-6 font-light text-sm text-accent-foreground
-          
-        "
+      {isComment ? (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="p-2 flex flex-col gap-2"
         >
-          Save
-        </Button>
-      </div>
+          <TextEditor
+            handleChange={handleContentChange}
+            placeholder={placeholder}
+          />
+          <div className="space-x-2 self-end">
+            <button
+              className="font-light text-sm bg-background border border-opacity-25 border-slate-600
+          px-4 py-1 rounded-xl"
+              type="reset"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={
+                commentData.content === "" ||
+                commentData.content === "<p><br></p>"
+              }
+              className="bg-accent px-6 py-1 font-light text-sm text-accent-foreground rounded-xl
+              disabled:brightness-75"
+            >
+              Save
+            </button>
+          </div>
+        </motion.div>
+      ) : isFocused ? (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="px-2 pb-2 flex flex-col gap-2 "
+        >
+          <TextEditor
+            handleChange={handleContentChange}
+            placeholder={placeholder}
+          />
+          <div className="space-x-2 self-end">
+            <button
+              className="font-light text-sm bg-background 
+          px-4 py-1 rounded-xl"
+              type="reset"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={
+                commentData.content === "" ||
+                commentData.content === "<p><br></p>"
+              }
+              className="bg-accent px-6 py-1 font-light text-sm text-accent-foreground rounded-xl
+              disabled:brightness-75"
+            >
+              Save
+            </button>
+          </div>
+        </motion.div>
+      ) : (
+        <div
+          className="w-full p-2 border rounded-md
+        px-2 pb-2 "
+        >
+          <input
+            type="text"
+            name=""
+            id=""
+            className="w-full bg-background rounded-xl text-sm py-2 px-4 outline-none"
+            placeholder={placeholder}
+            onFocus={() => setIsFocused(true)}
+          />
+        </div>
+      )}
     </form>
   );
 };

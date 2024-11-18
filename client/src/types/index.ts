@@ -27,6 +27,7 @@ export type Comment = Entity<{
   parentId: string | null;
   createdAt: Date;
   createdBy: User;
+  threadId: string;
   replies: Comment[];
 }>;
 

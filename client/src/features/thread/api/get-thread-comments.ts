@@ -10,7 +10,7 @@ const getComments = async (id: string | undefined): Promise<Comment[]> => {
 
 export const getCommentsQueryOptions = (id: string | undefined) => {
   return queryOptions({
-    queryKey: ["comments"],
+    queryKey: ["comments", id],
     queryFn: () => getComments(id),
   });
 };
