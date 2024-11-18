@@ -4,6 +4,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
 import { createContext } from "react";
 import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
+import { getCommentsQueryOptions } from "@/features/thread/api/get-thread-comments";
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -58,7 +59,7 @@ export const socketReducer = (
       comment.replies = [];
       if (comment.parentId) {
         queryClient.setQueryData(
-          ["comments", comment.threadId],
+          getCommentsQueryOptions(comment.threadId).queryKey,
           (oldComments: Comment[] | undefined) => {
             return oldComments?.map((existingComment) => {
               if (existingComment.id === comment.parentId) {
@@ -73,11 +74,18 @@ export const socketReducer = (
         );
       } else {
         queryClient.setQueryData(
-          ["comments", comment.threadId],
+          getCommentsQueryOptions(comment.threadId).queryKey,
           (oldComments: Comment[] | undefined) => {
             return oldComments ? [comment, ...oldComments] : undefined;
           },
         );
+
+        // queryClient.setQueryData(
+        //   ["comments", comment.threadId],
+        //   (oldComments: Comment[] | undefined) => {
+        //     return oldComments ? [comment, ...oldComments] : undefined;
+        //   },
+        // );
       }
       return { ...state };
     }
