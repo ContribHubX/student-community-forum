@@ -16,113 +16,116 @@ class ThreadRepository {
 
   /**
    * Finds a thread by its ID.
-   *
-   * @param {string} threadId - The ID of the thread to be retrieved.
-   * @returns {Promise<IThread | undefined>} - A promise that resolves to the thread object if found, or undefined if not.
-   * @throws {AppError} - Throws an AppError if the thread is not found or a database error occurs.
+   * 
+   * @param {string} threadId - The ID of the thread to find.
+   * @returns {Promise<IThreadFull | undefined>} The thread data or `undefined` if not found.
+   * @throws {AppError} If the thread is not found or a database error occurs.
    */
-  public async findOneById(threadId: string): Promise<IThreadFull | undefined> {
-    try {
-      const result = await this.db.query.ThreadTable.findFirst({
-        where: eq(ThreadTable.id, threadId),
-        extras: {
-          ...this.threadReactionExtras()
-        },
-        with: {
-          user: true,
-        },
-      });
+  public findOneById(threadId: string): Promise<IThreadFull | undefined> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await this.db.query.ThreadTable.findFirst({
+          where: eq(ThreadTable.id, threadId),
+          extras: {
+            ...this.threadReactionExtras(),
+          },
+          with: {
+            user: true,
+          },
+        });
 
-      if (!result) throw new AppError("Thread not found", 500);
+        if (!result) {
+          reject(new AppError("Thread not found", 404));
+          return;
+        }
 
-      return this.threadTransformer(result);
-    } catch (error: any) {
-      throw new AppError(error || "Database error", 500);
-    }
+        resolve(this.threadTransformer(result));
+      } catch (error: any) {
+        reject(new AppError(error || "Database error"));
+      }
+    });
   }
-
 
   /**
    * Creates a new thread in the database.
-   *
-   * @param {IThreadDto} dto - The data transfer object containing the thread details.
-   * @returns {Promise<IThread | undefined>} - A promise that resolves to the created thread object.
-   * @throws {AppError} - Throws an AppError if there is an issue inserting the thread or if the 'createdBy' user does not exist.
+   * 
+   * @param {IThreadDto} dto - The data transfer object containing thread details.
+   * @returns {Promise<IThreadFull | undefined>} The created thread.
+   * @throws {AppError} If an error occurs during thread creation or if constraints are violated.
    */
-  public async create(dto: IThreadDto): Promise<IThreadFull | undefined> {
-    const { title, content, attachment, createdBy } = dto;
+  public create(dto: IThreadDto): Promise<IThreadFull | undefined> {
+    return new Promise(async (resolve, reject) => {
+      const { title, content, attachment, createdBy } = dto;
 
-    try {
-      // Insert the new thread into the database
-      const insertResult = await this.db
-        .insert(ThreadTable)
-        .values({
-          title,
-          content,
-          attachment,
-          createdBy,
-          communityId: null,
-        })
-        .$returningId();
+      try {
+        const insertResult = await this.db
+          .insert(ThreadTable)
+          .values({
+            title,
+            content,
+            attachment,
+            createdBy,
+            communityId: null,
+          })
+          .$returningId();
 
-      // After insert, query the thread data to retrieve the full record
-      const threadId = insertResult[0].id;
+        const threadId = insertResult[0].id;
 
-      const threadCreated = await this.db.query.ThreadTable.findFirst({
-        where: eq(ThreadTable.id, threadId),
-        with: {
-          user: true,
-        },
-        extras: {
-          ...this.threadReactionExtras()
-        },
-      });
+        if (!threadId) {
+          reject(new AppError("Error creating thread"));
+          return;
+        }
 
-      if (!threadCreated) throw new AppError("Thread not created", 500);
+        const threadCreated = await this.findOneById(threadId);
 
-      return this.threadTransformer(threadCreated);
-    } catch (error: any) {
-      let errorMessage = "Error inserting thread";
-      let statusCode = 500;
+        resolve(this.threadTransformer(threadCreated));
+      } catch (error: any) {
+        let errorMessage = "Error inserting thread";
+        let statusCode = 500;
 
-      // Handle specific database error for foreign key constraint violation
-      if (error.code === "ER_NO_REFERENCED_ROW_2") {
-        console.log("repo error");
-        errorMessage =
-          "Foreign key constraint violation: The 'createdBy' user does not exist.";
-        statusCode = 500;
+        if (error.code === "ER_NO_REFERENCED_ROW_2") {
+          errorMessage =
+            "Foreign key constraint violation: The 'createdBy' user does not exist.";
+          statusCode = 500;
+        }
+
+        reject(new AppError(errorMessage, statusCode));
       }
-
-      // Throw a new AppError with the proper message and status code
-      throw new AppError(errorMessage, statusCode);
-    }
-  }
-  
-  /**
-   * Fetch all threads
-   * 
-   * @returns {Promise<IThreadFull[]> }
-   */
-  public async getAll(): Promise<IThreadFull[]> { 
-    const result = await this.db.query.ThreadTable.findMany({  
-      extras: {
-        ...this.threadReactionExtras()
-      },
-      with: {
-        user: true,
-      },
-      orderBy: [desc(ThreadTable.createdAt)]
     });
-
-    return result.map(thread => this.threadTransformer(thread));
   }
 
   /**
-   * Transform raw thread into {IThread} 
+   * Fetches all threads from the database.
    * 
-   * TODO infer rawResult type
-   * @param rawResult 
-   * @returns {IThread}
+   * @returns {Promise<IThreadFull[]>} A list of all threads.
+   * @throws {AppError} If a database error occurs.
+   */
+  public getAll(): Promise<IThreadFull[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await this.db.query.ThreadTable.findMany({
+          extras: {
+            ...this.threadReactionExtras(),
+          },
+          with: {
+            user: true,
+          },
+          orderBy: [desc(ThreadTable.createdAt)],
+        });
+
+        resolve(result.map((thread) => this.threadTransformer(thread)));
+      } catch (error: any) {
+        reject(new AppError(error || "Database error"));
+      }
+    });
+  }
+
+  /**
+   * Transforms raw thread data into the IThreadFull format.
+   * 
+   * @private
+   * @param {any} rawResult - The raw thread data from the database.
+   * @returns {IThreadFull} The transformed thread data.
    */
   private threadTransformer(rawResult: any): IThreadFull {
     const { user, ...threadData } = rawResult;
@@ -131,11 +134,13 @@ class ThreadRepository {
       ...threadData,
       createdBy: user,
     } as unknown as IThreadFull;
-  } 
-  
+  }
+
   /**
-   * Helper function to generate additional columns for like and dislike counts.
-   * @returns {Record<string, any>} - The extras configuration for like and dislike counts.
+   * Generates additional SQL columns for reaction and comment counts.
+   * 
+   * @private
+   * @returns {Object} An object containing SQL expressions for like, dislike, and comment counts.
    */
   private threadReactionExtras() {
     return {
@@ -152,7 +157,7 @@ class ThreadRepository {
       commentCount: sql<number>`(
         SELECT COUNT(*) FROM comment
         WHERE thread_id = ${ThreadTable.id} 
-      )`.as("comment_count")
+      )`.as("comment_count"),
     };
   }
 }

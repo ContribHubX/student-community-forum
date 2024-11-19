@@ -1,5 +1,6 @@
 import { IComment, ICommentDto } from "@/domain/interfaces/IComment";
 import {
+  IAlreadyReactedDto,
   IThreadReaction,
   IThreadReactionDto,
 } from "@/domain/interfaces/IThread";
@@ -8,7 +9,7 @@ import { AppError } from "@/libs/app-error";
 import EventManager from "@/sockets/event-manager";
 import { Inject, Service } from "typedi";
 import NotificationService from "../notification";
-import { NotificationType } from "@/types";
+import { NotificationType, ThreadReactionType } from "@/types";
 
 // TODO get user id  base on thread id
 
@@ -33,6 +34,7 @@ class ThreadInteractionService {
   public async reactToThread(
     dto: IThreadReactionDto,
   ): Promise<IThreadReaction | undefined> {
+
     try {
       const result = await this.threadInteractionRepo.react(dto);
       this.eventManager.publishToMany<IThreadReaction>(
@@ -46,21 +48,21 @@ class ThreadInteractionService {
       const user = await this.threadInteractionRepo.getUserByThreadId(
         dto.threadId,
       );
-      // await this.notifService.createNotification({
-      //   entityId: dto.threadId,
-      //   entityType: "thread",
-      //   type: dto.type.toLowerCase() as NotificationType,
-      //   createdBy: dto.userId,
-      //   receiveBy: "106734239908393657304",
-      // });
+      await this.notifService.createNotification({
+        entityId: dto.threadId,
+        entityType: "thread",
+        type: dto.type.toLowerCase() as NotificationType,
+        createdBy: dto.userId,
+        receiveBy: user.id,
+      });
 
       return result;
     } catch (error: any) {
-      if (error instanceof AppError) throw error;
-      throw new AppError("Create thread error");
+      if (error instanceof AppError)throw error; 
+      throw new AppError("React to thread error");
     }
   }
-
+  
   /**
    * Adds a comment to a thread
    *
@@ -77,18 +79,35 @@ class ThreadInteractionService {
       const user = await this.threadInteractionRepo.getUserByThreadId(
         dto.threadId,
       );
-      // await this.notifService.createNotification({
-      //   entityId: dto.threadId,
-      //   entityType: "thread",
-      //   type: "comment" as NotificationType,
-      //   createdBy: dto.createdBy,
-      //   receiveBy: "106734239908393657304",
-      // });
+      await this.notifService.createNotification({
+        entityId: dto.threadId,
+        entityType: "thread",
+        type: "comment" as NotificationType,
+        createdBy: dto.createdBy,
+        receiveBy: user.id,
+      });
 
       return result;
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Create thread error");
+    }
+  }
+
+  /**
+   * Check if user already reacted
+   *
+   * @param dto
+   * @returns {ThreadReactionType} - Created thread reaction object or undefined if an error occurs.
+   * @throws {AppError}
+   */
+  public async getUserReaction(dto: IAlreadyReactedDto): Promise<ThreadReactionType> {
+    try {
+      const reaction = await this.threadInteractionRepo.getReaction(dto);
+      return reaction ? reaction : "NONE"
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error fetching comments");
     }
   }
 

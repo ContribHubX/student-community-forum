@@ -26,7 +26,7 @@ export default {
       const thread = await threadService.createThread(body);
       res.status(201).json({ message: "Insert successful", thread });
     } catch (error: any) {
-      next(new AppError(error, 500));
+      next(new AppError(error));
     }
   },
 
@@ -47,7 +47,7 @@ export default {
       const response = await threadService.getThreadById(threadId);
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error, 500));
+      next(new AppError(error));
     }
   },
 
@@ -62,7 +62,7 @@ export default {
       const response = await threadService.getAllThread();
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error, 500));
+      next(new AppError(error));
     }
   },
 };
