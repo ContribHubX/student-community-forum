@@ -803,3 +803,22 @@
 2024-11-19T07:13:49.754Z error: Client socket not found
 2024-11-19T07:13:57.064Z error: Client socket not found
 2024-11-19T07:14:37.911Z error: Client socket not found
+2024-11-19T08:15:13.864Z info: ✌️ Dependencies injected into container
+2024-11-19T08:15:13.874Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-19T08:16:14.931Z error: Client socket not found
+2024-11-19T08:29:44.127Z info: ✌️ Dependencies injected into container
+2024-11-19T08:29:44.133Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-19T08:37:13.909Z info: ✌️ Dependencies injected into container
+2024-11-19T08:37:13.916Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
