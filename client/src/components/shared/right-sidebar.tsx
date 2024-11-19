@@ -1,5 +1,3 @@
-//right-sidebar
-
 import csps from "@/assets/sidebar/csps-logo.png";
 import uc from "@/assets/sidebar/groups/uc.svg";
 import arrowbutton from "@/assets/sidebar/arrow-button.svg";
@@ -61,8 +59,8 @@ const recentThreadData = [
 export const RightSidebar = () => {
   return (
     <SidebarLayout
-      className="flex flex-col gap-6 rg:flex"
-      width={250}
+      className="hidden flex-col gap-6 lg:flex"
+      width={325}
       height={"full"}
       position="right-6"
     >
@@ -124,8 +122,8 @@ const UpcomingEvent = ({
 }: UpcomingEventProps) => {
   return (
     <Link to="">
-      <div className="flex gap-4 mb-4">
-        <div className="bg-container flex flex-col flex-items-center justify-center rounded-lg w-12 h-12 text-center">
+      <div className="flex gap-4 mb-4 ">
+        <div className="bg-container flex flex-col flex-items-center w-12 justify-center rounded-lg  text-center">
           <p className="text-xs"> {month} </p>
           <p className="text-lg text-blue-400"> {date} </p>
         </div>
@@ -164,29 +162,23 @@ interface RecentThreadProps {
   iconBgcolor: string;
 }
 
-const RecentThread = ({
-  title,
-  author,
-  icon,
-  iconBgcolor,
-}: RecentThreadProps) => {
+const RecentThread = ({ title, author, icon }: RecentThreadProps) => {
   return (
-    <div className="flex flex-items-start gap-2">
+    <div className="flex  gap-2">
       <div
-        className={`rounded-xl h-10 w-10 flex items-center justify-center`}
-        style={{ backgroundColor: iconBgcolor }}
+        className={`rounded-xl flex p-4 items-center justify-center bg-container`}
       >
-        <img src={icon} alt="" className="h-5 w-5" />
+        <img src={icon} alt="" className="h-8 w-8" />
       </div>
 
-      <div className="flex-1">
-        <p className="text-sm">{truncateText(title, 23)}</p>
-        <p className="text-xs text-muted-foreground">
-          by {truncateText(author, 22)}
+      <div className="flex flex-col flex-1 justify-center">
+        <p className="text-sm">{title}</p>
+        <p className="text-xs text-muted-foreground justify-self-end">
+          by {author}
         </p>
       </div>
 
-      <Link to="">
+      <Link to="" className="self-center">
         <img src={arrowbutton} alt="" className="h-5 w-5" />
       </Link>
     </div>

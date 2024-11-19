@@ -7,6 +7,7 @@ import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
 import { createContext } from "react";
 import { getUserReactionQueryOptions } from "@/features/thread/api/get-reaction";
 
+
 export type SocketContextState = {
   socket: Socket | undefined;
 };
@@ -100,7 +101,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
             if(comm.id === comment.parentId) {
               return {
                 ...comm,
-                replies: [...comm.replies, comment]
+                replies: [...comm.replies || [], comment]
               }
             }
 

@@ -92,7 +92,7 @@ export const LeftSidebar = () => {
     <SidebarLayout
       className="hidden flex-col gap-6
       lg:flex"
-      width={250}
+      width={230}
       height={"full"}
       position="left-50"
     >
@@ -102,9 +102,9 @@ export const LeftSidebar = () => {
       >
         <SideBarItem
           title="Newest and Recent"
-          description="Find the latest updates.."
+          description="Find the latest updates"
           icon={newest}
-          iconBgcolor="#EFF5F8"
+          iconBgcolor="primary"
         />
         <SideBarItem
           title="Popular of the day"
@@ -188,17 +188,17 @@ const SideBarItem = ({
   };
   return (
     <Link to="">
-      <div className="flex gap-2">
+      <div className="flex gap-2 p-1">
         <div
-          className={`rounded-xl h-10 w-10 flex items-center justify-center`}
+          className={`rounded-xl h-8 w-8 flex items-center justify-center`}
           style={{ backgroundColor: iconBgcolor }}
         >
-          <img src={icon} alt="" className="h-6" />
+          <img src={icon} alt="" className="h-5" />
         </div>
 
         <div>
           <p className="text-sm">{truncateText(title, 23)}</p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground font-light">
             {truncateText(description, 22)}
           </p>
         </div>

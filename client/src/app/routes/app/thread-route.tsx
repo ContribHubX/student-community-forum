@@ -21,8 +21,7 @@ export const ThreadRoute = () => {
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section
         className="
-                  md:mr-[340px]
-                  lg:ml-[270px] "
+                  md:ml-[16rem] lg:mr-[22rem]"
       >
         <div className="space-y-4">
           <ThreadView thread={thread} />
@@ -37,7 +36,7 @@ const RightSidebar = () => {
   return (
     <SidebarLayout
       position="right-5"
-      width={320}
+      width={325}
       className="p-6 font-light flex-col gap-5 text-sm bg-primary text-primary-foreground
       hidden
       md:flex"

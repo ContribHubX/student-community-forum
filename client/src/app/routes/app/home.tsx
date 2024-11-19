@@ -14,7 +14,7 @@ export const HomeRoute = () => {
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section
         className="bg-background border-3 border-black
-        md:mr-[17.5rem] lg:mx-[17.5rem]
+        md:ml-[16rem] lg:mr-[22rem]
         "
       >
         <Threads userId={authState.user.id} />
