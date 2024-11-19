@@ -24,10 +24,6 @@ const createAppRouter = () =>
             return { Component: OAuthCallback };
           },
         },
-        // {
-        //   path: "sign-up",
-        //   lazy: async () => {},
-        // },
       ],
     },
     {
@@ -58,6 +54,13 @@ const createAppRouter = () =>
             return { Component: ThreadRoute };
           },
         },
+        {
+          path: "/topic/:topicId", 
+          lazy: async () => {
+            const { TopicRoute } = await import("./routes/app/topic");
+            return { Component: TopicRoute };
+          },
+        }
       ],
     },
   ]);
