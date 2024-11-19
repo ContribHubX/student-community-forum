@@ -13,12 +13,14 @@ export type ClientEventOptions = {
 
 export type AuthProvider = "GOOGLE" | "GITHUB";
 
-export type UPLOAD_TYPE = "thread" | "comment" | "community";
+export type UPLOAD_TYPE = "thread" | "comment" | "community" | "topic";
 
 export type ClientEventCallback = (data: object) => void;
 
-export type ThreadNotificationType = 'like' | 'dislike' | 'comment' | 'reply'
+export type ThreadNotificationType = 'like' | 'dislike' | 'comment' | 'reply';
 
-export type TaskNotificationType = 'assigned' | 'updated' | 'completed'
+export type ThreadReactionType = "LIKE" | "DISLIKE" | "NONE";
 
-export type NotificationType = ThreadNotificationType & TaskNotificationType
+export type TaskNotificationType = 'assigned' | 'updated' | 'completed';
+
+export type NotificationType = ThreadNotificationType & TaskNotificationType;

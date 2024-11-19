@@ -30,7 +30,7 @@ export default {
             const community = await communityService.createCommunity(body);
             res.status(200).json({message: "Community created", community});
         } catch (error: any) {
-            next(new AppError(error, 500));
+            next(new AppError(error));
         }
     },
 
@@ -51,7 +51,7 @@ export default {
             await communityService.joinCommunity(body);
             res.status(200).json({message: "Successfully joined"});
         } catch (error: any) {
-            next(new AppError(error, 500));
+            next(new AppError(error));
         }
     },
 
@@ -72,7 +72,7 @@ export default {
             const response = await communityService.getCommunityById(communityId);
             res.status(200).json(response);
         } catch (error: any) {
-            next(new AppError(error, 500));
+            next(new AppError(error));
         }
     },
 }

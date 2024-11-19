@@ -13,74 +13,76 @@ class CommunityRepository {
     constructor() {
         this.db = Container.get("database");
     }
-    
+
     /**
      * Adds a new community to the database.
-     * 
+     *
      * @param dto Community data.
      * @returns The created community or undefined.
      */
-    public async create(dto: ICommunityDto): Promise<ICommunity | undefined> {
-        try {
-            const result = await this.db 
-                .insert(CommunityTable)
-                .values({...dto})
-                .$returningId();
+    public create(dto: ICommunityDto): Promise<ICommunity | undefined> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .insert(CommunityTable)
+                    .values({ ...dto })
+                    .$returningId();
 
-            const communityId = result[0].id;
-
-            return this.getById(communityId);
-        } catch (error: any) {
-            throw new AppError(error, 500);
-        }
+                const communityId = result[0].id;
+                const community = await this.getById(communityId);
+                resolve(community);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
     }
 
     /**
      * Fetches community details by ID.
-     * 
+     *
      * @param communityId Community ID.
      * @returns The community or undefined.
      */
-    public async getById(communityId: string): Promise<ICommunity | undefined> {
-        try {
-            const result = await this.db 
-                .query
-                .CommunityTable
-                .findFirst({
+    public getById(communityId: string): Promise<ICommunity | undefined> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db.query.CommunityTable.findFirst({
                     where: eq(CommunityTable.id, communityId),
                     with: {
                         createdBy: true,
                         members: {
                             with: {
-                                user: true
-                            }
-                        }
-                    }
+                                user: true,
+                            },
+                        },
+                    },
                 });
-            
-            if (!result) {
-                throw new AppError("Community not found", 404);
-            }
 
-            return result as unknown as ICommunity;
-        } catch (error: any) {
-            throw new AppError(error, 500);
-        }
+                if (!result) {
+                    return reject(new AppError("Community not found", 404));
+                }
+
+                resolve(result as unknown as ICommunity);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
     }
 
     /**
      * Joins a user to a community.
-     * 
+     *
      * @param dto Join community data.
      */
-    public async join(dto: IJoinCommunityDto): Promise<void> {
-        try {
-            await this.db 
-                .insert(UsersCommunities)
-                .values({...dto});
-        } catch(error: any) {
-            throw new AppError(error, 500);
-        }
+    public join(dto: IJoinCommunityDto): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.db.insert(UsersCommunities).values({ ...dto });
+                resolve();
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
     }
 }
 

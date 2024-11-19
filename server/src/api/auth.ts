@@ -51,7 +51,7 @@ export default {
       res.status(200).json(result);
     } catch (error) {
       console.error("Error during Google OAuth callback:", error);
-      next(new AppError("Authentication failed", 500));
+      next(new AppError("Authentication failed"));
     }
   },
 
@@ -101,7 +101,7 @@ export default {
       res.status(200).json(result);
     } catch (error) {
       console.error("Error during Github OAuth callback:", error);
-      next(new AppError("Authentication failed", 500));
+      next(new AppError("Authentication failed"));
     }
   },
 
@@ -132,7 +132,7 @@ export default {
       res.status(200).json(user);
     } catch (error) {
       console.error("Error during user data retrieval:", error);
-      next(new AppError("Authentication failed", 500));
+      next(new AppError("Authentication failed"));
     }
   },
 };

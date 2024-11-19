@@ -21,7 +21,7 @@ export default {
             const response = await notifService.getNotifications(userId);
             res.status(200).json(response);
         } catch (error: any) {
-            next(new AppError(error, 500));
+            next(new AppError(error));
         }
     },
 }

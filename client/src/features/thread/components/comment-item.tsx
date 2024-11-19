@@ -33,7 +33,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
         </div>
       </div>
 
-      {comment.replies.length > 0 && (
+      {comment?.replies?.length > 0 && (
         <CommentReplyList replies={comment?.replies} />
       )}
 

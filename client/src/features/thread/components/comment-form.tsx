@@ -35,7 +35,7 @@ export const CommentForm = ({
     e.preventDefault();
     const data = {
       content: commentData.content,
-      createdBy: authState.user?.id,
+      createdBy: authState.user?.id.toString(),
       threadId: threadId,
       parentId: parentId ? parentId : null,
     };

@@ -1,4 +1,4 @@
-import { Thread } from "@/types";
+import { ReactionType, Thread } from "@/types";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { BiDislike } from "react-icons/bi";
 import { IoMdHeart } from "react-icons/io";
@@ -6,7 +6,9 @@ import { MdInsertComment } from "react-icons/md";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useCreateReaction } from "@/features/thread/api/create-reaction";
+import { useGetUserReaction } from "../api/get-reaction";
 import { useAuth } from "@/hooks/use-auth";
+import clsx from "clsx";
 
 interface ThreadViewProps {
   thread: Thread;
@@ -16,14 +18,21 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
   const navigate = useNavigate();
   const { authState } = useAuth();
   const { mutate: addReaction } = useCreateReaction({});
+  const { data: reaction } = useGetUserReaction({
+    data: { threadId: thread.id, userId: authState?.user?.id.toString() || "" },
+  });
 
   const onSubmitReaction = (type: string) => {
     const data = {
       threadId: thread.id,
-      userId: authState.user?.id,
+      userId: authState.user?.id.toString(),
       type: type,
     };
     addReaction(data);
+  };
+
+  const reactionFlag = (keyType: ReactionType) => {
+    return reaction?.type === keyType;
   };
 
   return (
@@ -56,12 +65,26 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
 
         <div className="flex gap-6">
           <Reaction
-            icon={<IoMdHeart className="text-accent" />}
+            icon={
+              <IoMdHeart
+                className={clsx(
+                  "transition-colors",
+                  reactionFlag("LIKE") ? "text-accent" : "text-[#808080]",
+                )}
+              />
+            }
             count={thread.likeCount}
             onClick={() => onSubmitReaction("LIKE")}
           />
           <Reaction
-            icon={<BiDislike />}
+            icon={
+              <BiDislike
+                className={clsx(
+                  "transition-colors",
+                  reactionFlag("DISLIKE") ? "text-accent" : "text-[#808080]",
+                )}
+              />
+            }
             count={thread.dislikeCount}
             onClick={() => onSubmitReaction("DISLIKE")}
           />

@@ -92,14 +92,22 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
         case "like--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_REACTION,
-            payload: { reaction: data, queryClient },
+            payload: {
+              currentUserId: authState?.user?.id || "",
+              reaction: data,
+              queryClient,
+            },
           });
           break;
 
         case "dislike--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_REACTION,
-            payload: { reaction: data, queryClient },
+            payload: {
+              currentUserId: authState?.user?.id || "",
+              reaction: data,
+              queryClient,
+            },
           });
           break;
       }
