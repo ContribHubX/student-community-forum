@@ -3,7 +3,7 @@ import { Service, Container } from "typedi";
 import * as schema from "@/database/schema";
 import { IAlreadyReactedDto, IThreadReaction, IThreadReactionDto } from "../interfaces/IThread";
 import { AppError } from "@/libs/app-error";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import { IComment, ICommentDto } from "../interfaces/IComment";
 import { IUser } from "../interfaces/IUser";
 import { ThreadReactionType } from "@/types";
@@ -101,7 +101,10 @@ class ThreadInteractionRepository {
                     .query
                     .CommentTable
                     .findMany({
-                        where: eq(schema.CommentTable.threadId, threadId),
+                        where: and(
+                            eq(schema.CommentTable.threadId, threadId),
+                            isNull(schema.CommentTable.parentId)
+                        ),
                         with: { createdBy: true },
                         orderBy: [desc(schema.CommentTable.createdAt)],
                     });

@@ -776,3 +776,30 @@
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+2024-11-19T07:09:20.676Z info: ✌️ Dependencies injected into container
+2024-11-19T07:09:20.682Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-19T07:09:25.120Z info: ✌️ Dependencies injected into container
+2024-11-19T07:09:25.126Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-19T07:09:51.356Z info: ✌️ Dependencies injected into container
+2024-11-19T07:09:51.363Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-19T07:10:51.799Z info: ✌️ Dependencies injected into container
+2024-11-19T07:10:51.806Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-11-19T07:13:49.754Z error: Client socket not found
+2024-11-19T07:13:57.064Z error: Client socket not found
+2024-11-19T07:14:37.911Z error: Client socket not found
