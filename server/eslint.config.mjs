@@ -13,6 +13,7 @@ export default [
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "prefer-const": "off",
+      "no-async-promise-executor": "off"
     },
   },
 ];

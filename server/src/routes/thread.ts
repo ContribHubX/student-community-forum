@@ -32,6 +32,8 @@ export default (app: Router) => {
 
   router.get("/", verifyAuth, threadController.getAllThreadsHandler);
 
+  router.get("/check", verifyAuth, threadReactionController.isAlreadyReactedHandler);
+  
   router.get("/:threadId", verifyAuth, threadController.getSingleThreadHandler); 
 
   router.get("/comment/:threadId", verifyAuth, threadReactionController.getCommentsHandler);

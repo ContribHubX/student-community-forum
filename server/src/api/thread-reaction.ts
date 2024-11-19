@@ -21,7 +21,7 @@ export default {
           const thread = await threadService.reactToThread(body);
           res.status(201).json({ message: "Reaction successful", thread });
         } catch (error: any) {
-          next(new AppError(error, 500));
+          next(error);
         }
     },
 
@@ -38,7 +38,7 @@ export default {
         const comment = await threadService.createComment(body);
         res.status(201).json({ message: "Comment successful", comment });
       } catch (error: any) {
-        next(new AppError(error, 500));
+        next(new AppError(error));
       }
     },
 
@@ -55,7 +55,25 @@ export default {
         const comments = await threadService.getComments(threadId);
         res.status(200).json(comments);
       } catch (error: any) {
-        next(new AppError(error, 500));
+        next(new AppError(error));
+      }
+    },
+
+    /**
+     * Handler to check if user already reacted.
+     *
+     * @route GET /thread/check?threadId=val&userId=val
+     */
+    async isAlreadyReactedHandler(req: Request, res: Response, next: NextFunction) {
+      const threadId = req.query.threadId as string;
+      const userId = req.query.userId as string;
+
+      try {
+        const threadService = Container.get(ThreadInteractionService);
+        const react = await threadService.getUserReaction({ userId, threadId });
+        res.status(200).json(react);
+      } catch (error: any) {
+        next(new AppError(error));
       }
     },
 }

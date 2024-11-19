@@ -37,3 +37,7 @@ export interface IThreadReactionDto {
   type: "LIKE" | "DISLIKE"
 }
 
+export interface IAlreadyReactedDto {
+  userId: string,
+  threadId: string 
+}
