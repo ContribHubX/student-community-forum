@@ -44,10 +44,20 @@ export const CommentForm = ({
       content: "",
       createdBy: "",
     });
-    console.log(commentData);
   };
 
   const handleCancel = () => {
+    if (commentData.content !== "" && commentData.content !== "<p><br></p>") {
+      const isDiscard = confirm(
+        "Are you sure you want to discard your unsaved changes?",
+      );
+
+      if (isDiscard) {
+        setIsFocused(!isFocused);
+        return;
+      }
+    }
+
     setIsFocused(!isFocused);
   };
 
