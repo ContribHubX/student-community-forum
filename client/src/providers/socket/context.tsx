@@ -88,7 +88,24 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       queryClient.setQueryData(
         getCommentsQueryOptions(comment.threadId).queryKey,
         (oldComments: Comment[] | undefined) => {
-          return oldComments ? [comment, ...oldComments] : undefined;
+          if (!oldComments) return [comment]; 
+
+          if (!comment.parentId)
+            return [comment, ...oldComments]; 
+
+          console.log(oldComments)
+
+          // if reply
+          return oldComments.map(comm => {
+            if(comm.id === comment.parentId) {
+              return {
+                ...comm,
+                replies: [...comm.replies, comment]
+              }
+            }
+
+            return comm;
+          })
         }
       );
       return { ...state };

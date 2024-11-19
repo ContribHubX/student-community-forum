@@ -23,7 +23,7 @@ export type Thread = Entity<{
 }>;
 
 export type Comment = Entity<{
-  content: string; 
+  content: string;
   parentId: string | null;
   createdAt: Date;
   createdBy: User;
@@ -40,7 +40,7 @@ export type Community = Entity<{
 }>;
 
 export type Reaction = Entity<{
-  type: ReactionType
+  type: ReactionType;
   userId: string;
   threadId: string;
 }>;

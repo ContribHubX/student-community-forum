@@ -6,7 +6,6 @@ interface CommentReplyListProps {
 }
 
 export const CommentReplyList = ({ replies }: CommentReplyListProps) => {
-
   return (
     <div className="border-t border-gray-500 border-opacity-50 flex flex-col">
       <p className="text-muted-foreground self-end mt-2 mx-2 text-sm">

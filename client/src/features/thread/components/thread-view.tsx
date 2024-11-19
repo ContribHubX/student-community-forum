@@ -7,7 +7,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useCreateReaction } from "@/features/thread/api/create-reaction";
 import { useGetUserReaction } from "../api/get-reaction";
-import { useAuth } from "@/hooks/use-auth"
+import { useAuth } from "@/hooks/use-auth";
 import clsx from "clsx";
 
 interface ThreadViewProps {
@@ -18,9 +18,9 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
   const navigate = useNavigate();
   const { authState } = useAuth();
   const { mutate: addReaction } = useCreateReaction({});
-  const { data: reaction } = useGetUserReaction({ data: { threadId: thread.id, userId: authState?.user?.id.toString() || ""},  });
-
-  console.log(reaction)
+  const { data: reaction } = useGetUserReaction({
+    data: { threadId: thread.id, userId: authState?.user?.id.toString() || "" },
+  });
 
   const onSubmitReaction = (type: string) => {
     const data = {
@@ -64,12 +64,12 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
         </div>
 
         <div className="flex gap-6">
-            <Reaction
+          <Reaction
             icon={
               <IoMdHeart
                 className={clsx(
                   "transition-colors",
-                  reactionFlag("LIKE") ? "text-accent" : "text-[#808080]"
+                  reactionFlag("LIKE") ? "text-accent" : "text-[#808080]",
                 )}
               />
             }
@@ -81,7 +81,7 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
               <BiDislike
                 className={clsx(
                   "transition-colors",
-                  reactionFlag("DISLIKE") ? "text-accent" : "text-[#808080]"
+                  reactionFlag("DISLIKE") ? "text-accent" : "text-[#808080]",
                 )}
               />
             }

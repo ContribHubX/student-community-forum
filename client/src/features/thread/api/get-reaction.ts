@@ -4,12 +4,16 @@ import { ReactionType } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 export type CheckReactedDto = {
-    userId: string,
-    threadId: string
-}  
+  userId: string;
+  threadId: string;
+};
 
-const getUserReaction = async (data: CheckReactedDto): Promise<{type: ReactionType}> => {
-  const response = await api.get(`/api/thread/check?threadId=${data.threadId}&userId=${data.userId}`);
+const getUserReaction = async (
+  data: CheckReactedDto,
+): Promise<{ type: ReactionType }> => {
+  const response = await api.get(
+    `/api/thread/check?threadId=${data.threadId}&userId=${data.userId}`,
+  );
   return response.data;
 };
 
@@ -21,11 +25,14 @@ export const getUserReactionQueryOptions = (data: CheckReactedDto) => {
 };
 
 export type getUserReactionQueryConfig = {
-  data: CheckReactedDto, 
+  data: CheckReactedDto;
   queryConfig?: QueryConfig<typeof getUserReaction>;
 };
 
-export const useGetUserReaction = ({ data, queryConfig }: getUserReactionQueryConfig) => {
+export const useGetUserReaction = ({
+  data,
+  queryConfig,
+}: getUserReactionQueryConfig) => {
   return useQuery({
     ...getUserReactionQueryOptions(data),
     ...queryConfig,
