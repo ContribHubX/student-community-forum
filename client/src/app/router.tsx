@@ -58,6 +58,19 @@ const createAppRouter = () =>
             return { Component: ThreadRoute };
           },
         },
+        {
+          path: "community/:id",
+          loader: ({ params }) => {
+            if (!params.id) {
+              throw new Error("params id is null");
+            }
+            return params.id;
+          },
+          lazy: async () => {
+            const { Community } = await import("./routes/app/community");
+            return { Component: Community };
+          },
+        },
       ],
     },
   ]);

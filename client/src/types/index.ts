@@ -48,8 +48,10 @@ export type Reaction = Entity<{
 export type ReactionType = "LIKE" | "DISLIKE";
 
 export type CommunityWithMembers = Community & {
-  members: {
-    joinedAt: Date;
-    user: User;
-  };
+  members: [
+    {
+      joinedAt: Date;
+      user: User;
+    },
+  ];
 };
