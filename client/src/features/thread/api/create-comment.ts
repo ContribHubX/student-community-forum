@@ -7,7 +7,7 @@ export const createCommentSchema = z.object({
   content: z.string().min(6, "Content must be at least 6 characters"),
 });
 
-export type CreateThreadType = z.infer<typeof createCommentSchema> & {
+export type CreateCommentType = z.infer<typeof createCommentSchema> & {
   createdBy: string;
 };
 

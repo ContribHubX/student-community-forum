@@ -10,7 +10,7 @@ import { CommentList } from "@/features/thread/components/comment-list";
 
 export const ThreadRoute = () => {
   const { id } = useParams();
-  const { data: thread, isFetching } = useGetThreadByID(id, {});
+  const { data: thread, isFetching } = useGetThreadByID({ threadId: id });
 
   if (!thread || isFetching) {
     return <div>Loading...</div>;

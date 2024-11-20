@@ -3,28 +3,29 @@ import { QueryConfig } from "@/lib/react-query";
 import { Thread } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getThreadById = async (id: string | undefined): Promise<Thread> => {
-  const response = await api.get(`/api/thread/${id}`);
+const getThreadById = async (threadId: string | undefined): Promise<Thread> => {
+  const response = await api.get(`/api/thread/${threadId}`);
   return response.data;
 };
 
-export const getThreadByIdQueryOptions = (id: string | undefined) => {
+export const getThreadByIdQueryOptions = (threadId: string | undefined) => {
   return queryOptions({
-    queryKey: ["thread", id],
-    queryFn: () => getThreadById(id),
+    queryKey: ["thread", threadId],
+    queryFn: () => getThreadById(threadId),
   });
 };
 
 export type getThreadsQueryConfig = {
+  threadId: string | undefined;
   queryConfig?: QueryConfig<typeof getThreadById>;
 };
 
-export const useGetThreadByID = (
-  id: string | undefined,
-  { queryConfig }: getThreadsQueryConfig,
-) => {
+export const useGetThreadByID = ({
+  threadId,
+  queryConfig,
+}: getThreadsQueryConfig) => {
   return useQuery({
-    ...getThreadByIdQueryOptions(id),
+    ...getThreadByIdQueryOptions(threadId),
     ...queryConfig,
   });
 };
