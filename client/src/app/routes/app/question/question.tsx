@@ -6,15 +6,10 @@ import { sampleQuestions } from "@/features/shared/data/questions";
 
 export const QuestionRoute = () => {
   return (
-    <MainLayout
-        LeftSidebar={Aside}
-        RightSidebar={RelatedTopics}
-    >
-        <section className="md:ml-[16rem] lg:mr-[22rem]">
-            <QuestionCardList
-                questions={sampleQuestions}
-            />
-        </section>
+    <MainLayout LeftSidebar={Aside} RightSidebar={RelatedTopics}>
+      <section className="md:ml-[16rem] lg:mr-[22rem]">
+        <QuestionCardList questions={sampleQuestions} />
+      </section>
     </MainLayout>
-  )
-}
+  );
+};

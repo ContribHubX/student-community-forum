@@ -43,7 +43,11 @@ export const Topics = () => {
       </div>
 
       <div className="mt-4">
-        {activeTab === "Answer" ? <QuestionCardList  questions={sampleQuestions} /> : <ThreadCardList />}
+        {activeTab === "Answer" ? (
+          <QuestionCardList questions={sampleQuestions} />
+        ) : (
+          <ThreadCardList />
+        )}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { useGetTopics } from "../api";
 
 export const RelatedTopics = () => {
- const { data: topics } = useGetTopics({});
+  const { data: topics } = useGetTopics({});
 
   return (
     <SidebarLayout

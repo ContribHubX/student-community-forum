@@ -1,4 +1,4 @@
-import { SidebarLayout } from "@/components/layouts/sidebar-layout"
+import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { SideBarItem } from "@/components/ui/sidebar-item";
 
 import newest from "@/assets/sidebar/newest.svg";
@@ -8,13 +8,13 @@ import brain from "@/assets/sidebar/brain.svg";
 export const Aside = () => {
   return (
     <SidebarLayout
-        className="hidden flex-col gap-6
+      className="hidden flex-col gap-6
         lg:flex"
-        width={230}
-        height={"full"}
-        position="left-50"
+      width={230}
+      height={"full"}
+      position="left-50"
     >
-        <div
+      <div
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-2 shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
@@ -41,6 +41,5 @@ export const Aside = () => {
         />
       </div>
     </SidebarLayout>
-  )
-}
-
+  );
+};

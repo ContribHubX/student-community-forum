@@ -34,23 +34,18 @@ export const QuestionCard = ({ question }: QuestionCardProp) => {
       </div>
 
       <div className="flex flex-col justify-between h-[100px]">
-          <RxCross2 
-            className="text-lg font-semibold self-end"
-          />
-          <div className="flex items-center">
-            {users.map(user => (
-              <Avatar
-                key={user.id}
-                className="ml-[-15px]"
-              >
-                <AvatarImage 
-                  src={user.attachment}
-                  className="rounded-full object-cover h-[50px] w-[50px]"
-                />
-              </Avatar>
-            ))}
-            <div className="ml-2 text-muted-foreground text-xs" > + 2 answers</div>
-          </div>
+        <RxCross2 className="text-lg font-semibold self-end" />
+        <div className="flex items-center">
+          {users.map((user) => (
+            <Avatar key={user.id} className="ml-[-15px]">
+              <AvatarImage
+                src={user.attachment}
+                className="rounded-full object-cover h-[50px] w-[50px]"
+              />
+            </Avatar>
+          ))}
+          <div className="ml-2 text-muted-foreground text-xs"> + 2 answers</div>
+        </div>
       </div>
     </div>
   );

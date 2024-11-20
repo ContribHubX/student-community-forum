@@ -1,7 +1,3 @@
-
-
 export const QuestionViewRoute = () => {
-  return (
-    <div>question-view</div>
-  )
-}
+  return <div>question-view</div>;
+};
