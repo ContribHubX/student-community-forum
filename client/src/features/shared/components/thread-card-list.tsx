@@ -1,5 +1,5 @@
-import { ThreadCard } from "./thread-card";
-import { useGetThreads } from "../api/get-all-threads";
+import { ThreadCard } from "@/features/thread/components/thread-card";
+import { useGetThreads } from "@/features/thread/api/get-all-threads";
 
 export const ThreadCardList = () => {
   const { data: threads } = useGetThreads({});

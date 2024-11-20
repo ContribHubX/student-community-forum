@@ -2,7 +2,7 @@ import { QuestionCardList } from "@/features/shared/components/question-card-lis
 import { TopicCard } from "./topic-card";
 import { Topic } from "@/types";
 import { useState } from "react";
-import { ThreadCardList } from "@/features/thread/components/thread-card-list";
+import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { sampleQuestions } from "@/features/shared/data/questions";
 
 const topic: Topic = {

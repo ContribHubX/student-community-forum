@@ -24,7 +24,7 @@ export const MainLayout = ({
 
         {children}
 
-        { RightSidebar && <RightSidebar />}
+        {RightSidebar && <RightSidebar />}
       </main>
     </div>
   );
