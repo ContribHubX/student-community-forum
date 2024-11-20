@@ -4,7 +4,7 @@ import * as schema from "@/database/schema";
 import { TopicTable, TopicFollowersTable } from "@/database/schema/topic";
 import { ITopic, ITopicDto, ITopicFollowersDto } from "../interfaces/ITopic";
 import { AppError } from "@/libs/app-error";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 @Service()
 class TopicRepository {
@@ -52,6 +52,27 @@ class TopicRepository {
             try {
                 const topics = await this.db.query.TopicTable.findMany({
                     with: { createdBy: true },
+                });
+                resolve(topics as unknown as ITopic[]);
+            } catch (error: any) {
+                reject(new AppError(error, 500));
+            }
+        });
+    }
+
+    // TODO get popular topicss
+    public getPopular(): Promise<ITopic[]>  {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const topics = await this.db.query.TopicTable.findMany({
+                    columns: {},
+                    extras: {
+                        followerCount: sql<number>`(
+                            SELECT COUNT(topic_i) FROM topic_followers
+                            WHERE ${TopicTable.id} = ${TopicFollowersTable.topicId}
+                             
+                        )`.as("follower_count")
+                    }
                 });
                 resolve(topics as unknown as ITopic[]);
             } catch (error: any) {

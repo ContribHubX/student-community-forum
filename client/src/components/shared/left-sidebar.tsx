@@ -12,8 +12,8 @@ import blogging from "@/assets/sidebar/groups/blogging.svg";
 import uc from "@/assets/sidebar/groups/uc.svg";
 import uccebu from "@/assets/sidebar/groups/universityofcebu.svg";
 
-import { Link } from "react-router-dom";
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
+import { SideBarItem } from "../ui/sidebar-item";
 
 const popularTagsData = [
   {
@@ -167,42 +167,5 @@ export const LeftSidebar = () => {
     // >
 
     // </aside>
-  );
-};
-
-interface SidebarItemProps {
-  title: string;
-  icon: string;
-  description: string;
-  iconBgcolor: string;
-}
-
-const SideBarItem = ({
-  title,
-  icon,
-  description,
-  iconBgcolor,
-}: SidebarItemProps) => {
-  const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
-  };
-  return (
-    <Link to="">
-      <div className="flex gap-2 p-1">
-        <div
-          className={`rounded-xl h-8 w-8 flex items-center justify-center`}
-          style={{ backgroundColor: iconBgcolor }}
-        >
-          <img src={icon} alt="" className="h-5" />
-        </div>
-
-        <div>
-          <p className="text-sm">{truncateText(title, 23)}</p>
-          <p className="text-xs text-muted-foreground font-light">
-            {truncateText(description, 22)}
-          </p>
-        </div>
-      </div>
-    </Link>
   );
 };

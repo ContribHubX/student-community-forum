@@ -30,7 +30,7 @@ class ThreadRepository {
             ...this.threadReactionExtras(),
           },
           with: {
-            user: true,
+            createdBy: true,
           },
         });
 
@@ -39,7 +39,7 @@ class ThreadRepository {
           return;
         }
 
-        resolve(this.threadTransformer(result));
+        resolve(result as unknown as IThreadFull);
       } catch (error: any) {
         reject(new AppError(error || "Database error"));
       }
@@ -78,7 +78,7 @@ class ThreadRepository {
 
         const threadCreated = await this.findOneById(threadId);
 
-        resolve(this.threadTransformer(threadCreated));
+        resolve(threadCreated);
       } catch (error: any) {
         let errorMessage = "Error inserting thread";
         let statusCode = 500;
@@ -108,34 +108,18 @@ class ThreadRepository {
             ...this.threadReactionExtras(),
           },
           with: {
-            user: true,
+            createdBy: true,
           },
           orderBy: [desc(ThreadTable.createdAt)],
         });
 
-        resolve(result.map((thread) => this.threadTransformer(thread)));
+        resolve(result as unknown as IThreadFull[]);
       } catch (error: any) {
         reject(new AppError(error || "Database error"));
       }
     });
   }
-
-  /**
-   * Transforms raw thread data into the IThreadFull format.
-   * 
-   * @private
-   * @param {any} rawResult - The raw thread data from the database.
-   * @returns {IThreadFull} The transformed thread data.
-   */
-  private threadTransformer(rawResult: any): IThreadFull {
-    const { user, ...threadData } = rawResult;
-
-    return {
-      ...threadData,
-      createdBy: user,
-    } as unknown as IThreadFull;
-  }
-
+  
   /**
    * Generates additional SQL columns for reaction and comment counts.
    * 

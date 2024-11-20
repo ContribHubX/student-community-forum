@@ -20,7 +20,7 @@ export const ThreadTable = mysqlTable("thread", {
 });
 
 export const threadRelations = relations(ThreadTable, ({ one, many }) => ({
-  user: one(UserTable, {
+  createdBy: one(UserTable, {
     fields: [ThreadTable.createdBy],
     references: [UserTable.id],
   }),

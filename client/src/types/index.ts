@@ -55,3 +55,17 @@ export type CommunityWithMembers = Community & {
     },
   ];
 };
+
+export type Topic = Entity<{
+  name: string;
+  attachment: string;
+  createdBy: User | null;
+  followerCount: number;
+}>;
+
+export type Question = Entity<{
+  name: string;
+  title: string;
+  content: string;
+  createdBy: User;
+}>;
