@@ -1,25 +1,20 @@
-import { useState } from "react";
-import { setDarkMode } from "../../utils/theme";
+import { useTheme } from "@/hooks/use-theme";
 
 export const ThemeToggle = () => {
-  const [isDark, setIsDark] = useState(() => {
-    const mode = localStorage.getItem("dark") === "1";
-    setDarkMode(mode);
-    return mode;
-  });
-
-  const toggleMode = () => {
-    const mode = !isDark;
-    setIsDark(mode);
-    setDarkMode(mode);
-  };
+  const { toggleMode } = useTheme();
 
   return (
-    <button
-      onClick={toggleMode}
-      className="border px-2 cursor-pointer  rounded-full bg-secondary flex items-center"
-    >
-      Click
-    </button>
+    // <Button
+    //   onClick={toggleMode}
+    //   className="border px-2 cursor-pointer bg-accent flex items-center text-accent-foreground"
+    // >
+    //   Click
+    // </Button>
+    <label className="toggle-switch">
+      <input type="checkbox" onChange={toggleMode} />
+      <div className="toggle-switch-background">
+        <div className="toggle-switch-handle"></div>
+      </div>
+    </label>
   );
 };

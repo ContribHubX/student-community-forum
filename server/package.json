@@ -1,11 +1,15 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "src/app.js",
+  "main": "src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint",
-    "dev": "tsc --noEmit && tsx --watch src/app.ts"
+    "dev": "tsc --noEmit && tsx --watch src/app.ts",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:update": "npx drizzle-kit push",
+    "db:seed": "node --import tsx --env-file .env ./src/database/seeder/topic.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +20,9 @@
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/multer": "^1.4.12",
+    "@types/uuid": "^10.0.0",
+    "drizzle-kit": "^0.28.1",
     "eslint": "^9.12.0",
     "globals": "^15.11.0",
     "prettier": "^3.3.3",
@@ -26,13 +33,21 @@
   "dependencies": {
     "arctic": "^1.9.2",
     "celebrate": "^15.0.3",
+    "cloudinary": "^1.41.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.36.3",
     "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "mysql2": "^3.11.4",
     "node-fetch": "^3.3.2",
     "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1",
     "typedi": "^0.10.0",
+    "uuid": "^11.0.2",
     "winston": "^3.15.0"
   }
 }

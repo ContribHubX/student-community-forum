@@ -10,6 +10,7 @@ export function setDarkMode(isDark: boolean) {
     "data-color-scheme",
     isDark ? "dark" : "light",
   );
+
   document.documentElement
     .querySelector('meta[name="theme-color"]')
     ?.setAttribute("content", isDark ? "#151216" : "#ebdfe9");
