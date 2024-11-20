@@ -45,6 +45,24 @@ export type Reaction = Entity<{
   threadId: string;
 }>;
 
+/* SAYOP GURO NI PRE */
+export type Notification = Entity<{
+  message: string;
+  entityId: string;
+  entityType: entityType;
+  type: ThreadNotificationType & TaskNotificationType;
+  link: string;
+  isRead: boolean;
+  createdBy: User;
+  receiveBy: string;
+}>;
+
+type entityType = "thread" | "task";
+
+type ThreadNotificationType = "like" | "dislike" | "comment" | "reply";
+
+type TaskNotificationType = "assigned" | "updated" | "completed";
+
 export type ReactionType = "LIKE" | "DISLIKE";
 
 export type CommunityWithMembers = Community & {

@@ -1,11 +1,10 @@
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
-import { Thread } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getNotification = async (
   userId: string | undefined,
-): Promise<Thread[]> => {
+): Promise<Notification[]> => {
   const response = await api.get(`/api/notif/${userId}`);
   return response.data;
 };
