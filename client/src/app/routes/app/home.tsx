@@ -8,8 +8,8 @@ export const HomeRoute = () => {
   const { authState } = useAuth();
 
   if (!authState?.user?.id) return <p>Loading...</p>;
-  console.log(authState.user);
 
+  console.log(authState.user);
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section

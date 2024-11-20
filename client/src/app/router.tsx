@@ -55,12 +55,24 @@ const createAppRouter = () =>
           },
         },
         {
+          path: "community/:id",
+          loader: ({ params }) => {
+            if (!params.id) {
+              throw new Error("params id is null");
+            }
+            return params.id;
+          },
+          lazy: async () => {
+            const { Community } = await import("./routes/app/community");
+            return { Component: Community };
+            }
+        },
+        {
           path: "/topic/:topicId",
           lazy: async () => {
             const { TopicRoute } = await import("./routes/app/topic");
             return { Component: TopicRoute };
-          },
-        },
+         },
         {
           path: "/question",
           lazy: async () => {

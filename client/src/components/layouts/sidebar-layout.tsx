@@ -22,7 +22,7 @@ export const SidebarLayout = ({
   } else if (typeof height === "number") {
     calculatedHeight = "number";
   }
-
+  
   return (
     <aside
       className={`fixed overflow-y-auto ${position} ${className} rounded-2xl`}

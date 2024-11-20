@@ -18,3 +18,7 @@ export function base64ToFile(base64: string, filename: string): File {
 
   return new File([byteArray], filename, { type: mime || "image/png" });
 }
+
+export const truncateText = (text: string, maxLength: number) => {
+  return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
+};
