@@ -55,12 +55,19 @@ const createAppRouter = () =>
           },
         },
         {
-          path: "/topic/:topicId", 
+          path: "/topic/:topicId",
           lazy: async () => {
             const { TopicRoute } = await import("./routes/app/topic");
             return { Component: TopicRoute };
           },
-        }
+        },
+        {
+          path: "/question",
+          lazy: async () => {
+            const { QuestionRoute } = await import("./routes/app/question/question");
+            return { Component: QuestionRoute };
+          },
+        },
       ],
     },
   ]);

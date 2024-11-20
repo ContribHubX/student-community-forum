@@ -5,7 +5,7 @@ export interface ITopic {
     name: string;
     attachment: string;
     createdAt: Date;
-createdBy: IUser;
+    createdBy: IUser;
     followerCount: number;
 }
 

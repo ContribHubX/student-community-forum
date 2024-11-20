@@ -59,11 +59,11 @@ export type Topic = Entity<{
   attachment: string;
   createdBy: User | null;
   followerCount: number;
-}>
+}>;
 
 export type Question = Entity<{
   name: string;
   title: string;
   content: string;
   createdBy: User;
-}>
+}>;

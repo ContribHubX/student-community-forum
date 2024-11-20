@@ -1,4 +1,4 @@
-import { mysqlTable, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { mysqlTable, timestamp, varchar, text } from "drizzle-orm/mysql-core";
 import { UserTable } from "./user";
 import { v4 as uuidv4 } from "uuid";
 import { relations } from "drizzle-orm";
@@ -6,7 +6,7 @@ import { relations } from "drizzle-orm";
 export const TopicTable = mysqlTable("topics", {
     id: varchar("id", { length: 255 }).primaryKey().$default(uuidv4),
     name: varchar("name", { length: 50 }).notNull(),
-    attachment: varchar("attachment", { length: 255 }),
+    attachment: text("attachment"),
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: varchar("created_by", { length: 255 })
       .references(() => UserTable.id)
