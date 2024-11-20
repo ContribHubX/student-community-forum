@@ -68,6 +68,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
      */
     case OPERATION.ADD_NEW_THREAD: {
       const { thread, queryClient } = action.payload;
+      console.log(thread);
       queryClient.setQueryData(
         getThreadsQueryOptions().queryKey,
         (oldThreads: Thread[] | undefined) => {

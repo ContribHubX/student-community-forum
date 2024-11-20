@@ -71,6 +71,15 @@ const createAppRouter = () =>
           },
         },
         {
+          path: "/question/:questionId",
+          lazy: async () => {
+            const { QuestionViewRoute } = await import(
+              "./routes/app/question/question-view"
+            );
+            return { Component: QuestionViewRoute };
+          },
+        },
+        {
           path: "/community/all",
           lazy: async () => {
             const { CommunitiesRoute } = await import(
