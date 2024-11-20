@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { CreateThreadForm } from "./create-thread-form";
-import { ThreadCardList } from "./thread-card-list";
+import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { Modal } from "@/components/ui/modal";

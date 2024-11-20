@@ -143,12 +143,12 @@ class ThreadInteractionRepository {
                     .ThreadTable
                     .findFirst({
                         where: eq(schema.ThreadTable.id, threadId),
-                        with: { user: true }
+                        with: { createdBy: true }
                     });
 
-                if (!result?.user) return reject(new AppError("User not found", 404));
+                if (!result?.createdBy) return reject(new AppError("User not found", 404));
 
-                resolve(result.user);
+                resolve(result.createdBy);
             } catch (error: any) {
                 reject(new AppError(error));
             }
