@@ -24,10 +24,6 @@ const createAppRouter = () =>
             return { Component: OAuthCallback };
           },
         },
-        // {
-        //   path: "sign-up",
-        //   lazy: async () => {},
-        // },
       ],
     },
     {
@@ -56,6 +52,40 @@ const createAppRouter = () =>
           lazy: async () => {
             const { ThreadRoute } = await import("./routes/app/thread-route");
             return { Component: ThreadRoute };
+          },
+        },
+        {
+          path: "/topic/:topicId",
+          lazy: async () => {
+            const { TopicRoute } = await import("./routes/app/topic");
+            return { Component: TopicRoute };
+          },
+        },
+        {
+          path: "/question",
+          lazy: async () => {
+            const { QuestionRoute } = await import(
+              "./routes/app/question/question"
+            );
+            return { Component: QuestionRoute };
+          },
+        },
+        {
+          path: "/question/:questionId",
+          lazy: async () => {
+            const { QuestionViewRoute } = await import(
+              "./routes/app/question/question-view"
+            );
+            return { Component: QuestionViewRoute };
+          },
+        },
+        {
+          path: "/community/all",
+          lazy: async () => {
+            const { CommunitiesRoute } = await import(
+              "./routes/app/community/communities"
+            );
+            return { Component: CommunitiesRoute };
           },
         },
       ],
