@@ -6,13 +6,9 @@ const router = Router();
 export default (app: Router) => {
   app.use("/auth", router);
 
-  router.get("/google", authController.generateGoogleAuthURL);
+  router.get("/url/:provider", authController.generateAuthURL);
 
-  router.get("/github", authController.generateGithubAuthURL);
-
-  router.get("/google/callback", authController.googleAuthCallback);
-
-  router.get("/github/callback", authController.githubAuthCallback);
-  
+  router.get("/:provider/callback", authController.authCallback);
+    
   router.get("/me", authController.getMyDetails);
 };

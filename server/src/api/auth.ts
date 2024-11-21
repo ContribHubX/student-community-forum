@@ -3,43 +3,48 @@ import AuthService from "@/service/auth/auth";
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "@/libs/app-error";
 import { parseAuthToken } from "@/libs/security";
+import { SocialAuthProvider } from "@/types";
+import LocalAuthService from "@/service/auth/local-auth";
 
 export default {
   /**
-   * Initiates the Google OAuth login process.
-   * Redirects the user to the Google OAuth authorization URL.
+   * Initiates the OAuth login process.
+   * Redirects the user to the OAuth authorization URL.
    *
-   * @route GET /auth/google
-   * @returns {Object} Redirect URL for Google OAuth login
+   * @route GET /auth/url/:provider
+   * @returns {Object} Redirect URL for OAuth login
    */
-  async generateGoogleAuthURL(req: Request, res: Response) {
+  async generateAuthURL(req: Request, res: Response) {
+    const provider = req.params.provider
+
     const authService: AuthService = Container.get(AuthService);
-    const redirectUrl = await authService.loginWithProvider("GOOGLE");
+    const redirectUrl = await authService.loginWithProvider(provider.toUpperCase() as SocialAuthProvider);
     res.status(200).json({ url: redirectUrl });
   },
 
   /**
    * Handles the callback from Google OAuth after the user authenticates.
    *
-   * @route GET /auth/google/callback
-   * @param {string} code - The authorization code from Google OAuth.
+   * @route GET /auth/:provider/callback
+   * @param {string} code - The authorization code from OAuth.
    * @param {string} state - The state parameter from the OAuth process.
    * @returns {Object} The user's authentication result, including tokens.
    * @throws {500} Authentication failed.
    */
-  async googleAuthCallback(req: Request, res: Response, next: NextFunction) {
+  async authCallback(req: Request, res: Response, next: NextFunction) {
     const { code, state } = req.query;
+    let provider = (req.params.provider.toUpperCase()) as SocialAuthProvider;
     const authService: AuthService = Container.get(AuthService);
 
     try {
       const result = await authService.handleCallback(
-        "GOOGLE",
+        provider,
         code as string,
         state as string,
       );
 
       // Modify the accessToken to include the provider identifier
-      const modifiedAccessToken = `GOOGLE_${result.accessToken}`;
+      const modifiedAccessToken = `${provider}_${result.accessToken}`;
 
       // Set cookies for user
       res.cookie("token", modifiedAccessToken, {
@@ -50,57 +55,7 @@ export default {
       // Handle the user data and tokens, e.g., store in session, issue JWT, etc.
       res.status(200).json(result);
     } catch (error) {
-      console.error("Error during Google OAuth callback:", error);
-      next(new AppError("Authentication failed"));
-    }
-  },
-
-  /**
-   * Initiates the GitHub OAuth login process.
-   * Redirects the user to the GitHub OAuth authorization URL.
-   *
-   * @route GET /auth/github
-   * @returns {Object} Redirect URL for GitHub OAuth login
-   */
-  async generateGithubAuthURL(req: Request, res: Response) {
-    const authService: AuthService = Container.get(AuthService);
-    const redirectUrl = await authService.loginWithProvider("GITHUB");
-    res.status(200).json({ url: redirectUrl });
-  },
-
-  /**
-   * Handles the callback from GitHub OAuth after the user authenticates.
-   *
-   * @route GET /auth/github/callback
-   * @param {string} code - The authorization code from GitHub OAuth.
-   * @param {string} state - The state parameter from the OAuth process.
-   * @returns {Object} The user's authentication result, including tokens.
-   * @throws {500} Authentication failed.
-   */
-  async githubAuthCallback(req: Request, res: Response, next: NextFunction) {
-    const { code, state } = req.query;
-    const authService: AuthService = Container.get(AuthService);
-
-    try {
-      const result = await authService.handleCallback(
-        "GITHUB",
-        code as string,
-        state as string,
-      );
-
-      // Modify the accessToken to include the provider identifier
-      const modifiedAccessToken = `GITHUB_${result.accessToken}`;
-
-      // Set cookies for user 1 hour
-      res.cookie("token", modifiedAccessToken, {
-        maxAge: 3600000,
-        httpOnly: true,
-      });
-
-      // Handle the user data and tokens, e.g., store in session, issue JWT, etc.
-      res.status(200).json(result);
-    } catch (error) {
-      console.error("Error during Github OAuth callback:", error);
+      console.error("Error during OAuth callback:", error);
       next(new AppError("Authentication failed"));
     }
   },
@@ -133,6 +88,19 @@ export default {
     } catch (error) {
       console.error("Error during user data retrieval:", error);
       next(new AppError("Authentication failed"));
+    }
+  },
+
+  // for local authentication
+  async register(req: Request, res: Response, next: NextFunction) {
+    const localAuthService: LocalAuthService = Container.get(LocalAuthService);
+    const body = req.body;
+
+    try {
+      await localAuthService.register(body);
+      res.status(201).json({ message: "Register successfull" });
+    } catch (error: any) {
+      next(new AppError(error));
     }
   },
 };

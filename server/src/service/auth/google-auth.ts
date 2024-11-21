@@ -1,15 +1,19 @@
-import { IAuthService } from "@/domain/interfaces/IAuth";
-import { AuthResponse } from "@/types";
+import { ISocialAuthService } from "@/domain/interfaces/IAuth";
+import { AuthProvider, AuthResponse } from "@/types";
 import { Google } from "arctic";
 import { randomBytes } from "crypto";
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import { googleConfig } from "@/config/oauth";
 import { AppError } from "@/libs/app-error";
+import UserRepository from "@/domain/repository/user";
 
 @Service()
-class GoogleAuthService implements IAuthService {
+class GoogleAuthService implements ISocialAuthService {
   private google: Google;
   private codeVerifier: string;
+
+  @Inject(() => UserRepository)
+  private userRepo!: UserRepository
 
   constructor() {
     this.codeVerifier = this.generateCodeVerifier();
@@ -82,7 +86,14 @@ class GoogleAuthService implements IAuthService {
       name: userData.name,
       email: userData.email,
       attachment: userData.picture,
+      password: null,
+      provider: "GOOGLE" as AuthProvider
     };
+
+    const existingUser = await this.userRepo.getByEmail(user.email);
+
+    if (!existingUser) await this.userRepo.create(user)
+    else await this.userRepo.update(user)
 
     return { user, accessToken };
   }

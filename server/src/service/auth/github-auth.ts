@@ -1,14 +1,18 @@
 import fetch from "node-fetch";
-import { Service } from "typedi";
-import { IAuthService } from "@/domain/interfaces/IAuth";
+import { Inject, Service } from "typedi";
+import { ISocialAuthService } from "@/domain/interfaces/IAuth";
 import { GitHub } from "arctic";
-import { AuthResponse } from "@/types";
+import { AuthProvider, AuthResponse } from "@/types";
 import { githubConfig } from "@/config/oauth";
 import { AppError } from "@/libs/app-error";
+import UserRepository from "@/domain/repository/user";
 
 @Service()
-export class GithubAuthService implements IAuthService {
+class GithubAuthService implements ISocialAuthService {
   private github: GitHub;
+
+  @Inject(() => UserRepository)
+  private userRepo!: UserRepository
 
   constructor() {
     this.github = new GitHub(
@@ -67,7 +71,7 @@ export class GithubAuthService implements IAuthService {
     });
     const userData: any = await userResponse.json();
 
-    // Fetch the user's email(s)
+    // Fetch the user's email
     const emailsResponse = await fetch(githubConfig.FETCH_USER_EMAILS_URL, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -80,8 +84,18 @@ export class GithubAuthService implements IAuthService {
       name: userData.login,
       email: emails[0].email,
       attachment: userData.avatar_url,
+      password: null,
+      provider: "GITHUB" as AuthProvider
     };
+
+    const existingUser = await this.userRepo.getByEmail(user.email);
+
+    if (!existingUser) await this.userRepo.create(user)
+    else await this.userRepo.update(user)
 
     return { user, accessToken: accessToken };
   }
 }
+
+
+export default GithubAuthService;
