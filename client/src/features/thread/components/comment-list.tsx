@@ -8,7 +8,9 @@ interface CommentListProps {
 }
 
 export const CommentList = ({ threadId }: CommentListProps) => {
-  const { data: comments, isFetching } = useGetThreadComments(threadId, {});
+  const { data: comments, isFetching } = useGetThreadComments({
+    threadId: threadId,
+  });
 
   if (isFetching) {
     return <div>Loading...</div>;

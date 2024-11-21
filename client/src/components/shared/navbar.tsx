@@ -3,9 +3,16 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
 import { IoMdNotifications } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
+import { useGetNotification } from "@/features/user/api/get-notifications";
 
 export const Navbar = () => {
   const { authState } = useAuth();
+
+  const { data: notification } = useGetNotification({
+    userId: authState.user?.id,
+  });
+
+  console.log(notification);
 
   return (
     <nav
@@ -36,7 +43,7 @@ export const Navbar = () => {
             <Avatar className="p-[4px] bg-accent">
               <AvatarImage
                 src={authState.user?.attachment}
-                className="rounded-full "
+                className="rounded-full"
               />
             </Avatar>
           </div>

@@ -1,6 +1,6 @@
 import { TextEditor } from "@/components/shared/text-editor";
 import {
-  CreateThreadType,
+  CreateCommentType,
   useCreateComment,
 } from "@/features/thread/api/create-comment";
 import { useAuth } from "@/hooks/use-auth";
@@ -24,7 +24,7 @@ export const CommentForm = ({
   const [isFocused, setIsFocused] = useState(false);
   const { authState } = useAuth();
 
-  const [commentData, setCommentData] = useState<CreateThreadType>({
+  const [commentData, setCommentData] = useState<CreateCommentType>({
     content: "",
     createdBy: "",
   });
@@ -61,7 +61,7 @@ export const CommentForm = ({
     setIsFocused(!isFocused);
   };
 
-  const handleContentChange = (data: Partial<CreateThreadType>) => {
+  const handleContentChange = (data: Partial<CreateCommentType>) => {
     setCommentData((prevData) => ({
       ...prevData,
       ...data,

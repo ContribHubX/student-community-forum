@@ -3,28 +3,31 @@ import { QueryConfig } from "@/lib/react-query";
 import { Comment } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getComments = async (id: string | undefined): Promise<Comment[]> => {
-  const response = await api.get(`/api/thread/comment/${id}`);
+const getComments = async (
+  threadId: string | undefined,
+): Promise<Comment[]> => {
+  const response = await api.get(`/api/thread/comment/${threadId}`);
   return response.data;
 };
 
-export const getCommentsQueryOptions = (id: string | undefined) => {
+export const getCommentsQueryOptions = (threadId: string | undefined) => {
   return queryOptions({
-    queryKey: ["comments", id],
-    queryFn: () => getComments(id),
+    queryKey: ["comments", threadId],
+    queryFn: () => getComments(threadId),
   });
 };
 
 export type getCommentsQueryConfig = {
+  threadId: string | undefined;
   queryConfig?: QueryConfig<typeof getComments>;
 };
 
-export const useGetThreadComments = (
-  id: string | undefined,
-  { queryConfig }: getCommentsQueryConfig,
-) => {
+export const useGetThreadComments = ({
+  threadId,
+  queryConfig,
+}: getCommentsQueryConfig) => {
   return useQuery({
-    ...getCommentsQueryOptions(id),
+    ...getCommentsQueryOptions(threadId),
     ...queryConfig,
   });
 };

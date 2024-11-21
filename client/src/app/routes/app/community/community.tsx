@@ -2,9 +2,8 @@ import { Navbar } from "@/components/shared/navbar";
 import { useGetCommunityById } from "@/features/community/api/get-community";
 import { useParams } from "react-router-dom";
 import { CommunityView } from "@/features/community/components/community-view";
-import { Threads } from "@/features/thread/components";
+import { Threads, UpcomingEventsList } from "@/features/thread/components";
 import { useAuth } from "@/hooks/use-auth";
-import { UpcomingEventsList } from "@/features/thread/components/upcoming-events";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export const Community = () => {
