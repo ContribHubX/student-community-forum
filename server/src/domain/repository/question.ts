@@ -1,9 +1,12 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
-import { IQuestion, IQuestionDto, IQuestionRequest, IQuestionRequestDto } from "../interfaces/IQuestion";
+import { IQuestion, IQuestionCreation, IQuestionDto, IQuestionRequest, IQuestionRequestDto } from "../interfaces/IQuestion";
 import { AppError } from "@/libs/app-error";
 import { eq } from "drizzle-orm";
+import { IThread } from "../interfaces/IThread";
+import { IUser } from "../interfaces/IUser";
+import { QuestionRequestTable } from "@/database/schema";
 
 @Service()
 class QuestionRepository {
@@ -82,12 +85,27 @@ class QuestionRepository {
      * @param dto - The data transfer object containing request details.
      * @returns A promise that resolves when the request is created.
      */
-    public request(dto: IQuestionRequestDto): Promise<void> {
+    public request(dto: IQuestionRequestDto): Promise<IQuestionRequest> {
         return new Promise(async (resolve, reject) => {
             try {
-                await this.db.insert(schema.QuestionRequestTable).values({ ...dto }).$returningId();
+                const result = await this.db.insert(QuestionRequestTable).values({ ...dto }).$returningId();
 
-                resolve();
+                const requestId = result[0].id;
+
+                const request = await this.db 
+                    .query
+                    .QuestionRequestTable
+                    .findFirst({
+                        columns: {},
+                        where: eq(QuestionRequestTable.id, requestId),
+                        with: { 
+                            question: true,
+                            requestedBy: true,
+                            requestedTo: true
+                        }
+                    })
+
+                resolve(request as unknown as IQuestionRequest);
             } catch (error: any) {
                 reject(new AppError(error));
             }
@@ -114,6 +132,67 @@ class QuestionRepository {
                 });
 
                 resolve(result as unknown as IQuestionRequest);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    public getThreadsByQuestionId(questionId: string): Promise<IThread[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .query
+                    .QuestionTable
+                    .findFirst({
+                        columns: {},
+                        with: { 
+                            threads: {
+                                with: {
+                                    createdBy: true
+                                }
+                            } 
+                        },
+                        where: eq(schema.QuestionTable.id, questionId)
+                    });
+                
+                if (!result) return reject(new AppError("Question not found", 404));
+
+                resolve(result.threads as unknown as IThread[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    public getUsersByQuestionId(questionId: string): Promise<IUser[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .query
+                    .QuestionTable
+                    .findFirst({
+                        columns: {},
+                        with: { 
+                            threads: {
+                                columns: {},
+                                with: {
+                                    createdBy: true
+                                }
+                            } 
+                        },
+                        where: eq(schema.QuestionTable.id, questionId)
+                    });
+                
+                if (!result) return reject(new AppError("Question not found", 404));
+
+                const users = Array.from(
+                    new Map(
+                        result.threads.map(res => [res.createdBy.id, res.createdBy])
+                    ).values()
+                );
+
+                resolve(users as unknown as IUser[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }

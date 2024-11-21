@@ -5,11 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint",
-    "dev": "tsc --noEmit && tsx --watch src/app.ts",
+    "dev": "tsc --noEmit && tsx --watch src/app.ts --ignore my-logs.log",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate",
     "db:update": "npx drizzle-kit push",
-    "db:seed": "node --import tsx --env-file .env ./src/database/seeder/topic.ts"
+    "db:seed": "node --import tsx --env-file .env ./src/database/seeder/question.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.12.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "arctic": "^1.9.2",
+    "bcrypt": "^5.1.1",
     "celebrate": "^15.0.3",
     "cloudinary": "^1.41.3",
     "cookie-parser": "^1.4.7",

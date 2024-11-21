@@ -9,7 +9,6 @@ export const HomeRoute = () => {
 
   if (!authState?.user?.id) return <p>Loading...</p>;
 
-  console.log(authState.user);
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section

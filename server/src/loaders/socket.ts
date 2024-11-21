@@ -33,7 +33,7 @@ function authenticateSocket(socket: Socket, next: (err?: Error) => void): void {
  * Handles a new client connection.
  */
 function handleNewConnection(socket: Socket, eventManager: EventManager): void {
-    const userId = (socket as any).userId;
+    const userId = (socket as any).userId.toString();
     const client = new Client(socket);
 
     // Connect the client using EventManager with the userId

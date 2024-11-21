@@ -11,7 +11,9 @@ export type ClientEventOptions = {
   client: Client
 }
 
-export type AuthProvider = "GOOGLE" | "GITHUB";
+export type AuthProvider = "GOOGLE" | "GITHUB" | "LOCAL";
+
+export type SocialAuthProvider = Exclude<AuthProvider, "LOCAL">;
 
 export type UPLOAD_TYPE = "thread" | "comment" | "community" | "topic";
 

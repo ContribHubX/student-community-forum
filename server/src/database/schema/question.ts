@@ -3,6 +3,7 @@ import { v4 as uuidV4 } from "uuid";
 import { UserTable } from "./user";
 import { TopicTable } from "./topic";
 import { relations } from "drizzle-orm";
+import { ThreadTable } from "./thread";
 
 export const QuestionTable = mysqlTable("question", {
     id: varchar("id", { length: 255 }).primaryKey().$default(uuidV4),
@@ -39,7 +40,8 @@ export const questionRelations = relations(QuestionTable, ({ one, many }) => ({
         fields: [QuestionTable.createdBy],
         references: [UserTable.id]
     }),
-    requests: many(QuestionRequestTable)
+    requests: many(QuestionRequestTable),
+    threads: many(ThreadTable)
 }))
 
 export const questionReqRelations = relations(QuestionRequestTable, ({ one }) => ({

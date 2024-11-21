@@ -1,12 +1,18 @@
 import { Service, Inject } from "typedi";
 import QuestionRepository from "@/domain/repository/question";
 import { AppError } from "@/libs/app-error";
-import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest } from "@/domain/interfaces/IQuestion";
+import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuestionCreation } from "@/domain/interfaces/IQuestion";
+import { IThread } from "@/domain/interfaces/IThread";
+import { IUser } from "@/domain/interfaces/IUser";
+import EventManager from "@/sockets/event-manager";
 
 @Service()
 class QuestionService {
     @Inject(() => QuestionRepository)
     private questionRepo!: QuestionRepository;
+
+    @Inject(() => EventManager)
+    private eventManager!: EventManager;
 
     /**
      * Creates a new question.
@@ -57,11 +63,14 @@ class QuestionService {
      * Creates a request for a user to answer a question.
      * 
      * @param dto - Data transfer object for creating a question request.
-     * @returns {Promise<void>}
+     * @returns {Promise<IQuestionRequest>}
      */
-    public async createQuestionRequest(dto: IQuestionRequestDto): Promise<void> {
+    public async createQuestionRequest(dto: IQuestionRequestDto): Promise<IQuestionRequest> {
         try {
-            await this.questionRepo.request(dto);
+            const result = await this.questionRepo.request(dto);
+            this.eventManager.publishToOne<IQuestionRequest>("request--new", result, result.requestedTo.id);
+
+            return result;
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);
@@ -77,6 +86,24 @@ class QuestionService {
     public async getQuestionsRequestedTo(requestedToId: string): Promise<IQuestionRequest> {
         try {
             return await this.questionRepo.getRequest(requestedToId);
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    public async getThreadsByQuestionId(questionId: string): Promise<IThread[]> {
+        try {
+            return await this.questionRepo.getThreadsByQuestionId(questionId);
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    public async getUsersByQuestion(questionId: string): Promise<IUser[]> {
+        try {
+            return await this.questionRepo.getUsersByQuestionId(questionId);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

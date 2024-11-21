@@ -8,8 +8,6 @@ export function errorHandler(
   next: NextFunction,
 ) {
   const status =  err instanceof AppError ? err.status : 500;
-  
-  console.log(err instanceof AppError)
 
   const message = err.message || "Internal Server Error";
   const details = err.details || null;
