@@ -90,7 +90,7 @@ class ThreadInteractionService {
       return result;
     } catch (error: any) {
       if (error instanceof AppError) throw error;
-      throw new AppError("Create thread error");
+      throw new AppError(error);
     }
   }
 

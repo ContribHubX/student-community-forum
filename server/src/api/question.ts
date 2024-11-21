@@ -87,4 +87,38 @@ export default {
             next(new AppError(error));
         }
     },
+
+    /**
+     * Handler to retrieve all threads by question.
+     * 
+     * @route GET /questions/threads/:questionId
+     */
+    async getThreadsByQuestionHandler(req: Request, res: Response, next: NextFunction) {
+        const questionId = req.params.questionId;
+
+        try {
+            const questionService = Container.get(QuestionService);
+            const response = await questionService.getThreadsByQuestionId(questionId);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    /**
+     * Handler to retrieve all users by question.
+     * 
+     * @route GET /questions/users/:questionId
+     */
+    async getUsersByQuestionHandler(req: Request, res: Response, next: NextFunction) {
+        const questionId = req.params.questionId;
+
+        try {
+            const questionService = Container.get(QuestionService);
+            const response = await questionService.getUsersByQuestion(questionId);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
 };

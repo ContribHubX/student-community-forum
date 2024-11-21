@@ -22,7 +22,9 @@ export const MainLayout = ({
       >
         {LeftSidebar && <LeftSidebar />}
 
-        {children}
+        <div 
+          style={{ minHeight: "calc(100vh - 8.5rem)" }}
+        >{children}</div>
 
         {RightSidebar && <RightSidebar />}
       </main>

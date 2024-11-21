@@ -17,5 +17,7 @@ export default (app: Router) => {
 
     router.get("/requested/:userId", verifyAuth, questionController.getQuestionsRequestedToHandler);
 
-    
+    router.get("/threads/:questionId", verifyAuth, questionController.getThreadsByQuestionHandler);
+
+    router.get("/users/:questionId", verifyAuth, questionController.getUsersByQuestionHandler);
 }

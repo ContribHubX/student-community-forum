@@ -20,6 +20,10 @@ export type Thread = Entity<{
   likeCount: number;
   dislikeCount: number;
   commentCount: number;
+
+  communityId: string | null;
+  topicId: string | null;
+  questionId: string | null;
 }>;
 
 export type Comment = Entity<{
@@ -69,3 +73,9 @@ export type Question = Entity<{
   content: string;
   createdBy: User;
 }>;
+
+export type PendingQuestionRequest = {
+  question: Question,
+  requestedBy: User,
+  requestedTo: User
+}

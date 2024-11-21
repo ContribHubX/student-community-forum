@@ -1,12 +1,13 @@
-import { Comment, Reaction, ReactionType, Thread } from "@/types";
+import { createContext } from "react";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, User } from "@/types";
 import { Socket } from "socket.io-client";
 import { QueryClient } from "@tanstack/react-query";
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
 import { getCommentsQueryOptions } from "@/features/thread/api/get-thread-comments";
 import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
-import { createContext } from "react";
 import { getUserReactionQueryOptions } from "@/features/thread/api/get-reaction";
-
+import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-users-by-question";
+import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -21,6 +22,7 @@ export enum OPERATION {
   ADD_NEW_THREAD,
   ADD_NEW_COMMENT,
   ADD_NEW_REACTION,
+  ADD_NEW_REQUEST,
 }
 
 type Actions =
@@ -34,9 +36,18 @@ type Actions =
     }
   | {
       type: OPERATION.ADD_NEW_REACTION;
-      payload: { currentUserId: string, reaction: Reaction; queryClient: QueryClient };
+      payload: { currentUserId: string; reaction: Reaction; queryClient: QueryClient };
     }
-  | { type: OPERATION.UPDATE_SOCKET; payload: Socket };
+  | { 
+      type: OPERATION.UPDATE_SOCKET; 
+      payload: Socket; 
+    }
+  | {
+      type: OPERATION.ADD_NEW_REQUEST;
+      payload: { request: PendingQuestionRequest; queryClient: QueryClient };
+    };
+
+  
 
 /**
  * Credits: ChatGPT for jsdoc
@@ -68,12 +79,26 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
      */
     case OPERATION.ADD_NEW_THREAD: {
       const { thread, queryClient } = action.payload;
-      queryClient.setQueryData(
-        getThreadsQueryOptions().queryKey,
-        (oldThreads: Thread[] | undefined) => {
-          return oldThreads ? [thread, ...oldThreads] : undefined;
-        }
-      );
+      
+      // TODO this if's statements should be extracted in some helper func para limpyo tan awn yawa!
+      if (!thread.communityId && !thread.topicId && !thread.questionId) {
+        queryClient.setQueryData(
+          getThreadsQueryOptions().queryKey,
+          (oldThreads: Thread[] | undefined) => {
+            return oldThreads ? [thread, ...oldThreads] : undefined;
+          }
+        );
+      }
+
+      if (thread.questionId) {
+        queryClient.setQueryData(
+          getUsersByQuestionQueryOptions(thread.questionId).queryKey,
+          (oldUsers: User[] | undefined) => {
+            return oldUsers ? [...oldUsers, thread.createdBy] : undefined;
+          }
+        );
+      }
+
       return { ...state };
     }
 
@@ -93,8 +118,6 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
           if (!comment.parentId)
             return [comment, ...oldComments]; 
-
-          console.log(oldComments)
 
           // if reply
           return oldComments.map(comm => {
@@ -156,6 +179,21 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       );
 
       return { ...state };     
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.ADD_NEW_REQUEST: { 
+      const { request, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getPendingRequestQueryOptions(request.requestedTo.id.toString()).queryKey,
+        (oldQuestionReq: PendingQuestionRequest[] | undefined) => {
+          return oldQuestionReq ? [request, ...oldQuestionReq] : undefined;
+        }
+      );
+
+      return { ...state };      
     }
 
     /**

@@ -8,6 +8,10 @@ export interface IQuestion {
     createdBy: IUser;
 }
 
+export interface IQuestionCreation extends IQuestion {
+    requestedTo: string
+}
+
 export interface IQuestionRequest {
     requestedBy: IUser,
     requestedTo: IUser,

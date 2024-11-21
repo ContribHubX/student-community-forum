@@ -90,7 +90,7 @@ class GoogleAuthService implements ISocialAuthService {
       provider: "GOOGLE" as AuthProvider
     };
 
-    const existingUser = await this.userRepo.getByEmail(user.email);
+    const existingUser = await this.userRepo.getById(user.id);
 
     if (!existingUser) await this.userRepo.create(user)
     else await this.userRepo.update(user)

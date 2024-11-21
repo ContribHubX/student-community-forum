@@ -5,6 +5,9 @@ import { SocketContextProvider } from "./context";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 
+// TODO naay problem ig create sa comment kung ang user bag o ra ni login dayun mo comment kelangan pa e refresh
+// TODO investigate socket when creating comment
+
 const SocketContextComponent = ({ children }: PropsWithChildren) => {
   const [socketState, socketDispatch] = useReducer(
     socketReducer,
@@ -19,13 +22,19 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
     reconnectionAttempts: 5,
     withCredentials: true,
     auth: {
-      userId: authState?.user?.id,
+      userId: authState?.user?.id.toString(),
     },
   });
 
   useEffect(() => {
+    if (!authState?.user?.id) {
+      console.log("User ID not available yet, waiting for auth state.");
+      return;
+    }
+
     if (socket) {
       /** Connect to the web socket **/
+      socket.auth = { userId: authState.user.id.toString() };
       socket.connect();
 
       socket.on("connect", () => {
@@ -41,7 +50,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
       /** Send the handshake **/
       sendHandShake();
     }
-  }, [socket]);
+  }, [socket, authState]);
 
   const startListeners = () => {
     if (!socket) return;
@@ -106,6 +115,16 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: {
               currentUserId: authState?.user?.id || "",
               reaction: data,
+              queryClient,
+            },
+          });
+          break;
+
+        case "request--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_REQUEST,
+            payload: {
+              request: data,
               queryClient,
             },
           });

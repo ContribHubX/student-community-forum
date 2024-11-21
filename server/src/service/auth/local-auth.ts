@@ -13,6 +13,7 @@ class LocalAuthService implements ILocalAuthService {
 
   /**
    * Registers a new user.
+   * 
    * @param dto - User registration details.
    * @returns {Promise<void>}
    */
@@ -38,6 +39,7 @@ class LocalAuthService implements ILocalAuthService {
 
   /**
    * Logs in a user.
+   * 
    * @param dto - User login details.
    * @returns {Promise<IUser>}
    */
@@ -60,6 +62,7 @@ class LocalAuthService implements ILocalAuthService {
 
   /**
    * Retrieves user details.
+   * 
    * @param dto - User login details.
    * @returns {Promise<IUser>}
    */

@@ -17,7 +17,7 @@ export const Modal = ({ className, isOpen, onClose, children }: ModalProps) => {
       style={{ transition: "opacity 0.3s ease" }}
     >
       <div
-        className={`rounded-xl p-5 gap-5 bg-primary max-h-[600px] flex flex-col overflow-x-scroll ${className}`}
+        className={`rounded-xl p-5 gap-5 bg-primary max-h-[600px] max-w-[800px] flex flex-col ${className}`}
       >
         <div
           onClick={onClose}

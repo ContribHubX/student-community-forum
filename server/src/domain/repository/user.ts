@@ -72,6 +72,44 @@ class UserRepository {
   }
 
   /**
+   * Retrieves user details for login.
+   * 
+   * @param dto - Data transfer object containing email and password.
+   * @returns A promise that resolves to the user data.
+   */
+  public getById(id: string): Promise<IUser> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const user = await this.db.query.UserTable.findFirst({
+          where: and(eq(UserTable.id, id)),
+        });
+
+        resolve(user as IUser);
+      } catch (error: any) {
+        reject(new AppError(error, 500));
+      }
+    });
+  }
+
+  
+  /**
+   * Retrieves all users
+   * 
+   * @param 
+   * @returns A promise that resolves to all users.
+   */
+  public getAll(): Promise<IUser[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const users = await this.db.query.UserTable.findMany({})
+        resolve(users as IUser[]);
+      } catch (error: any) {
+        reject(new AppError(error, 500));
+      }
+    });
+  }
+
+  /**
    * Updates user information in the database.
    * 
    * @param dto - Data transfer object containing updated user details.
@@ -80,7 +118,7 @@ class UserRepository {
   public update(dto: IUserFullRegisterDto): Promise<IUser> {
     return new Promise(async (resolve, reject) => {
       const { name, email, password, provider, attachment } = dto;
-
+      
       try {
         const user = await this.db.update(UserTable).set({
           name,
@@ -88,7 +126,7 @@ class UserRepository {
           password,
           provider,
           attachment,
-        }).where(eq(UserTable.email, dto.email));
+        }).where(eq(UserTable.id, dto.id));
 
         resolve(user as unknown as IUser);
       } catch (error: any) {

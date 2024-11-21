@@ -2,6 +2,7 @@ import { QuestionCard } from "./question-card";
 import { FaStar } from "react-icons/fa";
 import { Question } from "@/types";
 
+
 interface QuestionCardListProp {
   questions: Question[];
 }

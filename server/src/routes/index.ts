@@ -5,6 +5,7 @@ import notification from "./notification";
 import community from "./community";
 import topic from "./topic";
 import question from "./question";
+import user from "./user";
 
 export default () => {
   const app = Router();
@@ -14,6 +15,7 @@ export default () => {
   community(app);
   topic(app);
   question(app);
+  user(app);
 
   return app;
 };
