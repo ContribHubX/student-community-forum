@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, User } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User } from "@/types";
 import { Socket } from "socket.io-client";
 import { QueryClient } from "@tanstack/react-query";
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
@@ -8,6 +8,7 @@ import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
 import { getUserReactionQueryOptions } from "@/features/thread/api/get-reaction";
 import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-users-by-question";
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
+import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -23,6 +24,7 @@ export enum OPERATION {
   ADD_NEW_COMMENT,
   ADD_NEW_REACTION,
   ADD_NEW_REQUEST,
+  ADD_NEW_TOPIC_FOLLOWER,
 }
 
 type Actions =
@@ -38,16 +40,19 @@ type Actions =
       type: OPERATION.ADD_NEW_REACTION;
       payload: { currentUserId: string; reaction: Reaction; queryClient: QueryClient };
     }
-  | { 
-      type: OPERATION.UPDATE_SOCKET; 
-      payload: Socket; 
+  | {
+      type: OPERATION.UPDATE_SOCKET;
+      payload: Socket;
     }
   | {
       type: OPERATION.ADD_NEW_REQUEST;
       payload: { request: PendingQuestionRequest; queryClient: QueryClient };
+    }
+  | {
+      type: OPERATION.ADD_NEW_TOPIC_FOLLOWER;
+      payload: { data: TopicUserFollow; queryClient: QueryClient };
     };
 
-  
 
 /**
  * Credits: ChatGPT for jsdoc
@@ -182,7 +187,11 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
     }
 
     /**
-     * 
+     * Adds a new pending question request for a specific user and updates the cache.
+     * Updates the query data in the React Query cache for the user's pending requests.
+     *
+     * @param action.payload.request - The pending question request object to be added.
+     * @param action.payload.queryClient - The React Query client instance to update the cache.
      */
     case OPERATION.ADD_NEW_REQUEST: { 
       const { request, queryClient } = action.payload;
@@ -195,6 +204,26 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
       return { ...state };      
     }
+
+    /**
+     * Adds a new follower to a topic and updates the followers list in the cache.
+     * Updates the query data in the React Query cache for the topic's followers.
+     *
+     * @param action.payload.user - The user object representing the new follower.
+     * @param action.payload.queryClient - The React Query client instance to update the cache.
+     */
+    case OPERATION.ADD_NEW_TOPIC_FOLLOWER: { 
+      const { data, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getTopicFollowersQueryOptions(data.topicId.toString()).queryKey,
+        (oldUsers: User[] | undefined) => {
+          return oldUsers ? [data.user, ...oldUsers] : undefined;
+        }
+      );
+
+      return { ...state };      
+    }
+    
 
     /**
      * Default case: Returns the current state if no matching action type is found.

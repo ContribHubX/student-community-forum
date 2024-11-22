@@ -47,12 +47,12 @@ class QuestionService {
     /**
      * Retrieves all questions
      * 
-     * @param 
+     * @param topicId | null
      * @returns {Promise<IQuestion[]>} T
      */
-    public async getAllQuestions(): Promise<IQuestion[]> {
+    public async getAllQuestions(topicId?: string): Promise<IQuestion[]> {
         try {
-            return await this.questionRepo.getAll();
+            return await this.questionRepo.getAll(topicId);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

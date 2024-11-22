@@ -1,4 +1,4 @@
-import { mysqlTable, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { v4 as uuidV4 } from "uuid";
 import { UserTable } from "./user";
 import { TopicTable } from "./topic";
@@ -8,7 +8,7 @@ import { ThreadTable } from "./thread";
 export const QuestionTable = mysqlTable("question", {
     id: varchar("id", { length: 255 }).primaryKey().$default(uuidV4),
     title: varchar("title", { length: 100 }).notNull().unique(),
-    content: varchar("content", { length: 255 }),
+    content: text("content"),
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: varchar("created_by", { length: 255 })
       .references(() => UserTable.id)

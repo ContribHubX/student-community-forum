@@ -41,12 +41,14 @@ export default {
     /**
      * Handler to retrieve a question by its ID.
      * 
-     * @route GET /questions/:questionId
+     * @route GET /questions
      */
     async getAllQuestionsHandler(req: Request, res: Response, next: NextFunction) {
+        const topicId = req.query.topicId as string;
+
         try {
             const questionService = Container.get(QuestionService);
-            const response = await questionService.getAllQuestions();
+            const response = await questionService.getAllQuestions(topicId);
             res.status(200).json(response);
         } catch (error: any) {
             next(new AppError(error));

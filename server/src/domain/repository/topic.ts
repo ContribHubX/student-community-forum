@@ -2,9 +2,10 @@ import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
 import { TopicTable, TopicFollowersTable } from "@/database/schema/topic";
-import { ITopic, ITopicDto, ITopicFollowersDto } from "../interfaces/ITopic";
+import { ITopic, ITopicDto, ITopicFollowersDto, ITopicUserFollow } from "../interfaces/ITopic";
 import { AppError } from "@/libs/app-error";
 import { eq, sql } from "drizzle-orm";
+import { IUser } from "../interfaces/IUser";
 
 @Service()
 class TopicRepository {
@@ -109,11 +110,58 @@ class TopicRepository {
      * @returns A Promise that resolves when the operation completes.
      * @throws AppError if the operation fails.
      */
-    public follow(dto: ITopicFollowersDto): Promise<void> {
+    public follow(dto: ITopicFollowersDto): Promise<ITopicUserFollow> {
         return new Promise(async (resolve, reject) => {
             try {
-                await this.db.insert(TopicFollowersTable).values({ ...dto });
-                resolve();
+                const result = await this.db
+                    .insert(TopicFollowersTable)
+                    .values({ ...dto })
+                    .$returningId()
+
+                const resultId = result[0].id;
+
+                const topicFollower = await this.db
+                    .query
+                    .TopicFollowersTable
+                    .findFirst({
+                        columns: { topicId: true },
+                        where: eq(TopicFollowersTable.id, resultId),
+                        with: {
+                            user: true
+                        }
+                    })
+                    
+                resolve(topicFollower as ITopicUserFollow);
+            } catch (error: any) {
+                reject(new AppError(error, 500));
+            }
+        });
+    }
+
+    public getFollowers(topicId: string): Promise<IUser[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+            
+                const topicFollower = await this.db
+                    .query
+                    .TopicTable
+                    .findFirst({
+                        columns: {},
+                        where: eq(TopicTable.id, topicId),
+                        with: {
+                            followers: {
+                                columns: {},
+                                with: {
+                                    user: true
+                                }
+                            }
+                        }
+                    })
+
+                if (!topicFollower) 
+                    return resolve([])
+                    
+                resolve(topicFollower?.followers.map(follower => follower.user) as IUser[]);
             } catch (error: any) {
                 reject(new AppError(error, 500));
             }

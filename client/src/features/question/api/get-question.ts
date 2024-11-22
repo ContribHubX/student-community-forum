@@ -16,11 +16,14 @@ export const getQuestionQueryOptions = (questionId: string) => {
 };
 
 export type getQuestionQueryConfig = {
-  questionId: string,
+  questionId: string;
   queryConfig?: QueryConfig<typeof getQuestion>;
 };
 
-export const useGetQuestion = ({ questionId, queryConfig }: getQuestionQueryConfig) => {
+export const useGetQuestion = ({
+  questionId,
+  queryConfig,
+}: getQuestionQueryConfig) => {
   return useQuery({
     ...getQuestionQueryOptions(questionId),
     ...queryConfig,

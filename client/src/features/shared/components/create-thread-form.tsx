@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createThreadSchema, CreateThreadType } from "../api/create-thread";
 import { TextEditor } from "@/components/shared/text-editor";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FieldValues } from "react-hook-form";;
+import { useForm, FieldValues } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 
 interface CreateThreadFormProp {
@@ -11,12 +11,16 @@ interface CreateThreadFormProp {
   handleFormSubmit: (data: FormData) => void;
 }
 
-export const CreateThreadForm = ({ handleFormSubmit, initialTitleVal, userId }: CreateThreadFormProp) => {
+export const CreateThreadForm = ({
+  handleFormSubmit,
+  initialTitleVal,
+  userId,
+}: CreateThreadFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
- 
+
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
     formData.append("createdBy", userId);
@@ -47,10 +51,7 @@ export const CreateThreadForm = ({ handleFormSubmit, initialTitleVal, userId }: 
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit(onSubmit)} 
-      className="text-primary-foreground"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="text-primary-foreground">
       <div>
         <input
           {...register("title")}
@@ -72,7 +73,7 @@ export const CreateThreadForm = ({ handleFormSubmit, initialTitleVal, userId }: 
       <div className="mt-4 flex items-center justify-center">
         <Button
           type="submit"
-          className="shrink-0  bg-accent text-accent-foreground p-3 px-6 text-sm rounded-md"
+          className="shrink-0  bg-accent text-accent-foreground p-3 px-4 text-sm rounded-md"
         >
           Create
         </Button>

@@ -5,10 +5,8 @@ export const createQuestionSchema = Joi.object({
         "string.empty": "Title is required",
         "string.min": "Title cannot be empty",
     }),          
-    content: Joi.string().min(1).required().messages({
-        "string.empty": "Content is required",
-        "string.min": "Content cannot be empty",
-    }),
+    content: Joi.optional(),
+    attachment: Joi.optional(),
     createdBy: Joi.string().required().messages({
         "string.empty": "Creator is required",
     }),

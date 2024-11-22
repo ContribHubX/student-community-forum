@@ -129,6 +129,16 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             },
           });
           break;
+
+        case "topic-follow--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_TOPIC_FOLLOWER,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
       }
     });
   };

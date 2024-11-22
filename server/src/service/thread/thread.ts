@@ -67,6 +67,20 @@ class ThreadService {
     }
     
   }
+
+  /**
+   * 
+   * @returns 
+   */
+  public async getAllThreadByTopic(topicId: string): Promise<IThreadFull[] | undefined> {
+    try {
+       return await this.threadRepo.getAllByTopic(topicId);
+    } catch (error: any) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error getting threads");
+    }
+    
+  }
 }
 
 export default ThreadService;

@@ -65,13 +65,21 @@ class QuestionRepository {
     /**
      * Retrieves all questions 
      * 
-     * @param none
+     * @param topicId | null
      * @returns {Promise<IQuestion>}
      */
-    public getAll(): Promise<IQuestion[]> {
+    public getAll(topicId?: string): Promise<IQuestion[]> {
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await this.db.query.QuestionTable.findMany({});
+                let result;
+            
+                if (!topicId) 
+                    result = await this.db.query.QuestionTable.findMany({});
+                else 
+                    result = await this.db.query.QuestionTable.findMany({
+                        where: eq(schema.QuestionTable.topicId, topicId)
+                    });
+
                 resolve(result as unknown as IQuestion[]);
             } catch (error: any) {
                 reject(new AppError(error));

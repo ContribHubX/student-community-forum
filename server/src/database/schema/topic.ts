@@ -14,6 +14,7 @@ export const TopicTable = mysqlTable("topics", {
 });
 
 export const TopicFollowersTable = mysqlTable("topic_followers", {
+    id: varchar("id", { length: 255 }).primaryKey().$default(uuidv4),
     followerId: varchar("follower_id", { length: 255 }).references(() => UserTable.id).notNull(),
     topicId: varchar("topic_id", { length: 255 }).references(() => TopicTable.id).notNull(),
 })   

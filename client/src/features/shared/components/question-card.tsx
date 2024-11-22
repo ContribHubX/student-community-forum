@@ -13,13 +13,15 @@ interface QuestionCardProp {
 
 export const QuestionCard = ({ question }: QuestionCardProp) => {
   const navigate = useNavigate();
-  const { data: users } = useGetUsersByQuestion({ questionId: question.id || "" });
+  const { data: users } = useGetUsersByQuestion({
+    questionId: question.id || "",
+  });
 
   return (
-    <div 
+    <div
       onClick={() => navigate(`/question/${question.id}`)}
       className="text-primary-foreground px-4 py-3 text-sm flex items-start justify-between hover:bg-background rounded-lg"
-      >
+    >
       <div>
         <h2 className="font-medium text-base">{question.title}</h2>
         <div className="mt-4">
@@ -44,14 +46,11 @@ export const QuestionCard = ({ question }: QuestionCardProp) => {
         <RxCross2 className="text-lg font-semibold self-end" />
         <div className="flex items-center">
           {users?.map((user) => (
-            <Avatar 
-              key={user.id} 
-                className="ml-[-15px] object-cover h-[40px] w-[40px]"
-              >
-              <AvatarImage
-                src={user.attachment}
-                className="rounded-full "
-              />
+            <Avatar
+              key={user.id}
+              className="ml-[-15px] object-cover h-[40px] w-[40px]"
+            >
+              <AvatarImage src={user.attachment} className="rounded-full " />
             </Avatar>
           ))}
           <div className="ml-2 text-muted-foreground text-xs"> + 2 answers</div>

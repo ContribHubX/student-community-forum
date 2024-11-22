@@ -67,6 +67,11 @@ export type Topic = Entity<{
   followerCount: number;
 }>;
 
+export type TopicUserFollow = {
+  user: User;
+  topicId: string;
+}
+
 export type Question = Entity<{
   name: string;
   title: string;
@@ -75,7 +80,7 @@ export type Question = Entity<{
 }>;
 
 export type PendingQuestionRequest = {
-  question: Question,
-  requestedBy: User,
-  requestedTo: User
-}
+  question: Question;
+  requestedBy: User;
+  requestedTo: User;
+};

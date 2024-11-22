@@ -1,8 +1,11 @@
 import { ThreadCard } from "@/features/thread/components/thread-card";
-import { useGetThreads } from "@/features/thread/api/get-all-threads";
+import { Thread } from "@/types";
 
-export const ThreadCardList = () => {
-  const { data: threads } = useGetThreads({});
+interface ThreadCardListProp {
+  threads: Thread[]
+}
+
+export const ThreadCardList = ({ threads }: ThreadCardListProp) => {
 
   // Temporary only
   if (!threads) {

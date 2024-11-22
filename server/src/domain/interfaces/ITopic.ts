@@ -9,6 +9,11 @@ export interface ITopic {
     followerCount: number;
 }
 
+export interface ITopicUserFollow {
+    user: IUser,
+    topicId: string
+}
+
 export interface ITopicDto {
     name: string;
     attachment: string;

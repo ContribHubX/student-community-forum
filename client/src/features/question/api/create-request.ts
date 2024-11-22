@@ -3,14 +3,15 @@ import { MutationConfig } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 
 export type CreateRequestSchema = {
-  questionId: string,
-  requestedBy: string,
-  requestedTo: string
-}
+  questionId: string;
+  requestedBy: string;
+  requestedTo: string;
+};
 
 const createRequest = async (data: CreateRequestSchema) => {
   const response = await api.post(
-    "http://localhost:3000/api/question/request", data
+    "http://localhost:3000/api/question/request",
+    data,
   );
 
   return response.data;

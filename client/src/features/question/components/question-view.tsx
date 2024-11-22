@@ -10,18 +10,15 @@ interface QuestionViewProp {
 
 export const QuestionView = ({ user }: QuestionViewProp) => {
   const { questionId } = useParams();
-  const { data: question } = useGetQuestion({ questionId: questionId || "" })
+  const { data: question } = useGetQuestion({ questionId: questionId || "" });
 
   // temp
-  if (!question) return <p>Loading...</p>
+  if (!question) return <p>Loading...</p>;
 
   return (
     <div>
       <div>
-        <QuestionViewCard 
-          currentUser={user}
-          question={question}
-        />
+        <QuestionViewCard currentUser={user} question={question} />
       </div>
 
       <div className="my-6">
@@ -34,7 +31,6 @@ export const QuestionView = ({ user }: QuestionViewProp) => {
       </div>
 
       <div></div>
-
     </div>
   );
 };

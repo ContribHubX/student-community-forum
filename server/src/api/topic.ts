@@ -58,10 +58,7 @@ export default {
 
     try {
       const topicService = Container.get(TopicService);
-      const topic = await topicService.getTopicById(topicId);
-      if (!topic) {
-        throw new AppError("Topic not found", 404);
-      }
+      const topic = await topicService.getTopicById(topicId); 
       res.status(200).json(topic);
     } catch (error: any) {
       next(new AppError(error));
@@ -78,8 +75,29 @@ export default {
 
     try {
       const topicService = Container.get(TopicService);
-      await topicService.followTopic(body);
-      res.status(200).json({ message: "Followed topic successfully" });
+      const result = await topicService.followTopic(body);
+      res.status(200).json(result);
+    } catch (error: any) {
+      next(new AppError(error));
+    }
+  },
+
+  /**
+   * Handler to retrieve a single topic by its ID.
+   *
+   * @route GET /topic/followers/:topicId
+   */
+  async getTopicFollowersHandler(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const topicId = req.params.topicId;
+
+    try {
+      const topicService = Container.get(TopicService);
+      const followers = await topicService.getTopicFollowers(topicId);
+      res.status(200).json(followers);
     } catch (error: any) {
       next(new AppError(error));
     }

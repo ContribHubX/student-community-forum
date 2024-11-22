@@ -14,14 +14,20 @@ import { CreateThreadForm } from "@/features/shared/components/create-thread-for
 import { useDisclosure } from "@/hooks/use-disclosure";
 
 interface QuestionViewCardProp {
-  currentUser: User
-  question: Question
+  currentUser: User;
+  question: Question;
 }
 
-export const QuestionViewCard = ({ currentUser, question }: QuestionViewCardProp) => {
+export const QuestionViewCard = ({
+  currentUser,
+  question,
+}: QuestionViewCardProp) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isOpen: isReqModalOpen, toggle: toggleReqModal, close: closeReqModal } = useDisclosure();
-
+  const {
+    isOpen: isReqModalOpen,
+    toggle: toggleReqModal,
+    close: closeReqModal,
+  } = useDisclosure();
 
   const { mutate: createThread } = useCreateThread({});
 
@@ -29,31 +35,26 @@ export const QuestionViewCard = ({ currentUser, question }: QuestionViewCardProp
     // append question id
     data.append("questionId", question.id);
     createThread(data);
-  } 
+  };
 
   const handleThreadFormModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  return (  
+  return (
     <div
       className="w-full bg-primary rounded-xl p-5
      shadow-slate-400 shadow-md dark:shadow-gray-900 text-primary-foreground"
     >
       {/* render quill */}
       <div>
-        <h1 className="text-xl font-semibold">
-          {question.title}
-        </h1>
+        <h1 className="text-xl font-semibold">{question.title}</h1>
 
         {/* temporary */}
         <p className="text-sm mt-4">{question.content}</p>
       </div>
 
-      <div 
-        onClick={toggleReqModal}
-        className="mt-4 w-fit group h-[30px]"
-      >
+      <div onClick={toggleReqModal} className="mt-4 w-fit group h-[30px]">
         <div className="flex items-center gap-3 cursor-pointer">
           <img src={request} alt="request" />
           <p className="text-sm self-end">Request</p>
@@ -62,9 +63,9 @@ export const QuestionViewCard = ({ currentUser, question }: QuestionViewCardProp
       </div>
 
       <div className="mt-1 cursor-default">
-        <AnswerPrompt 
+        <AnswerPrompt
           onHandleClick={handleThreadFormModal}
-          user={currentUser} 
+          user={currentUser}
         />
       </div>
 
@@ -74,7 +75,7 @@ export const QuestionViewCard = ({ currentUser, question }: QuestionViewCardProp
           onClose={handleThreadFormModal}
           className="p-5 w-[1000px] max-h-[600px]"
         >
-          <CreateThreadForm 
+          <CreateThreadForm
             initialTitleVal={question.title}
             userId={currentUser.id}
             handleFormSubmit={handleCreateThread}
@@ -98,7 +99,6 @@ export const QuestionViewCard = ({ currentUser, question }: QuestionViewCardProp
   );
 };
 
-
 interface AnswerPrompt {
   user: User | undefined;
   onHandleClick: () => void;
@@ -108,7 +108,7 @@ const AnswerPrompt = ({ user, onHandleClick }: AnswerPrompt) => {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <div 
+    <div
       onClick={onHandleClick}
       className="bg-background flex flex-col items-center justify-center gap-3 py-9"
     >

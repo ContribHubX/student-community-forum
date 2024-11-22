@@ -13,7 +13,7 @@ export const Community = () => {
   console.log(id);
 
   const { data: community } = useGetCommunityById(
-    "9ac61397-755c-4158-b0f1-183ad9eb5316",
+    "f0d7d1d5-a751-44f4-b97c-a28d7d35404f",
     {},
   );
 
@@ -38,9 +38,9 @@ export const Community = () => {
           >
             <div
               className="font-light bg-primary rounded-xl shadow-slate-400 shadow-md dark:shadow-gray-900
-            "
+            text-sm "
             >
-              <p className="p-4 border-b-2 border-slate-700 border-opacity-50">
+              <p className=" py-2 px-4 border-b-[0.5px] border-[#878484] border-opacity-50">
                 Details
               </p>
               <div className="p-4">
@@ -49,10 +49,10 @@ export const Community = () => {
             </div>
 
             <div
-              className="font-light bg-primary rounded-xl shadow-slate-400 shadow-md dark:shadow-gray-900
+              className="text-sm font-light bg-primary rounded-xl shadow-slate-400 shadow-md dark:shadow-gray-900
             "
             >
-              <p className="p-4 border-b-2 border-slate-700 border-opacity-50">
+              <p className="py-2 px-4  border-b-[0.5px] border-[#878484] border-opacity-50">
                 Admin
               </p>
               <div className="p-4 flex items-center gap-2">
@@ -64,7 +64,7 @@ export const Community = () => {
             </div>
 
             <div
-              className="h-[270px] overflow-y-auto rounded-xl
+              className="max-h-[450px] overflow-y-auto rounded-xl
             shadow-slate-400 shadow-md dark:shadow-gray-900"
             >
               <UpcomingEventsList />
