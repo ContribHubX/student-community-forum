@@ -1,5 +1,17 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, foreignKey, primaryKey, varchar, text, timestamp, unique, mysqlEnum, tinyint } from "drizzle-orm/mysql-core"
-import { sql } from "drizzle-orm"
+import {
+  tinyint,
+  mysqlTable,
+  mysqlSchema,
+  AnyMySqlColumn,
+  foreignKey,
+  primaryKey,
+  varchar,
+  text,
+  timestamp,
+  unique,
+  mysqlEnum,
+} from "drizzle-orm/mysql-core";
+import { sql } from "drizzle-orm";
 
 export const comment = mysqlTable("comment", {
 	id: varchar({ length: 255 }).notNull(),
@@ -25,8 +37,8 @@ export const community = mysqlTable("community", {
 	name: varchar({ length: 100 }).notNull(),
 	description: varchar({ length: 255 }),
 	banner: varchar({ length: 255 }),
-	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 	icon: varchar({ length: 255 }),
+	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 },
 (table) => {
 	return {
@@ -53,6 +65,34 @@ export const notification = mysqlTable("notification", {
 	}
 });
 
+export const question = mysqlTable("question", {
+	id: varchar({ length: 255 }).notNull(),
+	title: varchar({ length: 100 }).notNull(),
+	content: text(),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
+	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
+	topicId: varchar("topic_id", { length: 255 }).references(() => topics.id),
+},
+(table) => {
+	return {
+		questionId: primaryKey({ columns: [table.id], name: "question_id"}),
+		questionTitleUnique: unique("question_title_unique").on(table.title),
+	}
+});
+
+export const questionRequest = mysqlTable("question_request", {
+	id: varchar({ length: 255 }).notNull(),
+	questionId: varchar("question_id", { length: 255 }).notNull().references(() => question.id),
+	requestedBy: varchar("requested_by", { length: 255 }).notNull().references(() => user.id),
+	requestedTo: varchar("requested_to", { length: 255 }).notNull().references(() => user.id),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
+},
+(table) => {
+	return {
+		questionRequestId: primaryKey({ columns: [table.id], name: "question_request_id"}),
+	}
+});
+
 export const thread = mysqlTable("thread", {
 	id: varchar({ length: 255 }).notNull(),
 	title: varchar({ length: 50 }).notNull(),
@@ -61,6 +101,8 @@ export const thread = mysqlTable("thread", {
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 	communityId: varchar("community_id", { length: 255 }).references(() => community.id),
+	topicId: varchar("topic_id", { length: 255 }).references(() => topics.id),
+	questionId: varchar("question_id", { length: 255 }).references(() => question.id),
 },
 (table) => {
 	return {
@@ -81,15 +123,10 @@ export const threadReaction = mysqlTable("thread_reaction", {
 	}
 });
 
-export const topicFollowers = mysqlTable("topic_followers", {
-	followerId: varchar("follower_id", { length: 255 }).notNull().references(() => user.id),
-	topicId: varchar("topic_id", { length: 255 }).notNull().references(() => topics.id),
-});
-
 export const topics = mysqlTable("topics", {
 	id: varchar({ length: 255 }).notNull(),
 	name: varchar({ length: 50 }).notNull(),
-	attachment: varchar({ length: 255 }),
+	attachment: text(),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 },
@@ -103,7 +140,10 @@ export const user = mysqlTable("user", {
 	id: varchar({ length: 255 }).notNull(),
 	name: varchar({ length: 255 }).notNull(),
 	email: varchar({ length: 255 }).notNull(),
+	password: text(),
+	provider: mysqlEnum(['GOOGLE','GITHUB','LOCAL']).default('LOCAL').notNull(),
 	attachment: varchar({ length: 255 }),
+	updatedAt: timestamp({ mode: 'string' }).default(sql`(now())`),
 },
 (table) => {
 	return {

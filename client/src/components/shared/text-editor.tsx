@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { base64ToFile } from "@/utils";
-import { CreateThreadType } from "../../features/thread/api/create-thread";
+import { CreateThreadType } from "../../features/shared/api/create-thread";
 
 const toolbarOptions = [
   [{ header: "1" }, { header: "2" }, { font: [] }],

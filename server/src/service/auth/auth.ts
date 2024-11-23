@@ -1,17 +1,18 @@
 import { Service, Container } from "typedi";
-import { IAuthService } from "@/domain/interfaces/IAuth";
-import { GithubAuthService } from "./github-auth";
+import { ISocialAuthService } from "@/domain/interfaces/IAuth";
+import { SocialAuthProvider } from "@/types";
+import GithubAuthService  from "./github-auth";
 import GoogleAuthService from "./google-auth";
-import { AuthProvider } from "@/types";
+
 
 @Service()
 class AuthService {
-  private strategies: Record<AuthProvider, IAuthService>;
+  private strategies: Record<SocialAuthProvider, ISocialAuthService>;
 
   constructor() {
     this.strategies = {
       GOOGLE: Container.get(GoogleAuthService),
-      GITHUB: Container.get(GithubAuthService),
+      GITHUB: Container.get(GithubAuthService)
     };
   }
 
@@ -21,7 +22,7 @@ class AuthService {
    * @param provider Provider
    * @returns Promise<string>
    */
-  public async loginWithProvider(provider: AuthProvider): Promise<string> {
+  public async loginWithProvider(provider: SocialAuthProvider): Promise<string> {
     const strategy = this.strategies[provider];
     if (!strategy) {
       throw new Error("Unsupported provider");
@@ -38,7 +39,7 @@ class AuthService {
    * @returns
    */
   public async handleCallback(
-    provider: AuthProvider,
+    provider: SocialAuthProvider,
     code: string,
     state: string,
   ) {
@@ -55,7 +56,7 @@ class AuthService {
    * @param accessToken
    * @returns
    */
-  public async getMyDetails(provider: AuthProvider, accessToken: string) {
+  public async getMyDetails(provider: SocialAuthProvider, accessToken: string) {
     const strategy = this.strategies[provider];
     if (!strategy) {
       throw new Error("Unsupported provider");

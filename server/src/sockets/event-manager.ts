@@ -18,7 +18,7 @@ class EventManager {
 
   connect(socketClient: ClientEventOptions) {
     // add client
-    this.clients.set(socketClient.userId, socketClient.client);
+    this.clients.set(socketClient.userId.toString(), socketClient.client);
   }
 
   /**
@@ -51,6 +51,7 @@ class EventManager {
       return;
     }
 
+    console.log(this.clients.values());
     this.emit(
       identifier,
       data,
@@ -66,6 +67,7 @@ class EventManager {
    * @param ignore Client not to send the packet to
    */
   emit(identifier: string, data: any = {}, ignore?: Client[]): void {
+    console.log("emit");
     const ignoredClient = ignore;
 
     const filteredClients = ignoredClient
@@ -73,6 +75,8 @@ class EventManager {
           (client) => !ignoredClient.some((ignore) => client.is(ignore)),
         )
       : Array.from(this.clients.values());
+
+    // console.log(filteredClients, null, 2)
 
     filteredClients.forEach((client) => client.send(identifier, data));
   }

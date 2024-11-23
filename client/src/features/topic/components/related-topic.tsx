@@ -19,7 +19,9 @@ export const RelatedTopics = () => {
 
         <div className="bg-primary text-primary-foreground flex flex-col p-4 gap-4">
           {topics?.map((topic) => (
-            <RelatedTopicItem key={topic.id} topic={topic} />
+            <Link to={`/topic/${topic.id}`}>
+              <RelatedTopicItem key={topic.id} topic={topic} />
+            </Link>
           ))}
         </div>
       </div>

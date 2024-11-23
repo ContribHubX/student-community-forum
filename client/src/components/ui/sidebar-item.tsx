@@ -7,6 +7,7 @@ interface SidebarItemProps {
   description: string;
   iconBgcolor: string;
   containerStyle?: string;
+  link?: string;
 }
 
 export const SideBarItem = ({
@@ -15,12 +16,13 @@ export const SideBarItem = ({
   description,
   iconBgcolor,
   containerStyle,
+  link,
 }: SidebarItemProps) => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
   };
   return (
-    <Link to="">
+    <Link to={link || ""}>
       <div className={clsx(`flex gap-2 p-1 rounded-lg`, containerStyle)}>
         <div
           className={`rounded-xl h-8 w-8 flex items-center justify-center`}

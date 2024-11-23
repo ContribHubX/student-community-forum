@@ -1,13 +1,15 @@
 import { Router } from "express";
 import questionController from "@/api/question";
 import { verifyAuth } from "@/api/middleware";
+import { validateRequest } from "@/api/middleware";
+import { createQuestionSchema } from "@/libs/validators/question-validator";
 
 const router = Router();
 
 export default (app: Router) => {
     app.use("/question", router);
   
-    router.post("/", verifyAuth, questionController.createQuestionHandler);
+    router.post("/", verifyAuth,  validateRequest(createQuestionSchema), questionController.createQuestionHandler);
 
     router.post("/request", verifyAuth, questionController.createQuestionRequestHandler);
 
@@ -17,5 +19,7 @@ export default (app: Router) => {
 
     router.get("/requested/:userId", verifyAuth, questionController.getQuestionsRequestedToHandler);
 
-    
+    router.get("/threads/:questionId", verifyAuth, questionController.getThreadsByQuestionHandler);
+
+    router.get("/users/:questionId", verifyAuth, questionController.getUsersByQuestionHandler);
 }

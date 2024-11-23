@@ -2,7 +2,7 @@ import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import { IThreadDto, IThreadFull } from "../interfaces/IThread";
 import { ThreadTable } from "@/database/schema";
-import { desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
 
@@ -55,17 +55,12 @@ class ThreadRepository {
    */
   public create(dto: IThreadDto): Promise<IThreadFull | undefined> {
     return new Promise(async (resolve, reject) => {
-      const { title, content, attachment, createdBy } = dto;
-
+      
       try {
         const insertResult = await this.db
           .insert(ThreadTable)
           .values({
-            title,
-            content,
-            attachment,
-            createdBy,
-            communityId: null,
+            ...dto
           })
           .$returningId();
 
@@ -110,6 +105,38 @@ class ThreadRepository {
           with: {
             createdBy: true,
           },
+          where: and(
+            isNull(ThreadTable.communityId),
+            isNull(ThreadTable.topicId),
+            isNull(ThreadTable.questionId)
+          ),
+          orderBy: [desc(ThreadTable.createdAt)],
+        });
+
+        resolve(result as unknown as IThreadFull[]);
+      } catch (error: any) {
+        reject(new AppError(error || "Database error"));
+      }
+    });
+  }
+
+  /**
+   * Fetches all threads by topic from the database.
+   * 
+   * @returns {Promise<IThreadFull[]>} A list of all threads.
+   * @throws {AppError} If a database error occurs.
+   */
+  public getAllByTopic(topicId: string): Promise<IThreadFull[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await this.db.query.ThreadTable.findMany({
+          extras: {
+            ...this.threadReactionExtras(),
+          },
+          with: {
+            createdBy: true,
+          },
+          where: eq(ThreadTable.topicId, topicId),
           orderBy: [desc(ThreadTable.createdAt)],
         });
 

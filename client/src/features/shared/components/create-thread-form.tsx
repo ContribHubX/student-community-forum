@@ -3,18 +3,23 @@ import { createThreadSchema, CreateThreadType } from "../api/create-thread";
 import { TextEditor } from "@/components/shared/text-editor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FieldValues } from "react-hook-form";
-import { useCreateThread } from "../api/create-thread";
+import { Button } from "@/components/ui/button";
 
 interface CreateThreadFormProp {
+  initialTitleVal?: string;
   userId: string;
+  handleFormSubmit: (data: FormData) => void;
 }
 
-export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
+export const CreateThreadForm = ({
+  handleFormSubmit,
+  initialTitleVal,
+  userId,
+}: CreateThreadFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
-  const { mutate: createThread } = useCreateThread({});
 
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
@@ -30,8 +35,8 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
 
     console.log(formData);
 
-    // TODO final layer validation
-    createThread(formData);
+    // submit
+    handleFormSubmit(formData);
   };
 
   const handleContentChange = (data: Partial<CreateThreadType>) => {
@@ -53,6 +58,7 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
           className="w-full px-4 py-3 rounded-[10px]  outline-none focus:border-accent bg-background 
           border-[1px] border-gray-300 dark:border-gray-500"
           placeholder="Title"
+          value={initialTitleVal}
         />
       </div>
 
@@ -64,13 +70,13 @@ export const CreateThreadForm = ({ userId }: CreateThreadFormProp) => {
       <input type="hidden" {...register("content")} />
       <input type="hidden" {...register("attachment")} />
 
-      <div className="mt-4 flex items-center justify-end">
-        <button
+      <div className="mt-4 flex items-center justify-center">
+        <Button
           type="submit"
-          className="shrink-0 w-40 bg-accent text-accent-foreground p-3 text-sm rounded-md"
+          className="shrink-0  bg-accent text-accent-foreground p-3 px-4 text-sm rounded-md"
         >
-          Create Thread
-        </button>
+          Create
+        </Button>
       </div>
     </form>
   );

@@ -7,6 +7,9 @@ export interface IThread {
   attachment: string;
   createdBy: IUser;
   createdAt: Date;
+  communityId: string | null;
+  topicId: string | null;
+  questionId: string | null;
 }
 
 export interface IThreadFull extends IThread {
@@ -29,6 +32,9 @@ export interface IThreadDto {
   content: string;
   attachment: string;
   createdBy: string;
+  communityId: string | null;
+  topicId: string | null;
+  questionId: string | null;
 }
 
 export interface IThreadReactionDto {

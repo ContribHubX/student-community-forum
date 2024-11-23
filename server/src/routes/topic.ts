@@ -27,4 +27,6 @@ export default (app: Router) => {
   router.get("/", verifyAuth, topicController.getAllTopicsHandler);
 
   router.get("/:topicId", verifyAuth, topicController.getSingleTopicHandler);
+
+  router.get("/followers/:topicId", verifyAuth, topicController.getTopicFollowersHandler);
 }

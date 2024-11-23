@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ReactNode } from "react";
 import { IoMdClose } from "react-icons/io";
 
@@ -6,27 +7,40 @@ interface ModalProps {
   onClose: () => void;
   children?: ReactNode;
   className?: string;
+  isExit?: boolean;
 }
 
-export const Modal = ({ className, isOpen, onClose, children }: ModalProps) => {
-  return isOpen ? (
-    <div
-      id="thread-form-modal-container"
-      className={`z-50 top-0 left-0 fixed h-screen w-screen bg-[#00000080]
-        transition-opacity duration-300 bg-opacity-80 grid place-content-center`}
-      style={{ transition: "opacity 0.3s ease" }}
-    >
-      <div
-        className={`rounded-xl p-5 gap-5 bg-primary max-h-[600px] flex flex-col overflow-x-scroll ${className}`}
+export const Modal = ({
+  className,
+  isOpen,
+  onClose,
+  children,
+  isExit = false,
+}: ModalProps) => {
+  return (
+    isOpen && (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+        transition={{ duration: 0.2 }}
+        id="thread-form-modal-container"
+        className={`z-50 top-0 left-0 fixed h-screen w-screen bg-[#00000080]
+        grid place-content-center`}
       >
         <div
-          onClick={onClose}
-          className="shrink-0 cursor-pointer text-white h-7 w-7 rounded-full bg-red-400 grid place-content-center self-end"
+          className={`rounded-xl p-5 gap-5 bg-primary max-h-[600px] max-w-[800px] flex flex-col ${className}`}
         >
-          <IoMdClose />
+          {!isExit && (
+            <div
+              onClick={onClose}
+              className="shrink-0 cursor-pointer text-white h-7 w-7 rounded-full bg-red-400 grid place-content-center self-end"
+            >
+              <IoMdClose />
+            </div>
+          )}
+          {children}
         </div>
-        {children}
-      </div>
-    </div>
-  ) : null;
+      </motion.div>
+    )
+  );
 };

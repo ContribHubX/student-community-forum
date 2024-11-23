@@ -13,16 +13,16 @@ export const MainLayout = ({
   children,
 }: LayoutProps) => {
   return (
-    <div className="pt-[5.5rem]">
+    <div className="pt-[5rem]">
       <Navbar />
 
       <main
         className="bg-background flex-1 flex flex-col p-6 gap-6"
-        style={{ minHeight: "calc(100vh - 5.5rem)" }}
+        style={{ minHeight: "calc(100vh - 4rem)" }}
       >
         {LeftSidebar && <LeftSidebar />}
 
-        {children}
+        <div style={{ minHeight: "calc(100vh - 8.5rem)" }}>{children}</div>
 
         {RightSidebar && <RightSidebar />}
       </main>

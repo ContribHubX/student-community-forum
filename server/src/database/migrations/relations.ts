@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { user, comment, thread, community, notification, threadReaction, topicFollowers, topics, userCommunities } from "./schema";
+import { user, comment, thread, community, notification, question, topics, questionRequest, threadReaction, userCommunities } from "./schema";
 
 export const commentRelations = relations(comment, ({one, many}) => ({
 	user: one(user, {
@@ -29,9 +29,15 @@ export const userRelations = relations(user, ({many}) => ({
 	notifications_receiveBy: many(notification, {
 		relationName: "notification_receiveBy_user_id"
 	}),
+	questions: many(question),
+	questionRequests_requestedBy: many(questionRequest, {
+		relationName: "questionRequest_requestedBy_user_id"
+	}),
+	questionRequests_requestedTo: many(questionRequest, {
+		relationName: "questionRequest_requestedTo_user_id"
+	}),
 	threads: many(thread),
 	threadReactions: many(threadReaction),
-	topicFollowers: many(topicFollowers),
 	topics: many(topics),
 	userCommunities: many(userCommunities),
 }));
@@ -45,6 +51,14 @@ export const threadRelations = relations(thread, ({one, many}) => ({
 	user: one(user, {
 		fields: [thread.createdBy],
 		references: [user.id]
+	}),
+	question: one(question, {
+		fields: [thread.questionId],
+		references: [question.id]
+	}),
+	topic: one(topics, {
+		fields: [thread.topicId],
+		references: [topics.id]
 	}),
 	threadReactions: many(threadReaction),
 }));
@@ -71,6 +85,45 @@ export const notificationRelations = relations(notification, ({one}) => ({
 	}),
 }));
 
+export const questionRelations = relations(question, ({one, many}) => ({
+	user: one(user, {
+		fields: [question.createdBy],
+		references: [user.id]
+	}),
+	topic: one(topics, {
+		fields: [question.topicId],
+		references: [topics.id]
+	}),
+	questionRequests: many(questionRequest),
+	threads: many(thread),
+}));
+
+export const topicsRelations = relations(topics, ({one, many}) => ({
+	questions: many(question),
+	threads: many(thread),
+	user: one(user, {
+		fields: [topics.createdBy],
+		references: [user.id]
+	}),
+}));
+
+export const questionRequestRelations = relations(questionRequest, ({one}) => ({
+	question: one(question, {
+		fields: [questionRequest.questionId],
+		references: [question.id]
+	}),
+	user_requestedBy: one(user, {
+		fields: [questionRequest.requestedBy],
+		references: [user.id],
+		relationName: "questionRequest_requestedBy_user_id"
+	}),
+	user_requestedTo: one(user, {
+		fields: [questionRequest.requestedTo],
+		references: [user.id],
+		relationName: "questionRequest_requestedTo_user_id"
+	}),
+}));
+
 export const threadReactionRelations = relations(threadReaction, ({one}) => ({
 	thread: one(thread, {
 		fields: [threadReaction.threadId],
@@ -78,25 +131,6 @@ export const threadReactionRelations = relations(threadReaction, ({one}) => ({
 	}),
 	user: one(user, {
 		fields: [threadReaction.userId],
-		references: [user.id]
-	}),
-}));
-
-export const topicFollowersRelations = relations(topicFollowers, ({one}) => ({
-	user: one(user, {
-		fields: [topicFollowers.followerId],
-		references: [user.id]
-	}),
-	topic: one(topics, {
-		fields: [topicFollowers.topicId],
-		references: [topics.id]
-	}),
-}));
-
-export const topicsRelations = relations(topics, ({one, many}) => ({
-	topicFollowers: many(topicFollowers),
-	user: one(user, {
-		fields: [topics.createdBy],
 		references: [user.id]
 	}),
 }));

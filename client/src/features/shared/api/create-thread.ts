@@ -19,7 +19,7 @@ export type CreateThreadType = z.infer<typeof createThreadSchema> & {
   createdBy: string;
 };
 
-const createThread = async (data: any) => {
+const createThread = async (data: FormData) => {
   const response = await api.post(
     "http://localhost:3000/api/thread/create",
     data,

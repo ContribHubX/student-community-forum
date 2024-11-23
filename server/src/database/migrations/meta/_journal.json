@@ -36,6 +36,13 @@
       "when": 1731505966547,
       "tag": "0004_first_stryfe",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1732244012300,
+      "tag": "0005_white_proemial_gods",
+      "breakpoints": true
     }
   ]
 }

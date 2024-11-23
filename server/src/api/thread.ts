@@ -65,4 +65,21 @@ export default {
       next(new AppError(error));
     }
   },
+
+  /**
+   * Handler to retrieve a threads by topic.
+   *
+   * @route GET /thread/:threadId
+   */
+  async getAllThreadsByTopicHandler(req: Request, res: Response, next: NextFunction) {
+    const topicId = req.params.topicId;
+
+    try {
+      const threadService = Container.get(ThreadService);
+      const response = await threadService.getAllThreadByTopic(topicId);
+      res.status(200).json(response);
+    } catch (error: any) {
+      next(new AppError(error));
+    }
+  },
 };

@@ -1,12 +1,17 @@
 import TopicRepository from "@/domain/repository/topic";
 import { AppError } from "@/libs/app-error";
-import { ITopic, ITopicDto, ITopicFollowersDto } from "@/domain/interfaces/ITopic";
+import { ITopic, ITopicDto, ITopicFollowersDto, ITopicUserFollow } from "@/domain/interfaces/ITopic";
 import { Inject, Service } from "typedi";
+import { IUser } from "@/domain/interfaces/IUser";
+import EventManager from "@/sockets/event-manager";
 
 @Service()
 class TopicService {
     @Inject(() => TopicRepository)
     private topicRepo!: TopicRepository;
+
+    @Inject(() => EventManager)
+    private eventManager!: EventManager;
 
     /**
      * Creates a new topic.
@@ -56,10 +61,29 @@ class TopicService {
      * Follows a topic.
      * 
      * @param dto - Data transfer object for following a topic.
+     * @returns {Promise<IUser>}
      */
-    public async followTopic(dto: ITopicFollowersDto): Promise<void> {
+    public async followTopic(dto: ITopicFollowersDto): Promise<ITopicUserFollow> {
         try {
-            await this.topicRepo.follow(dto);
+            const result = await this.topicRepo.follow(dto);
+            this.eventManager.publishToMany<ITopicUserFollow>("topic-follow--new", result);
+
+            return result;
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    /**
+     * Retrieves followers in a topic.
+     * 
+     * @param topicId - The ID of the topic to retrieve.
+     * @returns The topic or undefined if not found.
+     */
+    public async getTopicFollowers(topicId: string): Promise<IUser[]> {
+        try {
+            return await this.topicRepo.getFollowers(topicId);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

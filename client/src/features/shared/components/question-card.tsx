@@ -4,15 +4,24 @@ import { FaPencilAlt } from "react-icons/fa";
 import { MdOutlineRssFeed } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { users } from "../data/users";
+import { useNavigate } from "react-router-dom";
+import { useGetUsersByQuestion } from "@/features/question/api/get-users-by-question";
 
 interface QuestionCardProp {
   question: Question;
 }
 
 export const QuestionCard = ({ question }: QuestionCardProp) => {
+  const navigate = useNavigate();
+  const { data: users } = useGetUsersByQuestion({
+    questionId: question.id || "",
+  });
+
   return (
-    <div className="text-primary-foreground px-4 py-3 text-sm flex items-start justify-between hover:bg-background rounded-lg">
+    <div
+      onClick={() => navigate(`/question/${question.id}`)}
+      className="text-primary-foreground px-4 py-3 text-sm flex items-start justify-between hover:bg-background rounded-lg"
+    >
       <div>
         <h2 className="font-medium text-base">{question.title}</h2>
         <div className="mt-4">
@@ -36,12 +45,12 @@ export const QuestionCard = ({ question }: QuestionCardProp) => {
       <div className="flex flex-col justify-between h-[100px]">
         <RxCross2 className="text-lg font-semibold self-end" />
         <div className="flex items-center">
-          {users.map((user) => (
-            <Avatar key={user.id} className="ml-[-15px]">
-              <AvatarImage
-                src={user.attachment}
-                className="rounded-full object-cover h-[50px] w-[50px]"
-              />
+          {users?.map((user) => (
+            <Avatar
+              key={user.id}
+              className="ml-[-15px] object-cover h-[40px] w-[40px]"
+            >
+              <AvatarImage src={user.attachment} className="rounded-full " />
             </Avatar>
           ))}
           <div className="ml-2 text-muted-foreground text-xs"> + 2 answers</div>

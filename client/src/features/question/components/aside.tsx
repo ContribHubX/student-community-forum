@@ -24,6 +24,7 @@ export const Aside = () => {
           icon={question}
           iconBgcolor="primary"
           containerStyle="hover:bg-background p-2"
+          link="/question"
         />
         <SideBarItem
           title="Answer requests"
@@ -31,6 +32,7 @@ export const Aside = () => {
           icon={brain}
           iconBgcolor="#EFF5F8"
           containerStyle="hover:bg-background p-2"
+          link="/question/request"
         />
         <SideBarItem
           title="Popular of the day"
