@@ -76,13 +76,19 @@ class ThreadInteractionService {
       this.eventManager.publishToMany<IComment>("comment--new", result);
 
       // notify user who created the thread
-      const user = await this.threadInteractionRepo.getUserByThreadId(
-        dto.threadId,
-      );
+      let user;
+
+      // if comment
+      if (!result?.parentId)
+        user = await this.threadInteractionRepo.getUserByThreadId(dto.threadId);
+      // if reply
+      else 
+        user = await this.threadInteractionRepo.getUserByCommentId(result.parentId);
+
       await this.notifService.createNotification({
         entityId: dto.threadId,
         entityType: "thread",
-        type: "comment" as NotificationType,
+        type: (!result?.parentId ? "comment" : "reply") as NotificationType,
         createdBy: dto.createdBy,
         receiveBy: user.id,
       });

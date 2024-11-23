@@ -16,7 +16,7 @@ export const getTopicQueryOptions = (topicId: string) => {
 };
 
 export type getTopicQueryConfig = {
-  topicId: string,
+  topicId: string;
   queryConfig?: QueryConfig<typeof getTopic>;
 };
 

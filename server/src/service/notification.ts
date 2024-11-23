@@ -2,7 +2,7 @@ import { IRawNotificationDto, INotificationDto, INotification } from "@/domain/i
 import NotificationRepository from "@/domain/repository/notification";
 import { AppError } from "@/libs/app-error";
 import EventManager from "@/sockets/event-manager";
-import { TaskNotificationType, ThreadNotificationType } from "@/types";
+import { QuestionRequestNotificationType, TaskNotificationType, ThreadNotificationType } from "@/types";
 import { Inject, Service } from "typedi";
 
 // TODO must implement (UserService, UserRepo)  
@@ -32,6 +32,10 @@ class NotificationService {
         if (dto.entityType === "thread")
             message = this.getThreadNotificationMessage(dto.type);
             link = `api/thread/${dto.entityId}`
+
+        if (dto.entityType === "question")
+            message = this.getQuestionNotificationMessage(dto.type);
+            link = `api/question/${dto.entityId}`
         
         // TODO must implement user service 
         message = "User " + message;
@@ -100,6 +104,13 @@ class NotificationService {
             default:
                 return '';
         }
+    }
+
+    /**
+     * Utility function
+     */
+    private getQuestionNotificationMessage(actionType: QuestionRequestNotificationType): string {
+        return "requested you to answer a question"
     }
 }
 

@@ -5,4 +5,6 @@ export * from "./thread-reaction";
 export * from "./comment";
 export * from "./notification";
 export * from "./topic";
-export * from "./question"
+export * from "./question";
+export * from "./board";
+export * from "./task";

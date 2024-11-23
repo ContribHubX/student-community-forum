@@ -3,8 +3,8 @@ import { v4 as uuidV4 } from "uuid";
 import { UserTable } from "./user";
 import { relations } from "drizzle-orm";
 
-export const EntityType = mysqlEnum("entity_type", ["thread", "task"]);
-export const NotificationType = mysqlEnum("type", ["like", "dislike", "comment", "reply"]);
+export const EntityType = mysqlEnum("entity_type", ["thread", "task", "question"]);
+export const NotificationType = mysqlEnum("type", ["like", "dislike", "comment", "reply", "request"]);
 
 export const NotificationTable = mysqlTable("notification", {
     id: varchar("id", { length: 255 }).primaryKey().notNull().$default(uuidV4),

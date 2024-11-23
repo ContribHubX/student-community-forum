@@ -2,7 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthRoot from "./routes/auth/root";
 import AppRoot from "./routes/app/root";
 import { useMemo } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ProtectedRoute } from "@/lib/auth";
+
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -110,6 +112,15 @@ const createAppRouter = () =>
               "./routes/app/community/communities"
             );
             return { Component: CommunitiesRoute };
+          },
+        },
+        {
+          path: "/workspace",
+          lazy: async () => {
+            const { WorkspaceRoute } = await import(
+              "./routes/app/workspace/workspace"
+            );
+            return { Component: WorkspaceRoute };
           },
         },
       ],

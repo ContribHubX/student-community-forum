@@ -1,12 +1,12 @@
-import { NotificationType } from "@/types"
+import { NotificationType, NotificationEntityType } from "@/types"
 import { IUser } from "./IUser"
 
 export interface INotification {
-    id: string,
+    id: string;
     message: string, 
     createdAt: Date,
     entityId: string,
-    entityType: "task" | "thread",
+    entityType: NotificationEntityType;
     type: NotificationType,
     link: string,
     isRead: boolean,
@@ -17,7 +17,7 @@ export interface INotification {
 export interface INotificationDto {
     message: string, 
     entityId: string,
-    entityType: "task" | "thread",
+    entityType: NotificationEntityType;
     type: NotificationType,
     link: string,
     createdBy: string,
@@ -27,7 +27,7 @@ export interface INotificationDto {
 
 export interface IRawNotificationDto {
     entityId: string,
-    entityType: "task" | "thread",
+    entityType: NotificationEntityType;
     type: NotificationType,
     createdBy: string,
     receiveBy: string

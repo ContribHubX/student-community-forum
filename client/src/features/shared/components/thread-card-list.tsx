@@ -2,11 +2,10 @@ import { ThreadCard } from "@/features/thread/components/thread-card";
 import { Thread } from "@/types";
 
 interface ThreadCardListProp {
-  threads: Thread[]
+  threads: Thread[];
 }
 
 export const ThreadCardList = ({ threads }: ThreadCardListProp) => {
-
   // Temporary only
   if (!threads) {
     return <p>Loading...</p>;

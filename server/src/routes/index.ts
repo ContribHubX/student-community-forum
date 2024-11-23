@@ -6,6 +6,7 @@ import community from "./community";
 import topic from "./topic";
 import question from "./question";
 import user from "./user";
+import board from "./board";
 
 export default () => {
   const app = Router();
@@ -16,6 +17,7 @@ export default () => {
   topic(app);
   question(app);
   user(app);
+  board(app);
 
   return app;
 };

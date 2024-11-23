@@ -70,7 +70,7 @@ export type Topic = Entity<{
 export type TopicUserFollow = {
   user: User;
   topicId: string;
-}
+};
 
 export type Question = Entity<{
   name: string;
@@ -84,3 +84,13 @@ export type PendingQuestionRequest = {
   requestedBy: User;
   requestedTo: User;
 };
+
+export type Board = Entity<{
+  id: string;
+  name: string;
+  status: BoardStatus;
+  createdBy: User;
+  members: User[]; 
+}>
+
+export type BoardStatus = "active" | "finished" | "archived"; 

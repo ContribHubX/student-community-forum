@@ -17,10 +17,10 @@ export const CommunityView = ({ community }: CommunityViewProps) => {
         shadow-md"
     >
       <div className="w-[86%]  relative ">
-        <img 
-          src={community?.banner} 
-          className="h-[420px] w-full object-cover rounded-b-3xl" 
-          alt="banner" 
+        <img
+          src={community?.banner}
+          className="h-[420px] w-full object-cover rounded-b-3xl"
+          alt="banner"
         />
         <div className="absolute left-12 -bottom-14 flex gap-5">
           <img src={community?.icon} alt="icon" />
@@ -48,15 +48,15 @@ export const CommunityView = ({ community }: CommunityViewProps) => {
                 );
               })}
             </div> */}
-              <div className="flex">
+            <div className="flex">
               {users.map((member, index) => {
                 return (
                   <Avatar
                     key={index}
-                    className={`${index == 0 ? 'ml-0': 'ml-[-10px]'} h-[40px] w-[40px] rounded-full`}
+                    className={`${index == 0 ? "ml-0" : "ml-[-10px]"} h-[40px] w-[40px] rounded-full`}
                   >
-                    <AvatarImage 
-                      src={member.attachment}  
+                    <AvatarImage
+                      src={member.attachment}
                       className="rounded-full object-cover"
                     />
                   </Avatar>

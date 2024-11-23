@@ -63,7 +63,7 @@ export const Threads = ({ userId }: ThreadsProp) => {
       </Modal>
 
       <div>
-        <ThreadCardList threads={threads || []}  />
+        <ThreadCardList threads={threads || []} />
       </div>
     </div>
   );

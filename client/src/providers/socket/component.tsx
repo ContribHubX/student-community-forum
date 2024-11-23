@@ -139,6 +139,10 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             },
           });
           break;
+
+        case "notification--new":
+          console.log("notif: " + JSON.stringify(data, null, 2));
+          break;
       }
     });
   };

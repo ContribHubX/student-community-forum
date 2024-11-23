@@ -73,9 +73,7 @@ class EventManager {
       ? Array.from(this.clients.values()).filter(
           (client) => !ignoredClient.some((ignore) => client.is(ignore)),
         )
-      : Array.from(this.clients.values());
-
-    // console.log(filteredClients, null, 2)        
+      : Array.from(this.clients.values());      
 
     filteredClients.forEach((client) => client.send(identifier, data));
   }

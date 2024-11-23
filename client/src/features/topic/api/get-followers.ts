@@ -16,11 +16,14 @@ export const getTopicFollowersQueryOptions = (topicId: string) => {
 };
 
 export type getTopicFollowersQueryConfig = {
-  topicId: string,
+  topicId: string;
   queryConfig?: QueryConfig<typeof getTopicFollowers>;
 };
 
-export const useGetTopicFollowers = ({ topicId, queryConfig }: getTopicFollowersQueryConfig) => {
+export const useGetTopicFollowers = ({
+  topicId,
+  queryConfig,
+}: getTopicFollowersQueryConfig) => {
   return useQuery({
     ...getTopicFollowersQueryOptions(topicId),
     ...queryConfig,

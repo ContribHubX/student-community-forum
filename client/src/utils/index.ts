@@ -23,15 +23,14 @@ export const truncateText = (text: string, maxLength: number) => {
   return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
 };
 
-
 /**
  * Converts a FormData object into a plain JavaScript object.
  *
- * @param {FormData} formData 
- * @returns {Record<string, any>} 
+ * @param {FormData} formData
+ * @returns {Record<string, any>}
  */
 export const formDataToObject = (formData: FormData): Record<string, any> => {
-  const obj: Record<string, any> = {}; 
+  const obj: Record<string, any> = {};
   formData.forEach((value, key) => {
     if (obj[key]) {
       if (Array.isArray(obj[key])) {

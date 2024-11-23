@@ -16,11 +16,14 @@ export const getThreadsByTopicQueryOptions = (topicId: string) => {
 };
 
 export type getThreadsByTopicQueryConfig = {
-  topicId: string,
+  topicId: string;
   queryConfig?: QueryConfig<typeof getThreadsByTopic>;
 };
 
-export const useGetThreadsByTopic = ({ topicId, queryConfig }: getThreadsByTopicQueryConfig) => {
+export const useGetThreadsByTopic = ({
+  topicId,
+  queryConfig,
+}: getThreadsByTopicQueryConfig) => {
   return useQuery({
     ...getThreadsByTopicQueryOptions(topicId),
     ...queryConfig,

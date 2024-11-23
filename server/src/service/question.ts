@@ -5,6 +5,8 @@ import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuesti
 import { IThread } from "@/domain/interfaces/IThread";
 import { IUser } from "@/domain/interfaces/IUser";
 import EventManager from "@/sockets/event-manager";
+import NotificationService from "./notification";
+import { NotificationType, QuestionRequestNotificationType } from "@/types";
 
 @Service()
 class QuestionService {
@@ -13,6 +15,9 @@ class QuestionService {
 
     @Inject(() => EventManager)
     private eventManager!: EventManager;
+
+    @Inject(() => NotificationService)
+    private notifService!: NotificationService;
 
     /**
      * Creates a new question.
@@ -69,6 +74,15 @@ class QuestionService {
         try {
             const result = await this.questionRepo.request(dto);
             this.eventManager.publishToOne<IQuestionRequest>("request--new", result, result.requestedTo.id);
+
+            //notify user
+            await this.notifService.createNotification({
+                entityId: dto.questionId,
+                entityType: "question",
+                type: "request" as NotificationType,
+                createdBy: dto.requestedBy,
+                receiveBy: dto.requestedTo,
+              });
 
             return result;
         } catch (error: any) {

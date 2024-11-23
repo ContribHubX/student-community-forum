@@ -155,6 +155,32 @@ class ThreadInteractionRepository {
         });
     }
 
+    /**
+     * Gets user details based on commentId
+     * 
+     * @param commentId
+     * @returns {Promise<IUser>}
+     */
+    public getUserByCommentId(commentId: string): Promise<IUser> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .query
+                    .CommentTable
+                    .findFirst({
+                        where: eq(schema.CommentTable.id, commentId),
+                        with: { createdBy: true }
+                    });
+
+                if (!result?.createdBy) return reject(new AppError("User not found", 404));
+
+                resolve(result.createdBy);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
     
     /**
      * Check if user already reacted
