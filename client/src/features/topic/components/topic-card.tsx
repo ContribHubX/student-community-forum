@@ -20,27 +20,29 @@ interface TopicCardProp {
   createThread: (data: FormData) => void;
 }
 
-export const TopicCard = ({ userId, topic, createQuestion, createThread }: TopicCardProp) => {
+export const TopicCard = ({
+  userId,
+  topic,
+  createQuestion,
+  createThread,
+}: TopicCardProp) => {
   const { data: followers } = useGetTopicFollowers({ topicId: topic.id });
   const {
     isOpen: isModalOpen,
     toggle: toggleModal,
     close: closeModal,
   } = useDisclosure();
-  const [postType, setPostType] = useState("thread"); 
+  const [postType, setPostType] = useState("thread");
 
   const handleSubmit = (data: FormData) => {
     data.append("topicId", topic.id || "");
 
-    if (postType === "thread") 
-      createThread(data);
-    else 
-      createQuestion(formDataToObject(data) as CreateQuestionType);
-    
-  }
+    if (postType === "thread") createThread(data);
+    else createQuestion(formDataToObject(data) as CreateQuestionType);
+  };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPostType(event.target.value); 
+    setPostType(event.target.value);
   };
 
   return (
@@ -60,7 +62,7 @@ export const TopicCard = ({ userId, topic, createQuestion, createThread }: Topic
           </div>
         </div>
         <div className="flex items-center gap-2 text-muted-foreground  ">
-          <div 
+          <div
             className="group bg-background w-fit p-2 rounded-md hover:scale-125 transition-transform cursor-pointer hover:bg-accent"
             onClick={toggleModal}
           >
@@ -82,17 +84,14 @@ export const TopicCard = ({ userId, topic, createQuestion, createThread }: Topic
           <div>
             <label>Choose post type:</label>
             <select
-              onChange={handleSelectChange} 
+              onChange={handleSelectChange}
               className="border p-2 rounded"
             >
               <option value="thread">Thread</option>
               <option value="question">Question</option>
             </select>
           </div>
-          <CreateThreadForm
-            userId={userId}
-            handleFormSubmit={handleSubmit}
-          />
+          <CreateThreadForm userId={userId} handleFormSubmit={handleSubmit} />
         </Modal>
       </div>
     </div>

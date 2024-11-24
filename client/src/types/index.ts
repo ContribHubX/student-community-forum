@@ -90,7 +90,21 @@ export type Board = Entity<{
   name: string;
   status: BoardStatus;
   createdBy: User;
-  members: User[]; 
+  members: User[];
+}>;
+
+export type BoardStatus = "active" | "finished" | "archived";
+
+export type Task = Entity<{
+  id: string;
+  name: string;
+  description: string;
+  attachment: string | undefined;
+  status: TaskStatusType;
+  sequence: number;
+  createdAt: Date;
+  createdBy: User;
+  assingnees: User[]; 
 }>
 
-export type BoardStatus = "active" | "finished" | "archived"; 
+export type TaskStatusType = "todo" | "doing" | "finished";

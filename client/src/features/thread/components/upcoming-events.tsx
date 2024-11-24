@@ -1,4 +1,4 @@
-import { upcomingEventsData } from "@/data/upcoming-events-data";
+import { upcomingEventsData } from "@/features/shared/data/upcoming-events-data";
 import { truncateText } from "@/utils";
 import { Link } from "react-router-dom";
 

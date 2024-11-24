@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { createBoardSchema, CreateBoardType, useCreateBoard } from "../api/create-board";
-
+import {
+  createBoardSchema,
+  CreateBoardType,
+  useCreateBoard,
+} from "../api/create-board";
 
 interface CreateBoardFormProp {
   userId: string | undefined;
@@ -21,14 +24,14 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
   });
   const { mutate: createBoard } = useCreateBoard({});
 
-  const onSubmit: SubmitHandler<CreateBoardType> = async (data: CreateBoardType) => {
+  const onSubmit: SubmitHandler<CreateBoardType> = async (
+    data: CreateBoardType,
+  ) => {
+    // if (errors) {
 
-   
-     // if (errors) {
-      
     // }
     // validate
-    createBoard({...data, createdBy: userId || ""});
+    createBoard({ ...data, createdBy: userId || "" });
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     reset();
@@ -44,11 +47,10 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <fieldset className="space-y-1">
-      
         <div className="text-primary-foreground mb-6">
           <div className="flex  flex-col">
-              <label className="font-semibold text-lg">Name</label>
-              <small className="text-muted-foreground">Project name</small>
+            <label className="font-semibold text-lg">Name</label>
+            <small className="text-muted-foreground">Project name</small>
           </div>
           <div>
             <input
@@ -58,10 +60,8 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
           </div>
         </div>
 
-        <Button 
-            className="text-sm font-normal w-full rounded-sm bg-background  hover:bg-accent hover:text-accent-foreground"
-        >
-            Continue
+        <Button className="text-sm font-normal w-full rounded-sm bg-background  hover:bg-accent hover:text-accent-foreground">
+          Continue
         </Button>
       </fieldset>
     </form>

@@ -15,7 +15,7 @@ export type AuthProvider = "GOOGLE" | "GITHUB" | "LOCAL";
 
 export type SocialAuthProvider = Exclude<AuthProvider, "LOCAL">;
 
-export type UPLOAD_TYPE = "thread" | "comment" | "community" | "topic";
+export type UPLOAD_TYPE = "thread" | "comment" | "community" | "topic" | "task";
 
 export type ClientEventCallback = (data: object) => void;
 
@@ -32,3 +32,5 @@ export type NotificationType = ThreadNotificationType & TaskNotificationType & Q
 export type NotificationEntityType = "task" | "thread" | "question";
 
 export type BoardStatus = "active" | "finished" | "archived"; 
+
+export type TaskStatusType = "todo" | "doing" | "finished";

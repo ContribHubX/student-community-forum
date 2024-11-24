@@ -11,6 +11,7 @@
     "prepare": "cd .. && husky client/.husky"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^17.0.0",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",

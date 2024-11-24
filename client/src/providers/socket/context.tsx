@@ -1,7 +1,7 @@
 import { createContext } from "react";
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User } from "@/types";
 import { Socket } from "socket.io-client";
 import { QueryClient } from "@tanstack/react-query";
+
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
 import { getCommentsQueryOptions } from "@/features/thread/api/get-thread-comments";
 import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
@@ -9,6 +9,9 @@ import { getUserReactionQueryOptions } from "@/features/thread/api/get-reaction"
 import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-users-by-question";
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
+
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board } from "@/types";
+import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -25,6 +28,7 @@ export enum OPERATION {
   ADD_NEW_REACTION,
   ADD_NEW_REQUEST,
   ADD_NEW_TOPIC_FOLLOWER,
+  ADD_NEW_BOARD,
 }
 
 type Actions =
@@ -51,7 +55,11 @@ type Actions =
   | {
       type: OPERATION.ADD_NEW_TOPIC_FOLLOWER;
       payload: { data: TopicUserFollow; queryClient: QueryClient };
-    };
+    }
+  | {
+      type: OPERATION.ADD_NEW_BOARD;
+      payload: { data: Board; queryClient: QueryClient };
+    }
 
 
 /**
@@ -218,6 +226,25 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         getTopicFollowersQueryOptions(data.topicId.toString()).queryKey,
         (oldUsers: User[] | undefined) => {
           return oldUsers ? [data.user, ...oldUsers] : undefined;
+        }
+      );
+
+      return { ...state };      
+    }
+    
+    /**
+     * Adds a new board to the list of boards and updates the cache.
+     * Updates the query data in the React Query cache for the user's boards.
+     *
+     * @param action.payload.data - The board object representing the new board.
+     * @param action.payload.queryClient - The React Query client instance to update the cache.
+     */
+    case OPERATION.ADD_NEW_BOARD: { 
+      const { data, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getBoardsQueryOptions(data.createdBy.id.toString()).queryKey,
+        (oldBoards: Board[] | undefined) => {
+          return oldBoards ? [data, ...oldBoards] : undefined;
         }
       );
 

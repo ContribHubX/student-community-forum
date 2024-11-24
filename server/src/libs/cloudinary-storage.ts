@@ -14,6 +14,8 @@ const getCloudinaryFolder = (type: UPLOAD_TYPE) => {
       return "community";
     case "topic":
       return "topics";
+    case "task":
+      return "tasks";
     default:
       return "uploads";
   }
@@ -48,4 +50,5 @@ export const uploadCommunity = multer({ storage: createStorage("community") })
                                   { name: "banner", maxCount: 1 }, 
                                   { name: "icon", maxCount: 1 }, 
                                 ]);
-export const uploadTopic = multer({ storage: createStorage("topic") });                          
+export const uploadTopic = multer({ storage: createStorage("topic") });       
+export const uploadTask = multer({ storage: createStorage("task") });                                             

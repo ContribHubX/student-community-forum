@@ -7,6 +7,7 @@ import topic from "./topic";
 import question from "./question";
 import user from "./user";
 import board from "./board";
+import task from "./task";
 
 export default () => {
   const app = Router();
@@ -18,6 +19,7 @@ export default () => {
   question(app);
   user(app);
   board(app);
+  task(app);
 
   return app;
 };

@@ -1,4 +1,4 @@
-import { mysqlTable, varchar, timestamp, text, mysqlEnum } from "drizzle-orm/mysql-core";
+import { mysqlTable, varchar, timestamp, text, mysqlEnum, int } from "drizzle-orm/mysql-core";
 import { v4 as uuidV4} from "uuid";
 import { UserTable } from "./user"; 
 import { relations } from "drizzle-orm";
@@ -9,9 +9,10 @@ export const TaskStatusType = mysqlEnum("status", ["todo", "doing", "finished"])
 export const TaskTable = mysqlTable("task", { 
     id: varchar("id", { length: 255 }).primaryKey().notNull().$default(uuidV4),
     name: varchar("name", { length: 50 }).notNull(),
-    description: varchar("description", { length: 50 }),
+    description: text("description"),
     attachment: text("attachment"),
     status: TaskStatusType.default("todo"),
+    sequence: int("sequence"),
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: varchar("created_by", { length: 255 }).notNull().references(() => UserTable.id), 
     boardId: varchar("board_id", { length: 255 }).notNull().references(() => BoardTable.id), 

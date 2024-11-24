@@ -2,7 +2,7 @@ import arrowbutton from "@/assets/sidebar/arrow-button.svg";
 import { Link } from "react-router-dom";
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { UpcomingEventsList } from "@/features/thread/components/upcoming-events";
-import { recentThreadData } from "@/data/recent-thread-data";
+import { recentThreadData } from "@/features/shared/data/recent-thread-data";
 
 export const RightSidebar = () => {
   return (

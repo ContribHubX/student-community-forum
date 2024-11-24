@@ -1,7 +1,7 @@
 import Container from "typedi";
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "@/libs/app-error";
-import BoardService from "@/service/board/board";
+import BoardService from "@/service/board";
 
 export default {
     /**

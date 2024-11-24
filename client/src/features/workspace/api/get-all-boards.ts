@@ -16,7 +16,7 @@ export const getBoardsQueryOptions = (userId: string) => {
 };
 
 export type getBoardsQueryConfig = {
-  userId: string,
+  userId: string;
   queryConfig?: QueryConfig<typeof getAllBoards>;
 };
 

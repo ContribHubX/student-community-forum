@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 
 export const createBoardSchema = z.object({
-    name: z.string().min(3, "Content must be at least 6 characters"),
+  name: z.string().min(3, "Content must be at least 6 characters"),
 });
 
 export type CreateBoardType = z.infer<typeof createBoardSchema> & {
@@ -13,9 +13,7 @@ export type CreateBoardType = z.infer<typeof createBoardSchema> & {
 };
 
 const createBoard = async (data: CreateBoardType): Promise<Board> => {
-  const response = await api.post(
-    "http://localhost:3000/api/board", data
-  );
+  const response = await api.post("http://localhost:3000/api/board", data);
 
   return response.data;
 };

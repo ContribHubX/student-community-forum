@@ -1,12 +1,16 @@
 import { IBoard, IBoardDto } from "@/domain/interfaces/IBoard";
 import BoardRepository from "@/domain/repository/board";
 import { AppError } from "@/libs/app-error";
+import EventManager from "@/sockets/event-manager";
 import { Service, Inject } from "typedi";
 
 @Service()
 class BoardService {
     @Inject(() => BoardRepository)
     private boardRepo!: BoardRepository;
+
+    @Inject(() => EventManager)
+    private eventManager!: EventManager;
 
     /**
      * Creates a new board.
@@ -16,7 +20,10 @@ class BoardService {
      */
     public async createBoard(dto: IBoardDto): Promise<IBoard | undefined> {
         try {
-            return this.boardRepo.create(dto);
+            const result = await this.boardRepo.create(dto);
+            this.eventManager.publishToOne<IBoard>("board--new", result, result.createdBy.id);
+
+            return result;
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

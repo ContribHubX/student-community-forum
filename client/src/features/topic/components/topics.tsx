@@ -68,9 +68,9 @@ export const Topics = ({ userId }: TopicsProp) => {
   return (
     <div>
       <div>
-        <TopicCard 
-          userId={userId} 
-          topic={topic} 
+        <TopicCard
+          userId={userId}
+          topic={topic}
           createThread={createThread}
           createQuestion={createQuestion}
         />
@@ -126,7 +126,6 @@ export const Topics = ({ userId }: TopicsProp) => {
           />
         </Modal>
       </div>
-
     </div>
   );
 };

@@ -140,6 +140,16 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
+        case "board--new":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_BOARD,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
+
         case "notification--new":
           console.log("notif: " + JSON.stringify(data, null, 2));
           break;
