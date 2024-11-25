@@ -150,6 +150,16 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
+        case "task--updated":
+          socketDispatch({
+            type: OPERATION.UPDATE_TASK,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
+
         case "notification--new":
           console.log("notif: " + JSON.stringify(data, null, 2));
           break;

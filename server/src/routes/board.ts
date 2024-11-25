@@ -15,7 +15,17 @@ export default (app: Router) => {
     boardController.createBoardHandler,
   );
 
+  router.post(
+    "/member",
+    verifyAuth, 
+    boardController.addBoardMemberHandler
+  );
+
   router.get("/", verifyAuth, boardController.getAllBoardsHandler);
+
+  router.get("/member", verifyAuth, boardController.getBoardMembersHandler);
+
+  router.get("/shared", verifyAuth, boardController.getSharedBoardsHandler);
 
   router.get("/:boardId", verifyAuth, boardController.getBoardByIdHandler);
 }

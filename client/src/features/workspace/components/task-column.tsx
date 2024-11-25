@@ -7,7 +7,6 @@ import { FaTasks } from "react-icons/fa";
 
 import { TaskStatusType, Task as TaskType } from "@/types";
 
-
 interface TaskColumnProp {
   type: TaskStatusType;
   tasks: TaskType[];
@@ -18,14 +17,14 @@ export const TaskColumn = ({ type, tasks }: TaskColumnProp) => {
     type === "todo"
       ? statusColors["archived"].text
       : type === "doing"
-      ? statusColors["finished"].text
-      : statusColors["active"].text;
+        ? statusColors["finished"].text
+        : statusColors["active"].text;
 
   return (
     <div className="max-w-[300px]">
       <div className="flex items-center justify-between mb-2 text-primary-foreground">
         <h1>{type.charAt(0).toUpperCase() + type.substring(1)}</h1>
-        <FaTasks className="text-lg "/>
+        <FaTasks className="text-lg " />
       </div>
       <div
         className="h-[4px] rounded-full mb-2"

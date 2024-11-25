@@ -1,14 +1,20 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
-import Container, { Service } from "typedi";
+import Container, { Inject, Service } from "typedi";
 import * as schema from "@/database/schema";
 import { BoardTable } from "@/database/schema";
-import { IBoard, IBoardDto } from "../interfaces/IBoard";
+import { BoardMembersTable } from "@/database/schema";
+import { IBoard, IBoardDto, IBoardMember, IBoardMemberDto } from "../interfaces/IBoard";
 import { eq } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
+import { IUser } from "../interfaces/IUser";
+import UserRepository from "./user";
 
 @Service()
 class BoardRepository {
     private db: MySql2Database<typeof schema>;
+
+    @Inject(() => UserRepository)
+    private userRepo!: UserRepository;
 
     constructor() {
         this.db = Container.get("database");
@@ -92,6 +98,77 @@ class BoardRepository {
                 });
 
                 resolve(result as unknown as IBoard[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    /**
+     * Adds a new member to a board.
+     *
+     * @param {IBoardMemberDto} dto 
+     * @returns {Promise<IBoardMember>}
+     */
+    public addMember(dto: IBoardMemberDto): Promise<IBoardMember> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .insert(BoardMembersTable)
+                    .values({...dto})
+                    .$returningId();
+
+                const resultId = result[0].id;
+
+                const boardMember = await this.db
+                    .query 
+                    .BoardMembersTable
+                    .findFirst({
+                        columns: {},
+                        with: {
+                            member: true,
+                            board: true
+                        },
+                        where: eq(BoardMembersTable.id, resultId)
+                    })
+
+                resolve(boardMember as unknown as IBoardMember);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        })
+    }
+
+    public getMembers(boardId: string): Promise<IUser[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db.query.BoardMembersTable.findMany({
+                    where: eq(BoardMembersTable.boardId, boardId),
+                    columns: {},
+                    with: {
+                        member: true
+                    },
+                });
+
+                resolve(result.map(res => res.member) as unknown as IUser[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    public getSharedBoards(userId: string): Promise<IBoard[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db.query.BoardMembersTable.findMany({
+                    where: eq(BoardMembersTable.memberId, userId),
+                    columns: {},
+                    with: {
+                        board: true
+                    },
+                });
+
+                resolve(result.map(res => res.board) as unknown as IBoard[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }

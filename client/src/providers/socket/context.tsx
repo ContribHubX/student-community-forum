@@ -10,8 +10,9 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board, Task } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
+import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -29,6 +30,7 @@ export enum OPERATION {
   ADD_NEW_REQUEST,
   ADD_NEW_TOPIC_FOLLOWER,
   ADD_NEW_BOARD,
+  UPDATE_TASK
 }
 
 type Actions =
@@ -60,6 +62,10 @@ type Actions =
       type: OPERATION.ADD_NEW_BOARD;
       payload: { data: Board; queryClient: QueryClient };
     }
+  | {
+    type: OPERATION.UPDATE_TASK;
+    payload: { data: Task; queryClient: QueryClient };
+  }
 
 
 /**
@@ -245,6 +251,24 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         getBoardsQueryOptions(data.createdBy.id.toString()).queryKey,
         (oldBoards: Board[] | undefined) => {
           return oldBoards ? [data, ...oldBoards] : undefined;
+        }
+      );
+
+      return { ...state };      
+    }
+
+    /**
+     * 
+     * @param action.payload.data - The board object representing the new board.
+     * @param action.payload.queryClient - The React Query client instance to update the cache.
+     */
+    case OPERATION.UPDATE_TASK: { 
+      const { data, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getTasksQueryOptions(data.boardId.toString()).queryKey,
+        (oldTask: Task[] | undefined) => {
+          const updatedTask = oldTask?.map(task => task.id === data.id ? data : task);   
+          return updatedTask;
         }
       );
 

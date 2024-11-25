@@ -4,18 +4,20 @@ import { TaskColumn } from "./task-column";
 import { TaskStatusType } from "@/types";
 import { useGetTasks } from "../api/get-all-tasks";
 import { useParams } from "react-router-dom";
-import {  useUpdateTask } from "../api/update-task";
+import { useUpdateTask } from "../api/update-task";
 import { useKanbanDrag } from "@/features/workspace/hooks/use-kanban-drag";
 
-// TODO napay bug ang giatay kung mo drag sa same column mo duplicate 
+// TODO napay bug ang giatay kung mo drag sa same column mo duplicate
 
 export const KanbanBoard = () => {
   const { boardId } = useParams();
   const { data: taskData } = useGetTasks({ boardId: boardId || "" });
   const { mutate: updateTask } = useUpdateTask({});
-  const { tasks, onDragEnd } = useKanbanDrag(taskData, updateTask, boardId);
+  const { onDragEnd } = useKanbanDrag(taskData, updateTask, boardId);
 
-  if (!tasks) return <p>Loading...</p>
+  if (!taskData) return <p>Loading...</p>;
+
+  console.log(taskData)
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -30,9 +32,9 @@ export const KanbanBoard = () => {
               >
                 <TaskColumn
                   type={type as TaskStatusType}
-                  tasks={tasks
+                  tasks={taskData
                     .filter((task) => task.status === type)
-                    .sort((a, b) => a.sequence - b.sequence)}  
+                    .sort((a, b) => a.sequence - b.sequence)}
                 />
                 {provided.placeholder}
               </div>

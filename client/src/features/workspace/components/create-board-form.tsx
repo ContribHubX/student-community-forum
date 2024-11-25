@@ -31,7 +31,7 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
 
     // }
     // validate
-    createBoard({ ...data, createdBy: userId || "" });
+    createBoard({ ...data, createdBy: (userId || "").toString() });
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     reset();

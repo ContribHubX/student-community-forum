@@ -104,7 +104,8 @@ export type Task = Entity<{
   sequence: number;
   createdAt: Date;
   createdBy: User;
-  assingnees: User[]; 
-}>
+  assingnees: User[];
+  boardId: string;
+}>;
 
 export type TaskStatusType = "todo" | "doing" | "finished";

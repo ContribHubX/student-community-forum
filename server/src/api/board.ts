@@ -53,5 +53,47 @@ export default {
         } catch (error: any) {
             next(new AppError(error));
         }
+    },
+
+
+     /**
+     * Handler to adda new member to a board
+     * 
+     * @route POST /boards/member
+     */
+    async addBoardMemberHandler(req: Request, res: Response, next: NextFunction) {
+        const dto = req.body;
+
+        try {
+            const boardService = Container.get(BoardService);
+            const response = await boardService.addBoardMember(dto);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    async getBoardMembersHandler(req: Request, res: Response, next: NextFunction) {
+        const boardId = req.query.boardId as string;
+
+        try {
+            const boardService = Container.get(BoardService);
+            const response = await boardService.getBoardMembers(boardId);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    async getSharedBoardsHandler(req: Request, res: Response, next: NextFunction) {
+        const userId = req.query.userId as string;
+
+        try {
+            const boardService = Container.get(BoardService);
+            const response = await boardService.getSharedBoards(userId);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
     }
 };

@@ -179,10 +179,10 @@ class TaskRepository {
                             )
                         );
                     }
-    
-                    const updatedTask = await this.getById(taskId);
-                    resolve(updatedTask);
                 });
+
+                const updatedTask = await this.getById(taskId);
+                resolve(updatedTask);
             } catch (error: any) {
                 reject(new AppError(error));
             }

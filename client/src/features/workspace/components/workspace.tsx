@@ -14,6 +14,7 @@ import pinkStar from "@/assets/workspace/pink-star.svg";
 
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { useGetBoards } from "../api/get-all-boards";
+import { useGetSharedBoards } from "../api/get-shared-boards";
 
 interface WorkspaceProp {
   userId: string | undefined;
@@ -22,6 +23,7 @@ interface WorkspaceProp {
 export const Workspace = ({ userId }: WorkspaceProp) => {
   const { isOpen, toggle, close } = useDisclosure();
   const { data: boards } = useGetBoards({ userId: userId || "" });
+  const { data: sharedBoards } = useGetSharedBoards({ userId: userId || "" });
 
   return (
     <div>
@@ -37,7 +39,7 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
             <HiSortDescending className="text-xl text-muted-foreground hover:text-accent" />
           </div> */}
           <div className="flex justify-center gap-3 text-3xl text-muted-foreground">
-            <HiSortDescending className="border rounded-md p-[4px] hover:text-accent"/>
+            <HiSortDescending className="border rounded-md p-[4px] hover:text-accent" />
             <CiGrid41 className="border rounded-md p-[4px] hover:text-accent" />
             <FiMenu className="border rounded-md  p-[4px] hover:text-accent" />
           </div>
@@ -56,18 +58,48 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
         {/* {"12345679000".split("").map((el, index) => (
           <Board key={index} />
         ))} */}
-         {boards?.map(board => (
-          <Board 
-            key={board.id} 
-            board={board}
-          />
-        ))}
+        {boards?.map((board) => <Board key={board.id} board={board} />)}
       </div>
 
       <div>
         <Modal isOpen={isOpen} onClose={close}>
           <CreateBoardForm userId={userId} />
         </Modal>
+      </div>
+
+
+
+      {/* shared */}
+      <FlexContainer className="justify-between  text-sm text-primary-foreground mt-8">
+        <FlexContainer className="gap-3">
+          <HiOutlineViewBoards className="text-2xl font-semibold" />
+          <p className="text-sm font-semibold">Shared Boards</p>
+        </FlexContainer>
+
+        <div className="flex items-center gap-4">
+          {/* <div className="flex border items-center gap-2 "> 
+            <p className="text-sm">Sort by (Default)</p>
+            <HiSortDescending className="text-xl text-muted-foreground hover:text-accent" />
+          </div> */}
+          <div className="flex justify-center gap-3 text-3xl text-muted-foreground">
+            <HiSortDescending className="border rounded-md p-[4px] hover:text-accent" />
+            <CiGrid41 className="border rounded-md p-[4px] hover:text-accent" />
+            <FiMenu className="border rounded-md  p-[4px] hover:text-accent" />
+          </div>
+        </div>
+      </FlexContainer>
+
+      <div
+        className={`mt-4 grid gap-5
+            md:grid-cols-2
+            lg:grid-cols-4
+        `}
+      >
+      
+        {/* {"12345679000".split("").map((el, index) => (
+          <Board key={index} />
+        ))} */}
+        {sharedBoards?.map((board) => <Board key={board.id} board={board} />)}
       </div>
     </div>
   );
@@ -108,6 +140,11 @@ const CreateBoardCard = () => {
           Create new board
         </p>
       </div>
+
+
+
+
+      {/*  */}
     </div>
   );
 };

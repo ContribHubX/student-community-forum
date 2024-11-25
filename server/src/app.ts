@@ -9,6 +9,7 @@ import {
 import { Server as IOServer } from "socket.io";
 import socketHandler from "@/loaders/socket";
 import { corsConfig } from "@/config/cors";
+import { ngrokListener as startngrok } from "@/loaders/ngrok";
 
 async function startServer() {
   const app = express();
@@ -16,7 +17,9 @@ async function startServer() {
   let serverListener: ServerListener<
     typeof IncomingMessage,
     typeof ServerResponse
-  >; 
+  >;  
+
+  const ngrokListener = await startngrok();
 
   (await import("./loaders/express")).default({ app });
 
@@ -27,6 +30,9 @@ async function startServer() {
                 🛡️  Server listening on port: ${port} 🛡️
             ################################################      
         `);
+
+      ngrokListener.forward(`localhost:${port}`);
+      console.log("Ingress established at:", ngrokListener.url());
 
       // init socket
       socketHandler(new IOServer(serverListener, corsConfig));

@@ -11,7 +11,6 @@ import { statusColors } from "../constant";
 import { useTheme } from "@/hooks/use-theme";
 import { Board as BoardType } from "@/types";
 
-
 interface BoardProp {
   board: BoardType;
 }
