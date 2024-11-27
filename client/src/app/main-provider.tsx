@@ -1,9 +1,11 @@
-import { ThemeContextProvider } from "../providers/theme";
-import { AppRouter } from "./router";
-import AuthContextComponent from "@/providers/auth/component";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/react-query";
+import { AppRouter } from "./router";
+
+import { ThemeContextProvider } from "@/providers/theme";
+import AuthContextComponent from "@/providers/auth/component";
 import SocketContextComponent from "@/providers/socket/component";
+import { BoardContextProvider } from "@/features/workspace/provider/board";
 
 const AppProvider = () => {
   return (
@@ -12,7 +14,9 @@ const AppProvider = () => {
         <AuthContextComponent>
           <SocketContextComponent>
             <ThemeContextProvider>
-              <AppRouter />
+              <BoardContextProvider>
+                <AppRouter />
+              </BoardContextProvider>
             </ThemeContextProvider>
           </SocketContextComponent>
         </AuthContextComponent>

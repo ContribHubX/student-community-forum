@@ -19,7 +19,7 @@ async function startServer() {
     typeof ServerResponse
   >;  
 
-  const ngrokListener = await startngrok();
+  //const ngrokListener = await startngrok();
 
   (await import("./loaders/express")).default({ app });
 
@@ -31,8 +31,8 @@ async function startServer() {
             ################################################      
         `);
 
-      ngrokListener.forward(`localhost:${port}`);
-      console.log("Ingress established at:", ngrokListener.url());
+      // ngrokListener.forward(`localhost:${port}`);
+      // console.log("Ingress established at:", ngrokListener.url());
 
       // init socket
       socketHandler(new IOServer(serverListener, corsConfig));

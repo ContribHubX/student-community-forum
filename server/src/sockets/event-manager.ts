@@ -1,8 +1,9 @@
-import { Service } from "typedi";
+import { Inject, Service } from "typedi";
 import Client from "./client";
 import { ClientEventOptions } from "@/types";
 import { Container } from "typedi";
 import { type Logger } from "winston";
+import KanbanRoomManager from "./kanban-room-manager";
 
 // TODO implement notif pub/sub
 // TODO revise publish to publishToOne and publishToMany
@@ -12,6 +13,9 @@ class EventManager {
   private readonly clients: Map<string, Client> = new Map();
   private logger: Logger;
 
+  @Inject(() => KanbanRoomManager)
+  private kanbanManager!: KanbanRoomManager;
+
   constructor() {
     this.logger = Container.get("logger");
   }
@@ -19,6 +23,8 @@ class EventManager {
   connect(socketClient: ClientEventOptions) {
     // add client
     this.clients.set(socketClient.userId.toString(), socketClient.client);
+
+    socketClient.client.on("user--join", data => this.link(data));
     
   }
 
@@ -55,7 +61,7 @@ class EventManager {
     this.emit(
       identifier,
       data,
-      Array.from(this.clients.values().filter((socket) => !client.is(socket))),
+      Array.from(this.clients.values()).filter((socket) => !client.is(socket)),
     );
   }
 
@@ -76,6 +82,21 @@ class EventManager {
       : Array.from(this.clients.values());      
 
     filteredClients.forEach((client) => client.send(identifier, data));
+  }
+
+  /**
+   * 
+   */
+  link(data: any): void {
+    // find user in event manager clients
+    const client = this.clients.get(data.user.id.toString())!;
+    
+    if (!client) {
+        this.logger.error("User socket not found when joining room");
+        return;
+    }
+
+    this.kanbanManager.join({...data, userId: data.user.id.toString(), client});
   }
 }
 

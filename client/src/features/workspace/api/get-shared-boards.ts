@@ -20,7 +20,10 @@ export type getSharedBoardsQueryConfig = {
   queryConfig?: QueryConfig<typeof getSharedBoards>;
 };
 
-export const useGetSharedBoards = ({ userId, queryConfig }: getSharedBoardsQueryConfig) => {
+export const useGetSharedBoards = ({
+  userId,
+  queryConfig,
+}: getSharedBoardsQueryConfig) => {
   return useQuery({
     ...getSharedBoardsQueryOptions(userId),
     ...queryConfig,

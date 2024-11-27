@@ -13,8 +13,7 @@ import pinkStar from "@/assets/workspace/pink-star.svg";
 // import pencil from "@/assets/workspace/pencil.svg";
 
 import { useDisclosure } from "@/hooks/use-disclosure";
-import { useGetBoards } from "../api/get-all-boards";
-import { useGetSharedBoards } from "../api/get-shared-boards";
+import { useBoardContext } from "../hooks/use-board-context";
 
 interface WorkspaceProp {
   userId: string | undefined;
@@ -22,8 +21,9 @@ interface WorkspaceProp {
 
 export const Workspace = ({ userId }: WorkspaceProp) => {
   const { isOpen, toggle, close } = useDisclosure();
-  const { data: boards } = useGetBoards({ userId: userId || "" });
-  const { data: sharedBoards } = useGetSharedBoards({ userId: userId || "" });
+  const { state } = useBoardContext();
+
+
 
   return (
     <div>
@@ -58,7 +58,7 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
         {/* {"12345679000".split("").map((el, index) => (
           <Board key={index} />
         ))} */}
-        {boards?.map((board) => <Board key={board.id} board={board} />)}
+        {state.boards?.map((board) => <Board key={board.id} board={board} />)}
       </div>
 
       <div>
@@ -66,8 +66,6 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
           <CreateBoardForm userId={userId} />
         </Modal>
       </div>
-
-
 
       {/* shared */}
       <FlexContainer className="justify-between  text-sm text-primary-foreground mt-8">
@@ -95,11 +93,10 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
             lg:grid-cols-4
         `}
       >
-      
         {/* {"12345679000".split("").map((el, index) => (
           <Board key={index} />
         ))} */}
-        {sharedBoards?.map((board) => <Board key={board.id} board={board} />)}
+        {state.sharedBoards?.map((board) => <Board key={board.id} board={board} />)}
       </div>
     </div>
   );
@@ -140,9 +137,6 @@ const CreateBoardCard = () => {
           Create new board
         </p>
       </div>
-
-
-
 
       {/*  */}
     </div>

@@ -160,6 +160,43 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
+        case "user--joined":
+          socketDispatch({
+            type: OPERATION.ADD_NEW_USER_TO_BOARD,
+            payload: {
+              data
+            },
+          });
+          break;
+
+        case "mouse--move":
+          socketDispatch({
+            type: OPERATION.UPDATE_USER_POSITION,
+            payload: {
+              data
+            },
+          });
+          break;
+
+        case "users--initial": 
+          socketDispatch({
+            type: OPERATION.INIT_BOARD_USERS,
+            payload: {
+              data
+            },
+          });
+          break;
+
+        case "user--left": 
+        socketDispatch({
+          type: OPERATION.REMOVE_USER_TO_BOARD,
+          payload: {
+            user: data.user, 
+            boardId: data.boardId
+          },
+        });
+        break;
+
         case "notification--new":
           console.log("notif: " + JSON.stringify(data, null, 2));
           break;

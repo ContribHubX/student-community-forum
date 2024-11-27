@@ -10,16 +10,18 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board, Task } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board, Task, BoardState } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
-import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";
+import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";;
 
 export type SocketContextState = {
   socket: Socket | undefined;
+  boards: Record<string, BoardState[]>;
 };
 
 export const defaultSocketContextState: SocketContextState = {
   socket: undefined,
+  boards: {}
 };
 
 export enum OPERATION {
@@ -30,7 +32,12 @@ export enum OPERATION {
   ADD_NEW_REQUEST,
   ADD_NEW_TOPIC_FOLLOWER,
   ADD_NEW_BOARD,
-  UPDATE_TASK
+  UPDATE_TASK,
+  INITIALIZE_BOARDS,
+  UPDATE_USER_POSITION,
+  INIT_BOARD_USERS,
+  ADD_NEW_USER_TO_BOARD,
+  REMOVE_USER_TO_BOARD 
 }
 
 type Actions =
@@ -65,6 +72,26 @@ type Actions =
   | {
     type: OPERATION.UPDATE_TASK;
     payload: { data: Task; queryClient: QueryClient };
+  }
+  | {
+    type: OPERATION.INITIALIZE_BOARDS;
+    payload: { data: Board[] };
+  }
+  | {
+    type: OPERATION.UPDATE_USER_POSITION;
+    payload: { data: BoardState & {boardId: string} };
+  }
+  | {
+    type: OPERATION.ADD_NEW_USER_TO_BOARD;
+    payload: { data: BoardState & {boardId: string} };
+  }
+  | {
+    type: OPERATION.INIT_BOARD_USERS;
+    payload: { data: {userEntry: BoardState[], boardId: string }};
+  }
+  | {
+    type: OPERATION.REMOVE_USER_TO_BOARD;
+    payload: { user: User, boardId: string };
   }
 
 
@@ -275,11 +302,128 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       return { ...state };      
     }
     
+    /**
+     * 
+     */
+    case OPERATION.INITIALIZE_BOARDS: { 
+      const { data } = action.payload; 
 
+      const boards: Record<string, BoardState[]> = data.reduce((acc, board) => {
+        acc[board.id] = acc[board.id] ? [...acc[board.id]] : []; 
+        return acc;
+      }, {} as Record<string, BoardState[]>);
+    
+      return {
+        ...state,
+        boards, 
+      };
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.INIT_BOARD_USERS: { 
+      const { data } = action.payload; 
+
+      const updatedBoards = { ...state.boards };
+      
+      if (!updatedBoards[data.boardId]) {
+        updatedBoards[data.boardId] = []; 
+      }
+
+      updatedBoards[data.boardId] = data.userEntry.map(entry => ({
+        user: entry.user,
+        position: {x: 0, y: 0},
+        color: entry.color 
+      }))
+
+      return {
+        ...state,
+        boards: updatedBoards, 
+      };
+    }
+
+    /**
+     * 
+     */
+     case OPERATION.UPDATE_USER_POSITION: { 
+      const { data } = action.payload; 
+
+      const updatedBoards = { ...state.boards };
+
+      if (!updatedBoards[data.boardId]) {
+        updatedBoards[data.boardId] = []; 
+      }
+
+      updatedBoards[data.boardId] = state.boards[data.boardId]?.map(entry => {
+        if (entry.user.id.toString() === data.user.id.toString()) {
+          return { 
+            ...entry, 
+            position: { ...data.position }
+          };
+        }
+
+        return entry;
+      });
+
+
+      return { ...state, boards: updatedBoards };
+    }
+    /**
+     * 
+     */
+    case OPERATION.ADD_NEW_USER_TO_BOARD: {
+      const { data } = action.payload;
+    
+      const updatedBoards = { ...state.boards };
+      
+      // console.log("before: " + JSON.stringify(updatedBoards, null, 2));
+
+      if (!updatedBoards[data.boardId]) {
+        updatedBoards[data.boardId] = []; 
+      }
+
+      const userExists = updatedBoards[data.boardId].some(
+        (entry) => entry.user.id === data.user.id
+      );
+
+      if (!userExists) {
+        updatedBoards[data.boardId] = [...updatedBoards[data.boardId], {
+          user: data.user,
+          position: { x: 0, y: 0 }, 
+          color: data.color, 
+        }];
+      }
+        
+    
+      // console.log("updated: " + JSON.stringify(updatedBoards, null, 2));
+    
+      return { ...state, boards: updatedBoards };
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.REMOVE_USER_TO_BOARD: { 
+      const { user, boardId } = action.payload; 
+
+      const updatedBoards = { ...state.boards };
+
+      if (!updatedBoards[boardId]) {
+        updatedBoards[boardId] = []; 
+      }
+
+      updatedBoards[boardId] = state.boards[boardId]?.filter(entry => entry.user.id.toString() !== user.id.toString());
+
+      console.log(updatedBoards)
+
+      return { ...state, boards: updatedBoards };
+    }
+    
     /**
      * Default case: Returns the current state if no matching action type is found.
      */
-    default:
+    default: 
       return { ...state };
   }
 };

@@ -11,6 +11,10 @@ export type ClientEventOptions = {
   client: Client
 }
 
+export type KanbanClientOption =  ClientEventOptions & { boardId: string, user: IUser };
+
+export type KanbanClient = Pick<KanbanClientOption, "client" | "user"> & { color: number };
+
 export type AuthProvider = "GOOGLE" | "GITHUB" | "LOCAL";
 
 export type SocialAuthProvider = Exclude<AuthProvider, "LOCAL">;

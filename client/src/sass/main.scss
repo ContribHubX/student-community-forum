@@ -149,3 +149,21 @@ html.dark {
   /* for dropdown */
   color: #444 !important;
 }
+
+
+
+/* canvas */
+.canvas {
+  opacity: 0.06; /* Low opacity for subtle grid */
+  background-size: 16px 16px; /* Grid size */
+  background-image: 
+    linear-gradient(to right, gray 1px, transparent 1px), /* Vertical lines */
+    linear-gradient(to bottom, gray 1px, transparent 1px); /* Horizontal lines */
+  position: absolute; /* Position it as a background */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full screen */
+  height: 100%; /* Full screen */
+  pointer-events: none; /* Allow interaction with elements above */
+  /* Ensure it's behind all other content */
+}

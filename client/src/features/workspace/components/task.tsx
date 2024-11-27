@@ -28,7 +28,7 @@ export const Task = ({ task }: TaskProp) => {
   return (
     <FlexContainer
       direction="col"
-      className="bg-primary rounded-md items-start text-primary-foreground p-3  pb-1 max-w-[300px] "
+      className="bg-primary rounded-md items-start text-primary-foreground p-3  pb-1 max-w-[300px] shadow-md relative"
     >
       <FlexContainer className="justify-between">
         <small

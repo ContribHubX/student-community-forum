@@ -109,3 +109,15 @@ export type Task = Entity<{
 }>;
 
 export type TaskStatusType = "todo" | "doing" | "finished";
+
+export type CursorPosition = {
+  x: number,
+  y: number
+}
+
+export type BoardState = {
+  user: User,
+  position: CursorPosition;
+  color: number
+}
+

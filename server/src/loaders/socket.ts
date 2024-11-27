@@ -12,6 +12,7 @@ export default(io: Server) => {
     io.on("connection", (socket: Socket) => {
         handleNewConnection(socket, eventManager);
     })
+
 }
 
 /**
