@@ -1,7 +1,7 @@
 import { Service, Inject } from "typedi";
 import QuestionRepository from "@/domain/repository/question";
 import { AppError } from "@/libs/app-error";
-import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuestionCreation } from "@/domain/interfaces/IQuestion";
+import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuestionCreation, IQuestionVote, IQuestionUpvoteDto, IQuestionVoteStats } from "@/domain/interfaces/IQuestion";
 import { IThread } from "@/domain/interfaces/IThread";
 import { IUser } from "@/domain/interfaces/IUser";
 import EventManager from "@/sockets/event-manager";
@@ -118,6 +118,26 @@ class QuestionService {
     public async getUsersByQuestion(questionId: string): Promise<IUser[]> {
         try {
             return await this.questionRepo.getUsersByQuestionId(questionId);
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    public async voteQuestion(dto: IQuestionUpvoteDto): Promise<IQuestionVote> {
+        try {
+            const result = await this.questionRepo.vote(dto);
+            this.eventManager.publishToMany<IQuestionVote>("vote--new", result);
+            return result;
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    public async getQuestionVotes(dto: Partial<IQuestionUpvoteDto>): Promise<IQuestionVoteStats> {
+        try {
+            return await this.questionRepo.getVotes(dto);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

@@ -10,6 +10,7 @@ export const threadSchema = Joi.object({
     "string.min": "Content cannot be empty",
   }),
   attachment: Joi.string().optional().allow(""),
+  tags: Joi.optional(),
   createdBy: Joi.string().required().messages({
     "string.empty": "Creator is required",
   }),

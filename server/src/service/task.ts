@@ -21,7 +21,7 @@ class TaskService {
     public async createTask(dto: ITaskDto): Promise<ITask | undefined> {
         try {
             const result = await this.taskRepo.create(dto);
-            //this.eventManager.publishToOne<ITask>("task--new", result, result.createdBy.id);
+            this.eventManager.publishToMany<ITask>("task--new", result);
 
             return result;
         } catch (error: any) {

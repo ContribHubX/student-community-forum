@@ -9,11 +9,15 @@ import { colors } from "../constant";
 
 interface ActiveUserProp {
   currentUser: User;
-  boardState: BoardState[]; 
+  boardState: BoardState[];
   boardId: string;
 }
 
-export const ActiveUsers = ({ currentUser, boardState, boardId }: ActiveUserProp) => {
+export const ActiveUsers = ({
+  currentUser,
+  boardState,
+  boardId,
+}: ActiveUserProp) => {
   const { socketState } = useSocketProvider();
   const { x, y } = useMouse();
 
@@ -21,11 +25,15 @@ export const ActiveUsers = ({ currentUser, boardState, boardId }: ActiveUserProp
     if (!socketState.socket) return;
 
     // Emit mouse movement for the current user
-    socketState.socket.emit('client__mouse--move', { user: currentUser, position: { x, y }, boardId });
+    socketState.socket.emit("client__mouse--move", {
+      user: currentUser,
+      position: { x, y },
+      boardId,
+    });
 
     // Clean up the socket listener
     return () => {
-      socketState.socket?.off('client__mouse--move');
+      socketState.socket?.off("client__mouse--move");
     };
   }, [boardId, socketState.socket, currentUser, x, y]);
 
@@ -33,17 +41,18 @@ export const ActiveUsers = ({ currentUser, boardState, boardId }: ActiveUserProp
 
   return (
     <div>
-      {boardState?.length && boardState.map((userState) => (
-        <div key={userState.user.id}>
-          {currentUser.id.toString() !== userState.user.id.toString() && (
-            <UserCursor 
-              user={userState.user} 
-              position={userState.position} 
-              color={colors[Math.abs(userState.color % colors.length)]} 
-            />
-          )}
-        </div>
-      ))}
+      {boardState?.length &&
+        boardState.map((userState) => (
+          <div key={userState.user.id}>
+            {currentUser.id.toString() !== userState.user.id.toString() && (
+              <UserCursor
+                user={userState.user}
+                position={userState.position}
+                color={colors[Math.abs(userState.color % colors.length)]}
+              />
+            )}
+          </div>
+        ))}
     </div>
   );
 };

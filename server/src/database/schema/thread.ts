@@ -25,6 +25,14 @@ export const ThreadTable = mysqlTable("thread", {
   ),
 });
 
+export const ThreadTagsTable = mysqlTable("thread_tags", {
+  id: varchar("id", { length: 255 }).primaryKey().$default(uuidv4),
+  name: varchar("name", { length: 50 }).notNull(),
+  threadId: varchar("thread_id", { length: 255 }).references(
+    () => ThreadTable.id,
+  ),
+})
+
 export const threadRelations = relations(ThreadTable, ({ one, many }) => ({
   createdBy: one(UserTable, {
     fields: [ThreadTable.createdBy],
@@ -43,5 +51,16 @@ export const threadRelations = relations(ThreadTable, ({ one, many }) => ({
     references: [QuestionTable.id],
   }),
   reactions: many(ThreadReactionTable),
-  comments: many(CommentTable)
+  comments: many(CommentTable),
+  tags: many(ThreadTagsTable)
 }));
+
+
+export const threadTagsRelations = relations(ThreadTagsTable, ({ one }) => ({
+  thread: one(ThreadTable, {
+    fields: [ThreadTagsTable.threadId],
+    references: [ThreadTable.id],
+  }),
+ 
+}));
+

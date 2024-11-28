@@ -1,12 +1,12 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
-import { IQuestion, IQuestionCreation, IQuestionDto, IQuestionRequest, IQuestionRequestDto } from "../interfaces/IQuestion";
+import { IQuestion, IQuestionDto, IQuestionRequest, IQuestionRequestDto, IQuestionUpvoteDto, IQuestionVote, IQuestionVoteStats } from "../interfaces/IQuestion";
 import { AppError } from "@/libs/app-error";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { IThread } from "../interfaces/IThread";
 import { IUser } from "../interfaces/IUser";
-import { QuestionRequestTable } from "@/database/schema";
+import { QuestionRequestTable, QuestionVotesTable } from "@/database/schema";
 
 @Service()
 class QuestionRepository {
@@ -49,7 +49,11 @@ class QuestionRepository {
             try {
                 const result = await this.db.query.QuestionTable.findFirst({
                     where: eq(schema.QuestionTable.id, questionId),
-                    with: { createdBy: true },
+                    with: { 
+                            createdBy: true,
+                            threads: true
+                    },
+        
                 });
 
                 if (!result) return reject(new AppError("Question not found", 404));
@@ -73,11 +77,19 @@ class QuestionRepository {
             try {
                 let result;
             
-                if (!topicId) 
-                    result = await this.db.query.QuestionTable.findMany({});
-                else 
+                if (!topicId) {
                     result = await this.db.query.QuestionTable.findMany({
-                        where: eq(schema.QuestionTable.topicId, topicId)
+                        with: {
+                            createdBy: true,
+                            threads: true
+                        }});
+                } else 
+                    result = await this.db.query.QuestionTable.findMany({
+                        where: eq(schema.QuestionTable.topicId, topicId),
+                        with: {
+                            createdBy: true,
+                            threads: true
+                        }
                     });
 
                 resolve(result as unknown as IQuestion[]);
@@ -201,6 +213,80 @@ class QuestionRepository {
                 );
 
                 resolve(users as unknown as IUser[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    /**
+     * Upvote a question
+     * 
+     */
+    public vote(dto: IQuestionUpvoteDto): Promise<IQuestionVote> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                // check first if the user already upvoted
+                const isAlreadyVoted = await this.db
+                    .query
+                    .QuestionVotesTable
+                    .findFirst({
+                        where: and(
+                            eq(QuestionVotesTable.userId, dto.userId),
+                            eq(QuestionVotesTable.questionId, dto.questionId)
+                        )
+                    })
+
+                if (isAlreadyVoted) {
+                    reject(new AppError('User has already voted this question', 400));
+                    return;
+                }
+
+                const result = await this.db
+                    .insert(QuestionVotesTable)
+                    .values({...dto})
+                    .$returningId();
+
+                if (!result) {
+                    reject(new AppError('Upvote failed', 400));
+                    return;
+                }
+                
+                resolve(dto)
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    
+    /**
+     * Upvote a question
+     * 
+     */
+    public getVotes(dto: Partial<IQuestionUpvoteDto>): Promise<IQuestionVoteStats> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .query
+                    .QuestionVotesTable
+                    .findMany({
+                        where: eq(QuestionVotesTable.questionId, dto.questionId!)
+                    })
+
+                if (!result) {
+                    reject(new AppError("Failed to get votes", 400));
+                }
+
+                const upvoteCount = result.filter(res => res.vote === "up");
+                const downvoteCount = result.filter(res => res.vote === "down");
+                const userVote = result.find(res => res.userId === dto.userId)?.vote;
+
+                resolve({
+                    upvoteCount: upvoteCount.length,
+                    downvoteCount: downvoteCount.length,
+                    userVote: userVote || "none"
+                })
             } catch (error: any) {
                 reject(new AppError(error));
             }

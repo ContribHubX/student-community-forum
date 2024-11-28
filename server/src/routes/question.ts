@@ -13,6 +13,10 @@ export default (app: Router) => {
 
     router.post("/request", verifyAuth, questionController.createQuestionRequestHandler);
 
+    router.post("/vote", verifyAuth, questionController.voteQuestionHandler);
+
+    router.get("/vote", verifyAuth, questionController.getQuestionVotesHandler);
+
     router.get("/", verifyAuth, questionController.getAllQuestionsHandler);
 
     router.get("/:questionId", verifyAuth, questionController.getQuestionByIdHandler);

@@ -9,6 +9,7 @@ const router = Router();
 export default (app: Router) => {
   app.use("/community", router);
 
+  
   router.post(
     "/",
     verifyAuth,
@@ -23,6 +24,11 @@ export default (app: Router) => {
     validateRequest(joinCommunitySchema),
     communityContoller.joinCommunityHandler,
   );
+
+
+  router.get("/", verifyAuth, communityContoller.getCommunitiesHandler);
+  
+  router.get("/join", verifyAuth, communityContoller.getUserCommunitiesHandler);
 
   router.get("/:communityId", verifyAuth, communityContoller.getCommunityHandler);
 }

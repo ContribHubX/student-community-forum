@@ -1,24 +1,32 @@
 import { Draggable } from "@hello-pangea/dnd";
 
 import { Task } from "./task";
-
 import { statusColors } from "../constant";
+import { TaskForm } from "./task-form";
+
 import { FaTasks } from "react-icons/fa";
+import { LuPlusCircle } from "react-icons/lu";
 
 import { TaskStatusType, Task as TaskType } from "@/types";
+import { useTheme } from "@/hooks/use-theme";
+import { useDisclosure } from "@/hooks/use-disclosure";
 
 interface TaskColumnProp {
+  currentUserId: string;
+  boardId: string;
   type: TaskStatusType;
   tasks: TaskType[];
 }
 
-export const TaskColumn = ({ type, tasks }: TaskColumnProp) => {
+export const TaskColumn = ({ currentUserId, boardId, type, tasks }: TaskColumnProp) => {
   const separatorColor =
     type === "todo"
       ? statusColors["archived"].text
       : type === "doing"
         ? statusColors["finished"].text
         : statusColors["active"].text;
+  const { isDark } = useTheme(); 
+  const { isOpen, toggle } = useDisclosure();
 
   return (
     <div className="max-w-[300px]">
@@ -44,6 +52,26 @@ export const TaskColumn = ({ type, tasks }: TaskColumnProp) => {
             )}
           </Draggable>
         ))}
+      </div>
+
+      <div className={`${!isOpen && 'hidden'}  mt-6`}>
+        <TaskForm 
+          currentUserId={currentUserId}
+          boardId={boardId}
+          type={type}
+        />
+      </div>
+
+      <div 
+        className=" rounded-md flex items-center justify-center gap-3 p-2 mt-6 relative cursor-pointer"
+        style={{
+          color: statusColors["finished"].text,
+          background: !isDark ? statusColors["finished"].background : "#262d34",
+      }}
+        onClick={toggle}
+      >
+        <p className="text-center text-sm">Add a card</p>
+        <LuPlusCircle className="text-lg" />
       </div>
     </div>
   );

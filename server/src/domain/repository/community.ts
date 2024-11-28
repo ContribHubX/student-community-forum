@@ -38,6 +38,22 @@ class CommunityRepository {
     }
 
     /**
+     * Joins a user to a community.
+     *
+     * @param dto Join community data.
+     */
+      public join(dto: IJoinCommunityDto): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.db.insert(UsersCommunities).values({ ...dto });
+                resolve();
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    /**
      * Fetches community details by ID.
      *
      * @param communityId Community ID.
@@ -70,15 +86,55 @@ class CommunityRepository {
     }
 
     /**
-     * Joins a user to a community.
+     * Get all communities
      *
-     * @param dto Join community data.
+     * @param
+     * @returns {Promise<ICommunity[]>}
      */
-    public join(dto: IJoinCommunityDto): Promise<void> {
+    public getAll(): Promise<ICommunity[]> {
         return new Promise(async (resolve, reject) => {
             try {
-                await this.db.insert(UsersCommunities).values({ ...dto });
-                resolve();
+                const result = await this.db.query.CommunityTable.findMany({
+                    with: {
+                        createdBy: true,
+                        members: {
+                            with: {
+                                user: true,
+                            },
+                        },
+                    },
+                });
+
+                resolve(result as unknown as ICommunity[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    public getUserCommunities(userId: string): Promise<ICommunity[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db.query.UsersCommunities.findMany({
+                   columns: {},
+                   where: eq(UsersCommunities.userId, userId),
+                   with: {
+                        community: true
+                   }
+                });
+
+                if (!result) {
+                    return reject(new AppError("Community not found", 404));
+                }
+
+                const userCreatedComms = await this.db.query.CommunityTable.findMany({
+                    where: eq(CommunityTable.createdBy, userId),
+                    with: {
+                        createdBy: true
+                    }
+                })
+
+                resolve([...result.map(res => res.community), ...userCreatedComms] as unknown as ICommunity[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }

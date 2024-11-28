@@ -1,14 +1,20 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { ReactionType, Thread } from "@/types";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { BiDislike } from "react-icons/bi";
 import { IoMdHeart } from "react-icons/io";
 import { MdInsertComment } from "react-icons/md";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+
 import { useCreateReaction } from "@/features/thread/api/create-reaction";
 import { useGetUserReaction } from "../api/get-reaction";
 import { useAuth } from "@/hooks/use-auth";
+
 import clsx from "clsx";
+import hljs from 'highlight.js'; 
+import 'highlight.js/styles/github.css';
 
 interface ThreadViewProps {
   thread: Thread;
@@ -21,6 +27,19 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
   const { data: reaction } = useGetUserReaction({
     data: { threadId: thread.id, userId: authState?.user?.id.toString() || "" },
   });
+
+  useEffect(() => {
+    // Syntax highlighting for code blocks
+    const codeBlocks = document.querySelectorAll('pre code.ql-syntax');
+    console.log(codeBlocks);
+    codeBlocks.forEach((block) => {
+      const blockElement = block as HTMLElement;
+      hljs.highlightElement(blockElement); 
+    });
+  }, [thread?.content]);
+  
+
+  console.log(thread.content)
 
   const onSubmitReaction = (type: string) => {
     const data = {
@@ -56,7 +75,7 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
           </div>
         </div>
 
-        <div className="">
+        <div className="ql-snow">
           <h1 className="text-base text-primary-foreground">{thread?.title}</h1>
           <div className="text-muted-foreground">
             <p dangerouslySetInnerHTML={{ __html: thread?.content }}></p>

@@ -15,7 +15,6 @@ export const statusColors = {
   },
 };
 
-
 export const colors = [
   "#0091fe",
   "#FF5733", // reddish-orange
@@ -29,4 +28,3 @@ export const colors = [
   "#28B463", // emerald green
   "#D35400", // orange
 ];
-  

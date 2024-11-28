@@ -20,11 +20,16 @@ export type Thread = Entity<{
   likeCount: number;
   dislikeCount: number;
   commentCount: number;
-
+  tags?: Tag[];
   communityId: string | null;
   topicId: string | null;
   questionId: string | null;
 }>;
+
+export type Tag = Entity<{
+  name: string;
+  threadId: string;
+}>
 
 export type Comment = Entity<{
   content: string;
@@ -76,8 +81,22 @@ export type Question = Entity<{
   name: string;
   title: string;
   content: string;
+  threads: Thread[];
   createdBy: User;
 }>;
+
+export type QuestionVoteStats = {
+  upvoteCount: number;
+  downvoteCount: number;
+  userVote: "up" | "down";
+}
+
+export type QuestionVote = {
+  userId: string;
+  questionId: string;
+  vote: "up" | "down";
+}
+
 
 export type PendingQuestionRequest = {
   question: Question;
@@ -104,20 +123,19 @@ export type Task = Entity<{
   sequence: number;
   createdAt: Date;
   createdBy: User;
-  assingnees: User[];
+  assignees: User[];
   boardId: string;
 }>;
 
 export type TaskStatusType = "todo" | "doing" | "finished";
 
 export type CursorPosition = {
-  x: number,
-  y: number
-}
+  x: number;
+  y: number;
+};
 
 export type BoardState = {
-  user: User,
+  user: User;
   position: CursorPosition;
-  color: number
-}
-
+  color: number;
+};

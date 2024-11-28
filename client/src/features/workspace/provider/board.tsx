@@ -1,12 +1,10 @@
 import { createContext, useReducer, useEffect, PropsWithChildren } from "react";
- 
-import { useAuth } from "@/hooks/use-auth"; 
+
+import { useAuth } from "@/hooks/use-auth";
 import { useGetBoards } from "../api/get-all-boards";
 import { useGetSharedBoards } from "../api/get-shared-boards";
 
 import { Board } from "@/types";
-
-
 
 interface BoardState {
   boards: Board[];
@@ -47,20 +45,29 @@ const boardReducer = (state: BoardState, action: BoardAction): BoardState => {
 };
 
 // Create the BoardContext
-export const BoardContext = createContext<{ state: BoardState; dispatch: React.Dispatch<BoardAction> } | undefined>(undefined);
+export const BoardContext = createContext<
+  { state: BoardState; dispatch: React.Dispatch<BoardAction> } | undefined
+>(undefined);
 
 // BoardContextProvider component to provide the context
 export const BoardContextProvider = ({ children }: PropsWithChildren) => {
   const { authState } = useAuth();
   const [state, dispatch] = useReducer(boardReducer, initialBoardState);
 
-  const { data: boards, isLoading: boardsLoading, error: boardsError } = useGetBoards({
+  const {
+    data: boards,
+    isLoading: boardsLoading,
+    error: boardsError,
+  } = useGetBoards({
     userId: authState?.user?.id.toString() || "",
   });
-  const { data: sharedBoards, isLoading: sharedBoardsLoading, error: sharedBoardsError } = useGetSharedBoards({
+  const {
+    data: sharedBoards,
+    isLoading: sharedBoardsLoading,
+    error: sharedBoardsError,
+  } = useGetSharedBoards({
     userId: authState?.user?.id.toString() || "",
   });
-
 
   // useEffect(() => {
   //   const boardsData = [...(boards || []), ...(sharedBoards || [])];
@@ -68,7 +75,7 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
   //   socketDispatch({
   //       type: OPERATION.INITIALIZE_BOARDS,
   //       payload: { data: boardsData }
-  //   }) 
+  //   })
 
   // }, [boards, sharedBoards, socketDispatch])
 
@@ -87,7 +94,14 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
       dispatch({ type: "SET_BOARDS", payload: boards });
       dispatch({ type: "SET_SHARED_BOARDS", payload: sharedBoards });
     }
-  }, [boards, sharedBoards, boardsLoading, sharedBoardsLoading, boardsError, sharedBoardsError]);
+  }, [
+    boards,
+    sharedBoards,
+    boardsLoading,
+    sharedBoardsLoading,
+    boardsError,
+    sharedBoardsError,
+  ]);
 
   return (
     <BoardContext.Provider value={{ state, dispatch }}>
@@ -95,4 +109,3 @@ export const BoardContextProvider = ({ children }: PropsWithChildren) => {
     </BoardContext.Provider>
   );
 };
-

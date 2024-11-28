@@ -23,8 +23,6 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
   const { isOpen, toggle, close } = useDisclosure();
   const { state } = useBoardContext();
 
-
-
   return (
     <div>
       <FlexContainer className="justify-between  text-sm text-primary-foreground">
@@ -96,7 +94,9 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
         {/* {"12345679000".split("").map((el, index) => (
           <Board key={index} />
         ))} */}
-        {state.sharedBoards?.map((board) => <Board key={board.id} board={board} />)}
+        {state.sharedBoards?.map((board) => (
+          <Board key={board.id} board={board} />
+        ))}
       </div>
     </div>
   );

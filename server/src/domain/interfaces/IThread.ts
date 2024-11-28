@@ -8,8 +8,15 @@ export interface IThread {
   createdBy: IUser;
   createdAt: Date;
   communityId: string | null;
+  tags?: IThreadTag[];
   topicId: string | null;
   questionId: string | null;
+}
+
+export interface IThreadTag {
+  id: string;
+  name: string;
+  threadId: string;
 }
 
 export interface IThreadFull extends IThread {
@@ -32,6 +39,7 @@ export interface IThreadDto {
   content: string;
   attachment: string;
   createdBy: string;
+  tags?: IThreadTag[];
   communityId: string | null;
   topicId: string | null;
   questionId: string | null;

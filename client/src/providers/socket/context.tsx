@@ -10,9 +10,10 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board, Task, BoardState } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board, Task, BoardState, QuestionVote, QuestionVoteStats } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
-import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";;
+import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
+;
 
 export type SocketContextState = {
   socket: Socket | undefined;
@@ -32,12 +33,14 @@ export enum OPERATION {
   ADD_NEW_REQUEST,
   ADD_NEW_TOPIC_FOLLOWER,
   ADD_NEW_BOARD,
+  ADD_TASK,
   UPDATE_TASK,
   INITIALIZE_BOARDS,
   UPDATE_USER_POSITION,
   INIT_BOARD_USERS,
   ADD_NEW_USER_TO_BOARD,
-  REMOVE_USER_TO_BOARD 
+  REMOVE_USER_TO_BOARD,
+  ADD_QUESTION_VOTE
 }
 
 type Actions =
@@ -70,6 +73,10 @@ type Actions =
       payload: { data: Board; queryClient: QueryClient };
     }
   | {
+    type: OPERATION.ADD_TASK;
+    payload: { data: Task; queryClient: QueryClient };
+  }
+  | {
     type: OPERATION.UPDATE_TASK;
     payload: { data: Task; queryClient: QueryClient };
   }
@@ -92,6 +99,10 @@ type Actions =
   | {
     type: OPERATION.REMOVE_USER_TO_BOARD;
     payload: { user: User, boardId: string };
+  }
+  | {
+    type: OPERATION.ADD_QUESTION_VOTE;
+    payload: { data: QuestionVote, queryClient: QueryClient  };
   }
 
 
@@ -284,6 +295,24 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       return { ...state };      
     }
 
+     /**
+     * 
+     * @param action.payload.data - The board object representing the new board.
+     * @param action.payload.queryClient - The React Query client instance to update the cache.
+     */
+     case OPERATION.ADD_TASK: { 
+      const { data, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getTasksQueryOptions(data.boardId.toString()).queryKey,
+        (oldTask: Task[] | undefined) => {
+          return oldTask ? [...oldTask, data] : []
+        }
+      );
+
+      return { ...state };      
+    }
+    
+
     /**
      * 
      * @param action.payload.data - The board object representing the new board.
@@ -419,6 +448,34 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
       return { ...state, boards: updatedBoards };
     }
+
+      /**
+     * 
+     */
+      case OPERATION.ADD_QUESTION_VOTE: { 
+        const { data, queryClient } = action.payload; 
+  
+        queryClient.setQueryData(
+          getVotesQueryOptions({questionId: data.questionId, userId: data.userId}).queryKey,
+          (oldVote: QuestionVoteStats | undefined) => {
+            
+            const updatedVote = {
+              ...oldVote,
+              upvoteCount: data.vote === "up" 
+              ? (oldVote?.upvoteCount || 0) + 1
+              : (oldVote?.upvoteCount || 0),
+              downvoteCount: data.vote === "up" 
+              ? (oldVote?.downvoteCount || 0) + 1
+              : (oldVote?.downvoteCount || 0),
+              userVote: data.vote
+
+            }
+            return updatedVote;
+          }
+        );
+
+        return {...state};
+      }
     
     /**
      * Default case: Returns the current state if no matching action type is found.

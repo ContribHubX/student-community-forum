@@ -43,12 +43,33 @@ const createStorage = (uploadType: UPLOAD_TYPE) => {
   });
 };
 
-export const uploadThread = multer({ storage: createStorage("thread") });
-export const uploadComment = multer({ storage: createStorage("comment") });
-export const uploadCommunity = multer({ storage: createStorage("community") })
-                                .fields([
-                                  { name: "banner", maxCount: 1 }, 
-                                  { name: "icon", maxCount: 1 }, 
-                                ]);
-export const uploadTopic = multer({ storage: createStorage("topic") });       
-export const uploadTask = multer({ storage: createStorage("task") });                                             
+// 20MB file size limit (20 * 1024 * 1024 bytes)
+const uploadLimit = 25 * 1024 * 1024;
+
+export const uploadThread = multer({
+  storage: createStorage("thread"),
+  limits: { fieldSize: uploadLimit },  
+});
+
+export const uploadComment = multer({
+  storage: createStorage("comment"),
+  limits: { fieldSize: uploadLimit },  
+});
+
+export const uploadCommunity = multer({
+  storage: createStorage("community"),
+  limits: { fieldSize: uploadLimit },  
+}).fields([
+  { name: "banner", maxCount: 1 }, 
+  { name: "icon", maxCount: 1 }, 
+]);
+
+export const uploadTopic = multer({
+  storage: createStorage("topic"),
+  limits: { fieldSize: uploadLimit },  
+});
+
+export const uploadTask = multer({
+  storage: createStorage("task"),
+  limits: { fieldSize: uploadLimit },  
+});

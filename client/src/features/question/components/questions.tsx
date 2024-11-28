@@ -3,7 +3,7 @@ import { useGetQuestions } from "../../shared/api/get-all-question";
 
 export const Questions = () => {
   const { data: questions } = useGetQuestions({});
-
+  
   // temp
   if (!questions) return <p>Loading...</p>;
 

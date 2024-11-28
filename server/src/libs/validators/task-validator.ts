@@ -16,7 +16,7 @@ export const createTaskSchema = Joi.object({
                .messages({
                     "any.only": "Status must be one of: todo, doing, finished",
     }),
-    assingnees: Joi.optional(),
+    assignees: Joi.optional(),
     createdBy: Joi.string().required().messages({
       "string.empty": "Creator is required",
     }),

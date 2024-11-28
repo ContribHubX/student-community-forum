@@ -52,6 +52,24 @@ class CommunityService {
         }
     }
 
+    public async getUserCommunities(userId: string): Promise<ICommunity[]> {
+        try {
+            return await this.communityRepo.getUserCommunities(userId);
+        } catch(error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error); 
+        }
+    }
+
+    public async getAllCommunities(): Promise<ICommunity[]> {
+        try {
+            return await this.communityRepo.getAll();
+        } catch(error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error); 
+        }
+    }
+
 }
 
 export default CommunityService;

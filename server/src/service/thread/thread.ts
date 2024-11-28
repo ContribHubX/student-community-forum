@@ -4,11 +4,6 @@ import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
 import EventManager from "@/sockets/event-manager";
 
-// TODO integrate realtime reaction to client
-// TODO notification ui
-// TODO create community event 
-// TODO 
-
 /**
  * Service responsible for handling thread-related operations.
  */
@@ -20,6 +15,7 @@ class ThreadService {
   @Inject(() => EventManager)
   private eventManager!: EventManager;  
 
+    
   /**
    * Creates a new thread.
    *

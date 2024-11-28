@@ -11,7 +11,7 @@ export interface ITask {
     sequence: number;
     createdAt: Date;
     createdBy: IUser;
-    assingnees: IUser[]; 
+    assignees: IUser[]; 
     boardId: IBoard;
 }
 
@@ -21,7 +21,7 @@ export interface ITaskDto {
     attachment?: string;
     status: TaskStatusType;
     createdBy: string;
-    assingnees?: IUser[]; 
+    assignees?: IUser[]; 
     boardId: string;
 }
 

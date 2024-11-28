@@ -19,7 +19,7 @@ class NotificationService {
      * Create notication
      * 
      * @param dto 
-     * @returns {Promise<void>}
+     * @returns {Promise<void>}  
      */
     public async createNotification(dto: IRawNotificationDto): Promise<INotification | undefined> {
         let message;

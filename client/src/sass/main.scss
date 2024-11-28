@@ -105,7 +105,7 @@ html.dark {
   /* border radius of the toolbar */
   border-radius: 10px 10px 0 0;
 
-  @apply dark:border-gray-500;
+  @apply dark:border-gray-500 ;
 }
 
 .quill > .ql-container {
@@ -113,7 +113,8 @@ html.dark {
   font-size: inherit;
   border-radius: 0 0 10px 10px;
   min-height: 200px;
-  @apply dark:border-gray-500;
+
+  @apply dark:border-gray-500 ;
 }
 
 .ql-toolbar.ql-snow .ql-picker-label {
@@ -150,15 +151,13 @@ html.dark {
   color: #444 !important;
 }
 
-
-
 /* canvas */
 .canvas {
   opacity: 0.06; /* Low opacity for subtle grid */
   background-size: 16px 16px; /* Grid size */
-  background-image: 
-    linear-gradient(to right, gray 1px, transparent 1px), /* Vertical lines */
-    linear-gradient(to bottom, gray 1px, transparent 1px); /* Horizontal lines */
+  background-image:
+    linear-gradient(to right, gray 1px, transparent 1px),
+    /* Vertical lines */ linear-gradient(to bottom, gray 1px, transparent 1px); /* Horizontal lines */
   position: absolute; /* Position it as a background */
   top: 0;
   left: 0;

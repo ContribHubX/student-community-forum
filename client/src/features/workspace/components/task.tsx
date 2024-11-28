@@ -28,7 +28,7 @@ export const Task = ({ task }: TaskProp) => {
   return (
     <FlexContainer
       direction="col"
-      className="bg-primary rounded-md items-start text-primary-foreground p-3  pb-1 max-w-[300px] shadow-md relative"
+      className="bg-primary rounded-md items-start text-primary-foreground p-3 max-w-[300px] shadow-md relative"
     >
       <FlexContainer className="justify-between">
         <small
@@ -44,6 +44,14 @@ export const Task = ({ task }: TaskProp) => {
       </FlexContainer>
 
       {/* attachment here */}
+      {task.attachment && (
+      <img 
+        src={task.attachment} 
+        alt="attachment" 
+        className="max-h-[160px] object-cover"
+      />
+      )}
+       
       <FlexContainer direction="col" className="items-start">
         {/* <img 
                 src="" 
@@ -56,12 +64,27 @@ export const Task = ({ task }: TaskProp) => {
       </FlexContainer>
 
       <FlexContainer className="justify-between items-center h-fit">
-        <FlexContainer className="items-center gap-0">
+        <FlexContainer className="items-center gap-1">
           {users.slice(0, 3).map((user) => (
-            <Avatar key={user.id}>
+             <Avatar
+              key={user.id}
+              className="w-[30px] h-[30px] rounded-full"  
+            >
               <AvatarImage
                 src={user.attachment}
-                className="object-cover w-[30px] h-[30px] rounded-full"
+                className="object-cover"
+              />
+            </Avatar>
+          ))}
+
+        {task.assignees?.map((user) => (
+            <Avatar
+              key={user.id}
+              className="w-[30px] h-[30px] rounded-full"  
+            >
+              <AvatarImage
+                src={user.attachment}
+                className="object-cover"
               />
             </Avatar>
           ))}

@@ -20,7 +20,10 @@ export type getBoardMembersQueryConfig = {
   queryConfig?: QueryConfig<typeof getBoardMembers>;
 };
 
-export const useGetBoardMembers = ({ boardId, queryConfig }: getBoardMembersQueryConfig) => {
+export const useGetBoardMembers = ({
+  boardId,
+  queryConfig,
+}: getBoardMembersQueryConfig) => {
   return useQuery({
     ...getBoardMembersQueryOptions(boardId),
     ...queryConfig,

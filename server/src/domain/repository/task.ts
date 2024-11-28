@@ -21,48 +21,64 @@ class TaskRepository {
      * @returns {Promise<ITask>}
      */
     public async create(dto: ITaskDto): Promise<ITask> {
-        const { name, description, attachment, status, createdBy, boardId, assingnees } = dto;
+        const { name, description, attachment, status, createdBy, boardId, assignees } = dto;
+        
+        let taskId: string;
 
         return new Promise(async (resolve, reject) => {
             try {
-                const sequence = await this.db
-                    .select({
-                        lastSeq: sql<number>`MAX(${TaskTable.sequence})`.as("last_seq")
-                    })
-                    .from(TaskTable)
-                    .where(eq(TaskTable.status, status));
-            
+                await this.db.transaction(async (trx) => {
+                    const sequenceResult = await trx
+                        .select({
+                            lastSeq: sql<number>`MAX(${TaskTable.sequence})`.as("last_seq"),
+                        })
+                        .from(TaskTable)
+                        .where(eq(TaskTable.status, status));
+    
+                    const lastSeq = sequenceResult[0]?.lastSeq || 0;
+    
+                    // Insert the task
+                    const [insertedTask] = await trx
+                        .insert(TaskTable)
+                        .values({
+                            name,
+                            description,
+                            attachment,
+                            status,
+                            sequence: lastSeq + 1,
+                            createdBy,
+                            boardId,
+                        })
+                        .$returningId();
 
-                const result = await this.db
-                    .insert(TaskTable)
-                    .values({
-                        name, description,
-                        attachment, status,
-                        sequence: sequence[0].lastSeq + 1, createdBy,
-                        boardId,
-                    })
-                    .$returningId();
+                    if (!insertedTask?.id) {
+                        throw new AppError("Task creation failed", 500);
+                    }
 
-                const insertedTask = result[0].id;
+                    taskId = insertedTask.id;
+    
+                    if (assignees?.length) {
+                        await Promise.all(
+                            assignees.map((user) =>
+                                trx.insert(TaskAssigneeTable).values({
+                                    assigneeId: String(user.id),
+                                    taskId: insertedTask.id,
+                                })
+                            )
+                        );
+                    }
+    
+                });
 
-                if (assingnees?.length) {
-                    assingnees.forEach(async (user) => {
-                        await this.db
-                            .insert(schema.TaskAssigneeTable)
-                            .values({
-                                assigneeId: user.id,
-                                taskId: insertedTask,
-                            });
-                    });
-                }
-
-                resolve(await this.getById(insertedTask));
+                const fullTask = await this.getById(taskId);
+                resolve(fullTask);
             } catch (error: any) {
-                reject(new AppError(error));
+                reject(new AppError(error.message || "Task creation failed", 500));
             }
         });
     }
-
+    
+    
     /**
      * Retrieves a task by its ID.
      * 
@@ -77,18 +93,27 @@ class TaskRepository {
                     with: {
                         createdBy: true,
                         assignees: {
+                            columns: {},
                             with: {
-                                assignee: true,
-                            },
+                                assignee: true
+                            }
                         },
                     },
                 });
+
+                console.log(result)
 
                 if (!result) {
                     return reject(new AppError("Task not found", 404));
                 }
 
-                resolve(result as unknown as ITask);
+                const transformResult = {...result, assignees: result.assignees.map(assignee => ({
+                    ...assignee?.assignee
+                }))}
+
+                // console.log(transformResult)
+
+                resolve(transformResult as unknown as ITask);
             } catch (error: any) {
                 reject(new AppError(error));
             }
@@ -109,15 +134,23 @@ class TaskRepository {
                     with: {
                         createdBy: true,
                         assignees: {
+                            columns: {},
                             with: {
-                                assignee: true,
-                            },
-                        },
+                                assignee: true
+                            }
+                        }
                     },
                     orderBy: (TaskTable, { asc }) => [asc(TaskTable.sequence)]
                 });
 
-                resolve(result as unknown as ITask[]);
+                const transformResult = result.map(task => ({
+                    ...task,
+                    assignees: task.assignees.map(assignee => ({
+                        ...assignee?.assignee
+                    }))
+                }))
+
+                resolve(transformResult as unknown as ITask[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }
@@ -131,7 +164,7 @@ class TaskRepository {
      * @returns {Promise<ITask>}
      */
     public update(dto: ITaskUpdateDto): Promise<ITask> {
-        const { taskId, name, description, attachment, status, sequence, assingnees } = dto;
+        const { taskId, name, description, attachment, status, sequence, assignees } = dto;
         
         // kayasa nigana ang giatay
         return new Promise(async (resolve, reject) => {
@@ -165,13 +198,13 @@ class TaskRepository {
                         );
     
                     // Update assignees kung naa
-                    if (assingnees?.length) {
+                    if (assignees?.length) {
                         // Clear existing assignees for the task
                         await tx.delete(TaskAssigneeTable).where(eq(TaskAssigneeTable.taskId, taskId));
     
                         // Insert new assignees
                         await Promise.all(
-                            assingnees.map((user) =>
+                            assignees.map((user) =>
                                 tx.insert(TaskAssigneeTable).values({
                                     assigneeId: user.id,
                                     taskId,

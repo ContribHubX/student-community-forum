@@ -75,4 +75,46 @@ export default {
             next(new AppError(error));
         }
     },
+
+
+    /**
+     * Handler to retrieve a communities of user
+     *
+     * @route GET /community?userId
+     */
+     async getUserCommunitiesHandler(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
+        const userId = req.query.userId as string;
+
+        try {
+            const communityService = Container.get(CommunityService);
+            const response = await communityService.getUserCommunities(userId);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+
+    /**
+     * Handler to retrieve all communities
+     *
+     * @route GET /community
+     */
+    async getCommunitiesHandler(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
+        try {
+            const communityService = Container.get(CommunityService);
+            const response = await communityService.getAllCommunities();
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
 }

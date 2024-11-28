@@ -1,7 +1,7 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import { IThreadDto, IThreadFull } from "../interfaces/IThread";
-import { ThreadTable } from "@/database/schema";
+import { ThreadTable, ThreadTagsTable } from "@/database/schema";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
@@ -31,6 +31,7 @@ class ThreadRepository {
           },
           with: {
             createdBy: true,
+            tags: true
           },
         });
 
@@ -57,6 +58,7 @@ class ThreadRepository {
     return new Promise(async (resolve, reject) => {
       
       try {
+        
         const insertResult = await this.db
           .insert(ThreadTable)
           .values({
@@ -71,20 +73,23 @@ class ThreadRepository {
           return;
         }
 
+        // Insert tags if present
+        if (dto.tags && dto.tags.length > 0) {
+          await Promise.all(
+            dto.tags.map((tag) =>
+              this.db.insert(ThreadTagsTable).values({
+                name: (tag as any),
+                threadId
+              })
+            )
+          );
+        }
+
         const threadCreated = await this.findOneById(threadId);
 
         resolve(threadCreated);
       } catch (error: any) {
-        let errorMessage = "Error inserting thread";
-        let statusCode = 500;
-
-        if (error.code === "ER_NO_REFERENCED_ROW_2") {
-          errorMessage =
-            "Foreign key constraint violation: The 'createdBy' user does not exist.";
-          statusCode = 500;
-        }
-
-        reject(new AppError(errorMessage, statusCode));
+        reject(new AppError(error, 500));
       }
     });
   }

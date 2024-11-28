@@ -20,6 +20,10 @@ export default {
                 dto.attachment = file.path;
             }
 
+            if (dto.assignees) {
+                dto.assignees = JSON.parse(dto.assignees);
+            }
+
             const taskService = Container.get(TaskService);
             const response = await taskService.createTask(dto);
             res.status(201).json(response);

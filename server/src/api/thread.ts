@@ -18,9 +18,12 @@ export default {
     const file = req.file;
 
     try {
-      if (file) {
+      if (file) 
         body.attachment = file.path;
-      }
+      
+      if (body.tags) 
+        body.tags = JSON.parse(body.tags);
+      
 
       const threadService = Container.get(ThreadService);
       const thread = await threadService.createThread(body);

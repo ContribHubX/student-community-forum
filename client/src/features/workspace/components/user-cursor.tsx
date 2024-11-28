@@ -18,8 +18,8 @@ export const UserCursor = ({ user, position, color }: UserCursorProp) => {
 
     const smoothMove = () => {
       setCurrentPosition((prev) => ({
-        x: prev.x + (position.x - prev.x) * 0.2, 
-        y: prev.y + (position.y - prev.y) * 0.2, 
+        x: prev.x + (position.x - prev.x) * 0.2,
+        y: prev.y + (position.y - prev.y) * 0.2,
       }));
       animationFrame = requestAnimationFrame(smoothMove);
     };

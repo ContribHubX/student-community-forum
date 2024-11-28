@@ -123,4 +123,39 @@ export default {
             next(new AppError(error));
         }
     },
+
+    /**
+     * Handler to vote a question.
+     * 
+     * @route POST /questions/vote
+     */
+     async voteQuestionHandler(req: Request, res: Response, next: NextFunction) {
+        const dto = req.body;
+
+        try {
+            const questionService = Container.get(QuestionService);
+            const result = await questionService.voteQuestion(dto);
+            res.status(201).json(result);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    /**
+     * Handler to retrieve all votes on question.
+     * 
+     * @route GET /questions/votes?questionId?userId
+     */
+    async getQuestionVotesHandler(req: Request, res: Response, next: NextFunction) {
+        const questionId = req.query.questionId as string;
+        const userId = req.query.userId as string;
+
+        try {
+            const questionService = Container.get(QuestionService);
+            const response = await questionService.getQuestionVotes({questionId, userId});
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
 };

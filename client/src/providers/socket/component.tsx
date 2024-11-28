@@ -91,6 +91,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: { thread: data, queryClient },
           });
           break;
+          
         case "comment--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_COMMENT,
@@ -150,6 +151,16 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
+        case "task--new":
+          socketDispatch({
+            type: OPERATION.ADD_TASK,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
+
         case "task--updated":
           socketDispatch({
             type: OPERATION.UPDATE_TASK,
@@ -164,7 +175,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           socketDispatch({
             type: OPERATION.ADD_NEW_USER_TO_BOARD,
             payload: {
-              data
+              data,
             },
           });
           break;
@@ -173,29 +184,40 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           socketDispatch({
             type: OPERATION.UPDATE_USER_POSITION,
             payload: {
-              data
+              data,
             },
           });
           break;
 
-        case "users--initial": 
+        case "users--initial":
           socketDispatch({
             type: OPERATION.INIT_BOARD_USERS,
             payload: {
-              data
+              data,
             },
           });
           break;
 
-        case "user--left": 
+        case "user--left":
+          socketDispatch({
+            type: OPERATION.REMOVE_USER_TO_BOARD,
+            payload: {
+              user: data.user,
+              boardId: data.boardId,
+            },
+          });
+          break;
+
+        case "vote--new":
         socketDispatch({
-          type: OPERATION.REMOVE_USER_TO_BOARD,
+          type: OPERATION.ADD_QUESTION_VOTE,
           payload: {
-            user: data.user, 
-            boardId: data.boardId
+            data,
+            queryClient
           },
         });
         break;
+
 
         case "notification--new":
           console.log("notif: " + JSON.stringify(data, null, 2));
