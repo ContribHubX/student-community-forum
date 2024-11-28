@@ -24,7 +24,7 @@ export const TopicCard = ({ topic }: TopicCardProp) => {
         <div>
           <h1 className="font-semibold text-xl">{topic.name}</h1>
           <div className="flex items-center gap-4 ml-1 mt-1">
-            <div className="w-[8px] h-[8px] rounded-full bg-[#00FF00]"/>
+            <div className="w-[8px] h-[8px] rounded-full bg-[#00FF00]" />
             <p className="text-xs text-muted-foreground">Learn and education</p>
           </div>
         </div>

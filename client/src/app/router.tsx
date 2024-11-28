@@ -112,6 +112,13 @@ const createAppRouter = () =>
             return { Component: CommunitiesRoute };
           },
         },
+        {
+          path: "/event",
+          lazy: async () => {
+            const { Event } = await import("./routes/app/event/event");
+            return { Component: Event };
+          },
+        },
       ],
     },
   ]);

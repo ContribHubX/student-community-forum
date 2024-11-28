@@ -18,9 +18,8 @@ import { PiSealQuestionBold } from "react-icons/pi";
 import { useGetQuestions } from "@/features/shared/api/get-all-question";
 import { useGetThreadsByTopic } from "../api/get-threads-by-topic";
 
-
 interface TopicsProp {
-  userId: string
+  userId: string;
 }
 
 type ActiveTabType = "Read" | "Answer";
@@ -34,18 +33,22 @@ export const Topics = ({ userId }: TopicsProp) => {
     close: closeModal,
   } = useDisclosure();
   const { mutate: createQuestion } = useCreateQuestion({});
-  const { data: questions, isLoading: questionsLoading, refetch } = useGetQuestions({ topicId: topicId || "" });
-  const { data: topic } = useGetTopic({ topicId: topicId || ""});
-  const { data: threads } = useGetThreadsByTopic({ topicId: topicId || ""});
+  const {
+    data: questions,
+    isLoading: questionsLoading,
+    refetch,
+  } = useGetQuestions({ topicId: topicId || "" });
+  const { data: topic } = useGetTopic({ topicId: topicId || "" });
+  const { data: threads } = useGetThreadsByTopic({ topicId: topicId || "" });
 
   const handleCreateQuestion = (data: FormData) => {
     data.append("topicId", topicId || "");
     createQuestion(formDataToObject(data) as CreateQuestionType);
-  }
+  };
 
   const toggleCreateModal = () => {
     toggleModal();
-  }
+  };
 
   const toggleActiveTab = () => {
     setActiveTab(activeTab === "Answer" ? "Read" : "Answer");
@@ -58,7 +61,7 @@ export const Topics = ({ userId }: TopicsProp) => {
   }, [refetch, topicId]);
 
   // temp
-  if (!topic || questionsLoading) return <p>Loading...</p>
+  if (!topic || questionsLoading) return <p>Loading...</p>;
 
   return (
     <div>
@@ -80,28 +83,29 @@ export const Topics = ({ userId }: TopicsProp) => {
       </div>
 
       <div className="mt-4 h-full">
-      {activeTab === "Answer" ? (
-        questions && questions.length > 0 ? (
-          <QuestionCardList questions={sampleQuestions} />
+        {activeTab === "Answer" ? (
+          questions && questions.length > 0 ? (
+            <QuestionCardList questions={sampleQuestions} />
+          ) : (
+            <div className="bg-primary rounded-md flex flex-col gap-5 items-center justify-center h-[400px]">
+              <img src={ask} alt="illustration" className="w-[200px] mx-auto" />
+              <p className="text-muted-foreground text-sm text-center max-w-[300px]">
+                Frame insightful questions based on this topic to deepen
+                understanding.
+              </p>
+              <button
+                className="text-accent-foreground text-xl rounded-full bg-accent flex items-center justify-center py-3 px-4 gap-2"
+                onClick={toggleCreateModal}
+              >
+                <PiSealQuestionBold />
+                <span className="text-sm">Ask Now</span>
+              </button>
+            </div>
+          )
         ) : (
-          <div className="bg-primary rounded-md flex flex-col gap-5 items-center justify-center h-[400px]">
-            <img src={ask} alt="illustration" className="w-[200px] mx-auto" />
-            <p className="text-muted-foreground text-sm text-center max-w-[300px]">
-              Frame insightful questions based on this topic to deepen understanding.
-            </p>
-            <button
-              className="text-accent-foreground text-xl rounded-full bg-accent flex items-center justify-center py-3 px-4 gap-2"
-              onClick={toggleCreateModal}
-            >
-              <PiSealQuestionBold />
-              <span className="text-sm">Ask Now</span>
-            </button>
-          </div>
-        )
-      ) : (
-        <ThreadCardList threads={threads || []} />
-      )}
-    </div>
+          <ThreadCardList threads={threads || []} />
+        )}
+      </div>
 
       <div>
         <Modal

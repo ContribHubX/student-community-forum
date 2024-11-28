@@ -4,8 +4,8 @@ import { Question } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getAllQuestions = async (topicId?: string): Promise<Question[]> => {
-  const queryParam = topicId ? `topicId=${topicId}` : 'topicId=';
-  const response = await api.get(`/api/question?${queryParam }`);
+  const queryParam = topicId ? `topicId=${topicId}` : "topicId=";
+  const response = await api.get(`/api/question?${queryParam}`);
   return response.data;
 };
 
@@ -17,11 +17,14 @@ export const getQuestionsQueryOptions = (topicId?: string) => {
 };
 
 export type getQuestionsQueryConfig = {
-  topicId?: string,
+  topicId?: string;
   queryConfig?: QueryConfig<typeof getAllQuestions>;
 };
 
-export const useGetQuestions = ({ topicId, queryConfig }: getQuestionsQueryConfig) => {
+export const useGetQuestions = ({
+  topicId,
+  queryConfig,
+}: getQuestionsQueryConfig) => {
   return useQuery({
     ...getQuestionsQueryOptions(topicId),
     ...queryConfig,

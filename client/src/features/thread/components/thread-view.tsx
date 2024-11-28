@@ -9,6 +9,13 @@ import { useCreateReaction } from "@/features/thread/api/create-reaction";
 import { useGetUserReaction } from "../api/get-reaction";
 import { useAuth } from "@/hooks/use-auth";
 import clsx from "clsx";
+import { BsThreeDots } from "react-icons/bs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 
 interface ThreadViewProps {
   thread: Thread;
@@ -35,12 +42,36 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
     return reaction?.type === keyType;
   };
 
+  const isOwner = thread.createdBy.id === authState.user?.id;
+
   return (
     <div className="bg-primary p-5 rounded-xl">
-      <IoArrowBackOutline
-        className="mb-4 text-xl text-accent cursor-pointer"
-        onClick={() => navigate("/")}
-      />
+      <div className="mb-4 flex justify-between text-xl">
+        <IoArrowBackOutline
+          className="cursor-pointer text-accent"
+          onClick={() => navigate("/")}
+        />
+
+        {isOwner && (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <BsThreeDots className="cursor-pointer text-accent" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="flex flex-col items-center bg-container mr-48 rounded-lg 
+          text-base w-44 text-primary-foreground"
+            >
+              <DropdownMenuItem className="py-3 cursor-pointer hover:brightness-75">
+                <p>Delete</p>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem className="py-3 cursor-pointer hover:brightness-75">
+                Update
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      </div>
       <div className="space-y-6">
         <div className="flex items-center gap-2">
           <Avatar className="">

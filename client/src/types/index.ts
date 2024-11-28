@@ -88,7 +88,7 @@ export type Topic = Entity<{
 export type TopicUserFollow = {
   user: User;
   topicId: string;
-}
+};
 
 export type Question = Entity<{
   name: string;

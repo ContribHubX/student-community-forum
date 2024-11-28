@@ -21,8 +21,7 @@ export type CreateQuestionType = z.infer<typeof createQuestionSchema> & {
 };
 
 const createQuestion = async (data: CreateQuestionType) => {
-  const response = await api.post(
-    "http://localhost:3000/api/question", data);
+  const response = await api.post("http://localhost:3000/api/question", data);
 
   return response.data;
 };

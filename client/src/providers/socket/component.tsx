@@ -121,7 +121,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "request--new":
-          console.log("here")
+          console.log("here");
           socketDispatch({
             type: OPERATION.ADD_NEW_REQUEST,
             payload: {

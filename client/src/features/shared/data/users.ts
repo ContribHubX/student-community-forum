@@ -181,5 +181,4 @@ export const users: User[] = [
     attachment:
       "https://www.vibe.com/wp-content/uploads/2024/07/Screenshot-2024-07-11-at-10.11.45%E2%80%AFAM.png?w=800",
   },
-  
 ];
