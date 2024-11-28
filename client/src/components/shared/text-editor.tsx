@@ -21,10 +21,16 @@ export const modules = {
 interface TextEditorProp {
   handleChange: (data: Partial<CreateThreadType>) => void;
   placeholder?: string;
+  reset?: boolean;
 }
 
-export const TextEditor = ({ handleChange, placeholder }: TextEditorProp) => {
+export const TextEditor = ({
+  handleChange,
+  placeholder,
+  reset,
+}: TextEditorProp) => {
   const [value, setValue] = useState("");
+
   const [contentData, setContentData] = useState<Partial<CreateThreadType>>(
     {} as Partial<CreateThreadType>,
   );
@@ -49,13 +55,21 @@ export const TextEditor = ({ handleChange, placeholder }: TextEditorProp) => {
     handleChange(contentData);
   }, [contentData]);
 
+  useEffect(() => {
+    if (reset) {
+      setValue("");
+    }
+  }, [reset]);
+
   return (
-    <ReactQuill
-      theme="snow"
-      value={value}
-      onChange={setValue}
-      modules={modules}
-      placeholder={placeholder}
-    />
+    <div>
+      <ReactQuill
+        theme="snow"
+        value={value}
+        onChange={setValue}
+        modules={modules}
+        placeholder={placeholder}
+      />
+    </div>
   );
 };

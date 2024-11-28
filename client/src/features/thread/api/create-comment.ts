@@ -8,7 +8,7 @@ export const createCommentSchema = z.object({
 });
 
 export type CreateCommentType = z.infer<typeof createCommentSchema> & {
-  createdBy: string;
+  createdBy: string | undefined;
 };
 
 const createComment = async (data: any) => {

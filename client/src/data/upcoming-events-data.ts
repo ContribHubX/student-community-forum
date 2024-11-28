@@ -18,7 +18,7 @@ export const upcomingEventsData = [
     month: "FEB",
     tags: ["university", "aquaintance", "seaside"],
   },
-  { 
+  {
     title: "Halloween 2024",
     location: "UC - Sanciangko, Cebu",
     icon: uc,

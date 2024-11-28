@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { FormEvent, useState } from "react";
 
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 interface CommentFormProps {
   threadId: string | undefined;
@@ -22,14 +23,31 @@ export const CommentForm = ({
   isComment = false,
 }: CommentFormProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  const [resetEditor, setResetEditor] = useState(false);
   const { authState } = useAuth();
 
   const [commentData, setCommentData] = useState<CreateCommentType>({
     content: "",
-    createdBy: "",
+    createdBy: authState.user?.id,
   });
 
-  const { mutate: createComment } = useCreateComment({});
+  const { mutate: createComment, isPending } = useCreateComment({
+    mutationConfig: {
+      onSuccess: (data) => {
+        toast.success(data.message);
+        handleResetEditor();
+      },
+    },
+  });
+
+  const handleResetEditor = () => {
+    setResetEditor(true);
+    setTimeout(() => setResetEditor(false), 2);
+    setCommentData((prev) => ({
+      ...prev,
+      content: "",
+    }));
+  };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -40,10 +58,6 @@ export const CommentForm = ({
       parentId: parentId ? parentId : null,
     };
     createComment(data);
-    setCommentData({
-      content: "",
-      createdBy: "",
-    });
   };
 
   const handleCancel = () => {
@@ -54,6 +68,8 @@ export const CommentForm = ({
 
       if (isDiscard) {
         setIsFocused(!isFocused);
+
+        handleResetEditor();
         return;
       }
     }
@@ -84,6 +100,7 @@ export const CommentForm = ({
           <TextEditor
             handleChange={handleContentChange}
             placeholder={placeholder}
+            reset={resetEditor}
           />
           <div className="space-x-2 self-end">
             <button
@@ -94,14 +111,16 @@ export const CommentForm = ({
             >
               Cancel
             </button>
+
             <button
               type="submit"
               disabled={
                 commentData.content === "" ||
-                commentData.content === "<p><br></p>"
+                commentData.content === "<p><br></p>" ||
+                isPending
               }
               className="bg-accent px-6 py-1 font-light text-sm text-accent-foreground rounded-xl
-              disabled:brightness-75"
+              disabled:bg-slate-400"
             >
               Save
             </button>
@@ -117,6 +136,7 @@ export const CommentForm = ({
           <TextEditor
             handleChange={handleContentChange}
             placeholder={placeholder}
+            reset={resetEditor}
           />
           <div className="space-x-2 self-end">
             <button
@@ -131,10 +151,11 @@ export const CommentForm = ({
               type="submit"
               disabled={
                 commentData.content === "" ||
-                commentData.content === "<p><br></p>"
+                commentData.content === "<p><br></p>" ||
+                isPending
               }
               className="bg-accent px-6 py-1 font-light text-sm text-accent-foreground rounded-xl
-              disabled:brightness-75"
+              disabled:bg-slate-400"
             >
               Save
             </button>

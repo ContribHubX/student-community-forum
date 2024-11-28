@@ -17,7 +17,12 @@ export const CreateThreadForm = ({
   userId,
 }: CreateThreadFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
-  const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
 
@@ -25,6 +30,7 @@ export const CreateThreadForm = ({
     const formData = new FormData();
     formData.append("createdBy", userId);
 
+    console.log(formData);
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
         formData.append(key, data[key]);
@@ -52,7 +58,10 @@ export const CreateThreadForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="text-primary-foreground">
-      <div>
+      <div className="space-y-2">
+        {errors.title && (
+          <p className="text-red-500 text-sm">{errors.title.message}</p>
+        )}
         <input
           {...register("title")}
           className="w-full px-4 py-3 rounded-[10px]  outline-none focus:border-accent bg-background 
@@ -62,7 +71,10 @@ export const CreateThreadForm = ({
         />
       </div>
 
-      <div className="pt-3">
+      <div className="pt-3 space-y-2">
+        {errors.content && (
+          <p className="text-red-500 text-sm">{errors.content.message}</p>
+        )}
         <TextEditor handleChange={handleContentChange} />
       </div>
 

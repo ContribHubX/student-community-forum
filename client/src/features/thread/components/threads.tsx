@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { useCreateThread } from "../../shared/api/create-thread";
 import { useGetThreads } from "../api/get-all-threads";
+import { toast } from "react-toastify";
 
 interface ThreadsProp {
   userId: string;
@@ -15,7 +16,17 @@ export const Threads = ({ userId }: ThreadsProp) => {
   const { authState } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: threads } = useGetThreads({});
-  const { mutate: createThread } = useCreateThread({});
+  const { mutate: createThread } = useCreateThread({
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success("Thread created successfully");
+        handleThreadFormModal();
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  });
 
   const handleCreateThread = (data: FormData) => {
     createThread(data);
