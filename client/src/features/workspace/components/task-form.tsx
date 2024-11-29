@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { FlexContainer } from "@/components/ui/flex-container";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 import { useTheme } from "@/hooks/use-theme";
 import { statusColors } from "../constant";
 
@@ -37,11 +41,7 @@ export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
 
   const { text, background } =
     statusColors[
-      type === "todo"
-        ? "archived"
-        : type === "doing"
-        ? "finished"
-        : "active"
+      type === "todo" ? "archived" : type === "doing" ? "finished" : "active"
     ];
 
   const handleInputChange = (field: keyof CreateTaskSchema, value: any) => {
@@ -82,7 +82,7 @@ export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
 
     console.log("FormData:", formData);
     // Submit formData via an API request
-    createTask(formData)
+    createTask(formData);
   };
 
   return (
@@ -127,58 +127,63 @@ export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
         </div>
 
         <div className="w-full">
-            {formState.assignees &&  formState.assignees?.length > 0 && (
+          {formState.assignees && formState.assignees?.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-2">
-                {formState.assignees.map((user) => (
-            <div
-                key={user.id}
-                className="flex items-center gap-2 p-2 bg-background rounded-md"
-            >
-                <Avatar className="w-[30px] h-[30px] rounded-full">
-                    <AvatarImage src={user.attachment} className="object-cover" />
-                </Avatar>
-                <button
+              {formState.assignees.map((user) => (
+                <div
+                  key={user.id}
+                  className="flex items-center gap-2 p-2 bg-background rounded-md"
+                >
+                  <Avatar className="w-[30px] h-[30px] rounded-full">
+                    <AvatarImage
+                      src={user.attachment}
+                      className="object-cover"
+                    />
+                  </Avatar>
+                  <button
                     type="button"
                     onClick={() => handleRemoveAssignee(user.id)}
                     className="text-red-500 text-xs"
-                >
+                  >
                     ×
-                </button>
+                  </button>
+                </div>
+              ))}
             </div>
-      ))}
-        </div>
-        )}
+          )}
 
-        <Popover  >
+          <Popover>
             <PopoverTrigger>
-            <div className="flex gap-3 items-center w-full cursor-pointer">
+              <div className="flex gap-3 items-center w-full cursor-pointer">
                 <BsPeople className="text-xl items-start" />
                 <input
-                placeholder="Add responsible"
-                className={`${formState.assignees?.length && 'hidden'} outline-none w-[60%] p-2 bg-background rounded-md`}
+                  placeholder="Add responsible"
+                  className={`${formState.assignees?.length && "hidden"} outline-none w-[60%] p-2 bg-background rounded-md`}
                 />
                 <FiPlus className="text-lg hover:text-accent" />
-            </div>
+              </div>
             </PopoverTrigger>
             <PopoverContent className="bg-primary dark:border-muted-foreground border-[1px]">
-            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3">
                 {members?.map((user) => (
-                <div
+                  <div
                     key={user.id}
                     onClick={() => handleAddAssignee(user)}
                     className="flex items-center gap-3 cursor-pointer"
-                >
+                  >
                     <Avatar className="w-[30px] h-[30px] rounded-full">
-                    <AvatarImage src={user.attachment} className="object-cover" />
+                      <AvatarImage
+                        src={user.attachment}
+                        className="object-cover"
+                      />
                     </Avatar>
                     <p className="text-[.8rem]">{user.name}</p>
-                </div>
+                  </div>
                 ))}
-            </div>
+              </div>
             </PopoverContent>
-        </Popover>
-    </div>
-
+          </Popover>
+        </div>
 
         <div className="flex gap-3 items-center w-full">
           <CgAttachment className="text-xl" />

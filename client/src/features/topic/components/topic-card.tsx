@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { Topic } from "@/types";
-
 import { MdOutlineRssFeed } from "react-icons/md";
 import { BsVectorPen } from "react-icons/bs";
-
-import { CreateThreadForm } from "@/features/shared/components/create-thread-form";
+import { CreateQuestionForm } from "@/features/shared/api/create-question-form";
 import { CreateQuestionType } from "@/features/shared/api/create-question";
-
-import { Modal } from "@/components/ui/modal";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useGetTopicFollowers } from "../api/get-followers";
-
-import { useDisclosure } from "@/hooks/use-disclosure";
 import { formDataToObject } from "@/utils";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 interface TopicCardProp {
   userId: string;
@@ -27,12 +37,8 @@ export const TopicCard = ({
   createThread,
 }: TopicCardProp) => {
   const { data: followers } = useGetTopicFollowers({ topicId: topic.id });
-  const {
-    isOpen: isModalOpen,
-    toggle: toggleModal,
-    close: closeModal,
-  } = useDisclosure();
   const [postType, setPostType] = useState("thread");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleSubmit = (data: FormData) => {
     data.append("topicId", topic.id || "");
@@ -41,59 +47,67 @@ export const TopicCard = ({
     else createQuestion(formDataToObject(data) as CreateQuestionType);
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPostType(event.target.value);
+  const handleSelectChange = (value: string) => {
+    setPostType(value);
+    if (value === "question") {
+      setIsDialogOpen(true); // Open the dialog for questions
+    }
   };
 
   return (
-    <div className="p-4 bg-primary rounded-md flex  gap-5">
-      <img
-        src={topic.attachment}
-        alt="image"
-        className="max-w-[120px] min-h-[100px]  object-cover rounded-md "
-      />
-
-      <div className="text-primary-foreground flex flex-col justify-between">
-        <div>
-          <h1 className="font-semibold text-xl">{topic.name}</h1>
-          <div className="flex items-center gap-4 ml-1 mt-1">
-            <div className="w-[8px] h-[8px] rounded-full bg-[#00FF00]" />
-            <p className="text-xs text-muted-foreground">Learn and education</p>
-          </div>
+    <Card className="border-none w-full overflow-hidden transition-all duration-300 hover:shadow-lg bg-primary">
+      <CardHeader className="p-0">
+        <img
+          src={topic.attachment}
+          alt={topic.name}
+          className="w-full h-48 object-cover"
+        />
+      </CardHeader>
+      <CardContent className="p-6 ">
+        <div className="flex items-center justify-between mb-4 ">
+          <h2 className="text-2xl font-bold">{topic.name}</h2>
+          <Badge variant="secondary" className="bg-background">
+            Learn and education
+          </Badge>
         </div>
-        <div className="flex items-center gap-2 text-muted-foreground  ">
-          <div
-            className="group bg-background w-fit p-2 rounded-md hover:scale-125 transition-transform cursor-pointer hover:bg-accent"
-            onClick={toggleModal}
-          >
-            <BsVectorPen className="text-lg group-hover:text-white" />
-          </div>
-          <div className="flex items-center gap-2 bg-background w-fit p-2 rounded-md ">
-            <MdOutlineRssFeed className="text-xl" />
-            <span className="text-xs">{followers?.length || 0} Followers</span>
-          </div>
+        <div className="flex items-center text-sm text-muted-foreground">
+          <MdOutlineRssFeed className="mr-2" />
+          <span>{followers?.length || 0} Followers</span>
         </div>
-      </div>
-
-      <div>
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          className="p-5 w-[1000px] max-h-[600px]"
-        >
-          <div>
-            <label>Choose post type:</label>
-            <select
-              onChange={handleSelectChange}
-              className="border p-2 rounded"
-            >
-              <option value="thread">Thread</option>
-              <option value="question">Question</option>
-            </select>
-          </div>
-          <CreateThreadForm userId={userId} handleFormSubmit={handleSubmit} />
-        </Modal>
-      </div>
-    </div>
+      </CardContent>
+      <CardFooter className="p-6 pt-0 flex justify-between items-center">
+        <div className="mb-4">
+          <Select onValueChange={handleSelectChange}>
+            <SelectTrigger className="hover:bg-accent group ">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex px-1 items-center text-sm border-none group-hover:bg-accent group-hover:text-accent-foreground transition-none"
+              >
+                <BsVectorPen className="mr-2" />
+                Create Post
+              </Button>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="thread">Thread</SelectItem>
+              <SelectItem value="question">Question</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="sm:max-w-[600px] min-w-[730px] bg-primary">
+            <CreateQuestionForm
+              initialTopic={topic}
+              userId={userId}
+              handleFormSubmit={handleSubmit}
+            />
+          </DialogContent>
+        </Dialog>
+        <Avatar>
+          <AvatarImage src={topic.attachment} alt={topic.name} />
+          <AvatarFallback>{topic.name.charAt(0)}</AvatarFallback>
+        </Avatar>
+      </CardFooter>
+    </Card>
   );
 };

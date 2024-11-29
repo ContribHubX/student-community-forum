@@ -1,7 +1,7 @@
 import { ThemeToggle } from "../ui/theme-toggle";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
-import { IoMdNotifications } from "react-icons/io";
+import { NotificationDropdown } from "@/features/notification/components/notication-dropdown";
 import { IoSearch } from "react-icons/io5";
 
 export const Navbar = () => {
@@ -30,8 +30,9 @@ export const Navbar = () => {
           <div className="flex gap-2">
             <ThemeToggle />
           </div>
-
-          <IoMdNotifications className="text-2xl text-primary-foreground cursor-pointer" />
+          <NotificationDropdown 
+            userId={authState.user?.id || ""}
+          />
           <div className="cursor-pointer">
             <Avatar className="p-[4px] bg-accent">
               <AvatarImage

@@ -10,9 +10,10 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, TopicUserFollow, User, Board, Task, BoardState, QuestionVote, QuestionVoteStats } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, QuestionVote, QuestionVoteStats } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
+import { getNotificationQueryOptions } from "@/features/notification/api/get-notifications";
 ;
 
 export type SocketContextState = {
@@ -40,7 +41,8 @@ export enum OPERATION {
   INIT_BOARD_USERS,
   ADD_NEW_USER_TO_BOARD,
   REMOVE_USER_TO_BOARD,
-  ADD_QUESTION_VOTE
+  ADD_QUESTION_VOTE,
+  ADD_NEW_NOTIF
 }
 
 type Actions =
@@ -103,6 +105,10 @@ type Actions =
   | {
     type: OPERATION.ADD_QUESTION_VOTE;
     payload: { data: QuestionVote, queryClient: QueryClient  };
+  }
+  | {
+    type: OPERATION.ADD_NEW_NOTIF;
+    payload: { data: Notification, queryClient: QueryClient  };
   }
 
 
@@ -220,6 +226,39 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
           };
         }
       );
+
+      // // Update all threads
+      // queryClient.setQueryData(
+      //   getThreadsQueryOptions().queryKey,
+      //   (currentThreads: Thread[] | undefined) => {
+      //     if (!currentThreads) return currentThreads;
+
+      //     const updatedThreads = currentThreads.map(thread => {
+      //       if (thread.id === reaction.threadId) {
+      //         thread.likeCount = reaction.type === "LIKE" 
+      //           ? thread.likeCount + 1 
+      //           : thread.likeCount
+
+      //         thread.dislikeCount = reaction.type === "DISLIKE" 
+      //           ? thread.dislikeCount + 1 
+      //           : thread.dislikeCount
+      //       }
+
+      //       return thread;
+      //     })
+          
+      //     console.log(updatedThreads.filter(t => t.id === reaction.threadId))
+
+      //     queryClient.invalidateQueries({ queryKey: getThreadsQueryOptions().queryKey });
+
+
+      //     return [
+      //       ...updatedThreads
+      //     ];
+      //   }
+      // );
+
+      queryClient. invalidateQueries({ queryKey: getThreadsQueryOptions().queryKey });
 
       // Update the user's current reaction for the thread
       queryClient.setQueryData(
@@ -375,7 +414,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
     /**
      * 
      */
-     case OPERATION.UPDATE_USER_POSITION: { 
+    case OPERATION.UPDATE_USER_POSITION: { 
       const { data } = action.payload; 
 
       const updatedBoards = { ...state.boards };
@@ -444,15 +483,13 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
       updatedBoards[boardId] = state.boards[boardId]?.filter(entry => entry.user.id.toString() !== user.id.toString());
 
-      console.log(updatedBoards)
-
       return { ...state, boards: updatedBoards };
     }
 
-      /**
+    /**
      * 
-     */
-      case OPERATION.ADD_QUESTION_VOTE: { 
+    */
+    case OPERATION.ADD_QUESTION_VOTE: { 
         const { data, queryClient } = action.payload; 
   
         queryClient.setQueryData(
@@ -477,6 +514,23 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         return {...state};
       }
     
+      /**
+       * 
+       * @param action.payload.data - The board object representing the new board.
+       * @param action.payload.queryClient - The React Query client instance to update the cache.
+       */
+    case OPERATION.ADD_NEW_NOTIF: { 
+      const { data, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getNotificationQueryOptions(data.receiveBy.toString()).queryKey,
+        (oldNotif: Notification[] | undefined) => {
+          return oldNotif ? [data, ...oldNotif] : []
+        }
+      );
+
+      return { ...state };      
+    }
+
     /**
      * Default case: Returns the current state if no matching action type is found.
      */

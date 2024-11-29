@@ -81,3 +81,13 @@ export const blendWithBlack = (color: string, ratio: number): string => {
 
   return `rgb(${r}, ${g}, ${b})`;
 };
+
+export const sanitizeContent = (html: string) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  const images = tempDiv.querySelectorAll("img");
+  images.forEach((img) => img.remove());
+
+  return tempDiv.innerHTML;
+};

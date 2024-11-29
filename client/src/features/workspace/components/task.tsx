@@ -45,13 +45,13 @@ export const Task = ({ task }: TaskProp) => {
 
       {/* attachment here */}
       {task.attachment && (
-      <img 
-        src={task.attachment} 
-        alt="attachment" 
-        className="max-h-[160px] object-cover"
-      />
+        <img
+          src={task.attachment}
+          alt="attachment"
+          className="max-h-[160px] object-cover"
+        />
       )}
-       
+
       <FlexContainer direction="col" className="items-start">
         {/* <img 
                 src="" 
@@ -66,26 +66,14 @@ export const Task = ({ task }: TaskProp) => {
       <FlexContainer className="justify-between items-center h-fit">
         <FlexContainer className="items-center gap-1">
           {users.slice(0, 3).map((user) => (
-             <Avatar
-              key={user.id}
-              className="w-[30px] h-[30px] rounded-full"  
-            >
-              <AvatarImage
-                src={user.attachment}
-                className="object-cover"
-              />
+            <Avatar key={user.id} className="w-[30px] h-[30px] rounded-full">
+              <AvatarImage src={user.attachment} className="object-cover" />
             </Avatar>
           ))}
 
-        {task.assignees?.map((user) => (
-            <Avatar
-              key={user.id}
-              className="w-[30px] h-[30px] rounded-full"  
-            >
-              <AvatarImage
-                src={user.attachment}
-                className="object-cover"
-              />
+          {task.assignees?.map((user) => (
+            <Avatar key={user.id} className="w-[30px] h-[30px] rounded-full">
+              <AvatarImage src={user.attachment} className="object-cover" />
             </Avatar>
           ))}
         </FlexContainer>

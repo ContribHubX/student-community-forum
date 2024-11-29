@@ -91,7 +91,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: { thread: data, queryClient },
           });
           break;
-          
+
         case "comment--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_COMMENT,
@@ -209,18 +209,23 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "vote--new":
-        socketDispatch({
-          type: OPERATION.ADD_QUESTION_VOTE,
-          payload: {
-            data,
-            queryClient
-          },
-        });
-        break;
-
+          socketDispatch({
+            type: OPERATION.ADD_QUESTION_VOTE,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
 
         case "notification--new":
-          console.log("notif: " + JSON.stringify(data, null, 2));
+          socketDispatch({
+            type: OPERATION.ADD_NEW_NOTIF,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
           break;
       }
     });

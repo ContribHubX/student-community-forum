@@ -22,9 +22,10 @@ export type getCommunityQueryConfig = {
   queryConfig?: QueryConfig<typeof getUserCommunities>;
 };
 
-export const useGetUserCommunities = (
-  { userId, queryConfig }: getCommunityQueryConfig,
-) => {
+export const useGetUserCommunities = ({
+  userId,
+  queryConfig,
+}: getCommunityQueryConfig) => {
   return useQuery({
     ...getUserCommunitiesQueryOptions(userId),
     ...queryConfig,

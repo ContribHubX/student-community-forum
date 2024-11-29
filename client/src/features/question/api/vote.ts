@@ -16,9 +16,7 @@ type CreateVoteMutationOption = {
   mutationConfig?: MutationConfig<typeof createVote>;
 };
 
-export const useCreateVote = ({
-  mutationConfig,
-}: CreateVoteMutationOption) => {
+export const useCreateVote = ({ mutationConfig }: CreateVoteMutationOption) => {
   const { ...restConfig } = mutationConfig || {};
 
   return useMutation({

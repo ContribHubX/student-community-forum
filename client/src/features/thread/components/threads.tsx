@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { CreateThreadForm } from "../../shared/components/create-thread-form";
+import { ThreadForm } from "../../shared/components/create-thread-form";
 import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
@@ -56,10 +56,7 @@ export const Threads = ({ userId }: ThreadsProp) => {
         onClose={handleThreadFormModal}
         className="p-5 w-[1000px] max-h-[600px]"
       >
-        <CreateThreadForm
-          userId={userId}
-          handleFormSubmit={handleCreateThread}
-        />
+        <ThreadForm userId={userId} handleFormSubmit={handleCreateThread} />
       </Modal>
 
       <div>

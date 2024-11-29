@@ -34,13 +34,12 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
 
   const { data: taskData } = useGetTasks({ boardId: boardId || "" });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: members } = useGetBoardMembers({ boardId: boardId || "" })
+  const { data: members } = useGetBoardMembers({ boardId: boardId || "" });
 
   const { mutate: updateTask } = useUpdateTask({});
   const { onDragEnd } = useKanbanDrag(taskData, updateTask, boardId);
 
   const { socketState } = useSocketProvider();
-
 
   useEffect(() => {
     if (!socketState.socket || !socketState.socket.connected) return;

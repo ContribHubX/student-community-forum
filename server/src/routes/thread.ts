@@ -11,11 +11,19 @@ export default (app: Router) => {
   app.use("/thread", router);
 
   router.post(
-    "/create",
+    "/",
     verifyAuth,
     uploadThread.single("attachment"),
     validateRequest(threadSchema),
     threadController.createThreadHandler,
+  );
+
+  router.put(
+    "/",
+    verifyAuth,
+    uploadThread.single("attachment"),
+    validateRequest(threadSchema),
+    threadController.updateThreadHandler,
   );
 
   router.post("/react", 

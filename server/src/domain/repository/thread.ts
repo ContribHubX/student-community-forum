@@ -1,6 +1,6 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
-import { IThreadDto, IThreadFull } from "../interfaces/IThread";
+import { IThreadDto, IThreadFull, IThreadUpdateDto } from "../interfaces/IThread";
 import { ThreadTable, ThreadTagsTable } from "@/database/schema";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
@@ -62,7 +62,8 @@ class ThreadRepository {
         const insertResult = await this.db
           .insert(ThreadTable)
           .values({
-            ...dto
+            ...dto,
+            communityId: dto.communityId === "" ? null : dto.communityId 
           })
           .$returningId();
 
@@ -92,7 +93,56 @@ class ThreadRepository {
         reject(new AppError(error, 500));
       }
     });
-  }
+  }   
+
+  public update(dto: IThreadUpdateDto): Promise<IThreadFull | undefined> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const thread = await this.findOneById(dto.threadId);
+        
+        // check first if thread exist
+        if (!thread) 
+          return reject(new AppError("Thread doesn't exist", 400));
+        
+
+        // check if he/she is the owner
+        if (thread.createdBy.id !== dto.createdBy) 
+          return reject(new AppError("Only owner can edit the thread", 400));
+        
+        // update row
+        const updateResult = await this.db
+          .update(ThreadTable)
+          .set({
+            ...dto,
+            communityId: dto.communityId === "" ? null : dto.communityId 
+          })
+          .where(eq(ThreadTable.id, dto.threadId));
+
+        if (!updateResult) 
+          return reject(new AppError("Error updating thread", 500));
+
+        // Insert tags if present
+        if (dto.tags && dto.tags.length > 0) {
+          await Promise.all(
+            dto.tags.map((tag) =>
+              this.db.
+                update(ThreadTagsTable)
+                .set({
+                  name: (tag as any)
+                })
+                .where(eq(ThreadTagsTable.threadId, dto.threadId))
+            )
+          );
+        }
+
+        const threadCreated = await this.findOneById(dto.threadId);
+
+        resolve(threadCreated);
+      } catch (error: any) {
+        reject(new AppError(error, 500));
+      }
+    });
+  }   
 
   /**
    * Fetches all threads from the database.
@@ -109,9 +159,10 @@ class ThreadRepository {
           },
           with: {
             createdBy: true,
+            tags: true
           },
           where: and(
-            isNull(ThreadTable.communityId),
+            // isNull(ThreadTable.communityId),
             isNull(ThreadTable.topicId),
             isNull(ThreadTable.questionId)
           ),

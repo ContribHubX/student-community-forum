@@ -14,6 +14,7 @@ export const threadSchema = Joi.object({
   createdBy: Joi.string().required().messages({
     "string.empty": "Creator is required",
   }),
+  threadId: Joi.optional(),
   communityId: Joi.optional(),
   topicId: Joi.optional(),
   questionId: Joi.optional()

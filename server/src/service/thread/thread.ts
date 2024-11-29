@@ -1,4 +1,4 @@
-import { IThreadFull, IThreadDto } from "@/domain/interfaces/IThread";
+import { IThreadFull, IThreadDto, IThreadUpdateDto } from "@/domain/interfaces/IThread";
 import ThreadRepository from "@/domain/repository/thread";
 import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
@@ -31,6 +31,22 @@ class ThreadService {
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Create thread error");
+    }
+  }
+
+  /**
+   * 
+   * @param dto 
+   * @returns 
+   */
+  public async updateThread(dto: IThreadUpdateDto): Promise<IThreadFull | undefined> {
+    try {
+      const thread = await this.threadRepo.update(dto);
+      // this.eventManager.publishToMany<IThreadFull>("thread--new", thread);
+      return thread;
+    } catch (error: any) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Update thread error");
     }
   }
 

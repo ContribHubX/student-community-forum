@@ -29,7 +29,7 @@ export type Thread = Entity<{
 export type Tag = Entity<{
   name: string;
   threadId: string;
-}>
+}>;
 
 export type Comment = Entity<{
   content: string;
@@ -89,14 +89,13 @@ export type QuestionVoteStats = {
   upvoteCount: number;
   downvoteCount: number;
   userVote: "up" | "down";
-}
+};
 
 export type QuestionVote = {
   userId: string;
   questionId: string;
   vote: "up" | "down";
-}
-
+};
 
 export type PendingQuestionRequest = {
   question: Question;
@@ -139,3 +138,28 @@ export type BoardState = {
   position: CursorPosition;
   color: number;
 };
+
+
+export type Notification = Entity<{
+  message: string, 
+  entityId: string,
+  entityType: NotificationEntityType;
+  type: NotificationType,
+  link: string,
+  isRead: boolean,
+  createdBy: User
+  receiveBy: string
+}>
+
+
+export type ThreadNotificationType = 'like' | 'dislike' | 'comment' | 'reply';
+
+export type TaskNotificationType = 'assigned' | 'updated' | 'completed';
+
+export type QuestionRequestNotificationType = "request";
+
+export type NotificationEntityType = "task" | "thread" | "question";
+
+export type NotificationType = ThreadNotificationType & TaskNotificationType & QuestionRequestNotificationType;
+
+

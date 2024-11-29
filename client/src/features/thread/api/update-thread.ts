@@ -3,7 +3,7 @@ import { MutationConfig } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 
-export const createThreadSchema = z.object({
+export const updateThreadSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   content: z.string().min(6, "Content must be at least 6 characters"),
   attachment: z
@@ -15,12 +15,13 @@ export const createThreadSchema = z.object({
     .default(null),
 });
 
-export type CreateThreadType = z.infer<typeof createThreadSchema> & {
+export type UpdateThreadType = z.infer<typeof updateThreadSchema> & {
   createdBy: string;
+  threadId: string;
 };
 
-const createThread = async (data: FormData) => {
-  const response = await api.post("http://localhost:3000/api/thread", data, {
+const updateThread = async (data: FormData) => {
+  const response = await api.put("http://localhost:3000/api/thread", data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -30,16 +31,16 @@ const createThread = async (data: FormData) => {
 };
 
 type CreateThreadMutationOption = {
-  mutationConfig?: MutationConfig<typeof createThread>;
+  mutationConfig?: MutationConfig<typeof updateThread>;
 };
 
-export const useCreateThread = ({
+export const useUpdateThread = ({
   mutationConfig,
 }: CreateThreadMutationOption) => {
   const { ...restConfig } = mutationConfig || {};
 
   return useMutation({
     ...restConfig,
-    mutationFn: createThread,
+    mutationFn: updateThread,
   });
 };

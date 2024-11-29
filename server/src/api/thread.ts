@@ -11,7 +11,7 @@ export default {
   /**
    * Handler to create a new thread.
    *
-   * @route POST /thread/create
+   * @route POST /thread
    */
   async createThreadHandler(req: Request, res: Response, next: NextFunction) {
     const body = req.body;
@@ -32,6 +32,32 @@ export default {
       next(new AppError(error));
     }
   },
+
+  /**
+   * Handler to create a new thread.
+   *
+   * @route PUT /thread
+   */
+  async updateThreadHandler(req: Request, res: Response, next: NextFunction) {
+    const body = req.body;
+    const file = req.file;
+
+    try {
+      if (file) 
+        body.attachment = file.path;
+      
+      if (body.tags) 
+        body.tags = JSON.parse(body.tags);
+      
+
+      const threadService = Container.get(ThreadService);
+      const thread = await threadService.updateThread(body);
+      res.status(201).json({ message: "Update successful", thread });
+    } catch (error: any) {
+      next(new AppError(error));
+    }
+  },
+
 
   /**
    * Handler to retrieve a single thread by its ID.

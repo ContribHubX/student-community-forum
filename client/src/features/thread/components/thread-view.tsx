@@ -13,8 +13,8 @@ import { useGetUserReaction } from "../api/get-reaction";
 import { useAuth } from "@/hooks/use-auth";
 
 import clsx from "clsx";
-import hljs from 'highlight.js'; 
-import 'highlight.js/styles/github.css';
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
 
 interface ThreadViewProps {
   thread: Thread;
@@ -29,17 +29,15 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
   });
 
   useEffect(() => {
-    // Syntax highlighting for code blocks
-    const codeBlocks = document.querySelectorAll('pre code.ql-syntax');
+    const codeBlocks = document.querySelectorAll("pre code.ql-syntax");
     console.log(codeBlocks);
     codeBlocks.forEach((block) => {
       const blockElement = block as HTMLElement;
-      hljs.highlightElement(blockElement); 
+      hljs.highlightElement(blockElement);
     });
   }, [thread?.content]);
-  
 
-  console.log(thread.content)
+  console.log(thread.content);
 
   const onSubmitReaction = (type: string) => {
     const data = {
@@ -56,10 +54,20 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
 
   return (
     <div className="bg-primary p-5 rounded-xl">
-      <IoArrowBackOutline
-        className="mb-4 text-xl text-accent cursor-pointer"
-        onClick={() => navigate("/")}
-      />
+      <div className="flex items-center justify-between">
+        <IoArrowBackOutline
+          className="mb-4 text-xl text-accent cursor-pointer"
+          onClick={() => navigate("/")}
+        />
+        {thread?.createdBy?.id === authState?.user?.id && (
+          <div
+            onClick={() => navigate(`/thread-action/${thread.id}`)}
+            className="text-muted-foreground cursor-pointer text-sm"
+          >
+            edit
+          </div>
+        )}
+      </div>
       <div className="space-y-6">
         <div className="flex items-center gap-2">
           <Avatar className="">

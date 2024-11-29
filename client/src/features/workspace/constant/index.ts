@@ -13,6 +13,10 @@ export const statusColors = {
     text: "#FFB200",
     background: lighten(0.45, "#FFB200"),
   },
+  urgent: {
+    text: "#FF4F64",
+    background: lighten(0.45, "#FF4F64"),
+  },
 };
 
 export const colors = [

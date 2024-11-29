@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { QuestionCardList } from "@/features/shared/components/question-card-list";
 import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { sampleQuestions } from "@/features/shared/data/questions";
-import { CreateThreadForm } from "@/features/shared/components/create-thread-form";
 import { useCreateQuestion } from "@/features/shared/api/create-question";
+import { Insight } from "@/features/shared/components/insight";
+import { CreateQuestionForm } from "@/features/shared/api/create-question-form";
+import { useCreateThread } from "@/features/shared/api/create-thread";
+import { useGetQuestions } from "@/features/shared/api/get-all-question";
+import { CreateQuestionType } from "@/features/shared/api/create-question";
 
 import { Modal } from "@/components/ui/modal";
 import { useDisclosure } from "@/hooks/use-disclosure";
 import { TopicCard } from "./topic-card";
 import { useGetTopic } from "../api/get-topic";
 import { formDataToObject } from "@/utils";
-import { CreateQuestionType } from "@/features/shared/api/create-question";
-
-import ask from "@/assets/question/ask-1.svg";
-import { PiSealQuestionBold } from "react-icons/pi";
-import { useGetQuestions } from "@/features/shared/api/get-all-question";
 import { useGetThreadsByTopic } from "../api/get-threads-by-topic";
-import { useCreateThread } from "@/features/shared/api/create-thread";
 
 interface TopicsProp {
   userId: string;
@@ -94,20 +93,7 @@ export const Topics = ({ userId }: TopicsProp) => {
           questions && questions.length > 0 ? (
             <QuestionCardList questions={sampleQuestions} />
           ) : (
-            <div className="bg-primary rounded-md flex flex-col gap-5 items-center justify-center h-[400px]">
-              <img src={ask} alt="illustration" className="w-[200px] mx-auto" />
-              <p className="text-muted-foreground text-sm text-center max-w-[300px]">
-                Frame insightful questions based on this topic to deepen
-                understanding.
-              </p>
-              <button
-                className="text-accent-foreground text-xl rounded-full bg-accent flex items-center justify-center py-3 px-4 gap-2"
-                onClick={toggleCreateModal}
-              >
-                <PiSealQuestionBold />
-                <span className="text-sm">Ask Now</span>
-              </button>
-            </div>
+            <Insight handleClick={toggleCreateModal} />
           )
         ) : (
           <ThreadCardList threads={threads || []} />
@@ -118,9 +104,9 @@ export const Topics = ({ userId }: TopicsProp) => {
         <Modal
           isOpen={isModalOpen}
           onClose={closeModal}
-          className="p-5 w-[1000px] max-h-[600px]"
+          className="p-5 w-[1200px]  max-h-[600px] bg-red-400"
         >
-          <CreateThreadForm
+          <CreateQuestionForm
             userId={userId}
             handleFormSubmit={handleCreateQuestion}
           />

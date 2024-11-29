@@ -19,12 +19,17 @@ export const modules = {
 };
 
 interface TextEditorProp {
+  initialContent?: string;
   handleChange: (data: Partial<CreateThreadType>) => void;
   placeholder?: string;
 }
 
-export const TextEditor = ({ handleChange, placeholder }: TextEditorProp) => {
-  const [value, setValue] = useState("");
+export const TextEditor = ({
+  initialContent,
+  handleChange,
+  placeholder,
+}: TextEditorProp) => {
+  const [value, setValue] = useState(initialContent || "");
   const [contentData, setContentData] = useState<Partial<CreateThreadType>>(
     {} as Partial<CreateThreadType>,
   );

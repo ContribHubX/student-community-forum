@@ -45,6 +45,10 @@ export interface IThreadDto {
   questionId: string | null;
 }
 
+export interface IThreadUpdateDto extends IThreadDto {
+  threadId: string
+}
+
 export interface IThreadReactionDto {
   threadId: string,
   userId: string,

@@ -22,10 +22,10 @@ export const QuestionCardList = ({ questions }: QuestionCardListProp) => {
 
       <div className="flex flex-col gap-4  rounded-md">
         {questions.map((question) => (
-          <QuestionCard 
-            key={question.id} 
+          <QuestionCard
+            key={question.id}
             currentUserId={authState?.user?.id || ""}
-            question={question} 
+            question={question}
           />
         ))}
       </div>

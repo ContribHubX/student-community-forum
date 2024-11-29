@@ -18,14 +18,19 @@ interface TaskColumnProp {
   tasks: TaskType[];
 }
 
-export const TaskColumn = ({ currentUserId, boardId, type, tasks }: TaskColumnProp) => {
+export const TaskColumn = ({
+  currentUserId,
+  boardId,
+  type,
+  tasks,
+}: TaskColumnProp) => {
   const separatorColor =
     type === "todo"
       ? statusColors["archived"].text
       : type === "doing"
         ? statusColors["finished"].text
         : statusColors["active"].text;
-  const { isDark } = useTheme(); 
+  const { isDark } = useTheme();
   const { isOpen, toggle } = useDisclosure();
 
   return (
@@ -54,20 +59,16 @@ export const TaskColumn = ({ currentUserId, boardId, type, tasks }: TaskColumnPr
         ))}
       </div>
 
-      <div className={`${!isOpen && 'hidden'}  mt-6`}>
-        <TaskForm 
-          currentUserId={currentUserId}
-          boardId={boardId}
-          type={type}
-        />
+      <div className={`${!isOpen && "hidden"}  mt-6`}>
+        <TaskForm currentUserId={currentUserId} boardId={boardId} type={type} />
       </div>
 
-      <div 
+      <div
         className=" rounded-md flex items-center justify-center gap-3 p-2 mt-6 relative cursor-pointer"
         style={{
           color: statusColors["finished"].text,
           background: !isDark ? statusColors["finished"].background : "#262d34",
-      }}
+        }}
         onClick={toggle}
       >
         <p className="text-center text-sm">Add a card</p>

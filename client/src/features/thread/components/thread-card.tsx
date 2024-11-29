@@ -1,77 +1,214 @@
-import { Thread } from "@/types";
 import { useState } from "react";
-import { FaHeart } from "react-icons/fa";
+import { formatDistanceToNow } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  MessageSquare,
+  MoreHorizontal,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+
+import { ReactionType, Thread } from "@/types";
+import { statusColors } from "@/features/workspace/constant";
+import { sanitizeContent } from "@/utils";
+import { useCreateReaction } from "../api/create-reaction";
+import { useGetUserReaction } from "../api/get-reaction";
 import { useNavigate } from "react-router-dom";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useTheme } from "@/hooks/use-theme";
+
+import { TbArrowBigDown } from "react-icons/tb";
 
 interface ThreadCardProp {
   thread: Thread;
+  userId: string;
 }
 
-export const ThreadCard = ({ thread }: ThreadCardProp) => {
+export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
+  const { mutate: addReaction } = useCreateReaction({});
+  const { data: reaction } = useGetUserReaction({
+    data: { threadId: thread.id, userId: userId.toString() || "" },
+  });
+  const { isDark } = useTheme();
   const navigate = useNavigate();
-  const [isLiked, setIsLiked] = useState(false);
 
-  const handleCardClick = () => {
-    navigate(`/thread/${thread.id}`);
+  let sanitizedContent = sanitizeContent(thread?.content || "");
+  sanitizedContent =
+    sanitizedContent.length < 150
+      ? sanitizedContent
+      : sanitizedContent.substring(0, 150) + "...";
+  const [isUpHovered, setUpHovered] = useState(false);
+  const [isDownHovered, setDownHovered] = useState(false);
+
+  const toggleImageSize = () => {
+    setIsImageExpanded((prev) => !prev);
+  };
+
+  const onSubmitReaction = (type: string) => {
+    const data = {
+      threadId: thread.id,
+      userId: userId.toString(),
+      type: type,
+    };
+    addReaction(data);
+  };
+
+  const reactionFlag = (keyType: ReactionType) => {
+    return reaction?.type === keyType;
   };
 
   return (
-    <div
-      className="w-full bg-primary rounded-xl p-5 flex gap-5 relative flex-col cursor-pointer
-    xl:flex-row shadow-slate-400 shadow-md dark:shadow-gray-900"
-      onClick={handleCardClick}
-    >
-      <div
-        className={`absolute top-5 right-5 bg-[#EFF5F8] dark:bg-background h-8 w-8 cursor-pointer
-          rounded-full grid place-content-center ${isLiked ? "text-accent" : "text-[#E0E0E0]"}`}
-        onClick={() => setIsLiked(!isLiked)}
-      >
-        <FaHeart
-          className={`text-lg ${!isLiked && "dark:text-muted-foreground"} `}
-        />
-      </div>
-
-      <img
-        className=" rounded-xl flex-shrink-0 w-full mt-10
-            xl:w-[200px] xl:mt-0"
-        src="https://media.sproutsocial.com/uploads/2017/01/Instagram-Post-Ideas.png"
-        alt=""
-      />
-
-      <div className="w-full gap-10 flex flex-col">
-        <div className="space-y-4 text-xl text-primary-foreground">
-          <p>{thread.title}</p>
-          <div className="flex gap-2 text-xs text-accent-foreground font-light">
-            {/* tags */}
-            <div className="bg-accent py-2 px-3 rounded-2xl">finance</div>
-            <div className="bg-accent py-2 px-3 rounded-2xl">finance</div>
-            <div className="bg-accent py-2 px-3 rounded-2xl">finance</div>
+    <Card className="w-full hover:shadow-lg transition-shadow duration-300 bg-primary dark:border-none">
+      <CardHeader className="flex flex-row items-start space-y-0 gap-4">
+        <Avatar className="w-10 h-10">
+          <AvatarImage src={thread.createdBy?.attachment} alt="User Avatar" />
+          <AvatarFallback>UN</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col gap-0">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-sm font-medium">Kidlat 101</span>
+            <Badge
+              variant="secondary"
+              className="text-xs font-normal"
+              style={{
+                color: statusColors["archived"].text,
+                backgroundColor: !isDark
+                  ? statusColors["archived"].background
+                  : "#1e252b",
+              }}
+            >
+              {formatDistanceToNow(new Date(thread.createdAt || new Date()), {
+                addSuffix: true,
+              })}
+            </Badge>
           </div>
+          <h3
+            className="text-lg font-semibold hover:text-accent cursor-pointer transition-colors duration-200"
+            onClick={() => navigate(`/thread/${thread.id}`)}
+          >
+            {thread.title}
+          </h3>
         </div>
-
-        <div className="w-full flex text-muted-foreground items-center font-light justify-between">
-          <div className="flex gap-2 text-sm">
-            <Avatar>
-              <AvatarImage src={thread.createdBy.attachment} />
-            </Avatar>
-            <div className="">
-              <p className="text-primary-foreground ">
-                {thread.createdBy.name}
-              </p>
-              <p className="font-light text-xs">3 Weeks ago</p>
-            </div>
-          </div>
-
-          <div className="flex gap-3 text-sm text-muted-foreground">
-            <p className="cursor-pointer">652,324 views</p>
-
-            <p className="cursor-pointer">{thread.likeCount} likes</p>
-
-            <p className="cursor-pointer">{thread.commentCount} comments</p>
-          </div>
+      </CardHeader>
+      <CardContent>
+        <p
+          className="text-sm text-muted-foreground mb-4"
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        ></p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {thread.tags?.map((tag, index) => (
+            <Badge
+              key={index}
+              variant="outline"
+              className="text-accent-foreground bg-accent border-none p-2"
+            >
+              {tag.name}
+            </Badge>
+          ))}
         </div>
-      </div>
-    </div>
+        {thread.attachment !== "null" && (
+          <div className="relative rounded-lg overflow-hidden">
+            <img
+              src={thread.attachment}
+              alt="Thread attachment"
+              className={`w-full object-cover transition-all duration-300 ease-in-out ${
+                isImageExpanded ? "max-h-[600px]" : "max-h-[200px]"
+              }`}
+            />
+            <Button
+              size="sm"
+              variant="secondary"
+              className="absolute bottom-2 right-2 bg-primary"
+              onClick={toggleImageSize}
+            >
+              {isImageExpanded ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+        )}
+      </CardContent>
+      <CardFooter className="flex justify-between items-center">
+        <div className="flex items-center space-x-4">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center">
+                  <Button
+                    size="sm"
+                    variant={reactionFlag("LIKE") ? "default" : "ghost"}
+                    className="px-2"
+                    onClick={() => onSubmitReaction("LIKE")}
+                    onMouseEnter={() => setUpHovered(true)}
+                    onMouseLeave={() => setUpHovered(false)}
+                  >
+                    <TbArrowBigDown
+                      className="text-3xl rotate-180 text-white"
+                      style={{
+                        color:
+                          isDark || isUpHovered || reactionFlag("LIKE")
+                            ? "#ffffff"
+                            : "black",
+                      }}
+                    />
+                  </Button>
+                  <span className="text-sm font-medium mx-1">
+                    {thread.likeCount}
+                  </span>
+                  <Button
+                    size="sm"
+                    variant={reactionFlag("DISLIKE") ? "default" : "ghost"}
+                    className="px-2"
+                    onClick={() => onSubmitReaction("DISLIKE")}
+                    onMouseEnter={() => setDownHovered(true)}
+                    onMouseLeave={() => setDownHovered(false)}
+                  >
+                    <TbArrowBigDown
+                      className="text-2xl"
+                      style={{
+                        color:
+                          isDark || isDownHovered || reactionFlag("DISLIKE")
+                            ? "#ffffff"
+                            : "black",
+                      }}
+                    />
+                  </Button>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Vote on this thread</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex items-center space-x-1"
+          >
+            <MessageSquare className="h-4 w-4" />
+            <span className="text-sm">19 comments</span>
+          </Button>
+        </div>
+        <Button variant="ghost" size="icon">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };

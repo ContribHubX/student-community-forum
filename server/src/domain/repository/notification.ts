@@ -4,7 +4,7 @@ import * as schema from "@/database/schema";
 import { AppError } from "@/libs/app-error";
 import { INotification, INotificationDto } from "../interfaces/INotification";
 import { NotificationTable } from "@/database/schema/notification";
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 
 @Service()
 class NotificationRepository {
@@ -51,6 +51,7 @@ class NotificationRepository {
                 const result = await this.db.query.NotificationTable.findMany({
                     where: eq(NotificationTable.receiveBy, userId),
                     with: { createdBy: true },
+                    orderBy: desc(NotificationTable.createdAt)
                 });
 
                 resolve(result as unknown as INotification[]);

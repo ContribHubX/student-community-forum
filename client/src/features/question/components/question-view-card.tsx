@@ -9,7 +9,7 @@ import { Modal } from "@/components/ui/modal";
 import { SelectRequest } from "./select-request";
 
 import { useCreateThread } from "@/features/shared/api/create-thread";
-import { CreateThreadForm } from "@/features/shared/components/create-thread-form";
+import { ThreadForm } from "@/features/shared/components/create-thread-form";
 
 import { useDisclosure } from "@/hooks/use-disclosure";
 
@@ -75,7 +75,7 @@ export const QuestionViewCard = ({
           onClose={handleThreadFormModal}
           className="p-5 w-[1000px] max-h-[600px]"
         >
-          <CreateThreadForm
+          <ThreadForm
             initialTitleVal={question.title}
             userId={currentUser.id}
             handleFormSubmit={handleCreateThread}

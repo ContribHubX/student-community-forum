@@ -42,9 +42,11 @@ const createAppRouter = () =>
           },
         },
         {
-          path: "thread/create",
+          path: "thread-action/:threadId",
           lazy: async () => {
-            const { CreateThreadRoute } = await import("./routes/app/thread/create-thead");
+            const { CreateThreadRoute } = await import(
+              "./routes/app/thread/create-thead"
+            );
             return { Component: CreateThreadRoute };
           },
         },
@@ -57,7 +59,9 @@ const createAppRouter = () =>
             return params.id;
           },
           lazy: async () => {
-            const { ThreadRoute } = await import("./routes/app/thread/thread-route");
+            const { ThreadRoute } = await import(
+              "./routes/app/thread/thread-route"
+            );
             return { Component: ThreadRoute };
           },
         },
