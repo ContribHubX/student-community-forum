@@ -127,7 +127,11 @@ class BoardRepository {
                         columns: {},
                         with: {
                             member: true,
-                            board: true
+                            board: {
+                                with: {
+                                    createdBy: true
+                                }
+                            }
                         },
                         where: eq(BoardMembersTable.id, resultId)
                     })
@@ -164,7 +168,11 @@ class BoardRepository {
                     where: eq(BoardMembersTable.memberId, userId),
                     columns: {},
                     with: {
-                        board: true
+                        board: {
+                            with: {
+                                createdBy: true
+                            }
+                        }
                     },
                 });
 

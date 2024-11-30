@@ -41,7 +41,7 @@ class NotificationRepository {
 
     /**
      * Get's user notifications
-     * 
+    * 
      * @param userId 
      * @returns {Promise<INotification[] | undefined>}
      */

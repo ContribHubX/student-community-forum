@@ -4,6 +4,8 @@ import BoardRepository from "@/domain/repository/board";
 import { AppError } from "@/libs/app-error";
 import EventManager from "@/sockets/event-manager";
 import { Service, Inject } from "typedi";
+import NotificationService from "./notification";
+import { NotificationType } from "@/types";
 
 @Service()
 class BoardService {
@@ -13,7 +15,10 @@ class BoardService {
     @Inject(() => EventManager)
     private eventManager!: EventManager;
 
-    /**
+    @Inject(() => NotificationService)
+    private notifService!: NotificationService;
+    
+    /** 
      * Creates a new board.
      * 
      * @param dto
@@ -23,8 +28,7 @@ class BoardService {
         try {
             const result = await this.boardRepo.create(dto);
             this.eventManager.publishToOne<IBoard>("board--new", result, result.createdBy.id);
-
-            return result;
+            return result;  
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);
@@ -69,7 +73,20 @@ class BoardService {
      */
     public async addBoardMember(dto: IBoardMemberDto): Promise<IBoardMember> {
         try {
-            return this.boardRepo.addMember(dto );
+            const result = await this.boardRepo.addMember(dto);
+
+            if (!result) throw new AppError("Error adding board member", 500);
+
+            // notify user who has been added to board
+            await this.notifService.createNotification({
+                entityId: result.board.id,
+                entityType: "board",
+                type: "added" as NotificationType,
+                createdBy: result.board.createdBy.id,
+                receiveBy: result.member.id,
+            });
+
+            return result;
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

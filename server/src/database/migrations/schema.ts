@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, tinyint, foreignKey, primaryKey, varchar, text, timestamp, mysqlEnum, unique, int, mediumtext } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, tinyint, foreignKey, primaryKey, varchar, text, timestamp, mysqlEnum, unique, int, mediumtext, index } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const board = mysqlTable("board", {
@@ -65,8 +65,8 @@ export const notification = mysqlTable("notification", {
 	message: varchar({ length: 255 }).notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	entityId: varchar("entity_id", { length: 255 }).notNull(),
-	entityType: mysqlEnum("entity_type", ['thread','task','question']).notNull(),
-	type: mysqlEnum(['like','dislike','comment','reply','request']).notNull(),
+	entityType: mysqlEnum("entity_type", ['thread','task','question','board']).notNull(),
+	type: mysqlEnum(['like','dislike','comment','reply','request','added']).notNull(),
 	link: varchar({ length: 255 }).notNull(),
 	isRead: tinyint("is_read"),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
@@ -169,10 +169,11 @@ export const threadReaction = mysqlTable("thread_reaction", {
 	type: mysqlEnum(['LIKE','DISLIKE']).notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id),
-	threadId: varchar("thread_id", { length: 255 }).notNull().references(() => thread.id).references(() => thread.id),
+	threadId: varchar("thread_id", { length: 255 }).notNull().references(() => thread.id),
 },
 (table) => {
 	return {
+		threadTagsThreadIdThreadIdFk: index("thread_tags_thread_id_thread_id_fk").on(table.threadId),
 		threadReactionId: primaryKey({ columns: [table.id], name: "thread_reaction_id"}),
 	}
 });

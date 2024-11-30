@@ -166,3 +166,63 @@ html.dark {
   pointer-events: none; /* Allow interaction with elements above */
   /* Ensure it's behind all other content */
 }
+
+
+/* comment related */
+
+.collapse-line {
+  border: none;
+  background: none;
+  padding: 0;
+  width: 15px;
+  margin-top: .5rem;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transform: translateX(-50%);
+}
+
+.collapse-line:hover::before,
+.collapse-line:focus-visible::before {
+  background-color: hsl(235, 100%, 60%);
+}
+
+.collapse-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background-color: hsl(235, 50%, 74%);
+  transition: background-color;
+  
+  margin-top: -10px;
+  margin-left: 40px;
+}
+
+
+// .avatar-line {
+//   border: none;
+//   background: none;
+//   padding: 0;
+//   width: 15px;
+//   margin-top: .5rem;
+//   position: relative;
+//   cursor: pointer;
+//   outline: none;
+//   transform: translateX(-50%);
+// }
+
+// .avatar-line::before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 50%;
+//   width: 1px;
+//   background-color: hsl(235, 50%, 74%);
+//   transition: background-color;
+  
+//   margin-top: 8px;
+// }

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { useParams } from "react-router-dom";
@@ -14,13 +14,23 @@ import { TaskStatusType, User } from "@/types";
 import { useKanbanDrag } from "@/features/workspace/hooks/use-kanban-drag";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useSocketProvider } from "@/hooks/use-socket-provider";
+import { users } from "@/features/shared/data/users";
+import { ActiveUsers } from "./active-users";
 
 import { useGetTasks } from "../api/get-all-tasks";
 import { useUpdateTask } from "../api/update-task";
 import { useGetBoardMembers } from "../api/get-board-members";
 
-import { users } from "@/features/shared/data/users";
-import { ActiveUsers } from "./active-users";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import { useGetUsers } from "@/features/shared/api/get-all-users";
+import { useAddBoardMember } from "../api/add-board-member";
+import { statusColors } from "../constant";
+import { useTheme } from "@/hooks/use-theme";
+import { useBoardContext } from "../hooks/use-board-context";
 
 // TODO napay bug ang giatay kung mo drag sa same column mo duplicate
 
@@ -32,14 +42,19 @@ interface KanbanBoardProp {
 export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
   const { boardId } = useParams();
 
+  const [boardOwner, setBoardOwner] = useState<User>({} as User);
+
   const { data: taskData } = useGetTasks({ boardId: boardId || "" });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: members } = useGetBoardMembers({ boardId: boardId || "" });
+  const { data: allUsers } = useGetUsers({  });
 
   const { mutate: updateTask } = useUpdateTask({});
-  const { onDragEnd } = useKanbanDrag(taskData, updateTask, boardId);
+  const { mutate: addBoardMember } = useAddBoardMember({});
 
+  const { onDragEnd } = useKanbanDrag(taskData, updateTask, boardId);
   const { socketState } = useSocketProvider();
+  const { state } = useBoardContext();
+  const { isDark } = useTheme();
 
   useEffect(() => {
     if (!socketState.socket || !socketState.socket.connected) return;
@@ -60,13 +75,21 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
     };
   }, [boardId, currentUser, socketState.socket]);
 
+  useEffect(() => {
+    if (!state || !boardId) return;
+
+    const board = [...state.boards, ...state.sharedBoards].filter(board => board.id === boardId)[0];
+    setBoardOwner(board?.createdBy);
+
+  }, [state, boardId, currentUser.id])
+
+
   if (!taskData || !boardId) return <p>Loading...</p>;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <div className="canvas" />
-
         <div className="w-fit mx-auto bg-primary p-2 text-xs rounded-xl flex items-center gap-1">
           <div className="w-[6px] h-[6px] bg-[#00FF00] rounded-lg" />
           <LiaUserSolid className="text-xl text-muted-foreground" />
@@ -84,17 +107,65 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
                 <AvatarImage src={user.attachment} className="object-cover" />
               </Avatar>
             ))}
-            <div
-              className="rounded-full w-[40px] h-[40px] flex items-center justify-center border border-accent text-accent"
-              style={
-                {
-                  // color: "#533de0",
-                  // backgroundColor: lighten(0.4, "#533de0"),
-                }
-              }
-            >
+            <Popover>
+              <PopoverTrigger>
+              <div
+                  className="rounded-full w-[40px] h-[40px] flex items-center justify-center border border-accent text-accent"
+                  style={
+                    {
+                      // color: "#533de0",
+                      // backgroundColor: lighten(0.4, "#533de0"),
+                    }
+                  }
+                >
               <FaPlus className="text-xl font-thin " />
-            </div>
+              </div>
+              </PopoverTrigger>
+              <PopoverContent className="bg-primary dark:border-muted-foreground border-[1px]">
+                <div className="flex flex-col gap-3">
+                  {allUsers?.map((user) => {
+                    return user.id !== currentUser.id && (
+                    <div
+                      key={user.id}
+                      onClick={() => ""}
+                      className="flex items-center gap-3 cursor-pointer"
+                    >
+                      {boardOwner && user.id !== boardOwner?.id && (
+                        <>
+                          <Avatar className="w-[30px] h-[30px] rounded-full">
+                          <AvatarImage
+                            src={user.attachment}
+                            className="object-cover"
+                          />
+                        </Avatar>
+                          <p className="text-[.8rem]">{user.name}</p>
+                          {members?.some(mem => mem.id === user.id)
+                          ? (
+                            <div
+                              className="text-xs ml-auto rounded-full p-2"
+                              style={{
+                                color: statusColors["active"].text,
+                                backgroundColor: !isDark ? statusColors["active"].background : "#1e252b",
+                              }}
+                            >
+                            joined
+                            </div>
+                          )
+                          : (
+                            <div
+                              className="text-xs ml-auto rounded-full p-2 bg-background border border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                              onClick={() => addBoardMember({ memberId: user.id, boardId })}
+                            >
+                              add
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div> )
+                })}
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="flex items-center gap-3 text-xl text-primary-foreground">

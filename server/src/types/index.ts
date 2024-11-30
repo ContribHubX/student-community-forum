@@ -29,11 +29,13 @@ export type ThreadReactionType = "LIKE" | "DISLIKE" | "NONE";
 
 export type TaskNotificationType = 'assigned' | 'updated' | 'completed';
 
+export type BoardNotificationType = "added";
+
 export type QuestionRequestNotificationType = "request";
 
-export type NotificationType = ThreadNotificationType & TaskNotificationType & QuestionRequestNotificationType;
+export type NotificationType = ThreadNotificationType & TaskNotificationType & QuestionRequestNotificationType & BoardNotificationType;
 
-export type NotificationEntityType = "task" | "thread" | "question";
+export type NotificationEntityType = "task" | "thread" | "question" | "board";
 
 export type BoardStatus = "active" | "finished" | "archived"; 
 

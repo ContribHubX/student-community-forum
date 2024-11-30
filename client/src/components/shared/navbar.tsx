@@ -30,9 +30,7 @@ export const Navbar = () => {
           <div className="flex gap-2">
             <ThemeToggle />
           </div>
-          <NotificationDropdown 
-            userId={authState.user?.id || ""}
-          />
+          <NotificationDropdown userId={authState.user?.id || ""} />
           <div className="cursor-pointer">
             <Avatar className="p-[4px] bg-accent">
               <AvatarImage

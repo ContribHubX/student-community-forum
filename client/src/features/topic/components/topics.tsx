@@ -6,7 +6,7 @@ import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { sampleQuestions } from "@/features/shared/data/questions";
 import { useCreateQuestion } from "@/features/shared/api/create-question";
 import { Insight } from "@/features/shared/components/insight";
-import { CreateQuestionForm } from "@/features/shared/api/create-question-form";
+import { CreateQuestionForm } from "@/features/shared/components/create-question-form";
 import { useCreateThread } from "@/features/shared/api/create-thread";
 import { useGetQuestions } from "@/features/shared/api/get-all-question";
 import { CreateQuestionType } from "@/features/shared/api/create-question";
@@ -29,7 +29,6 @@ export const Topics = ({ userId }: TopicsProp) => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>("Answer");
   const {
     isOpen: isModalOpen,
-    toggle: toggleModal,
     close: closeModal,
   } = useDisclosure();
   const { mutate: createQuestion } = useCreateQuestion({});
@@ -47,9 +46,6 @@ export const Topics = ({ userId }: TopicsProp) => {
     createQuestion(formDataToObject(data) as CreateQuestionType);
   };
 
-  const toggleCreateModal = () => {
-    toggleModal();
-  };
 
   const toggleActiveTab = () => {
     setActiveTab(activeTab === "Answer" ? "Read" : "Answer");
@@ -93,7 +89,7 @@ export const Topics = ({ userId }: TopicsProp) => {
           questions && questions.length > 0 ? (
             <QuestionCardList questions={sampleQuestions} />
           ) : (
-            <Insight handleClick={toggleCreateModal} />
+            <Insight />
           )
         ) : (
           <ThreadCardList threads={threads || []} />

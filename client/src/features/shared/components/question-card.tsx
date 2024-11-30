@@ -1,115 +1,111 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 
-import { Question } from "@/types";
+import { Question } from "@/types"
 
-import { FaArrowUp } from "react-icons/fa6";
-import { FaMessage } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
+import { ChevronUp, ChevronDown, MessageSquare, Eye } from 'lucide-react'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { statusColors } from "@/features/workspace/constant";
-import { useTheme } from "@/hooks/use-theme";
-import { useGetVotes } from "@/features/question/api/get-votes";
-import { useCreateVote } from "@/features/question/api/vote";
+import { Card, CardContent } from "@/components/ui/card"
+import { useGetVotes } from "@/features/question/api/get-votes"
+import { useCreateVote } from "@/features/question/api/vote"
 
 interface QuestionCardProp {
-  currentUserId: string;
-  question: Question;
+  currentUserId: string
+  question: Question
 }
 
 export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { data: votes } = useGetVotes({
     data: { userId: currentUserId.toString(), questionId: question.id },
-  });
-  const { mutate: createVote } = useCreateVote({});
-  const { isDark } = useTheme();
+  })
+  const { mutate: createVote } = useCreateVote({})
 
   const handleCreateVote = (vote: "up" | "down") => {
     createVote({
       userId: currentUserId,
       questionId: question.id,
       vote,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="shadow-md text-primary-foreground rounded-md p-6 bg-primary">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-5">
-          <div className="cursor-pointer">
-            <Avatar className="p-[3px] bg-accent">
-              <AvatarImage
-                src={question.createdBy.attachment}
-                className="rounded-full "
+    <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
+      <CardContent className="p-6">
+        <div className="flex items-start space-x-6">
+          {/* Voting Section */}
+          <div className="flex flex-col items-center space-y-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`rounded-full hover:accent ${votes?.userVote === "up" ? "text-white bg-accent" : "text-gray-500"}`}
+              onClick={() => handleCreateVote("up")}
+            >
+              <ChevronUp className="h-5 w-5" />
+            </Button>
+            <span className="text-lg font-bold text-gray-700">{votes?.upvoteCount || 0}</span>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`rounded-full hover:accent ${votes?.userVote === "down" ? "text-white bg-accent" : "text-gray-500"}`}
+              onClick={() => handleCreateVote("down")}
+            >
+              <ChevronDown className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Question Details */}
+          <div className="flex-1 space-y-4">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={question.createdBy.attachment} alt={question.createdBy.name} />
+                  <AvatarFallback>{question.createdBy.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="text-sm font-medium text-gray-900">{question.createdBy.name}</p>
+                  <p className="text-xs text-gray-500">
+                    {new Date(question.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
+                onClick={() => navigate(`/question/${question.id}`)}
+              >
+                Answer
+              </Button>
+            </div>
+
+            {/* Question Content */}
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800 leading-snug mb-2">{question.title}</h3>
+              <p 
+                className="text-sm text-gray-600 line-clamp-2"
+                dangerouslySetInnerHTML={{
+                  __html: question.content || "<p>No content added yet</p>",
+                }}
               />
-            </Avatar>
-          </div>
-          <div className="flex  flex-col gap-0">
-            <small className="text-xs text-muted-foreground">
-              Asked on March 12, 2024
-            </small>
-            <h1 className="font-semibold">{question.title}</h1>
-          </div>
-        </div>
+            </div>
 
-        <div
-          className="bg-accent px-2 py-1 text-xs rounded-md"
-          style={{
-            color: statusColors["active"].text,
-            backgroundColor: !isDark
-              ? statusColors["active"].background
-              : "#1e252b",
-          }}
-        >
-          QUESTION
-        </div>
-      </div>
-
-      <div className="flex gap-8 mt-4">
-        <div className="flex items-center gap-1 flex-col ml-2">
-          <FaArrowUp
-            onClick={() => handleCreateVote("up")}
-            className={`text-base cursor-pointer text-muted-foreground hover:text-green-400 ${
-              votes?.userVote === "up" ? "text-green-400" : ""
-            }`}
-            style={{
-              color: votes?.userVote === "up" ? "#4ade80" : "",
-            }}
-          />
-          <p>{votes?.upvoteCount || 0}</p>
-          <FaArrowUp
-            onClick={() => handleCreateVote("down")}
-            className={`rotate-180 text-base cursor-pointer hover:text-red-400 text-muted-foreground ${
-              votes?.userVote === "down" ? "text-red-400" : ""
-            }`}
-          />
-        </div>
-
-        <p className="text-sm text-muted-foreground">{question.content}</p>
-      </div>
-
-      <div className="flex items-center justify-between text-muted-foreground  bg-background p-4 ml-[57px]">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1 px-3 bg-primary py-2 text-xs border dark:border-none">
-            <FaMessage />
-            <span>{question?.threads?.length || 0}</span>
-            <span>answers</span>
-          </div>
-          <div className="flex items-center gap-1 px-3 bg-primary py-2 text-xs border dark:border-none">
-            <FaEye className="text-sm" />
-            <span>10</span>
-            <span>views</span>
+            {/* Footer */}
+            <div className="flex items-center space-x-6 text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <MessageSquare className="h-4 w-4 text-gray-400" />
+                <span>{question?.threads?.length || 0} answers</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Eye className="h-4 w-4 text-gray-400" />
+                <span>10 views</span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <button
-          onClick={() => navigate(`/question/${question.id}`)}
-          className="text-accent-foreground text-xs py-2 px-3 rounded-md bg-accent"
-        >
-          Answer
-        </button>
-      </div>
-    </div>
-  );
-};
+      </CardContent>
+    </Card>
+  )
+}

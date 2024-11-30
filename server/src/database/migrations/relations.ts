@@ -86,9 +86,7 @@ export const threadRelations = relations(thread, ({one, many}) => ({
 		fields: [thread.topicId],
 		references: [topics.id]
 	}),
-	threadReactions_threadId: many(threadReaction, {
-		relationName: "threadReaction_threadId_thread_id"
-	}),
+	threadReactions: many(threadReaction),
 }));
 
 export const communityRelations = relations(community, ({one, many}) => ({
@@ -189,10 +187,9 @@ export const taskAssigneeRelations = relations(taskAssignee, ({one}) => ({
 }));
 
 export const threadReactionRelations = relations(threadReaction, ({one}) => ({
-	thread_threadId: one(thread, {
+	thread: one(thread, {
 		fields: [threadReaction.threadId],
-		references: [thread.id],
-		relationName: "threadReaction_threadId_thread_id"
+		references: [thread.id]
 	}),
 	user: one(user, {
 		fields: [threadReaction.userId],

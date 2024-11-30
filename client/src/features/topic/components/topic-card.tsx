@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Topic } from "@/types";
 import { MdOutlineRssFeed } from "react-icons/md";
 import { BsVectorPen } from "react-icons/bs";
-import { CreateQuestionForm } from "@/features/shared/api/create-question-form";
+import { CreateQuestionForm } from "@/features/shared/components/create-question-form";
 import { CreateQuestionType } from "@/features/shared/api/create-question";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useGetTopicFollowers } from "../api/get-followers";

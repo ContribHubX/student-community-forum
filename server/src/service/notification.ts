@@ -1,8 +1,9 @@
 import { IRawNotificationDto, INotificationDto, INotification } from "@/domain/interfaces/INotification";
 import NotificationRepository from "@/domain/repository/notification";
+import UserRepository from "@/domain/repository/user";
 import { AppError } from "@/libs/app-error";
 import EventManager from "@/sockets/event-manager";
-import { QuestionRequestNotificationType, TaskNotificationType, ThreadNotificationType } from "@/types";
+import { BoardNotificationType, QuestionRequestNotificationType, TaskNotificationType, ThreadNotificationType } from "@/types";
 import { Inject, Service } from "typedi";
 
 // TODO must implement (UserService, UserRepo)  
@@ -15,6 +16,10 @@ class NotificationService {
     @Inject(() => EventManager)
     private eventManager!: EventManager;
 
+    @Inject(() => UserRepository)
+    private userRepo!: UserRepository;
+
+
     /**
      * Create notication
      * 
@@ -22,40 +27,52 @@ class NotificationService {
      * @returns {Promise<void>}  
      */
     public async createNotification(dto: IRawNotificationDto): Promise<INotification | undefined> {
-        let message;
-        let link;
-
-        if (dto.entityType === "task")
-            message = this.getTaskNotificationMessage(dto.type);
-            link = `api/task/${dto.entityId}`
-
-        if (dto.entityType === "thread")
-            message = this.getThreadNotificationMessage(dto.type);
-            link = `api/thread/${dto.entityId}`
-
-        if (dto.entityType === "question")
-            message = this.getQuestionNotificationMessage(dto.type);
-            link = `api/question/${dto.entityId}`
-        
-        // TODO must implement user service 
-        message = "User " + message;
+        let message = '';
+        let link = '';
     
-        const fDto: INotificationDto = {...dto, message, link};
+        if (dto.entityType === "task") {
+            message = this.getTaskNotificationMessage(dto.type);
+            link = `/api/task/${dto.entityId}`;
+        } else if (dto.entityType === "thread") {
+            message = this.getThreadNotificationMessage(dto.type);
+            link = `/thread/${dto.entityId}`;
+        } else if (dto.entityType === "question") {
+            message = this.getQuestionNotificationMessage(dto.type);
+            link = `/question/${dto.entityId}`;
+        } else if (dto.entityType === "board") {
+            message = this.getBoardNotificationMessage(dto.type);
+            link = `/workspace/${dto.entityId}`;
+        }
+        
 
+        // NOTE wala nani gamit
+        // const publisher = await this.userRepo.getById(dto.createdBy);
+    
+        // if (publisher?.name) {
+        //     message = `${publisher.name} ${message}`;
+        // } else {
+        //     message = `User ${message}`;
+        // }
+
+        const fDto: INotificationDto = { ...dto, message, link };
+    
         try {
             const notif = await this.notificationRepo.create(fDto);
-            
-            if (!notif) 
-                throw new AppError("Create notification error"); 
-
+    
+            if (!notif) {
+                throw new AppError("Create notification error");
+            }
+    
+            // Publish the notification
             this.eventManager.publishToOne<INotification>("notification--new", notif, notif.receiveBy);
-            
+    
             return notif;
         } catch (error: any) {
             if (error instanceof AppError) throw error;
-            throw new AppError(error); 
+            throw new AppError(error);
         }
     }
+    
 
     /**
      * Fetche user notications
@@ -101,6 +118,18 @@ class NotificationService {
                 return 'updated a task you are working on.';
             case 'completed':
                 return 'completed a task you were working on.';
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * Utility function
+     */
+    private getBoardNotificationMessage(actionType: BoardNotificationType): string {
+        switch (actionType) {
+            case 'added':
+                return 'added you a to a board.';
             default:
                 return '';
         }

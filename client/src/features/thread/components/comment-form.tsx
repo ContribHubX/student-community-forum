@@ -5,8 +5,8 @@ import {
 } from "@/features/thread/api/create-comment";
 import { useAuth } from "@/hooks/use-auth";
 import { FormEvent, useState } from "react";
-
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 interface CommentFormProps {
   threadId: string | undefined;
@@ -44,21 +44,23 @@ export const CommentForm = ({
       content: "",
       createdBy: "",
     });
+    setIsFocused(false);
   };
 
   const handleCancel = () => {
     if (commentData.content !== "" && commentData.content !== "<p><br></p>") {
       const isDiscard = confirm(
-        "Are you sure you want to discard your unsaved changes?",
+        "Are you sure you want to discard your unsaved changes?"
       );
 
       if (isDiscard) {
-        setIsFocused(!isFocused);
+        setIsFocused(false);
+        setCommentData({ content: "", createdBy: "" });
         return;
       }
     }
 
-    setIsFocused(!isFocused);
+    setIsFocused(false);
   };
 
   const handleContentChange = (data: Partial<CreateThreadType>) => {
@@ -69,92 +71,52 @@ export const CommentForm = ({
   };
 
   return (
-    <form
-      action=""
-      className="text-primary-foreground bg-primary rounded-xl"
-      onSubmit={onSubmit}
-    >
-      {isComment ? (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="p-2 flex flex-col gap-2"
-        >
-          <TextEditor
-            handleChange={handleContentChange}
-            placeholder={placeholder}
-          />
-          <div className="space-x-2 self-end">
-            <button
-              className="font-light text-sm bg-background border border-opacity-25 border-slate-600
-          px-4 py-1 rounded-xl"
-              type="reset"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={
-                commentData.content === "" ||
-                commentData.content === "<p><br></p>"
-              }
-              className="bg-accent px-6 py-1 font-light text-sm text-accent-foreground rounded-xl
-              disabled:brightness-75"
-            >
-              Save
-            </button>
+    <form className="bg-card rounded-lg shadow-sm" onSubmit={onSubmit}>
+      <AnimatePresence>
+        {isComment || isFocused ? (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="p-4"
+          >
+            <TextEditor
+              handleChange={handleContentChange}
+              placeholder={placeholder}
+            />
+            <div className="mt-4 flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                disabled={
+                  commentData.content === "" ||
+                  commentData.content === "<p><br></p>"
+                }
+              >
+                Post
+              </Button>
+            </div>
+          </motion.div>
+        ) : (
+          <div className="p-4">
+            <input
+              type="text"
+              className="w-full bg-background rounded-md text-sm py-2 px-4 outline-none border border-input focus:border-primary transition-colors"
+              placeholder={placeholder}
+              onFocus={() => setIsFocused(true)}
+            />
           </div>
-        </motion.div>
-      ) : isFocused ? (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="px-2 pb-2 flex flex-col gap-2 "
-        >
-          <TextEditor
-            handleChange={handleContentChange}
-            placeholder={placeholder}
-          />
-          <div className="space-x-2 self-end">
-            <button
-              className="font-light text-sm bg-background 
-          px-4 py-1 rounded-xl"
-              type="reset"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={
-                commentData.content === "" ||
-                commentData.content === "<p><br></p>"
-              }
-              className="bg-accent px-6 py-1 font-light text-sm text-accent-foreground rounded-xl
-              disabled:brightness-75"
-            >
-              Save
-            </button>
-          </div>
-        </motion.div>
-      ) : (
-        <div
-          className="w-full rounded-md
-        px-2 pb-2 "
-        >
-          <input
-            type="text"
-            name=""
-            id=""
-            className="w-full bg-background rounded-xl text-sm py-2 px-4 outline-none"
-            placeholder={placeholder}
-            onFocus={() => setIsFocused(true)}
-          />
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </form>
   );
 };
+

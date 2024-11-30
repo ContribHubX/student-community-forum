@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { createThreadSchema, CreateThreadType } from "../api/create-thread";
-import { TextEditor } from "@/components/shared/text-editor";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FieldValues } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { TextEditor } from "@/components/shared/text-editor";
 import { Button } from "@/components/ui/button";
+
 import { Topic } from "@/types";
+
+import { createThreadSchema, CreateThreadType } from "../api/create-thread";
+import { useGetTopics } from "@/features/topic/api";
 
 import {
   Select,
@@ -32,13 +36,13 @@ export const CreateQuestionForm = ({
     resolver: zodResolver(createThreadSchema),
   });
   const [selectedTopic, setSelectedTopic] = useState<string>("");
-
-  const topics: Topic[] = [];
+  const { data: topics } = useGetTopics({});
 
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
     formData.append("createdBy", userId);
-
+    formData.append("topicId", selectedTopic || "");
+  
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
         formData.append(key, data[key]);
@@ -46,6 +50,8 @@ export const CreateQuestionForm = ({
         formData.append(key, data[key]);
       }
     });
+
+    console.log(formData)
 
     // Submit the form
     handleFormSubmit(formData);
@@ -91,14 +97,14 @@ export const CreateQuestionForm = ({
               <div className="flex items-center gap-3">
                 <img
                   src={
-                    topics.find((topic) => topic.id === selectedTopic)  
+                    topics?.find((topic) => topic.id === selectedTopic)
                       ?.attachment || initialTopic?.attachment
                   }
                   alt="attachment"
                   className="w-[25px] h-[25px] rounded-full"
                 />
                 <p>
-                  {topics.find((topic) => topic.id === selectedTopic)?.name ||
+                  {topics?.find((topic) => topic.id === selectedTopic)?.name ||
                     initialTopic?.name}
                 </p>
               </div>

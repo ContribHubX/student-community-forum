@@ -174,25 +174,36 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
      */
     case OPERATION.ADD_NEW_COMMENT: {
       const { comment, queryClient } = action.payload;
+      // queryClient.setQueryData(
+      //   getCommentsQueryOptions(comment.threadId).queryKey,
+      //   (oldComments: Comment[] | undefined) => {
+      //     if (!oldComments) return [comment]; 
+
+      //     if (!comment.parentId)
+      //       return [comment, ...oldComments]; 
+
+      //     // if reply
+      //     return oldComments.map(comm => {
+      //       if(comm.id === comment.parentId) {
+      //         return {
+      //           ...comm,
+      //           replies: [...comm.replies || [], comment]
+      //         }
+      //       }
+
+      //       return comm;
+      //     })
+      //   }
+      // );
       queryClient.setQueryData(
         getCommentsQueryOptions(comment.threadId).queryKey,
         (oldComments: Comment[] | undefined) => {
           if (!oldComments) return [comment]; 
 
-          if (!comment.parentId)
-            return [comment, ...oldComments]; 
+          
+          return [comment, ...oldComments]; 
 
-          // if reply
-          return oldComments.map(comm => {
-            if(comm.id === comment.parentId) {
-              return {
-                ...comm,
-                replies: [...comm.replies || [], comment]
-              }
-            }
-
-            return comm;
-          })
+        
         }
       );
       return { ...state };

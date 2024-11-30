@@ -13,14 +13,12 @@ interface BoardState {
   error: string | null;
 }
 
-// Types for actions
 export type BoardAction =
   | { type: "SET_BOARDS"; payload: Board[] }
   | { type: "SET_SHARED_BOARDS"; payload: Board[] }
   | { type: "SET_LOADING" }
   | { type: "SET_ERROR"; payload: string };
 
-// Define the initial state
 const initialBoardState: BoardState = {
   boards: [],
   sharedBoards: [],
@@ -28,7 +26,6 @@ const initialBoardState: BoardState = {
   error: null,
 };
 
-// Reducer function to handle the state updates
 const boardReducer = (state: BoardState, action: BoardAction): BoardState => {
   switch (action.type) {
     case "SET_BOARDS":

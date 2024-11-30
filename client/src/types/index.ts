@@ -139,27 +139,25 @@ export type BoardState = {
   color: number;
 };
 
-
 export type Notification = Entity<{
-  message: string, 
-  entityId: string,
+  message: string;
+  entityId: string;
   entityType: NotificationEntityType;
-  type: NotificationType,
-  link: string,
-  isRead: boolean,
-  createdBy: User
-  receiveBy: string
-}>
+  type: NotificationType;
+  link: string;
+  isRead: boolean;
+  createdBy: User;
+  receiveBy: string;
+}>;
 
+export type ThreadNotificationType = "like" | "dislike" | "comment" | "reply";
 
-export type ThreadNotificationType = 'like' | 'dislike' | 'comment' | 'reply';
-
-export type TaskNotificationType = 'assigned' | 'updated' | 'completed';
+export type TaskNotificationType = "assigned" | "updated" | "completed";
 
 export type QuestionRequestNotificationType = "request";
 
 export type NotificationEntityType = "task" | "thread" | "question";
 
-export type NotificationType = ThreadNotificationType & TaskNotificationType & QuestionRequestNotificationType;
-
-
+export type NotificationType = ThreadNotificationType &
+  TaskNotificationType &
+  QuestionRequestNotificationType;

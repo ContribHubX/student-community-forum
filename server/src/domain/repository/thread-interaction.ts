@@ -97,32 +97,21 @@ class ThreadInteractionRepository {
     public getAll(threadId: string): Promise<IComment[] | undefined> {
         return new Promise(async (resolve, reject) => {
             try {
-                const topLevelComments = await this.db
+                const comments = await this.db
                     .query
                     .CommentTable
                     .findMany({
                         where: and(
                             eq(schema.CommentTable.threadId, threadId),
-                            isNull(schema.CommentTable.parentId)
                         ),
-                        with: { createdBy: true },
+                        with: { 
+                            createdBy: true,
+                        },
                         orderBy: [desc(schema.CommentTable.createdAt)],
                     });
 
-                // attach replies on each comment
-                for (const comment of topLevelComments) {
-                    const replies = await this.db
-                        .query
-                        .CommentTable
-                        .findMany({
-                            where: eq(schema.CommentTable.parentId, comment.id),
-                            with: { createdBy: true }
-                        });
 
-                    (comment as any).replies = replies;
-                }
-
-                resolve(topLevelComments as unknown as IComment[]);
+                resolve(comments as unknown as IComment[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }

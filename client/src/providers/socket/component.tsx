@@ -93,6 +93,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "comment--new":
+          console.log(data)
           socketDispatch({
             type: OPERATION.ADD_NEW_COMMENT,
             payload: { comment: data, queryClient },
@@ -219,6 +220,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "notification--new":
+          console.log(JSON.stringify(data, null, 2))
           socketDispatch({
             type: OPERATION.ADD_NEW_NOTIF,
             payload: {

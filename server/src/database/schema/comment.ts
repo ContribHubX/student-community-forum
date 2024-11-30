@@ -23,8 +23,11 @@ export const CommentTableRelations = relations(CommentTable, ({ one, many }) => 
         references: [UserTable.id]
     }),
     parentComment: one(CommentTable, {
-        fields: [CommentTable.parentId],
+        fields: [CommentTable.parentId],    
         references: [CommentTable.id],
+        relationName: 'parentComment'   
     }),
-    replies: many(CommentTable)
+    replies: many(CommentTable, {
+        relationName: 'replies', 
+    }),
 }))

@@ -3,10 +3,10 @@ import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
 import { IQuestion, IQuestionDto, IQuestionRequest, IQuestionRequestDto, IQuestionUpvoteDto, IQuestionVote, IQuestionVoteStats } from "../interfaces/IQuestion";
 import { AppError } from "@/libs/app-error";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { IThread } from "../interfaces/IThread";
 import { IUser } from "../interfaces/IUser";
-import { QuestionRequestTable, QuestionVotesTable } from "@/database/schema";
+import { QuestionRequestTable, QuestionTable, QuestionVotesTable } from "@/database/schema";
 
 @Service()
 class QuestionRepository {
@@ -26,7 +26,7 @@ class QuestionRepository {
             try {
                 const result = await this.db
                     .insert(schema.QuestionTable)
-                    .values({ ...dto })
+                    .values({ ...dto, topicId: dto.topicId !== "" ? dto.topicId : null })
                     .$returningId();
 
                 const questionId = result[0].id;
@@ -82,14 +82,17 @@ class QuestionRepository {
                         with: {
                             createdBy: true,
                             threads: true
-                        }});
+                        },
+                        orderBy: desc(QuestionTable.createdAt)
+                    });
                 } else 
                     result = await this.db.query.QuestionTable.findMany({
                         where: eq(schema.QuestionTable.topicId, topicId),
                         with: {
                             createdBy: true,
                             threads: true
-                        }
+                        },
+                        orderBy: desc(QuestionTable.createdAt)
                     });
 
                 resolve(result as unknown as IQuestion[]);
