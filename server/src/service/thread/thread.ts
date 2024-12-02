@@ -2,7 +2,7 @@ import { IThreadFull, IThreadDto, IThreadUpdateDto } from "@/domain/interfaces/I
 import ThreadRepository from "@/domain/repository/thread";
 import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 
 /**
  * Service responsible for handling thread-related operations.

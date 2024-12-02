@@ -10,20 +10,23 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, QuestionVote, QuestionVoteStats } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
 import { getNotificationQueryOptions } from "@/features/notification/api/get-notifications";
+import { getChatsQueryOptions } from "@/features/study-room/api/get-chats";
 ;
 
 export type SocketContextState = {
   socket: Socket | undefined;
   boards: Record<string, BoardState[]>;
+  rooms: Record<string, RoomState>;
 };
 
 export const defaultSocketContextState: SocketContextState = {
   socket: undefined,
-  boards: {}
+  boards: {},
+  rooms: {}
 };
 
 export enum OPERATION {
@@ -42,7 +45,11 @@ export enum OPERATION {
   ADD_NEW_USER_TO_BOARD,
   REMOVE_USER_TO_BOARD,
   ADD_QUESTION_VOTE,
-  ADD_NEW_NOTIF
+  ADD_NEW_NOTIF,
+  INIT_ROOM_USERS,
+  ADD_ROOM_USER,
+  REMOVE_USER_TO_ROOM,
+  ADD_ROOM_CHAT
 }
 
 type Actions =
@@ -109,6 +116,22 @@ type Actions =
   | {
     type: OPERATION.ADD_NEW_NOTIF;
     payload: { data: Notification, queryClient: QueryClient  };
+  }
+  | {
+    type: OPERATION.INIT_ROOM_USERS;
+    payload: { data: RoomState };
+  }
+  | {
+    type: OPERATION.ADD_ROOM_USER;
+    payload: { user: User, roomId: string };
+  }
+  | {
+    type: OPERATION.REMOVE_USER_TO_ROOM;
+    payload: { user: User, roomId: string };
+  }
+  | {
+    type: OPERATION.ADD_ROOM_CHAT;
+    payload: { chat: Chat, queryClient: QueryClient };
   }
 
 
@@ -473,10 +496,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
           color: data.color, 
         }];
       }
-        
-    
-      // console.log("updated: " + JSON.stringify(updatedBoards, null, 2));
-    
+      
       return { ...state, boards: updatedBoards };
     }
 
@@ -499,7 +519,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
     /**
      * 
-    */
+     */
     case OPERATION.ADD_QUESTION_VOTE: { 
         const { data, queryClient } = action.payload; 
   
@@ -529,7 +549,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
        * 
        * @param action.payload.data - The board object representing the new board.
        * @param action.payload.queryClient - The React Query client instance to update the cache.
-       */
+      */
     case OPERATION.ADD_NEW_NOTIF: { 
       const { data, queryClient } = action.payload;
       queryClient.setQueryData(
@@ -541,6 +561,75 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
       return { ...state };      
     }
+
+    /**
+      * @param action.payload.data - The room object representing the new board. 
+      */
+    case OPERATION.INIT_ROOM_USERS: { 
+      const { data } = action.payload;
+      
+      const updateRooms = {...state.rooms};
+
+      if (!updateRooms[data.room.id]) 
+        updateRooms[data.room.id] = {} as RoomState;
+      
+      updateRooms[data.room.id].users = [...data.users];
+      updateRooms[data.room.id].room = {...data.room};
+
+      return { ...state, rooms: updateRooms };      
+    }
+
+    
+    /**
+      * @param action.payload.data - The room object representing the new board. 
+      */
+    case OPERATION.ADD_ROOM_USER: { 
+      const { user, roomId } = action.payload;
+      
+      const updatedRooms = {...state.rooms};
+
+      if (!updatedRooms[roomId]) 
+        updatedRooms[roomId] = {} as RoomState;
+      
+      const existingUser = updatedRooms[roomId].users.find(current => current.id === user.id)
+
+      if (existingUser) return { ...state, rooms: updatedRooms }; 
+
+      updatedRooms[roomId].users = [...updatedRooms[roomId].users, user];
+
+      return { ...state, rooms: updatedRooms };      
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.REMOVE_USER_TO_ROOM: { 
+      const { user, roomId } = action.payload; 
+
+      const updatedRooms = { ...state.rooms };
+
+      if (!updatedRooms[roomId]) return {...state};
+
+      updatedRooms[roomId].users = updatedRooms[roomId].users.filter(current => current.id.toString() !== user.id.toString());
+      
+      return { ...state, rooms: updatedRooms };
+    }
+
+     /**
+     * 
+     */
+     case OPERATION.ADD_ROOM_CHAT: { 
+      const { chat, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getChatsQueryOptions(chat.roomId).queryKey,
+        (oldChats: Chat[] | undefined) => {
+          return oldChats ? [...oldChats, chat] : []
+        }
+      );
+
+      return { ...state };   
+    }
+
 
     /**
      * Default case: Returns the current state if no matching action type is found.

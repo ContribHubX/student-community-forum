@@ -50,7 +50,7 @@ export const CommentForm = ({
   const handleCancel = () => {
     if (commentData.content !== "" && commentData.content !== "<p><br></p>") {
       const isDiscard = confirm(
-        "Are you sure you want to discard your unsaved changes?"
+        "Are you sure you want to discard your unsaved changes?",
       );
 
       if (isDiscard) {
@@ -119,4 +119,3 @@ export const CommentForm = ({
     </form>
   );
 };
-

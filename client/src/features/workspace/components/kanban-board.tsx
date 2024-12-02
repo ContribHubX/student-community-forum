@@ -46,7 +46,7 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
 
   const { data: taskData } = useGetTasks({ boardId: boardId || "" });
   const { data: members } = useGetBoardMembers({ boardId: boardId || "" });
-  const { data: allUsers } = useGetUsers({  });
+  const { data: allUsers } = useGetUsers({});
 
   const { mutate: updateTask } = useUpdateTask({});
   const { mutate: addBoardMember } = useAddBoardMember({});
@@ -78,11 +78,11 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
   useEffect(() => {
     if (!state || !boardId) return;
 
-    const board = [...state.boards, ...state.sharedBoards].filter(board => board.id === boardId)[0];
+    const board = [...state.boards, ...state.sharedBoards].filter(
+      (board) => board.id === boardId,
+    )[0];
     setBoardOwner(board?.createdBy);
-
-  }, [state, boardId, currentUser.id])
-
+  }, [state, boardId, currentUser.id]);
 
   if (!taskData || !boardId) return <p>Loading...</p>;
 
@@ -109,7 +109,7 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
             ))}
             <Popover>
               <PopoverTrigger>
-              <div
+                <div
                   className="rounded-full w-[40px] h-[40px] flex items-center justify-center border border-accent text-accent"
                   style={
                     {
@@ -118,51 +118,59 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
                     }
                   }
                 >
-              <FaPlus className="text-xl font-thin " />
-              </div>
+                  <FaPlus className="text-xl font-thin " />
+                </div>
               </PopoverTrigger>
               <PopoverContent className="bg-primary dark:border-muted-foreground border-[1px]">
                 <div className="flex flex-col gap-3">
                   {allUsers?.map((user) => {
-                    return user.id !== currentUser.id && (
-                    <div
-                      key={user.id}
-                      onClick={() => ""}
-                      className="flex items-center gap-3 cursor-pointer"
-                    >
-                      {boardOwner && user.id !== boardOwner?.id && (
-                        <>
-                          <Avatar className="w-[30px] h-[30px] rounded-full">
-                          <AvatarImage
-                            src={user.attachment}
-                            className="object-cover"
-                          />
-                        </Avatar>
-                          <p className="text-[.8rem]">{user.name}</p>
-                          {members?.some(mem => mem.id === user.id)
-                          ? (
-                            <div
-                              className="text-xs ml-auto rounded-full p-2"
-                              style={{
-                                color: statusColors["active"].text,
-                                backgroundColor: !isDark ? statusColors["active"].background : "#1e252b",
-                              }}
-                            >
-                            joined
-                            </div>
-                          )
-                          : (
-                            <div
-                              className="text-xs ml-auto rounded-full p-2 bg-background border border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                              onClick={() => addBoardMember({ memberId: user.id, boardId })}
-                            >
-                              add
-                            </div>
+                    return (
+                      user.id !== currentUser.id && (
+                        <div
+                          key={user.id}
+                          onClick={() => ""}
+                          className="flex items-center gap-3 cursor-pointer"
+                        >
+                          {boardOwner && user.id !== boardOwner?.id && (
+                            <>
+                              <Avatar className="w-[30px] h-[30px] rounded-full">
+                                <AvatarImage
+                                  src={user.attachment}
+                                  className="object-cover"
+                                />
+                              </Avatar>
+                              <p className="text-[.8rem]">{user.name}</p>
+                              {members?.some((mem) => mem.id === user.id) ? (
+                                <div
+                                  className="text-xs ml-auto rounded-full p-2"
+                                  style={{
+                                    color: statusColors["active"].text,
+                                    backgroundColor: !isDark
+                                      ? statusColors["active"].background
+                                      : "#1e252b",
+                                  }}
+                                >
+                                  joined
+                                </div>
+                              ) : (
+                                <div
+                                  className="text-xs ml-auto rounded-full p-2 bg-background border border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                                  onClick={() =>
+                                    addBoardMember({
+                                      memberId: user.id,
+                                      boardId,
+                                    })
+                                  }
+                                >
+                                  add
+                                </div>
+                              )}
+                            </>
                           )}
-                        </>
-                      )}
-                    </div> )
-                })}
+                        </div>
+                      )
+                    );
+                  })}
                 </div>
               </PopoverContent>
             </Popover>

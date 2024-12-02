@@ -42,6 +42,15 @@ const createAppRouter = () =>
           },
         },
         {
+          path: "/popular",
+          lazy: async () => {
+            const { PopularRoute } = await import(
+              "./routes/app/popular"
+            );
+            return { Component: PopularRoute };
+          },
+        },
+        {
           path: "thread-action/:threadId",
           lazy: async () => {
             const { CreateThreadRoute } = await import(
@@ -139,6 +148,15 @@ const createAppRouter = () =>
               "./routes/app/workspace/board-view"
             );
             return { Component: BoardViewRoute };
+          },
+        },
+        {
+          path: "/study-room/:roomId",
+          lazy: async () => {
+            const { StudyRoomRoute } = await import(
+              "./routes/app/study-room"
+            );
+            return { Component: StudyRoomRoute };
           },
         },
       ],

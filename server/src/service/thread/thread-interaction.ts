@@ -6,7 +6,7 @@ import {
 } from "@/domain/interfaces/IThread";
 import ThreadInteractionRepository from "@/domain/repository/thread-interaction";
 import { AppError } from "@/libs/app-error";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 import { Inject, Service } from "typedi";
 import NotificationService from "../notification";
 import { NotificationType, ThreadReactionType } from "@/types";

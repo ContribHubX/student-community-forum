@@ -45,7 +45,6 @@ export async function verifyAuth(
     if (error instanceof AppError) {
       next(error);
     } else {
-      // Handle unexpected errors
       next(new AppError("Unauthorized access", 401));
     }
   }

@@ -8,3 +8,6 @@ export * from "./topic";
 export * from "./question";
 export * from "./board";
 export * from "./task";
+export * from "./study-room";
+export * from "./chat";
+export * from "./todo";

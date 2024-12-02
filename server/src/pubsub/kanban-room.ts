@@ -3,7 +3,7 @@ import Client from "./client";
 import Container from "typedi";
 import { type Logger } from "winston";
 
-class Room {
+class KanbanRoom {
     public id: string;
     private readonly clients: Map<string, KanbanClient> = new Map();
     private logger: Logger;
@@ -23,7 +23,7 @@ class Room {
 
         const color = this.getColorFromUserId(userId);
 
-        this.clients.set(userId, { client, user, color });
+        this.clients.set(userId.toString(), { client, user, color });
 
         client.send("users--initial", this.initialUsers(socketClient.boardId));
 
@@ -59,7 +59,7 @@ class Room {
             return;
         }
 
-        this.clients.delete(entry.user.id);
+        this.clients.delete(entry.user.id.toString());
         this.emit("user--left", { user: entry.user, boardId: data.boardId })
     }
 
@@ -125,4 +125,4 @@ class Room {
     }
 }
 
-export default Room;
+export default KanbanRoom;

@@ -2,7 +2,7 @@ import { IRawNotificationDto, INotificationDto, INotification } from "@/domain/i
 import NotificationRepository from "@/domain/repository/notification";
 import UserRepository from "@/domain/repository/user";
 import { AppError } from "@/libs/app-error";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 import { BoardNotificationType, QuestionRequestNotificationType, TaskNotificationType, ThreadNotificationType } from "@/types";
 import { Inject, Service } from "typedi";
 

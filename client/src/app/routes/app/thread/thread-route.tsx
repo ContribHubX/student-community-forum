@@ -12,24 +12,23 @@ import { CommentForm } from "@/features/thread/components/comment-form";
 import { MessageCircle } from "lucide-react";
 import { CommentContextProvider } from "@/features/thread/provider/comment";
 
-
 export const ThreadRoute = () => {
   const { id } = useParams();
-  const { data: thread, isFetching } = useGetThreadByID({threadId: id || ""});
+  const { data: thread, isFetching } = useGetThreadByID({ threadId: id || "" });
 
   if (!thread || isFetching) {
     return <div>Loading...</div>;
   }
 
   return (
-    <CommentContextProvider  >
+    <CommentContextProvider>
       <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
         <section
           className="
                     md:ml-[16rem] lg:mr-[22rem]"
         >
-            <div className="space-y-4">
-              <ThreadView thread={thread} />
+          <div className="space-y-4">
+            <ThreadView thread={thread} />
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold flex items-center gap-2">
                 <MessageCircle className="w-5 h-5" />

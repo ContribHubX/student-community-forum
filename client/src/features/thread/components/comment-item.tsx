@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Comment } from "@/types";
 import { CommentForm } from "@/features/thread/components/comment-form";
 import { formatDistanceToNow } from "date-fns";
-import { ThumbsUp, MessageSquare, MoreHorizontal, Heart } from 'lucide-react';
+import { ThumbsUp, MessageSquare, MoreHorizontal, Heart } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,10 +23,10 @@ interface CommentItemProps {
 
 export const CommentItem = ({ comment }: CommentItemProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);  
+  const [isLiked, setIsLiked] = useState(false);
   const { state } = useCommentContext();
 
-  if (!comment) return <p>Loading...</p>
+  if (!comment) return <p>Loading...</p>;
 
   const replies = (state.groupedComments[comment?.id] || []).sort((a, b) => {
     const dateA = new Date(a.createdAt).getTime();
@@ -34,29 +34,36 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
     return dateA - dateB;
   });
 
-
-  //bg-primary hover:shadow-md transition-shadow 
+  //bg-primary hover:shadow-md transition-shadow
   return (
-
     <div className="mt-[-30px]">
       <Card className="overflow-hidden duration-300 bg-background shadow-none border-0">
         <CardContent className="p-4 pb-0">
           <div className="flex items-start gap-4">
             <div className="flex items-center flex-col">
               <Avatar className="w-12 h-12 border-2 border-primary">
-                <AvatarImage src={comment.createdBy.attachment} alt={comment.createdBy.name} />
-                <AvatarFallback>{comment.createdBy.name.charAt(0)}</AvatarFallback>
+                <AvatarImage
+                  src={comment.createdBy.attachment}
+                  alt={comment.createdBy.name}
+                />
+                <AvatarFallback>
+                  {comment.createdBy.name.charAt(0)}
+                </AvatarFallback>
               </Avatar>
-              { comment?.replies?.length !== 0 && (
+              {comment?.replies?.length !== 0 && (
                 <div className="avatar-line w-[1px] h-[50px] bg-[#9ca1de]" />
-              ) }
+              )}
             </div>
             <div className="flex-1 space-y-2 ">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg">{comment.createdBy.name}</h3>
+                  <h3 className="font-semibold text-lg">
+                    {comment.createdBy.name}
+                  </h3>
                   <span className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                    {formatDistanceToNow(new Date(comment.createdAt), {
+                      addSuffix: true,
+                    })}
                   </span>
                 </div>
                 <DropdownMenu>
@@ -92,9 +99,13 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
                 animate={{ scale: isLiked ? [1, 1.2, 1] : 1 }}
                 transition={{ duration: 0.2 }}
               >
-                {isLiked ? <Heart className="w-4 h-4 fill-primary text-primary" /> : <ThumbsUp className="w-4 h-4" />}
+                {isLiked ? (
+                  <Heart className="w-4 h-4 fill-primary text-primary" />
+                ) : (
+                  <ThumbsUp className="w-4 h-4" />
+                )}
               </motion.div>
-              {isLiked ? 'Liked' : 'Like'}
+              {isLiked ? "Liked" : "Like"}
             </Button>
             <Button
               variant="ghost"
@@ -124,9 +135,8 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
           </motion.div>
         )}
       </Card>
-       {/* nested shit */}
+      {/* nested shit */}
 
-      
       {replies?.length > 0 && (
         <>
           <div className="flex">
@@ -136,16 +146,11 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
               onClick={() => ""}
             />
             <div className="pl-8 flex-1">
-              <CommentList
-                comments={replies}
-              />
+              <CommentList comments={replies} />
             </div>
           </div>
         </>
       )}
-
-
     </div>
   );
 };
-

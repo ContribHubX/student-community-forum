@@ -16,13 +16,14 @@ export const getCommentsQueryOptions = (id: string | undefined) => {
 };
 
 export type getCommentsQueryConfig = {
-  threadId: string,
+  threadId: string;
   queryConfig?: QueryConfig<typeof getComments>;
 };
 
-export const useGetThreadComments = (
-  { threadId, queryConfig }: getCommentsQueryConfig,
-) => {
+export const useGetThreadComments = ({
+  threadId,
+  queryConfig,
+}: getCommentsQueryConfig) => {
   return useQuery({
     ...getCommentsQueryOptions(threadId),
     ...queryConfig,

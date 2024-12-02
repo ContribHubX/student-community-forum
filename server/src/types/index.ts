@@ -1,5 +1,6 @@
+import { IStudyRoom } from "@/domain/interfaces/IStudyRoom";
 import { IUser } from "@/domain/interfaces/IUser";
-import type Client from "@/sockets/client";
+import type Client from "@/pubsub/client";
 
 export type AuthResponse = {
   user: IUser;
@@ -40,3 +41,7 @@ export type NotificationEntityType = "task" | "thread" | "question" | "board";
 export type BoardStatus = "active" | "finished" | "archived"; 
 
 export type TaskStatusType = "todo" | "doing" | "finished";
+
+export type ChatType = "message" | "indicator";
+
+export type StudyRoomClient = Omit<KanbanClient, "color"> & { room: IStudyRoom };

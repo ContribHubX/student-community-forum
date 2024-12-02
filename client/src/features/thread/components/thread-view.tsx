@@ -14,7 +14,6 @@ interface ThreadViewProps {
 export const ThreadView = ({ thread }: ThreadViewProps) => {
   const { authState } = useAuth();
 
-
   useEffect(() => {
     const codeBlocks = document.querySelectorAll("pre code.ql-syntax");
     console.log(codeBlocks);
@@ -24,16 +23,9 @@ export const ThreadView = ({ thread }: ThreadViewProps) => {
     });
   }, [thread?.content]);
 
-
   return (
     <div className="">
-      <ThreadCard 
-        thread={thread}
-        userId={authState.user?.id || ""}
-      />
+      <ThreadCard thread={thread} userId={authState.user?.id || ""} />
     </div>
   );
 };
-
-
-

@@ -9,7 +9,10 @@ export type AddBoardMemberType = {
 };
 
 const addBoardMember = async (data: AddBoardMemberType): Promise<Board> => {
-  const response = await api.post("http://localhost:3000/api/board/member", data);
+  const response = await api.post(
+    "http://localhost:3000/api/board/member",
+    data,
+  );
 
   return response.data;
 };

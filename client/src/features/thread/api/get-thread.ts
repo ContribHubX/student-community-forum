@@ -16,13 +16,14 @@ export const getThreadByIdQueryOptions = (id: string | undefined) => {
 };
 
 export type getThreadsQueryConfig = {
-  threadId: string,
+  threadId: string;
   queryConfig?: QueryConfig<typeof getThreadById>;
 };
 
-export const useGetThreadByID = (
-  { threadId, queryConfig }: getThreadsQueryConfig,
-) => {
+export const useGetThreadByID = ({
+  threadId,
+  queryConfig,
+}: getThreadsQueryConfig) => {
   return useQuery({
     ...getThreadByIdQueryOptions(threadId),
     ...queryConfig,

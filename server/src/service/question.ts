@@ -4,7 +4,7 @@ import { AppError } from "@/libs/app-error";
 import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuestionCreation, IQuestionVote, IQuestionUpvoteDto, IQuestionVoteStats } from "@/domain/interfaces/IQuestion";
 import { IThread } from "@/domain/interfaces/IThread";
 import { IUser } from "@/domain/interfaces/IUser";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 import NotificationService from "./notification";
 import { NotificationType, QuestionRequestNotificationType } from "@/types";
 

@@ -3,7 +3,7 @@ import { Service, Container } from "typedi";
 import * as schema from "@/database/schema";
 import { IAlreadyReactedDto, IThreadReaction, IThreadReactionDto } from "../interfaces/IThread";
 import { AppError } from "@/libs/app-error";
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { IComment, ICommentDto } from "../interfaces/IComment";
 import { IUser } from "../interfaces/IUser";
 import { ThreadReactionType } from "@/types";

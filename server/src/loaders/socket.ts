@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
-import EventManager from "@/sockets/event-manager";
-import Client from "@/sockets/client";
+import EventManager from "@/pubsub/event-manager";
+import Client from "@/pubsub/client";
 import Container from "typedi";
 
 export default(io: Server) => {

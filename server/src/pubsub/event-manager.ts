@@ -3,7 +3,7 @@ import Client from "./client";
 import { ClientEventOptions } from "@/types";
 import { Container } from "typedi";
 import { type Logger } from "winston";
-import KanbanRoomManager from "./kanban-room-manager";
+import RoomManager from "./room-manager";
 
 // TODO implement notif pub/sub
 // TODO revise publish to publishToOne and publishToMany
@@ -13,8 +13,8 @@ class EventManager {
   private readonly clients: Map<string, Client> = new Map();
   private logger: Logger;
 
-  @Inject(() => KanbanRoomManager)
-  private kanbanManager!: KanbanRoomManager;
+  @Inject(() => RoomManager)
+  private roomManager!: RoomManager;
 
   constructor() {
     this.logger = Container.get("logger");
@@ -26,6 +26,7 @@ class EventManager {
 
     socketClient.client.on("user--join", data => this.link(data));
     
+    socketClient.client.on("user-room--join", data => this.link(data));
   }
 
   /**
@@ -88,7 +89,6 @@ class EventManager {
    * 
    */
   link(data: any): void {
-    // find user in event manager clients
     const client = this.clients.get(data.user.id.toString())!;
     
     if (!client) {
@@ -96,7 +96,10 @@ class EventManager {
         return;
     }
 
-    this.kanbanManager.join({...data, userId: data.user.id.toString(), client});
+    if (data.boardId)
+      this.roomManager.joinKanban({...data, userId: data.user.id.toString(), client});
+    else 
+      this.roomManager.joinStudyRoom({...data, userId: data.user.id.toString(), client});
   }
 }
 

@@ -1,21 +1,21 @@
-import { HelpCircle } from 'lucide-react'
-import { CreateQuestionForm } from "./create-question-form"
-import { SidebarLayout } from "@/components/layouts/sidebar-layout"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
-import { Card, CardContent } from "@/components/ui/card"
-import { CreateQuestionType, useCreateQuestion } from "../api/create-question"
-import { useAuth } from "@/hooks/use-auth"
-import { formDataToObject } from "@/utils"
-import askIllustration from "@/assets/question/ask-1.svg"
+import { HelpCircle } from "lucide-react";
+import { CreateQuestionForm } from "./create-question-form";
+import { SidebarLayout } from "@/components/layouts/sidebar-layout";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Card, CardContent } from "@/components/ui/card";
+import { CreateQuestionType, useCreateQuestion } from "../api/create-question";
+import { useAuth } from "@/hooks/use-auth";
+import { formDataToObject } from "@/utils";
+import askIllustration from "@/assets/question/ask-1.svg";
 
 export const Insight = () => {
-  const { authState } = useAuth()
-  const { mutate: createQuestion } = useCreateQuestion({})
+  const { authState } = useAuth();
+  const { mutate: createQuestion } = useCreateQuestion({});
 
   const handleCreateQuestion = (data: FormData) => {
-    createQuestion(formDataToObject(data) as CreateQuestionType)
-  }
+    createQuestion(formDataToObject(data) as CreateQuestionType);
+  };
 
   return (
     <SidebarLayout
@@ -37,7 +37,8 @@ export const Insight = () => {
             </div>
             <h3 className="text-lg font-semibold">Got a Question?</h3>
             <p className="text-sm text-muted-foreground max-w-[250px]">
-              Frame insightful questions to deepen your understanding of this topic.
+              Frame insightful questions to deepen your understanding of this
+              topic.
             </p>
           </div>
           <Dialog>
@@ -58,6 +59,5 @@ export const Insight = () => {
         </CardContent>
       </Card>
     </SidebarLayout>
-  )
-}
-
+  );
+};

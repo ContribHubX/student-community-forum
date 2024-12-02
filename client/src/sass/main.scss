@@ -167,7 +167,6 @@ html.dark {
   /* Ensure it's behind all other content */
 }
 
-
 /* comment related */
 
 .collapse-line {
@@ -175,7 +174,7 @@ html.dark {
   background: none;
   padding: 0;
   width: 15px;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   position: relative;
   cursor: pointer;
   outline: none;
@@ -196,33 +195,67 @@ html.dark {
   width: 1px;
   background-color: hsl(235, 50%, 74%);
   transition: background-color;
-  
+
   margin-top: -10px;
   margin-left: 40px;
 }
 
 
-// .avatar-line {
-//   border: none;
-//   background: none;
-//   padding: 0;
-//   width: 15px;
-//   margin-top: .5rem;
-//   position: relative;
-//   cursor: pointer;
-//   outline: none;
-//   transform: translateX(-50%);
-// }
+/* lobby scene */
+.scene-wrapper {
+  height: 100svh; 
+  overflow: hidden;
+  z-index: 100;
+  //position: relative;
+}
 
-// .avatar-line::before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   bottom: 0;
-//   left: 50%;
-//   width: 1px;
-//   background-color: hsl(235, 50%, 74%);
-//   transition: background-color;
-  
-//   margin-top: 8px;
-// }
+.iframe-container {
+  /* pointer-events: none; */
+  height: 100%;
+}
+
+.iframe {
+  height: 100%;
+  width: 100%;
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  transform: scale(1.3);
+  transition: transform 500ms;
+}
+
+
+
+@media (max-width: 1150px) {
+  .iframe {
+    transform: scale(2);
+  }
+}
+
+
+@media (max-width: 990px) {
+  .iframe {
+    transform: scale(3);
+  }
+}
+
+
+@media (max-width: 550px) {
+  .iframe {
+    transform: scale(3.5);
+  }
+}
+
+
+@media (max-width: 440px) {
+  .iframe {
+    transform: scale(4);
+  }
+}
+
+
+@media (max-width: 400px) {
+  .iframe {
+    transform: scale(5.5);
+  }
+}

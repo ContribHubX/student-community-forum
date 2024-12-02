@@ -1,34 +1,34 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-import { Question } from "@/types"
+import { Question } from "@/types";
 
-import { ChevronUp, ChevronDown, MessageSquare, Eye } from 'lucide-react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { ChevronUp, ChevronDown, MessageSquare, Eye } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { useGetVotes } from "@/features/question/api/get-votes"
-import { useCreateVote } from "@/features/question/api/vote"
+import { Card, CardContent } from "@/components/ui/card";
+import { useGetVotes } from "@/features/question/api/get-votes";
+import { useCreateVote } from "@/features/question/api/vote";
 
 interface QuestionCardProp {
-  currentUserId: string
-  question: Question
+  currentUserId: string;
+  question: Question;
 }
 
 export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { data: votes } = useGetVotes({
     data: { userId: currentUserId.toString(), questionId: question.id },
-  })
-  const { mutate: createVote } = useCreateVote({})
+  });
+  const { mutate: createVote } = useCreateVote({});
 
   const handleCreateVote = (vote: "up" | "down") => {
     createVote({
       userId: currentUserId,
       questionId: question.id,
       vote,
-    })
-  }
+    });
+  };
 
   return (
     <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
@@ -44,7 +44,9 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
             >
               <ChevronUp className="h-5 w-5" />
             </Button>
-            <span className="text-lg font-bold text-gray-700">{votes?.upvoteCount || 0}</span>
+            <span className="text-lg font-bold text-gray-700">
+              {votes?.upvoteCount || 0}
+            </span>
             <Button
               variant="ghost"
               size="icon"
@@ -61,13 +63,23 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={question.createdBy.attachment} alt={question.createdBy.name} />
-                  <AvatarFallback>{question.createdBy.name.charAt(0)}</AvatarFallback>
+                  <AvatarImage
+                    src={question.createdBy.attachment}
+                    alt={question.createdBy.name}
+                  />
+                  <AvatarFallback>
+                    {question.createdBy.name.charAt(0)}
+                  </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{question.createdBy.name}</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {question.createdBy.name}
+                  </p>
                   <p className="text-xs text-gray-500">
-                    {new Date(question.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                    {new Date(question.createdAt).toLocaleDateString(
+                      undefined,
+                      { year: "numeric", month: "short", day: "numeric" },
+                    )}
                   </p>
                 </div>
               </div>
@@ -83,8 +95,10 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
 
             {/* Question Content */}
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 leading-snug mb-2">{question.title}</h3>
-              <p 
+              <h3 className="text-xl font-semibold text-gray-800 leading-snug mb-2">
+                {question.title}
+              </h3>
+              <p
                 className="text-sm text-gray-600 line-clamp-2"
                 dangerouslySetInnerHTML={{
                   __html: question.content || "<p>No content added yet</p>",
@@ -107,5 +121,5 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
         </div>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

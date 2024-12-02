@@ -42,7 +42,7 @@ export const CreateQuestionForm = ({
     const formData = new FormData();
     formData.append("createdBy", userId);
     formData.append("topicId", selectedTopic || "");
-  
+
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
         formData.append(key, data[key]);
@@ -51,7 +51,7 @@ export const CreateQuestionForm = ({
       }
     });
 
-    console.log(formData)
+    console.log(formData);
 
     // Submit the form
     handleFormSubmit(formData);

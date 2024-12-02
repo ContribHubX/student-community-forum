@@ -1,7 +1,7 @@
 import { ITask, ITaskDto, ITaskUpdateDto } from "@/domain/interfaces/ITask";
 import TaskRepository from "@/domain/repository/task";
 import { AppError } from "@/libs/app-error";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 import { Service, Inject } from "typedi";
 
 @Service()

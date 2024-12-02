@@ -8,6 +8,7 @@ import question from "./question";
 import user from "./user";
 import board from "./board";
 import task from "./task";
+import studyRoom from "./study-room";
 
 export default () => {
   const app = Router();
@@ -20,6 +21,7 @@ export default () => {
   user(app);
   board(app);
   task(app);
+  studyRoom(app);
 
   return app;
 };

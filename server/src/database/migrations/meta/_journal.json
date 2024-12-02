@@ -43,6 +43,13 @@
       "when": 1732244012300,
       "tag": "0005_white_proemial_gods",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1733036511149,
+      "tag": "0006_nifty_ender_wiggin",
+      "breakpoints": true
     }
   ]
 }

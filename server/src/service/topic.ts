@@ -3,7 +3,7 @@ import { AppError } from "@/libs/app-error";
 import { ITopic, ITopicDto, ITopicFollowersDto, ITopicUserFollow } from "@/domain/interfaces/ITopic";
 import { Inject, Service } from "typedi";
 import { IUser } from "@/domain/interfaces/IUser";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 
 @Service()
 class TopicService {

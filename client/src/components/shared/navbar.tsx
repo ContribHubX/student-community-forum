@@ -9,10 +9,10 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 bg-primary px-10 py-4 flex items-center justify-between w-full z-10
+      className="fixed top-0 bg-primary px-10 py-4 flex items-center justify-between w-full z-50
     text-primary-foreground "
     >
-      <div>LOGO</div> {/* logo */}
+      <div>LOGO</div> 
       <div className="flex gap-20">
         <div className="bg-background  rounded-xl py-2 pl-4 pr-1 flex relative items-center justify-between gap-2">
           <input

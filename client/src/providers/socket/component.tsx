@@ -93,7 +93,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "comment--new":
-          console.log(data)
+          console.log(data);
           socketDispatch({
             type: OPERATION.ADD_NEW_COMMENT,
             payload: { comment: data, queryClient },
@@ -220,11 +220,49 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "notification--new":
-          console.log(JSON.stringify(data, null, 2))
           socketDispatch({
             type: OPERATION.ADD_NEW_NOTIF,
             payload: {
               data,
+              queryClient,
+            },
+          });
+          break;
+
+        case "room-users--initial":
+          socketDispatch({
+            type: OPERATION.INIT_ROOM_USERS,
+            payload: {
+              data
+            },
+          });
+          break;
+
+        case "user-room--joined":
+          socketDispatch({
+            type: OPERATION.ADD_ROOM_USER,
+            payload: {
+              user: data.user,
+              roomId: data.roomId
+            },
+          });
+          break;
+
+        case "user-room--left":
+          socketDispatch({
+            type: OPERATION.REMOVE_USER_TO_ROOM,
+            payload: {
+              user: data.user,
+              roomId: data.roomId
+            },
+          });
+          break;
+
+        case "room-chat--new":
+          socketDispatch({
+            type: OPERATION.ADD_ROOM_CHAT,
+            payload: {
+              chat: data,
               queryClient,
             },
           });

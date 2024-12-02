@@ -10,6 +10,7 @@ class Client {
 
     /** 
      * Register an event callback to the client
+     * 
      * @param event Event name
      * @param callback Callback function
      */
@@ -19,6 +20,7 @@ class Client {
 
     /**
      * Send packet to the client
+     * 
      * @param identifier Packet type identifier
      * @param data Data to send to the client
      */
@@ -38,6 +40,7 @@ class Client {
 
     /** 
      * Helper function to test if both clients match 
+     * 
      * @param other The other client instance to test against
      */
     is(other: Client): boolean { 

@@ -20,7 +20,7 @@ const AppProvider = () => {
             </ThemeContextProvider>
           </SocketContextComponent>
         </AuthContextComponent>
-    </QueryClientProvider>
+      </QueryClientProvider>
     </>
   );
 };

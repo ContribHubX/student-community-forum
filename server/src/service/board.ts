@@ -2,7 +2,7 @@ import { IBoard, IBoardDto, IBoardMember, IBoardMemberDto } from "@/domain/inter
 import { IUser } from "@/domain/interfaces/IUser";
 import BoardRepository from "@/domain/repository/board";
 import { AppError } from "@/libs/app-error";
-import EventManager from "@/sockets/event-manager";
+import EventManager from "@/pubsub/event-manager";
 import { Service, Inject } from "typedi";
 import NotificationService from "./notification";
 import { NotificationType } from "@/types";

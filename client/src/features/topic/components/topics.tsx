@@ -27,10 +27,7 @@ type ActiveTabType = "Read" | "Answer";
 export const Topics = ({ userId }: TopicsProp) => {
   const { topicId } = useParams();
   const [activeTab, setActiveTab] = useState<ActiveTabType>("Answer");
-  const {
-    isOpen: isModalOpen,
-    close: closeModal,
-  } = useDisclosure();
+  const { isOpen: isModalOpen, close: closeModal } = useDisclosure();
   const { mutate: createQuestion } = useCreateQuestion({});
   const { mutate: createThread } = useCreateThread({});
   const {
@@ -45,7 +42,6 @@ export const Topics = ({ userId }: TopicsProp) => {
     data.append("topicId", topicId || "");
     createQuestion(formDataToObject(data) as CreateQuestionType);
   };
-
 
   const toggleActiveTab = () => {
     setActiveTab(activeTab === "Answer" ? "Read" : "Answer");

@@ -161,3 +161,36 @@ export type NotificationEntityType = "task" | "thread" | "question";
 export type NotificationType = ThreadNotificationType &
   TaskNotificationType &
   QuestionRequestNotificationType;
+
+export type StudyRoom = Entity<{
+  name: string;
+  description: string;
+  attachment: string;
+  createdBy: User;
+}>;
+
+export type Todo = Entity<{
+  name: string;
+  isDone: boolean;
+  createdBy: User;
+}>;
+
+export type Chat = Entity<{
+  message : string;
+  type: ChatType;
+  roomId: string;
+  createdBy: User;
+}>;
+
+export type ChatType = "message" | "indicator";
+
+export type RoomState = {
+  users: User[],
+  room: StudyRoom
+}
+
+export type MusicType = {
+  id: string,
+  title: string,
+  thumbnail: string
+}

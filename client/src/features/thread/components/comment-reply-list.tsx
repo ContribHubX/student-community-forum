@@ -14,4 +14,3 @@ export const CommentReplyList = ({ replies }: CommentReplyListProps) => {
     </div>
   );
 };
-
