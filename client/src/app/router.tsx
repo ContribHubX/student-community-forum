@@ -44,9 +44,7 @@ const createAppRouter = () =>
         {
           path: "/popular",
           lazy: async () => {
-            const { PopularRoute } = await import(
-              "./routes/app/popular"
-            );
+            const { PopularRoute } = await import("./routes/app/popular");
             return { Component: PopularRoute };
           },
         },
@@ -153,9 +151,7 @@ const createAppRouter = () =>
         {
           path: "/study-room/:roomId",
           lazy: async () => {
-            const { StudyRoomRoute } = await import(
-              "./routes/app/study-room"
-            );
+            const { StudyRoomRoute } = await import("./routes/app/study-room");
             return { Component: StudyRoomRoute };
           },
         },

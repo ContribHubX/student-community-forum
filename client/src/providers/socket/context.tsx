@@ -10,7 +10,7 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
 import { getNotificationQueryOptions } from "@/features/notification/api/get-notifications";
@@ -49,7 +49,8 @@ export enum OPERATION {
   INIT_ROOM_USERS,
   ADD_ROOM_USER,
   REMOVE_USER_TO_ROOM,
-  ADD_ROOM_CHAT
+  ADD_ROOM_CHAT,
+  PLAY_NEXT_VIDEO
 }
 
 type Actions =
@@ -132,6 +133,10 @@ type Actions =
   | {
     type: OPERATION.ADD_ROOM_CHAT;
     payload: { chat: Chat, queryClient: QueryClient };
+  }
+  | {
+    type: OPERATION.PLAY_NEXT_VIDEO;
+    payload: { video: VideoType, roomId: string };
   }
 
 
@@ -575,6 +580,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       
       updateRooms[data.room.id].users = [...data.users];
       updateRooms[data.room.id].room = {...data.room};
+      updateRooms[data.room.id].video = {...data.video};
 
       return { ...state, rooms: updateRooms };      
     }
@@ -615,7 +621,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       return { ...state, rooms: updatedRooms };
     }
 
-     /**
+    /**
      * 
      */
      case OPERATION.ADD_ROOM_CHAT: { 
@@ -628,6 +634,19 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       );
 
       return { ...state };   
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.PLAY_NEXT_VIDEO: { 
+      const { video, roomId } = action.payload; 
+
+      const updatedRooms = {...state.rooms};
+
+      updatedRooms[roomId].video = {...video};
+      
+      return { ...state, rooms: updatedRooms };   
     }
 
 

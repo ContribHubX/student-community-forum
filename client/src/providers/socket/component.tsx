@@ -233,7 +233,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           socketDispatch({
             type: OPERATION.INIT_ROOM_USERS,
             payload: {
-              data
+              data,
             },
           });
           break;
@@ -243,7 +243,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             type: OPERATION.ADD_ROOM_USER,
             payload: {
               user: data.user,
-              roomId: data.roomId
+              roomId: data.roomId,
             },
           });
           break;
@@ -253,7 +253,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             type: OPERATION.REMOVE_USER_TO_ROOM,
             payload: {
               user: data.user,
-              roomId: data.roomId
+              roomId: data.roomId,
             },
           });
           break;
@@ -264,6 +264,17 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: {
               chat: data,
               queryClient,
+            },
+          });
+          break;
+
+        case "video--next":
+          console.log(data);
+          socketDispatch({
+            type: OPERATION.PLAY_NEXT_VIDEO,
+            payload: {
+              video: data.video,
+              roomId: data.roomId,
             },
           });
           break;

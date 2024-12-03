@@ -176,7 +176,7 @@ export type Todo = Entity<{
 }>;
 
 export type Chat = Entity<{
-  message : string;
+  message: string;
   type: ChatType;
   roomId: string;
   createdBy: User;
@@ -185,12 +185,15 @@ export type Chat = Entity<{
 export type ChatType = "message" | "indicator";
 
 export type RoomState = {
-  users: User[],
-  room: StudyRoom
-}
+  users: User[];
+  room: StudyRoom;
+  video: VideoType;
+};
 
-export type MusicType = {
-  id: string,
-  title: string,
-  thumbnail: string
-}
+export type VideoType = {
+  id: string;
+  title: string;
+  thumbnail: string;
+  state: number;
+  time: number;
+};

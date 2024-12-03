@@ -16,7 +16,7 @@ export const getChatsQueryOptions = (roomId: string) => {
 };
 
 export type getChatsQueryConfig = {
-  roomId: string
+  roomId: string;
   queryConfig?: QueryConfig<typeof getChats>;
 };
 

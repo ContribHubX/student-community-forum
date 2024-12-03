@@ -16,11 +16,14 @@ export const getStudyRoomQueryOptions = (roomId: string) => {
 };
 
 export type getStudyRoomQueryConfig = {
-  roomId: string,
+  roomId: string;
   queryConfig?: QueryConfig<typeof getStudyRoom>;
 };
 
-export const useGetStudyRoom = ({ roomId, queryConfig }: getStudyRoomQueryConfig) => {
+export const useGetStudyRoom = ({
+  roomId,
+  queryConfig,
+}: getStudyRoomQueryConfig) => {
   return useQuery({
     ...getStudyRoomQueryOptions(roomId),
     ...queryConfig,

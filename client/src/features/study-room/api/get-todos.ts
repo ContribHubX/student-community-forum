@@ -16,7 +16,7 @@ export const getTodosQueryOptions = (userId: string) => {
 };
 
 export type getTodosQueryConfig = {
-  userId: string
+  userId: string;
   queryConfig?: QueryConfig<typeof getTodos>;
 };
 

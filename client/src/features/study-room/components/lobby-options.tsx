@@ -3,31 +3,31 @@ import { HiOutlineSpeakerWave } from "react-icons/hi2";
 import { Scene } from "./scene";
 
 export const LobbyOptions = () => {
+
   return (
     <div className="w-screen h-full relative flex items-center justify-center px-4 md:p-0">
       <div className="absolute w-screen h-svh">
-        <Scene/>
+        <Scene 
+        />
       </div>
 
-      <div className="flex flex-col items-center justify-between h-full"> 
+      <div className="flex flex-col items-center justify-between h-full">
         <div className="relative">
-          <LobbyHeader/>
+          <LobbyHeader />
         </div>
-        <div className="relative  py-1 px-2 bg-canvas rounded-full flex mb-2 z-[12]"> 
+        <div className="relative  py-1 px-2 bg-canvas rounded-full flex mb-2 z-[12]">
           <div>
-            <MusicManager/>
-          </div>     
+            <MusicManager />
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const LobbyHeader = () => {
-  return (
-    <div>lobby-header</div>
-  )
-}
+  return <div>lobby-header</div>;
+};
 
 const MusicManager = () => {
   return (
@@ -38,8 +38,10 @@ const MusicManager = () => {
           className="w-[30px] h-[30px] rounded-full object-cover "
         />
       </div>
-      <span className="text-[.8rem] hidden lg:block">Dark Acdameida Classical...</span>
-        <HiOutlineSpeakerWave className="text-xl"/>
+      <span className="text-[.8rem] hidden lg:block">
+        Dark Acdameida Classical...
+      </span>
+      <HiOutlineSpeakerWave className="text-xl" />
     </div>
-  )
-} 
+  );
+};

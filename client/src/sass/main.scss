@@ -200,10 +200,9 @@ html.dark {
   margin-left: 40px;
 }
 
-
 /* lobby scene */
 .scene-wrapper {
-  height: 100svh; 
+  height: 100svh;
   overflow: hidden;
   z-index: 100;
   //position: relative;
@@ -224,14 +223,11 @@ html.dark {
   transition: transform 500ms;
 }
 
-
-
 @media (max-width: 1150px) {
   .iframe {
     transform: scale(2);
   }
 }
-
 
 @media (max-width: 990px) {
   .iframe {
@@ -239,20 +235,17 @@ html.dark {
   }
 }
 
-
 @media (max-width: 550px) {
   .iframe {
     transform: scale(3.5);
   }
 }
 
-
 @media (max-width: 440px) {
   .iframe {
     transform: scale(4);
   }
 }
-
 
 @media (max-width: 400px) {
   .iframe {

@@ -38,10 +38,7 @@ export const updateTodoSchema = Joi.object({
 // Chat Validators
 
 export const createChatSchema = Joi.object({
-    message: Joi.string().min(1).required().messages({
-        "string.empty": "Message content is required",
-        "string.min": "Message cannot be empty",
-    }),
+    message: Joi.string().allow("").optional(),
     type: Joi.string().valid("message", "indicator").required().messages({
         "any.only": "Chat type must be one of 'message', or 'indicator'",
         "any.required": "Chat type is required",

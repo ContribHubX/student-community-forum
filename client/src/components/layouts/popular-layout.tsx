@@ -7,11 +7,7 @@ interface LayoutProps {
   children?: ReactNode;
 }
 
-export const PopularLayout = ({
-  LeftSidebar,
-  RightSidebar,
-  children,
-}: LayoutProps) => {
+export const PopularLayout = ({ LeftSidebar, children }: LayoutProps) => {
   return (
     <div className="pt-[5rem]">
       <Navbar />

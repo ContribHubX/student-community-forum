@@ -1,10 +1,25 @@
-import { Chat } from "@/types"; 
+import { Chat } from "@/types";
 
 const users = [
-  { id: "1", name: "Alice", email: "alice@example.com", attachment: "alice.jpg" },
+  {
+    id: "1",
+    name: "Alice",
+    email: "alice@example.com",
+    attachment: "alice.jpg",
+  },
   { id: "2", name: "Bob", email: "bob@example.com", attachment: "bob.jpg" },
-  { id: "3", name: "Charlie", email: "charlie@example.com", attachment: "charlie.jpg" },
-  { id: "4", name: "Diana", email: "diana@example.com", attachment: "diana.jpg" },
+  {
+    id: "3",
+    name: "Charlie",
+    email: "charlie@example.com",
+    attachment: "charlie.jpg",
+  },
+  {
+    id: "4",
+    name: "Diana",
+    email: "diana@example.com",
+    attachment: "diana.jpg",
+  },
 ];
 
 const generateChats = (): Chat[] => {
@@ -12,7 +27,7 @@ const generateChats = (): Chat[] => {
 
   for (let i = 0; i < 10; i++) {
     const randomUser = users[Math.floor(Math.random() * users.length)];
-    const isIndicator = Math.random() > 0.5; 
+    const isIndicator = Math.random() > 0.5;
     const chat: Chat = {
       id: `${i + 1}`,
       createdAt: new Date(),
@@ -37,4 +52,3 @@ const generateChats = (): Chat[] => {
 };
 
 export const chats = generateChats();
-

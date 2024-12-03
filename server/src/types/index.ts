@@ -12,6 +12,12 @@ export type ClientEventOptions = {
   client: Client
 }
 
+export type VideoOptions = {
+  id: string;
+  title: string;
+  thumbnail: string;
+};
+
 export type KanbanClientOption =  ClientEventOptions & { boardId: string, user: IUser };
 
 export type KanbanClient = Pick<KanbanClientOption, "client" | "user"> & { color: number };

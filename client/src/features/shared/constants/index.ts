@@ -12,5 +12,5 @@ export const slateColor = {
   yellow: {
     text: "#bd8322",
     background: lighten(0.4, "#bd8322"),
-  }
+  },
 };
