@@ -10,7 +10,7 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType, GroupTimerState } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
 import { getNotificationQueryOptions } from "@/features/notification/api/get-notifications";
@@ -50,7 +50,10 @@ export enum OPERATION {
   ADD_ROOM_USER,
   REMOVE_USER_TO_ROOM,
   ADD_ROOM_CHAT,
-  PLAY_NEXT_VIDEO
+  PLAY_NEXT_VIDEO,
+  SYNC_VIDEO_CLOCK,
+  PLAY_VIDEO,
+  TIMER_SYNC
 }
 
 type Actions =
@@ -137,6 +140,18 @@ type Actions =
   | {
     type: OPERATION.PLAY_NEXT_VIDEO;
     payload: { video: VideoType, roomId: string };
+  }
+  | {
+    type: OPERATION.SYNC_VIDEO_CLOCK;
+    payload: { time: number, roomId: string };
+  }
+  | {
+    type: OPERATION.PLAY_VIDEO;
+    payload: { video: VideoType, roomId: string };
+  }
+  | {
+    type: OPERATION.TIMER_SYNC;
+    payload: { time: GroupTimerState, roomId: string };
   }
 
 
@@ -581,6 +596,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       updateRooms[data.room.id].users = [...data.users];
       updateRooms[data.room.id].room = {...data.room};
       updateRooms[data.room.id].video = {...data.video};
+      updateRooms[data.room.id].timer = {...data.timer};
 
       return { ...state, rooms: updateRooms };      
     }
@@ -649,6 +665,45 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       return { ...state, rooms: updatedRooms };   
     }
 
+    
+    /**
+     * 
+     */
+    case OPERATION.PLAY_VIDEO: { 
+      const { video, roomId } = action.payload; 
+
+      const updatedRooms = {...state.rooms};
+
+      updatedRooms[roomId].video = {...video};
+      
+      return { ...state, rooms: updatedRooms };   
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.SYNC_VIDEO_CLOCK: { 
+      const { time, roomId } = action.payload; 
+
+      const updatedRooms = {...state.rooms};
+
+      updatedRooms[roomId].video = {...updatedRooms[roomId].video, time};
+      
+      return { ...state, rooms: updatedRooms };   
+    }
+
+     /**
+     * 
+     */
+    case OPERATION.TIMER_SYNC: { 
+      const { time, roomId } = action.payload; 
+
+      const updatedRooms = {...state.rooms};
+
+      updatedRooms[roomId].timer = {...time};
+      
+      return { ...state, rooms: updatedRooms };   
+    }
 
     /**
      * Default case: Returns the current state if no matching action type is found.

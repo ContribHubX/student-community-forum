@@ -14,8 +14,11 @@ export const Activities = ({ roomId }: ActivitiesProp) => {
 
   return (
     <div
-      className={`flex flex-col gap-3 p-3 bg-background rounded-2xl 
-        h-[78svh]  md:h-[98vh]  
+      className={`gap-3 p-3 md:bg-background rounded-2xl 
+        sm:h-[78svh]  md:h-[98vh]
+        grid grid-cols-1 
+        sm:grid-cols-2
+        md:grid-cols-1
       `}
       style={
         {
@@ -23,7 +26,9 @@ export const Activities = ({ roomId }: ActivitiesProp) => {
         }
       }
     >
-      <Timer />
+      <Timer
+        roomId={roomId}
+      />
       <Todos userId={authState.user.id} />
       <Chats userId={authState.user.id} roomId={roomId} />
     </div>

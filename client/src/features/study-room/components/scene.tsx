@@ -1,35 +1,18 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-
-import { useSocketProvider } from "@/hooks/use-socket-provider";
 import { ScenePlayer } from "./player";
 import { VideoType } from "@/types";
 
-export const Scene = () => {
-  const { roomId } = useParams();
-  const { socketState } = useSocketProvider();
-  const [video, setVideo] = useState<VideoType>({} as VideoType);
+import { Socket } from "socket.io-client";
 
-  
-  useEffect(() => {
-    if (!roomId || !socketState || !socketState?.rooms[roomId]) return;
-    
-    setVideo(socketState.rooms[roomId].video);
-  }, [roomId, socketState])
-  
-  if (!socketState.socket) return <p>Loading...</p>
+interface SceneProp {
+  video: VideoType,
+  socket: Socket,
+}
 
-  console.log(video)
+export const Scene = ({ video, socket }: SceneProp ) => {
 
   return (
     <div className="scene-wrapper">
-      {video?.id && (
-        <ScenePlayer 
-          video={video} 
-          socket={socketState.socket}
-        />
-      )}
+      {video?.id && <ScenePlayer video={video} socket={socket} />}
     </div>
   );
-  
 };

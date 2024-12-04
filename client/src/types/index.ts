@@ -188,6 +188,7 @@ export type RoomState = {
   users: User[];
   room: StudyRoom;
   video: VideoType;
+  timer: GroupTimerState;
 };
 
 export type VideoType = {
@@ -197,3 +198,9 @@ export type VideoType = {
   state: number;
   time: number;
 };
+
+export type GroupTimerState = {  
+  state: "break" | "focus",
+  time: number;
+  formattedTime: string;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, Fragment } from "react";
+import { useEffect, useRef, Fragment, useState } from "react";
 import { VideoType } from "@/types";
 import { Socket } from "socket.io-client";
 
@@ -17,9 +17,12 @@ declare global {
 export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
   const playerRef = useRef<any>(null);
   const playerInstance = useRef<any>(null);
+  const [loadTime, setLoadTime] = useState<number | null>(null); // State to store load time
 
   useEffect(() => {
-    // Load YouTube Iframe API if not loaded
+    let intervalId: NodeJS.Timeout | null = null;
+    const startTime = performance.now(); // Record start time when component mounts
+
     if (!window.YT) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -31,13 +34,11 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
       };
     }
 
-    // Destroy previous player if exists
     if (playerInstance.current) {
       playerInstance.current.destroy();
       playerInstance.current = null;
     }
 
-    // Create a new player
     if (video && playerRef.current) {
       playerInstance.current = new window.YT.Player(playerRef.current, {
         videoId: video?.id,
@@ -51,18 +52,50 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
         origin: window.location.origin,
         events: {
           onReady: (event: any) => {
-            event.target.seekTo(video.time);
-            event.target.playVideo();
-            console.log("Player is ready");
-            console.log(video);
+            const player = event.target;
+
+            // Start polling for player updates
+            intervalId = setInterval(() => {
+              if (playerInstance.current) {
+                const currentTime = playerInstance.current.getCurrentTime();
+                socket.emit("client__video--update", {
+                  state: 1,
+                  time: currentTime,
+                });
+              }
+            }, 3000);
+
+            // Wait for the video to start playing
+            const waitForPlayingState = () => {
+              const playStartTime = performance.now();
+              const elapsedTime = (playStartTime - startTime) / 1000; 
+              setLoadTime(elapsedTime);
+
+              console.log(`Video started playing after ${elapsedTime.toFixed(2)} seconds`);
+
+              // Seek to video.time + elapsedTime
+              const seekTime = video.time + elapsedTime;
+              console.log(`Seeking to: ${seekTime.toFixed(2)} seconds`);
+              player.seekTo(seekTime, true);
+            };
+
+            // Check when the video starts playing
+            const checkStateInterval = setInterval(() => {
+              if (player.getPlayerState() === window.YT.PlayerState.PLAYING) {
+                clearInterval(checkStateInterval);
+                waitForPlayingState();
+              }
+            }, 100); 
           },
           onStateChange: (event: any) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               console.log("Player is playing");
-              socket.emit("client__queue--play");
             } else if (event.data === window.YT.PlayerState.ENDED) {
               console.log("Video ended");
-              socket.emit("client__queue--next");
+              socket.emit("client__video--update", {
+                state: 0,
+                time: 0,
+              });
             }
           },
         },
@@ -74,6 +107,10 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
         playerInstance.current.destroy();
         playerInstance.current = null;
       }
+
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
     };
   }, [video, socket]);
 
@@ -82,6 +119,9 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
       <div className="iframe-container">
         <div className="iframe" ref={playerRef}></div>
       </div>
+      {loadTime !== null && (
+        <p>Time taken for the video to start playing: {loadTime.toFixed(2)} seconds</p>
+      )}
     </Fragment>
   );
 };

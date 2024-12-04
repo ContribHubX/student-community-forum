@@ -43,7 +43,6 @@ export const Chats = ({ userId, roomId }: ChatsProp) => {
     bottomRef.current.scrollIntoView({ behavior: "smooth" });
   }, [chatsData]);
 
-
   useEffect(() => {
     if (!roomId || !userId) return;
 
@@ -52,12 +51,14 @@ export const Chats = ({ userId, roomId }: ChatsProp) => {
       message: "",
       roomId,
       createdBy: userId.toString(),
-    })
-  }, [roomId, userId])
+    });
+  }, [roomId, userId]);
+
+  console.log(chatsData);
 
   return (
     <div
-      className="text-sm rounded-2xl bg-primary max-w-[261px] shadow-xl flex-1 flex flex-col"
+      className="sm:col-span-2 md:col-span-1 text-sm rounded-2xl bg-primary md:max-w-[261px] shadow-xl flex-1 flex flex-col"
       style={{
         minHeight: "calc(100% - 80%)",
       }}
@@ -152,7 +153,7 @@ const Message = ({ user, message }: MessageProp) => {
     <div className="flex flex-col  gap-2 px-3 ">
       <div className="flex items-center gap-2">
         <Avatar className="w-[30px] h-[30px]">
-          <AvatarImage src="" />
+          <AvatarImage src={user.attachment} />
           <AvatarFallback />
         </Avatar>
         <p>{user.name}</p>

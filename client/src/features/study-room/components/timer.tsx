@@ -5,10 +5,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSocketProvider } from "@/hooks/use-socket-provider";
+import { GroupTimerState } from "@/types";
+import { useEffect, useState } from "react";
 
-export const Timer = () => {
+
+interface TimerProp {
+  roomId: string;
+}
+
+export const Timer = ({ roomId }: TimerProp) => {
+  const { socketState } = useSocketProvider();
+  const [timer, setTimer] = useState<GroupTimerState>({} as GroupTimerState);
+
+  useEffect(() => {
+    if (!roomId || !socketState || !socketState.rooms || !socketState.rooms[roomId]) {
+      return;
+    }
+
+    const time = socketState.rooms[roomId].timer;
+    setTimer({...time})
+  }, [roomId, socketState])
+
   return (
-    <div className="text-sm rounded-2xl bg-primary max-w-[261px] shadow-xl">
+    <div className="text-sm rounded-2xl bg-primary md:max-w-[261px] shadow-xl   flex flex-col">
       <div className="bg-[#bd8322] p-3 text-accent-foreground rounded-t-2xl ">
         <Select>
           <SelectTrigger className=" max-w-[120px] p-0 flex text-[.8rem] font-medium bg-transparent border-0 px-0 h-4">
@@ -20,8 +40,8 @@ export const Timer = () => {
           </SelectContent>
         </Select>
       </div>
-      <p className="text-5xl font-medium py-3 px-6  text-accent-foreground">
-        12:50
+      <p className="text-5xl self-center flex items-center justify-center font-medium py-3 px-6  text-accent-foreground flex-1">
+        <span>{timer?.formattedTime || "00:00"}</span>
       </p>
       <div className="p-3 flex flex-col gap-2 items-center pt-0">
         <div className="h-[1px] bg-muted-foreground w-full " />

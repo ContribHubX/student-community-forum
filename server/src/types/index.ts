@@ -18,6 +18,12 @@ export type VideoOptions = {
   thumbnail: string;
 };
 
+export type GroupTimerState = {  
+  state: "break" | "focus";
+  time: number;
+  formattedTime: string;
+}
+
 export type KanbanClientOption =  ClientEventOptions & { boardId: string, user: IUser };
 
 export type KanbanClient = Pick<KanbanClientOption, "client" | "user"> & { color: number };

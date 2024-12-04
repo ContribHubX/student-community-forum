@@ -269,11 +269,42 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "video--next":
-          console.log(data);
           socketDispatch({
             type: OPERATION.PLAY_NEXT_VIDEO,
             payload: {
               video: data.video,
+              roomId: data.roomId,
+            },
+          });
+          break;
+
+        case "video--clock":
+          console.log(data);
+          socketDispatch({
+            type: OPERATION.SYNC_VIDEO_CLOCK,
+            payload: {
+              time: data.time,
+              roomId: data.roomId,
+            },
+          });
+          break;
+
+        case "video--play":
+          console.log("new video play: " + JSON.stringify(data, null, 2));
+          socketDispatch({
+            type: OPERATION.PLAY_VIDEO,
+            payload: {
+              video: data.video,
+              roomId: data.roomId,
+            },
+          });
+          break;
+        
+        case "timer--sync":
+          socketDispatch({
+            type: OPERATION.TIMER_SYNC,
+            payload: {
+              time: data.time,
               roomId: data.roomId,
             },
           });

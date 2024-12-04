@@ -45,7 +45,7 @@ class Video {
     }
 
     getState(): number {
-        return this.state;
+        return this.state;  
     }
 
     /**
@@ -69,8 +69,7 @@ class Video {
         }
     
         // figure out how long has elapsed since the last clock update
-        // return (this.time + (Math.abs(Date.now() - this.lastSyncTime) / 1000));
-        return this.time;
+        return (this.time + (Math.abs(Date.now() - this.lastSyncTime) / 1000));
     }
 
 

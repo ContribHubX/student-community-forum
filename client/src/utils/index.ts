@@ -91,3 +91,11 @@ export const sanitizeContent = (html: string) => {
 
   return tempDiv.innerHTML;
 };
+
+
+// Utility function to extract video ID
+export const extractVideoId = (url: string) => {
+  const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+  const match = url.match(regex);
+  return match ? match[1] : null;
+};

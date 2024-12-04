@@ -64,7 +64,7 @@ export const Todos = ({ userId }: TodosProp) => {
   };
 
   return (
-    <div className="text-sm rounded-2xl bg-primary max-w-[261px] shadow-xl">
+    <div className="text-sm rounded-2xl bg-primary md:max-w-[261px] shadow-xl">
       <div className="bg-[#bd8322] p-3 text-accent-foreground rounded-t-2xl">
         <Select>
           <SelectTrigger className="text-[.8rem] max-w-[80px] p-0 flex font-medium bg-transparent border-0 px-0 h-4">
