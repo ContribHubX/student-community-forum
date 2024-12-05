@@ -33,7 +33,11 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/hooks/use-theme";
 
 import { TbArrowBigDown } from "react-icons/tb";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface ThreadCardProp {
   thread: Thread;
@@ -73,9 +77,6 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   const reactionFlag = (keyType: ReactionType) => {
     return reaction?.type === keyType;
   };
-
-  console.log(thread.tags)
-
 
   return (
     <Card className="w-full hover:shadow-lg transition-shadow duration-300 bg-primary dark:border-none">
@@ -212,9 +213,9 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
           </Button>
         </div>
         <div>
-          <ThreadMenu 
+          <ThreadMenu
             onEdit={() => navigate(`/thread-action/${thread.id}`)}
-            onDelete={() => ''}
+            onDelete={() => ""}
             isCurrentUserThread={userId === thread?.createdBy?.id}
           />
         </div>
@@ -226,43 +227,45 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
 interface ThreadMenuProp {
   onEdit: () => void;
   onDelete: () => void;
-  isCurrentUserThread: boolean
+  isCurrentUserThread: boolean;
 }
 
-export const ThreadMenu = ({ onEdit, onDelete, isCurrentUserThread }: ThreadMenuProp) => {
-
-
+export const ThreadMenu = ({
+  onEdit,
+  onDelete,
+  isCurrentUserThread,
+}: ThreadMenuProp) => {
   return (
     <Popover>
-    <PopoverTrigger>
-      <Button variant="ghost" size="icon">
-        <MoreHorizontal className="h-4 w-4" />
-      </Button>
-    </PopoverTrigger>
-    <PopoverContent className="w-[100px] p-0">
-      <div className="p-2">
-        {isCurrentUserThread ? (
-          <>
-            <span 
-              className="cursor-pointer rounded-md p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
-              onClick={onEdit}
-            >
-                <GrEdit       />
+      <PopoverTrigger>
+        <Button variant="ghost" size="icon">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[100px] p-0">
+        <div className="p-2">
+          {isCurrentUserThread ? (
+            <>
+              <span
+                className="cursor-pointer rounded-md p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
+                onClick={onEdit}
+              >
+                <GrEdit />
                 <p className="text-sm">Edit</p>
-            </span>
-            <span 
-              className="rounded-md cursor-pointer p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
-              onClick={onDelete}
-            >
-                <FaTrashAlt className=""/>
+              </span>
+              <span
+                className="rounded-md cursor-pointer p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
+                onClick={onDelete}
+              >
+                <FaTrashAlt className="" />
                 <p className="text-sm">Delete</p>
-            </span>
-          </>
-        ): (
-          <span>Hide</span>
-        )}
-      </div>
-    </PopoverContent>
-  </Popover>
-  )
-}
+              </span>
+            </>
+          ) : (
+            <span>Hide</span>
+          )}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};

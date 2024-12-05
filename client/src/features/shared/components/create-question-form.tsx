@@ -17,13 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { BsFillTagsFill } from "react-icons/bs";
 
 interface CreateQuestionFormProp {
   initialTopic?: Topic;
   initialTitleVal?: string;
   userId: string;
   handleFormSubmit: (data: FormData) => void;
-}
+} 
 
 export const CreateQuestionForm = ({
   initialTopic,
@@ -32,16 +33,18 @@ export const CreateQuestionForm = ({
   userId,
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
+  const [tags, setTags] = useState<string[]>([]);
   const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
-  const [selectedTopic, setSelectedTopic] = useState<string>("");
+  const [selectedTopic, setSelectedTopic] = useState<string>(initialTopic?.id || "");
   const { data: topics } = useGetTopics({});
 
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
     formData.append("createdBy", userId);
     formData.append("topicId", selectedTopic || "");
+    formData.append("tags", JSON.stringify(tags));
 
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
@@ -55,6 +58,15 @@ export const CreateQuestionForm = ({
 
     // Submit the form
     handleFormSubmit(formData);
+  };
+  const handleTagAddition = (tag: string) => {
+    if (tag && !tags.includes(tag)) {
+      setTags([...tags, tag]);
+    }
+  };
+
+  const handleTagRemoval = (tag: string) => {
+    setTags(tags.filter((t) => t !== tag));
   };
 
   const handleContentChange = (data: Partial<CreateThreadType>) => {
@@ -84,7 +96,7 @@ export const CreateQuestionForm = ({
         <input
           {...register("title")}
           id="title"
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:ring-accent focus:border-accent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400"
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 focus:ring-accent focus:border-accent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400"
           placeholder="Enter your question title..."
           defaultValue={initialTitleVal || ""}
         />
@@ -92,7 +104,7 @@ export const CreateQuestionForm = ({
 
       <div className="relative">
         <Select onValueChange={(val: string) => setSelectedTopic(val)}>
-          <SelectTrigger className="w-full focus:border-accent bg-primary px-4 py-6 dark:border-gray-500">
+          <SelectTrigger className="w-full focus:border-accent bg-primary px-4 py-6 dark:border-gray-500 bg-gray-100">
             {selectedTopic || initialTopic ? (
               <div className="flex items-center gap-3">
                 <img
@@ -145,6 +157,46 @@ export const CreateQuestionForm = ({
         <TextEditor handleChange={handleContentChange} />
         <input type="hidden" {...register("content")} />
         <input type="hidden" {...register("attachment")} />
+      </div>
+
+      {/* Tag section */}
+      <div className="p-6 border dark:border-gray-500 rounded-lg">
+        <h3>Tags</h3>
+        <div className="flex items-center border rounded-md mt-2 dark:border-gray-500">
+          <BsFillTagsFill className="text-accent ml-4" />
+          <input
+            type="text"
+            placeholder="Add a tag and press Enter"
+            className="w-full px-4 py-2 rounded-md outline-none focus:border-accent 
+          border-[1px]  border-none text-sm bg-primary "
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === ",") {
+                e.preventDefault();
+                handleTagAddition(
+                  (e.target as HTMLInputElement).value.trim(),
+                );
+                (e.target as HTMLInputElement).value = "";
+              }
+            }}
+          />
+        </div>
+        <div className="flex flex-wrap mt-4 gap-2">
+          {tags.map((tag, index) => (
+            <span
+              key={index}
+              className="flex items-center px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm"
+            >
+              {tag}
+              <button
+                type="button"
+                onClick={() => handleTagRemoval(tag)}
+                className="ml-2 text-white hover:text-gray-200"
+              >
+                ✕
+              </button>
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Submit Button */}

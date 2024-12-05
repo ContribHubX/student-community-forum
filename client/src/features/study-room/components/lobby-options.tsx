@@ -45,9 +45,7 @@ export const LobbyOptions = () => {
 
       <div className="flex flex-col items-center  mt-2 justify-between h-full">
         <div className="relative z-[12]">
-          <LobbyHeader 
-            name={room.name}
-          />
+          <LobbyHeader name={room.name} />
         </div>
         <div className="relative  py-1 px-2 bg-canvas rounded-full flex mb-2 z-[12]">
           <div>
@@ -59,7 +57,6 @@ export const LobbyOptions = () => {
   );
 };
 
-
 interface LobbyHeaderProp {
   name: string;
 }
@@ -69,17 +66,17 @@ const LobbyHeader = ({ name }: LobbyHeaderProp) => {
 
   return (
     <div className="cursor-pointer py-2 px-3 bg-black/80 rounded-full flex items-center gap-3">
-        <IoArrowBack 
-          className="text-accent-foreground text-xl cursor-pointer" 
-          onClick={() => navigate("/popular")}
-        />
-        <div className="py-1 px-4  text-sm xs:text-base  md:text-lg flex items-center justify-center gap-2 text-accent-foreground bg-gradient-to-r from-cyan-500 to-blue-500  rounded-full">
-          <LuGlobe className="text-2xl" />
-          <span className="font-yuji ">{name}</span>
-        </div>
-        <FaEllipsis className="cursor-pointer text-lg text-accent-foreground" />
+      <IoArrowBack
+        className="text-accent-foreground text-xl cursor-pointer"
+        onClick={() => navigate("/popular")}
+      />
+      <div className="py-1 px-4  text-sm xs:text-base  md:text-lg flex items-center justify-center gap-2 text-accent-foreground bg-gradient-to-r from-cyan-500 to-blue-500  rounded-full">
+        <LuGlobe className="text-2xl" />
+        <span className="font-yuji ">{name}</span>
+      </div>
+      <FaEllipsis className="cursor-pointer text-lg text-accent-foreground" />
     </div>
-  )
+  );
 };
 
 interface MusicManagerProp {
@@ -91,7 +88,6 @@ const MusicManager = ({ video }: MusicManagerProp) => {
   const [isPlaying, setIsPlaying] = useState(true);
   const diskRef = useRef<HTMLDivElement>(null);
   const [title, setTitle] = useState("");
-  
 
   const { socketState } = useSocketProvider();
 
@@ -99,9 +95,12 @@ const MusicManager = ({ video }: MusicManagerProp) => {
 
   useEffect(() => {
     if (!video || !video.title) return;
-    const formattedTitle = video?.title && video.title.length < 40 ? video.title : video.title.substring(0, 39) + "..."
+    const formattedTitle =
+      video?.title && video.title.length < 40
+        ? video.title
+        : video.title.substring(0, 39) + "...";
     setTitle(formattedTitle);
-  }, [video])
+  }, [video]);
 
   useEffect(() => {
     let animationId: number;
@@ -181,9 +180,7 @@ const MusicManager = ({ video }: MusicManagerProp) => {
         </div>
       </div>
       <div className="flex-col hidden md:flex text-sm">
-        <span className="font-medium">
-          {title || "No track selected"}
-        </span>
+        <span className="font-medium">{title || "No track selected"}</span>
         <span className="text-xs text-gray-400">Study Room Music</span>
       </div>
       <div className="flex items-center gap-3 text-lg ml-auto">

@@ -34,7 +34,9 @@ export const Topics = ({ userId }: TopicsProp) => {
     isLoading: questionsLoading,
     refetch,
   } = useGetQuestions({ topicId: topicId || "" });
-  const { data: topic } = useGetTopic({ data: {topicId: topicId!, userId: userId!}});
+  const { data: topic } = useGetTopic({
+    data: { topicId: topicId!, userId: userId! },
+  });
   const { data: threads } = useGetThreadsByTopic({ topicId: topicId || "" });
 
   const handleCreateQuestion = (data: FormData) => {
@@ -51,8 +53,6 @@ export const Topics = ({ userId }: TopicsProp) => {
       refetch();
     }
   }, [refetch, topicId]);
-
-
 
   // temp
   if (!topic || questionsLoading) return <p>Loading...</p>;

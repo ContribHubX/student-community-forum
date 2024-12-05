@@ -36,7 +36,7 @@ export const TextEditor = ({
 
   useEffect(() => {
     if (initialContent && initialContent !== value) {
-      setValue(initialContent); 
+      setValue(initialContent);
     }
   }, [initialContent]);
 

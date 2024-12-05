@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { Community } from "@/types"
-import { Users, ChevronRight } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import { Community } from "@/types";
+import { Users, ChevronRight } from "lucide-react";
 
 interface CommunityCardProps {
-  community: Community
-  rank: number
+  community: Community;
+  rank: number;
 }
 
 export function CommunityCard({ community, rank }: CommunityCardProps) {
@@ -31,12 +31,15 @@ export function CommunityCard({ community, rank }: CommunityCardProps) {
         <p className="text-sm line-clamp-1 mt-1">{community.description}</p>
       </div>
       <div className="flex-shrink-0 flex items-center space-x-2 ">
-        <Button variant={isJoined ? "outline" : "default"} size="sm" className="text-accent-foreground">
+        <Button
+          variant={isJoined ? "outline" : "default"}
+          size="sm"
+          className="text-accent-foreground"
+        >
           {isJoined ? "Leave" : "Join"}
         </Button>
         <ChevronRight className="text-muted-foreground" />
       </div>
     </div>
-  )
+  );
 }
-

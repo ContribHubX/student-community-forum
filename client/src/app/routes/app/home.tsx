@@ -4,11 +4,12 @@ import { RightSidebar } from "@/components/shared/right-sidebar";
 import { Threads } from "@/features/thread/components";
 import { useAuth } from "@/hooks/use-auth";
 
-// TODO finalize user answer question  
+// TODO make creating answer realtime, creating question in a topic etcc..
+// TODO setup seeders data
 // TODO make colors in study room constant
 // TODO finalize communities route
 
-export const HomeRoute = () => {
+export const HomeRoute = () => {  
   const { authState } = useAuth();
 
   if (!authState?.user?.id) return <p>Loading...</p>;

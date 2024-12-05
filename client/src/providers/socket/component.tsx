@@ -86,7 +86,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
     socket.on("recv", (data) => {
       switch (data.eventType) {
         case "thread--new":
-          console.log(data)
+          console.log(data);
           socketDispatch({
             type: OPERATION.ADD_NEW_THREAD,
             payload: { thread: data, queryClient },

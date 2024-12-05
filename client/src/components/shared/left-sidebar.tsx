@@ -3,13 +3,15 @@ import popular from "@/assets/sidebar/popular.svg";
 
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { SideBarItem } from "../ui/sidebar-item";
-import { popularTagsData, popularGroupsData } from "@/features/shared/data/topic-group";
+import {
+  popularTagsData,
+  popularGroupsData,
+} from "@/features/shared/data/topic-group";
 import { useGetTopics } from "@/features/topic/api";
-
 
 export const LeftSidebar = () => {
   const { data: topics } = useGetTopics({});
-  
+
   return (
     <SidebarLayout
       className="hidden flex-col gap-6
@@ -48,17 +50,19 @@ export const LeftSidebar = () => {
       >
         <h1>Popular Topics</h1>
 
-        {topics && topics.length > 0 && topics.slice(0, popularTagsData.length).map((topics, index) => {
-          return (
-            <SideBarItem
-              key={topics.id}
-              title={topics.name}
-              description={popularTagsData[index].description}
-              icon={popularTagsData[index].icon}
-              iconBgcolor={popularTagsData[index].iconBgColor}
-            />
-          );
-        })}
+        {topics &&
+          topics.length > 0 &&
+          topics.slice(0, popularTagsData.length).map((topics, index) => {
+            return (
+              <SideBarItem
+                key={topics.id}
+                title={topics.name}
+                description={popularTagsData[index].description}
+                icon={popularTagsData[index].icon}
+                iconBgcolor={popularTagsData[index].iconBgColor}
+              />
+            );
+          })}
       </div>
 
       <div

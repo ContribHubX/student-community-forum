@@ -50,9 +50,9 @@ export const questionRelations = relations(QuestionTable, ({ one, many }) => ({
         fields: [QuestionTable.createdBy],
         references: [UserTable.id]
     }),
-    topic: one(UserTable, {
-        fields: [QuestionTable.createdBy],
-        references: [UserTable.id]
+    topic: one(TopicTable, {
+        fields: [QuestionTable.topicId],
+        references: [TopicTable.id]
     }),
     requests: many(QuestionRequestTable),
     threads: many(ThreadTable)

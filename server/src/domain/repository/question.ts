@@ -51,7 +51,8 @@ class QuestionRepository {
                     where: eq(schema.QuestionTable.id, questionId),
                     with: { 
                             createdBy: true,
-                            threads: true
+                            threads: true,
+                            topic: true
                     },
         
                 });
@@ -166,22 +167,19 @@ class QuestionRepository {
             try {
                 const result = await this.db
                     .query
-                    .QuestionTable
-                    .findFirst({
-                        columns: {},
+                    .ThreadTable
+                    .findMany({
                         with: { 
-                            threads: {
-                                with: {
-                                    createdBy: true
-                                }
-                            } 
+                            createdBy: true,
+                            tags: true
                         },
-                        where: eq(schema.QuestionTable.id, questionId)
+                        where: eq(schema.ThreadTable.questionId, questionId),
+                        orderBy: desc(schema.ThreadTable.createdAt)
                     });
                 
                 if (!result) return reject(new AppError("Question not found", 404));
 
-                resolve(result.threads as unknown as IThread[]);
+                resolve(result as unknown as IThread[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }

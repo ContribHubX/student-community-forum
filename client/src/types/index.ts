@@ -83,6 +83,7 @@ export type Question = Entity<{
   title: string;
   content: string;
   threads: Thread[];
+  topic: Topic;
   createdBy: User;
 }>;
 

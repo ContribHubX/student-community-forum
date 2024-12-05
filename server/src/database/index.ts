@@ -3,7 +3,6 @@ import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import * as schema from "./schema";
 
-// Create the pool connection
 export const poolConnection = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -11,13 +10,11 @@ export const poolConnection = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
-// Initialize drizzle with the connection pool
 export const database = drizzle(poolConnection, {
   schema,
   mode: "default",
 });
 
-// Function to check the database connection and query using Drizzle ORM
 const checkDatabaseConnection = async () => {
   try {
     // const rows = await database.select().from(ThreadTable);

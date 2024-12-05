@@ -57,8 +57,8 @@ export default {
       },
     },
     fontFamily: {
-      yuji: ["Yuji Mai", "serif"]
-    }
+      yuji: ["Yuji Mai", "serif"],
+    },
   },
   plugins: [
     require("tailwindcss-animate"),

@@ -11,7 +11,7 @@ export type CreateFollowType = {
 const followTopic = async (data: CreateFollowType): Promise<Topic> => {
   const response = await api.post(
     "http://localhost:3000/api/topic/follow",
-    data
+    data,
   );
 
   return response.data;

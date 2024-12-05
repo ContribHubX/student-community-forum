@@ -90,7 +90,9 @@ const createAppRouter = () =>
         {
           path: "/topic-library",
           lazy: async () => {
-            const { TopicLibraryRoute } = await import("./routes/app/topic/topic-library");
+            const { TopicLibraryRoute } = await import(
+              "./routes/app/topic/topic-library"
+            );
             return { Component: TopicLibraryRoute };
           },
         },

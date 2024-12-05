@@ -1,4 +1,5 @@
 import { IThread } from "./IThread";
+import { ITopic } from "./ITopic";
 import { IUser } from "./IUser";
 
 export interface IQuestion {
@@ -7,6 +8,7 @@ export interface IQuestion {
     content: string;
     threads: IThread[];
     topicId?: string;
+    topic?: ITopic;
     createdAt: Date;
     createdBy: IUser;
 }

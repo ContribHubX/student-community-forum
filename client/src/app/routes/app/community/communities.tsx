@@ -1,26 +1,29 @@
-import { useState } from 'react'
-import { MainLayout } from "@/components/layouts/layout"
-import { CommunityCard } from "@/features/community/components/community-card"
-import { communities } from "@/features/shared/data/communities"
-import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Search, Filter } from 'lucide-react'
+import { useState } from "react";
+import { MainLayout } from "@/components/layouts/layout";
+import { CommunityCard } from "@/features/community/components/community-card";
+import { communities } from "@/features/shared/data/communities";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Search, Filter } from "lucide-react";
 
 export const CommunitiesRoute = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [showJoinedOnly, setShowJoinedOnly] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showJoinedOnly, setShowJoinedOnly] = useState(false);
   const isJoin = false;
 
-  const filteredCommunities = communities.filter(community => 
-    community.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (!showJoinedOnly || isJoin)
-  )
+  const filteredCommunities = communities.filter(
+    (community) =>
+      community.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (!showJoinedOnly || isJoin),
+  );
 
   return (
     <MainLayout>
       <section className="container mx-auto px-4 py-8 max-w-3xl text-primary-foreground">
-        <h1 className="text-3xl font-bold text-center mb-8">Explore Communities</h1>
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Explore Communities
+        </h1>
 
         <div className="space-y-4 mb-8">
           <div className="relative">
@@ -57,10 +60,11 @@ export const CommunitiesRoute = () => {
         </div>
 
         {filteredCommunities.length === 0 && (
-          <p className="text-center text-muted-foreground mt-8">No communities found.</p>
+          <p className="text-center text-muted-foreground mt-8">
+            No communities found.
+          </p>
         )}
       </section>
     </MainLayout>
-  )
-}
-
+  );
+};

@@ -12,7 +12,7 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
-  Newspaper
+  Newspaper,
 } from "lucide-react";
 import { useGetNotifications } from "../api/get-notifications";
 import { Notification } from "@/types";

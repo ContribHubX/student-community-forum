@@ -1,25 +1,32 @@
-import { useState } from 'react'
-import { useGetTopics } from "../api"
-import { TopicLibraryCard } from './topic-library-card'
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from "react";
+import { useGetTopics } from "../api";
+import { TopicLibraryCard } from "./topic-library-card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const TopicResource = () => {
-  const { data: topics } = useGetTopics({})
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filter, setFilter] = useState('all')
+  const { data: topics } = useGetTopics({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("all");
 
-  const filteredTopics = topics?.filter(topic => 
-    topic.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (filter === 'all' || topic.category === filter)
-  )
+  const filteredTopics = topics?.filter(
+    (topic) =>
+      topic.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (filter === "all" || topic.category === filter),
+  );
 
   return (
     <div className="container mx-auto px-4 py-8 text-primary-foreground">
       <h1 className="text-4xl font-bold mb-8 text-center">Explore Topics</h1>
-      
+
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <Input
           type="text"
@@ -42,13 +49,13 @@ export const TopicResource = () => {
       </div>
 
       <AnimatePresence>
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {filteredTopics?.map(topic => (
+          {filteredTopics?.map((topic) => (
             <motion.div
               key={topic.id}
               initial={{ opacity: 0, y: 20 }}
@@ -63,13 +70,14 @@ export const TopicResource = () => {
       </AnimatePresence>
 
       {filteredTopics?.length === 0 && (
-        <p className="text-center text-gray-500 mt-8">No topics found. Try adjusting your search or filter.</p>
+        <p className="text-center text-gray-500 mt-8">
+          No topics found. Try adjusting your search or filter.
+        </p>
       )}
 
       <div className="mt-12 text-center">
-        <Button className='text-accent-foreground'>Load More Topics</Button>
+        <Button className="text-accent-foreground">Load More Topics</Button>
       </div>
     </div>
-  )
-}
-
+  );
+};

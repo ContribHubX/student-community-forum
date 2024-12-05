@@ -52,23 +52,26 @@ export const TopicCard = ({
   const handleSelectChange = (value: string) => {
     setPostType(value);
     if (value === "question") {
-      setIsDialogOpen(true); 
+      setIsDialogOpen(true);
     }
   };
 
   const handleFollow = () => {
     follow({
       followerId: userId.toString(),
-      topicId: topic.id
+      topicId: topic.id,
     });
   };
 
   const isUserFollower = () => {
-    return followers?.length ? followers.some(follower => follower.id.toString() === userId.toString()) : false;
-  }
+    return followers?.length
+      ? followers.some(
+          (follower) => follower.id.toString() === userId.toString(),
+        )
+      : false;
+  };
 
   if (!topic || !topic.name) return <p>Loading...</p>;
-
 
   return (
     <Card className="border-none w-full overflow-hidden transition-all duration-300 hover:shadow-lg bg-primary">
@@ -138,4 +141,3 @@ export const TopicCard = ({
     </Card>
   );
 };
-

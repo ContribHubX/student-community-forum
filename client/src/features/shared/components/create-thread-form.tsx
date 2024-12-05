@@ -34,7 +34,7 @@ export const ThreadForm = ({
   initialTitleVal,
   user,
 }: ThreadFormProp) => {
-  const [tags, setTags] = useState<string[]>([])
+  const [tags, setTags] = useState<string[]>([]);
   const [selectedCommunity, setSelectedCommunity] = useState<string>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
@@ -48,13 +48,12 @@ export const ThreadForm = ({
   const title = watch("title", initialTitleVal || thread?.title || "");
 
   useEffect(() => {
-    if (!thread|| !thread.tags) return;
-    
-    setTags([...thread.tags.map(tag => tag.name)])
-    
-  }, [thread, thread?.tags])
+    if (!thread || !thread.tags) return;
 
-  if (!user) return <p>Loading...</p>
+    setTags([...thread.tags.map((tag) => tag.name)]);
+  }, [thread, thread?.tags]);
+
+  if (!user) return <p>Loading...</p>;
 
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
@@ -107,25 +106,22 @@ export const ThreadForm = ({
           <div className="flex py-2 px-3 justify-between rounded-lg items-center gap-3 border dark:border-gray-500">
             <div className="flex items-center gap-3">
               <Avatar>
-                <AvatarImage
-                  src={user.attachment}
-                  className="object-cover"
-                />
+                <AvatarImage src={user.attachment} className="object-cover" />
                 <AvatarFallback />
               </Avatar>
 
               <div className="flex items-start flex-col gap-0">
                 <h2 className="font-semibold">{user.name}</h2>
-                <small className="text-muted-foreground">
-                  {user.email}
-                </small>
+                <small className="text-muted-foreground">{user.email}</small>
               </div>
             </div>
 
             <div>
-              {user.provider === "GOOGLE"
-              ? <FcGoogle className="text-3xl" />
-              : <IoLogoGithub className="text-3xl text-black" /> }
+              {user.provider === "GOOGLE" ? (
+                <FcGoogle className="text-3xl" />
+              ) : (
+                <IoLogoGithub className="text-3xl text-black" />
+              )}
             </div>
           </div>
 

@@ -13,7 +13,7 @@ interface CommentFormProps {
   parentId?: string | undefined;
   placeholder: string;
   isComment?: boolean;
-  onSubmitCallback?: () => void; 
+  onSubmitCallback?: () => void;
 }
 
 export const CommentForm = ({
@@ -21,7 +21,7 @@ export const CommentForm = ({
   parentId,
   placeholder,
   isComment = false,
-  onSubmitCallback
+  onSubmitCallback,
 }: CommentFormProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const { authState } = useAuth();
@@ -47,7 +47,7 @@ export const CommentForm = ({
       createdBy: "",
     });
     setIsFocused(false);
-    
+
     if (onSubmitCallback) onSubmitCallback();
   };
 
@@ -75,7 +75,10 @@ export const CommentForm = ({
   };
 
   return (
-    <form className="text-primary-foreground rounded-lg bg-primary shadow-sm" onSubmit={onSubmit}>
+    <form
+      className="text-primary-foreground rounded-lg bg-primary shadow-sm"
+      onSubmit={onSubmit}
+    >
       <AnimatePresence>
         {isComment || isFocused ? (
           <motion.div

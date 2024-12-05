@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
@@ -14,7 +13,7 @@ export const Threads = () => {
   const { data: threads } = useGetThreads({});
   const navigate = useNavigate();
 
-  if (!authState.user) return <p>Loading...</p>
+  if (!authState.user) return <p>Loading...</p>;
 
   return (
     <div>
@@ -42,7 +41,6 @@ export const Threads = () => {
           Create Thread
         </button>
       </div>
-
 
       <div>
         <ThreadCardList threads={threads || []} />

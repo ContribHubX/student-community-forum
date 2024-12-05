@@ -56,10 +56,9 @@ class ThreadRepository {
    */
   public create(dto: IThreadDto): Promise<IThreadFull | undefined> {
     return new Promise(async (resolve, reject) => {
-      
       try {
         
-        const insertResult = await this.db
+        const insertResult = await this.db  
           .insert(ThreadTable)
           .values({
             ...dto,

@@ -6,10 +6,12 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 export type GetTopicSchema = {
   topicId: string;
   userId: string;
-}
+};
 
 const getTopic = async (data: GetTopicSchema): Promise<Topic> => {
-  const response = await api.get(`/api/topic/${data.topicId}?userId=${data.userId}`);
+  const response = await api.get(
+    `/api/topic/${data.topicId}?userId=${data.userId}`,
+  );
   return response.data;
 };
 
@@ -21,7 +23,7 @@ export const getTopicQueryOptions = (data: GetTopicSchema) => {
 };
 
 export type getTopicQueryConfig = {
-  data: GetTopicSchema
+  data: GetTopicSchema;
   queryConfig?: QueryConfig<typeof getTopic>;
 };
 
