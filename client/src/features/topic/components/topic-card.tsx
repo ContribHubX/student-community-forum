@@ -22,6 +22,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { useFollowTopic } from "../api/follow-topic";
 
 interface TopicCardProp {
   userId: string;
@@ -37,6 +38,7 @@ export const TopicCard = ({
   createThread,
 }: TopicCardProp) => {
   const { data: followers } = useGetTopicFollowers({ topicId: topic.id });
+  const { mutate: follow } = useFollowTopic({});
   const [postType, setPostType] = useState("thread");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -50,9 +52,23 @@ export const TopicCard = ({
   const handleSelectChange = (value: string) => {
     setPostType(value);
     if (value === "question") {
-      setIsDialogOpen(true); // Open the dialog for questions
+      setIsDialogOpen(true); 
     }
   };
+
+  const handleFollow = () => {
+    follow({
+      followerId: userId.toString(),
+      topicId: topic.id
+    });
+  };
+
+  const isUserFollower = () => {
+    return followers?.length ? followers.some(follower => follower.id.toString() === userId.toString()) : false;
+  }
+
+  if (!topic || !topic.name) return <p>Loading...</p>;
+
 
   return (
     <Card className="border-none w-full overflow-hidden transition-all duration-300 hover:shadow-lg bg-primary">
@@ -64,19 +80,30 @@ export const TopicCard = ({
         />
       </CardHeader>
       <CardContent className="p-6 ">
-        <div className="flex items-center justify-between mb-4 ">
+        <div className="flex items-center justify-between mb-1 ">
           <h2 className="text-2xl font-bold">{topic.name}</h2>
           <Badge variant="secondary" className="bg-background">
             Learn and education
           </Badge>
         </div>
-        <div className="flex items-center text-sm text-muted-foreground">
-          <MdOutlineRssFeed className="mr-2" />
-          <span>{followers?.length || 0} Followers</span>
+        <div className="flex  gap-2 flex-col">
+          <div className="flex items-center text-sm text-muted-foreground">
+            <MdOutlineRssFeed className="mr-2" />
+            <span>{followers?.length || 0} Followers</span>
+          </div>
+          <Button
+            variant={"default"}
+            size="sm"
+            onClick={handleFollow}
+            className="transition-all duration-300 text-sm w-fit hover:scale-105 text-accent-foreground disabled:bg-background disabled:text-primary-foreground"
+            disabled={isUserFollower()}
+          >
+            {isUserFollower() ? "Following" : "Follow"}
+          </Button>
         </div>
       </CardContent>
       <CardFooter className="p-6 pt-0 flex justify-between items-center">
-        <div className="mb-4">
+        <div className="">
           <Select onValueChange={handleSelectChange}>
             <SelectTrigger className="hover:bg-accent group ">
               <Button
@@ -111,3 +138,4 @@ export const TopicCard = ({
     </Card>
   );
 };
+

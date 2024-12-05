@@ -72,7 +72,7 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-primary-foreground">
                     {question.createdBy.name}
                   </p>
                   <p className="text-xs text-gray-500">
@@ -95,11 +95,11 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
 
             {/* Question Content */}
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 leading-snug mb-2">
+              <h3 className="text-xl font-semibold text-primary-foreground leading-snug mb-2">
                 {question.title}
               </h3>
               <p
-                className="text-sm text-gray-600 line-clamp-2"
+                className="text-sm text-muted-foreground line-clamp-2"
                 dangerouslySetInnerHTML={{
                   __html: question.content || "<p>No content added yet</p>",
                 }}

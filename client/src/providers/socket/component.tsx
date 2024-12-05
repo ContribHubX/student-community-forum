@@ -86,6 +86,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
     socket.on("recv", (data) => {
       switch (data.eventType) {
         case "thread--new":
+          console.log(data)
           socketDispatch({
             type: OPERATION.ADD_NEW_THREAD,
             payload: { thread: data, queryClient },
@@ -220,6 +221,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "notification--new":
+          console.log(data);
           socketDispatch({
             type: OPERATION.ADD_NEW_NOTIF,
             payload: {
@@ -299,7 +301,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             },
           });
           break;
-        
+
         case "timer--sync":
           socketDispatch({
             type: OPERATION.TIMER_SYNC,

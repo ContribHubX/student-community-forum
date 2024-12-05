@@ -46,9 +46,11 @@ export type BoardNotificationType = "added";
 
 export type QuestionRequestNotificationType = "request";
 
-export type NotificationType = ThreadNotificationType & TaskNotificationType & QuestionRequestNotificationType & BoardNotificationType;
+export type TopicNotificationType = "new";
 
-export type NotificationEntityType = "task" | "thread" | "question" | "board";
+export type NotificationType = ThreadNotificationType & TaskNotificationType & QuestionRequestNotificationType & BoardNotificationType & TopicNotificationType;
+
+export type NotificationEntityType = "task" | "thread" | "question" | "board" | "topic";
 
 export type BoardStatus = "active" | "finished" | "archived"; 
 

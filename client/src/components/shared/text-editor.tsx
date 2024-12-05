@@ -35,6 +35,12 @@ export const TextEditor = ({
   );
 
   useEffect(() => {
+    if (initialContent && initialContent !== value) {
+      setValue(initialContent); 
+    }
+  }, [initialContent]);
+
+  useEffect(() => {
     const parseHtml = () => {
       const div = document.createElement("div");
       div.innerHTML = value;

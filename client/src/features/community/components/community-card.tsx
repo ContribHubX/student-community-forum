@@ -1,28 +1,42 @@
-import { Community } from "@/types";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button"
+import { Community } from "@/types"
+import { Users, ChevronRight } from 'lucide-react'
 
-interface CommunityCardProp {
-  community: Community;
-  rank: number;
+interface CommunityCardProps {
+  community: Community
+  rank: number
 }
 
-export const CommunityCard = ({ community, rank }: CommunityCardProp) => {
+export function CommunityCard({ community, rank }: CommunityCardProps) {
+  const isJoined = false;
+
   return (
-    <div className="flex items-center gap-3 cursor-pointer">
-      <p className="mr-6 text-xs">{rank}</p>
-
-      <Avatar className="w-[40px] h-[40px] rounded-full">
-        <AvatarImage
+    <div className="flex items-center hover:text-accent-foreground text-primary-foreground space-x-4 p-4 bg-background hover:bg-accent transition-colors rounded-lg">
+      <div className="relative flex-shrink-0">
+        <img
           src={community.icon}
-          className="rounded-full object-cover"
+          alt={community.name}
+          className="w-16 h-16 rounded-full object-cover"
         />
-      </Avatar>
-
-      <div className="text-sm">
-        <p className="">c/machinelearning</p>
-        <p className="text-xs">Learning And Education</p>
-        <p className="text-muted-foreground text-xs">20M members</p>
+        <div className="absolute -top-2 -left-2 bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+          {rank}
+        </div>
+      </div>
+      <div className="flex-grow">
+        <h3 className="font-semibold text-lg">{community.name}</h3>
+        <p className="text-muted-foreground text-sm flex items-center">
+          <Users size={14} className="mr-1" />
+          99 members
+        </p>
+        <p className="text-sm line-clamp-1 mt-1">{community.description}</p>
+      </div>
+      <div className="flex-shrink-0 flex items-center space-x-2 ">
+        <Button variant={isJoined ? "outline" : "default"} size="sm" className="text-accent-foreground">
+          {isJoined ? "Leave" : "Join"}
+        </Button>
+        <ChevronRight className="text-muted-foreground" />
       </div>
     </div>
-  );
-};
+  )
+}
+

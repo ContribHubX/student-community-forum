@@ -12,7 +12,7 @@ const getAllQuestions = async (topicId?: string): Promise<Question[]> => {
 export const getQuestionsQueryOptions = (topicId?: string) => {
   return queryOptions({
     queryKey: ["questions", topicId?.toString()],
-    queryFn: () => getAllQuestions(),
+    queryFn: () => getAllQuestions(topicId),
   });
 };
 

@@ -43,7 +43,7 @@ export const Insight = () => {
           </div>
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="w-full text-accent-foreground" size="lg">
+              <Button className="w-full text-accent-foreground" size="sm">
                 <HelpCircle className="mr-2 h-4 w-4" />
                 Ask Now
               </Button>

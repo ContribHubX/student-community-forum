@@ -9,7 +9,6 @@ import { useSocketProvider } from "@/hooks/use-socket-provider";
 import { GroupTimerState } from "@/types";
 import { useEffect, useState } from "react";
 
-
 interface TimerProp {
   roomId: string;
 }
@@ -19,13 +18,18 @@ export const Timer = ({ roomId }: TimerProp) => {
   const [timer, setTimer] = useState<GroupTimerState>({} as GroupTimerState);
 
   useEffect(() => {
-    if (!roomId || !socketState || !socketState.rooms || !socketState.rooms[roomId]) {
+    if (
+      !roomId ||
+      !socketState ||
+      !socketState.rooms ||
+      !socketState.rooms[roomId]
+    ) {
       return;
     }
 
     const time = socketState.rooms[roomId].timer;
-    setTimer({...time})
-  }, [roomId, socketState])
+    setTimer({ ...time });
+  }, [roomId, socketState]);
 
   return (
     <div className="text-sm rounded-2xl bg-primary md:max-w-[261px] shadow-xl   flex flex-col">

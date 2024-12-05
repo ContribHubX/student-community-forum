@@ -88,9 +88,16 @@ const createAppRouter = () =>
           },
         },
         {
+          path: "/topic-library",
+          lazy: async () => {
+            const { TopicLibraryRoute } = await import("./routes/app/topic/topic-library");
+            return { Component: TopicLibraryRoute };
+          },
+        },
+        {
           path: "/topic/:topicId",
           lazy: async () => {
-            const { TopicRoute } = await import("./routes/app/topic");
+            const { TopicRoute } = await import("./routes/app/topic/topic");
             return { Component: TopicRoute };
           },
         },

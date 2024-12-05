@@ -96,6 +96,7 @@ class ThreadRepository {
   }   
 
   public update(dto: IThreadUpdateDto): Promise<IThreadFull | undefined> {
+    console.log(dto.tags)
     return new Promise(async (resolve, reject) => {
       try {
         const thread = await this.findOneById(dto.threadId);
@@ -121,16 +122,22 @@ class ThreadRepository {
         if (!updateResult) 
           return reject(new AppError("Error updating thread", 500));
 
-        // Insert tags if present
+        // Update tags if present
         if (dto.tags && dto.tags.length > 0) {
+
+          // clear tags first
+          await this.db
+            .delete(ThreadTagsTable)
+            .where(eq(ThreadTagsTable.threadId, dto.threadId));
+
           await Promise.all(
             dto.tags.map((tag) =>
               this.db.
-                update(ThreadTagsTable)
-                .set({
-                  name: (tag as any)
+                insert(ThreadTagsTable)
+                .values({
+                  name: (tag as any),
+                  threadId: dto.threadId
                 })
-                .where(eq(ThreadTagsTable.threadId, dto.threadId))
             )
           );
         }

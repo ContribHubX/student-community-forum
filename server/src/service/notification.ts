@@ -42,6 +42,9 @@ class NotificationService {
         } else if (dto.entityType === "board") {
             message = this.getBoardNotificationMessage(dto.type);
             link = `/workspace/${dto.entityId}`;
+        } else if (dto.entityType === "topic") {
+            message = this.getTopicNotificationMessage(dto.type);
+            link = `/topic/${dto.entityId}`;
         }
         
 
@@ -140,6 +143,13 @@ class NotificationService {
      */
     private getQuestionNotificationMessage(actionType: QuestionRequestNotificationType): string {
         return "requested you to answer a question"
+    }
+
+    /**
+     * Utility function
+     */
+     private getTopicNotificationMessage(actionType: QuestionRequestNotificationType): string {
+        return "posted in the topic that you're following"
     }
 }
 

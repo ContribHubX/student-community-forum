@@ -12,6 +12,7 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronUp,
+  Newspaper
 } from "lucide-react";
 import { useGetNotifications } from "../api/get-notifications";
 import { Notification } from "@/types";
@@ -56,6 +57,8 @@ export const NotificationDropdown = ({ userId }: NotificationDropdownProp) => {
         return <Trophy className="h-4 w-4 text-yellow-500" />;
       case "request":
         return <HelpCircle className="h-4 w-4 text-cyan-500" />;
+      case "new":
+        return <Newspaper className="h-4 w-4 text-green-500" />;
       default:
         return <Bell className="h-4 w-4 text-gray-500" />;
     }
@@ -75,7 +78,7 @@ export const NotificationDropdown = ({ userId }: NotificationDropdownProp) => {
         className="w-80 p-0 dark:border-none dark:bg-background bg-primary"
         align="end"
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b">
+        <div className="flex items-center justify-between px-4 py-3 border-b dark:border-0">
           <h2 className="text-sm font-semibold">Notifications</h2>
           <Button variant="ghost" size="sm" onClick={toggleExpand}>
             {isExpanded ? (

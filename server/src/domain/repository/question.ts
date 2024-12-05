@@ -44,7 +44,7 @@ class QuestionRepository {
      * @param questionId - The ID of the question to retrieve.
      * @returns A promise that resolves to the question or undefined if not found.
      */
-    public getById(questionId: string): Promise<IQuestion | undefined> {
+    public getById(questionId: string): Promise<IQuestion | undefined> {    
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await this.db.query.QuestionTable.findFirst({

@@ -47,18 +47,19 @@ export default {
   /**
    * Handler to retrieve a single topic by its ID.
    *
-   * @route GET /topic/:topicId
+   * @route GET /topic
    */
   async getSingleTopicHandler(
     req: Request,
     res: Response,
     next: NextFunction,
   ) {
-    const topicId = req.params.topicId;
+    const topicId = req.params.topicId as string;
+    const userId = req.query.userId as string;
 
     try {
       const topicService = Container.get(TopicService);
-      const topic = await topicService.getTopicById(topicId); 
+      const topic = await topicService.getTopicById({topicId, userId}); 
       res.status(200).json(topic);
     } catch (error: any) {
       next(new AppError(error));

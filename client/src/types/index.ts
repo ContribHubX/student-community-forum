@@ -10,6 +10,7 @@ export type User = Entity<{
   name: string;
   email: string;
   attachment: string;
+  provider?: string;
 }>;
 
 export type Thread = Entity<{
@@ -199,8 +200,8 @@ export type VideoType = {
   time: number;
 };
 
-export type GroupTimerState = {  
-  state: "break" | "focus",
+export type GroupTimerState = {
+  state: "break" | "focus";
   time: number;
   formattedTime: string;
-}
+};

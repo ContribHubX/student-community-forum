@@ -1,17 +1,14 @@
 import { useState } from "react";
-import request from "@/assets/question/request.svg";
 import { FaPencilAlt } from "react-icons/fa";
 import { Question, User } from "@/types";
-
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { SelectRequest } from "./select-request";
-
 import { useCreateThread } from "@/features/shared/api/create-thread";
 import { ThreadForm } from "@/features/shared/components/create-thread-form";
-
 import { useDisclosure } from "@/hooks/use-disclosure";
+import { MessageSquare, Eye, ThumbsUp, ChevronUp } from 'lucide-react';
 
 interface QuestionViewCardProp {
   currentUser: User;
@@ -32,7 +29,6 @@ export const QuestionViewCard = ({
   const { mutate: createThread } = useCreateThread({});
 
   const handleCreateThread = (data: FormData) => {
-    // append question id
     data.append("questionId", question.id);
     createThread(data);
   };
@@ -42,89 +38,110 @@ export const QuestionViewCard = ({
   };
 
   return (
-    <div
-      className="w-full bg-primary rounded-xl p-5
-     shadow-slate-400 shadow-md dark:shadow-gray-900 text-primary-foreground"
-    >
-      {/* render quill */}
-      <div>
-        <h1 className="text-xl font-semibold">{question.title}</h1>
-
-        {/* temporary */}
-        <p className="text-sm mt-4">{question.content}</p>
-      </div>
-
-      <div onClick={toggleReqModal} className="mt-4 w-fit group h-[30px]">
-        <div className="flex items-center gap-3 cursor-pointer">
-          <img src={request} alt="request" />
-          <p className="text-sm self-end">Request</p>
+    <div className="w-full bg-primary rounded-xl p-8 shadow-lg dark:shadow-gray-900 text-primary-foreground transition-all duration-300 hover:shadow-xl">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold">{question.title}</h1>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <MessageSquare className="w-5 h-5" />
+              <span className="text-sm">{question.threads?.length || 0} answers</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Eye className="w-5 h-5" />
+              <span className="text-sm">10 views</span>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`rounded-full hover:accent text-primary-foreground`}
+              onClick={() => ''}
+            > 
+              <ChevronUp className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
-        <div className="h-[2px] w-[17px] bg-accent mt-1 hidden group-hover:block" />
+
+        <div className="prose dark:prose-invert max-w-none">
+        <p
+          className="text-sm text-muted-foreground mb-4"
+          dangerouslySetInnerHTML={{ __html: question.content }}
+        ></p>
+        </div>
+
+        <div className="flex items-center justify-between pt-4 border-t dark:border-muted-foreground border-primary-foreground/10">
+          <Button
+            onClick={toggleReqModal}
+            variant="outline"
+            className="text-sm hover:bg-primary-foreground hover:text-primary transition-colors duration-200"
+          >
+            Request Answer
+          </Button>
+          <AnswerPrompt
+            onHandleClick={handleThreadFormModal}
+            user={currentUser}
+          />
+        </div>
       </div>
 
-      <div className="mt-1 cursor-default">
-        <AnswerPrompt
-          onHandleClick={handleThreadFormModal}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleThreadFormModal}
+        className="p-5 w-[1000px] max-h-[600px]"
+      >
+        <ThreadForm
+          initialTitleVal={question.title}
           user={currentUser}
+          handleFormSubmit={handleCreateThread}
         />
-      </div>
+      </Modal>
 
-      <div>
-        <Modal
-          isOpen={isModalOpen}
-          onClose={handleThreadFormModal}
-          className="p-5 w-[1000px] max-h-[600px]"
-        >
-          <ThreadForm
-            initialTitleVal={question.title}
-            userId={currentUser.id}
-            handleFormSubmit={handleCreateThread}
-          />
-        </Modal>
-      </div>
-
-      <div>
-        <Modal
-          isOpen={isReqModalOpen}
-          onClose={closeReqModal}
-          className="p-5 w-[500px] max-h-[600px]"
-        >
-          <SelectRequest
-            questionId={question.id}
-            currentUserId={currentUser.id}
-          />
-        </Modal>
-      </div>
+      <Modal
+        isOpen={isReqModalOpen}
+        onClose={closeReqModal}
+        className="p-5 w-[500px] max-h-[600px]"
+      >
+        <SelectRequest
+          questionId={question.id}
+          currentUserId={currentUser.id}
+        />
+      </Modal>
     </div>
   );
 };
 
-interface AnswerPrompt {
+interface AnswerPromptProps {
   user: User | undefined;
   onHandleClick: () => void;
 }
 
-const AnswerPrompt = ({ user, onHandleClick }: AnswerPrompt) => {
+const AnswerPrompt = ({ user, onHandleClick }: AnswerPromptProps) => {
   if (!user) return <p>Loading...</p>;
 
   return (
     <div
       onClick={onHandleClick}
-      className="bg-background flex flex-col items-center justify-center gap-3 py-9"
+      className="flex items-center space-x-4 cursor-pointer group"
     >
-      <Avatar className="w-[50px] h-[50px]">
+      <Avatar className="w-10 h-10">
         <AvatarImage src={user.attachment} />
       </Avatar>
       <div>
-        <p>{user.name}, can you answer this question?</p>
-        <p className="text-muted-foreground text-sm">
-          People are searching for a better answer to this question
+        <p className="font-medium group-hover:text-accent transition-colors duration-200">
+          {user.name}, can you answer this?
+        </p>
+        <p className="text-sm text-muted-foreground">
+          Share your knowledge
         </p>
       </div>
-      <Button className="text-accent-foreground text-sm py-1 px-4">
-        <FaPencilAlt />
-        <span>Answer</span>
+      <Button
+        className="bg-accent text-accent-foreground hover:bg-accent/90 transition-colors duration-200"
+        size="sm"
+      >
+        <FaPencilAlt className="mr-2" />
+        Answer
       </Button>
     </div>
   );
 };
+

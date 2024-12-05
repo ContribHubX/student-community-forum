@@ -27,7 +27,7 @@ export const ThreadRoute = () => {
           className="
                     md:ml-[16rem] lg:mr-[22rem]"
         >
-          <div className="space-y-4">
+          <div className="space-y-4 text-primary-foreground">
             <ThreadView thread={thread} />
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold flex items-center gap-2">

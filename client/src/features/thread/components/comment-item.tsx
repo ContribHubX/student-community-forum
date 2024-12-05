@@ -131,6 +131,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
               threadId={comment.threadId}
               parentId={comment.id}
               placeholder="Write your reply..."
+              onSubmitCallback={() => setShowReplyForm(!showReplyForm)}
             />
           </motion.div>
         )}

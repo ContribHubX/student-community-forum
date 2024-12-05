@@ -48,7 +48,7 @@ export const Task = ({ task }: TaskProp) => {
         <img
           src={task.attachment}
           alt="attachment"
-          className="max-h-[160px] object-cover"
+          className="max-h-[160px] w-full object-cover"
         />
       )}
 

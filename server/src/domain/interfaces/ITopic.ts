@@ -24,3 +24,8 @@ export interface ITopicFollowersDto {
     followerId: string;
     topicId: string;
 }
+
+export interface ITopicGetByIdDto {
+    userId?: string;
+    topicId: string;
+}

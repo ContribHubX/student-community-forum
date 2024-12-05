@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createThreadSchema, CreateThreadType } from "../api/create-thread";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FieldValues } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 
 import { BsFillTagsFill } from "react-icons/bs";
+import { IoLogoGithub } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
 
 import { useGetUserCommunities } from "../api/get-user-communities";
 
 import { TextEditor } from "@/components/shared/text-editor";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -17,12 +19,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Thread } from "@/types";
+import { Thread, User } from "@/types";
 
 interface ThreadFormProp {
   thread?: Thread;
   initialTitleVal?: string;
-  userId: string;
+  user: User;
   handleFormSubmit: (data: FormData) => void;
 }
 
@@ -30,15 +32,13 @@ export const ThreadForm = ({
   thread,
   handleFormSubmit,
   initialTitleVal,
-  userId,
+  user,
 }: ThreadFormProp) => {
-  const [tags, setTags] = useState<string[]>([
-    ...(thread?.tags?.map((tag) => tag.name) || []),
-  ] as string[]);
+  const [tags, setTags] = useState<string[]>([])
   const [selectedCommunity, setSelectedCommunity] = useState<string>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
-  const { data: communities } = useGetUserCommunities({ userId: userId });
+  const { data: communities } = useGetUserCommunities({ userId: user.id });
 
   const { register, handleSubmit, setValue, watch } = useForm<CreateThreadType>(
     {
@@ -47,9 +47,18 @@ export const ThreadForm = ({
   );
   const title = watch("title", initialTitleVal || thread?.title || "");
 
+  useEffect(() => {
+    if (!thread|| !thread.tags) return;
+    
+    setTags([...thread.tags.map(tag => tag.name)])
+    
+  }, [thread, thread?.tags])
+
+  if (!user) return <p>Loading...</p>
+
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
-    formData.append("createdBy", userId);
+    formData.append("createdBy", user?.id.toString());
     if (selectedCommunity !== "none" && selectedCommunity !== "") {
       formData.append("communityId", selectedCommunity);
     }
@@ -99,27 +108,27 @@ export const ThreadForm = ({
             <div className="flex items-center gap-3">
               <Avatar>
                 <AvatarImage
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJR87LhAQLHCyOgunM1HObOBjHB9eJPwbBRA&s"
+                  src={user.attachment}
                   className="object-cover"
                 />
+                <AvatarFallback />
               </Avatar>
 
-              <div className="flex items-center flex-col gap-0">
-                <h2 className="font-semibold">Kidla Sherlock</h2>
+              <div className="flex items-start flex-col gap-0">
+                <h2 className="font-semibold">{user.name}</h2>
                 <small className="text-muted-foreground">
-                  kidlat@gmail.com
+                  {user.email}
                 </small>
               </div>
             </div>
 
-            <img
-              src="https://banner2.cleanpng.com/20180610/jeu/aa8r2y6ex.webp"
-              alt="account"
-              className="w-[30px] h-[30px] rounded-full object-cover"
-            />
+            <div>
+              {user.provider === "GOOGLE"
+              ? <FcGoogle className="text-3xl" />
+              : <IoLogoGithub className="text-3xl text-black" /> }
+            </div>
           </div>
 
-          {/* Content Editor Section */}
           <div className="p-6  rounded-lg border dark:border-gray-500 text-sm">
             {/* Community Selector */}
             <h2 className="font-semibold mb-1">Community</h2>
@@ -192,9 +201,9 @@ export const ThreadForm = ({
               />
             </div>
             <div className="flex flex-wrap mt-4 gap-2">
-              {tags.map((tag) => (
+              {tags.map((tag, index) => (
                 <span
-                  key={tag}
+                  key={index}
                   className="flex items-center px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm"
                 >
                   {tag}
@@ -214,7 +223,7 @@ export const ThreadForm = ({
         {/* Submit Button */}
         <div className="flex justify-end mr-5">
           <Button type="submit" className="bg-accent text-accent-foreground">
-            Create Post
+            {thread ? "Edit Post" : "Create Post"}
           </Button>
         </div>
       </form>

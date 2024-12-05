@@ -56,6 +56,9 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
     },
+    fontFamily: {
+      yuji: ["Yuji Mai", "serif"]
+    }
   },
   plugins: [
     require("tailwindcss-animate"),

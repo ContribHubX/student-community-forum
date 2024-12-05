@@ -4,6 +4,10 @@ import { RightSidebar } from "@/components/shared/right-sidebar";
 import { Threads } from "@/features/thread/components";
 import { useAuth } from "@/hooks/use-auth";
 
+// TODO finalize user answer question  
+// TODO make colors in study room constant
+// TODO finalize communities route
+
 export const HomeRoute = () => {
   const { authState } = useAuth();
 
@@ -16,7 +20,7 @@ export const HomeRoute = () => {
         md:ml-[16rem] lg:mr-[22rem]
         "
       >
-        <Threads userId={authState.user.id} />
+        <Threads />
       </section>
     </MainLayout>
   );

@@ -46,7 +46,7 @@ export const Lobby = ({ user }: LobbyProp) => {
 
   return (
     <div>
-      <div className="z-[11] relative flex px-2 flex-col md:flex-row justify-between gap-2 py-2">
+      <div className="z-[11] relative flex px-2 flex-col md:flex-row justify-between gap-2 py-2 mt-12 md:mt-0">
         <UsersPanel users={roomUsers || []} />
         <Activities roomId={roomId || ""} />
       </div>

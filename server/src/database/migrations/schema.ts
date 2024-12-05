@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, AnyMySqlColumn, tinyint, foreignKey, primaryKey, varchar, text, timestamp, mysqlEnum, unique, int, mediumtext, index } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, foreignKey, primaryKey, varchar, text, timestamp, mysqlEnum, unique, int, mediumtext, index } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const board = mysqlTable("board", {
@@ -23,6 +23,20 @@ export const boardMembers = mysqlTable("board_members", {
 (table) => {
 	return {
 		boardMembersId: primaryKey({ columns: [table.id], name: "board_members_id"}),
+	}
+});
+
+export const chat = mysqlTable("chat", {
+	id: varchar({ length: 255 }).notNull(),
+	message: varchar({ length: 255 }).notNull(),
+	type: mysqlEnum(['message','indicator']).default('message'),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
+	createdBy: varchar("created_by", { length: 255 }).notNull(),
+	roomId: varchar("room_id", { length: 255 }),
+},
+(table) => {
+	return {
+		chatId: primaryKey({ columns: [table.id], name: "chat_id"}),
 	}
 });
 
@@ -65,8 +79,8 @@ export const notification = mysqlTable("notification", {
 	message: varchar({ length: 255 }).notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	entityId: varchar("entity_id", { length: 255 }).notNull(),
-	entityType: mysqlEnum("entity_type", ['thread','task','question','board']).notNull(),
-	type: mysqlEnum(['like','dislike','comment','reply','request','added']).notNull(),
+	entityType: mysqlEnum("entity_type", ['thread','task','question','board','topic']).notNull(),
+	type: mysqlEnum(['like','dislike','comment','reply','request','added','new']).notNull(),
 	link: varchar({ length: 255 }).notNull(),
 	isRead: tinyint("is_read"),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
@@ -116,6 +130,21 @@ export const questionVotes = mysqlTable("question_votes", {
 (table) => {
 	return {
 		questionVotesId: primaryKey({ columns: [table.id], name: "question_votes_id"}),
+	}
+});
+
+export const studyRoom = mysqlTable("study_room", {
+	id: varchar({ length: 255 }).notNull(),
+	name: varchar({ length: 100 }).notNull(),
+	description: text(),
+	attachment: text(),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
+	createdBy: varchar("created_by", { length: 255 }).notNull(),
+},
+(table) => {
+	return {
+		studyRoomId: primaryKey({ columns: [table.id], name: "study_room_id"}),
+		studyRoomNameUnique: unique("study_room_name_unique").on(table.name),
 	}
 });
 
@@ -186,6 +215,20 @@ export const threadTags = mysqlTable("thread_tags", {
 (table) => {
 	return {
 		threadTagsId: primaryKey({ columns: [table.id], name: "thread_tags_id"}),
+	}
+});
+
+export const todo = mysqlTable("todo", {
+	id: varchar({ length: 255 }).notNull(),
+	name: varchar({ length: 100 }).notNull(),
+	isDone: tinyint("is_done").default(0),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
+	createdBy: varchar("created_by", { length: 255 }).notNull(),
+},
+(table) => {
+	return {
+		todoId: primaryKey({ columns: [table.id], name: "todo_id"}),
+		todoNameUnique: unique("todo_name_unique").on(table.name),
 	}
 });
 

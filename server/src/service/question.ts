@@ -7,6 +7,7 @@ import { IUser } from "@/domain/interfaces/IUser";
 import EventManager from "@/pubsub/event-manager";
 import NotificationService from "./notification";
 import { NotificationType, QuestionRequestNotificationType } from "@/types";
+import TopicRepository from "@/domain/repository/topic";
 
 @Service()
 class QuestionService {
@@ -19,6 +20,9 @@ class QuestionService {
     @Inject(() => NotificationService)
     private notifService!: NotificationService;
 
+    @Inject(() => TopicRepository)
+    private topicRepo!: TopicRepository;
+
     /**
      * Creates a new question.
      * 
@@ -27,7 +31,27 @@ class QuestionService {
      */
     public async createQuestion(dto: IQuestionDto): Promise<IQuestion | undefined> {
         try {
-            return await this.questionRepo.create(dto);
+            const question =  await this.questionRepo.create(dto);
+
+            if (question?.topicId) {
+                // get followers
+                const followers = await this.topicRepo.getFollowers(question.topicId); 
+
+                await Promise.all([
+                    followers.map(async (follower) => {
+                        await this.notifService.createNotification({
+                            entityId: question.topicId || "",
+                            entityType: "topic",
+                            type: "new" as NotificationType,
+                            createdBy: question.createdBy.id,
+                            receiveBy: follower.id,
+                        });
+                    })
+                ])
+            }
+
+            return question;
+
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

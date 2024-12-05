@@ -6,6 +6,7 @@ export interface IQuestion {
     title: string;
     content: string;
     threads: IThread[];
+    topicId?: string;
     createdAt: Date;
     createdBy: IUser;
 }

@@ -17,10 +17,12 @@ export const UsersPanel = ({ users }: UsersPanelProp) => {
       className="p-3 md:bg-background rounded-2xl 
          md:h-[98vh] flex md:flex-col justify-between md:justify-normal"
     >
-      <div className={`flex items-center gap-5 
+      <div
+        className={`flex items-center gap-5 
           md:flex-col
           md:flex-1
-      `}>
+      `}
+      >
         {users.slice(0, 5).map((user) => (
           <UserTab key={user.id} user={user} />
         ))}

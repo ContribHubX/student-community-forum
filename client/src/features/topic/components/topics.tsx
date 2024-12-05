@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 import { QuestionCardList } from "@/features/shared/components/question-card-list";
 import { ThreadCardList } from "@/features/shared/components/thread-card-list";
-import { sampleQuestions } from "@/features/shared/data/questions";
 import { useCreateQuestion } from "@/features/shared/api/create-question";
 import { Insight } from "@/features/shared/components/insight";
 import { CreateQuestionForm } from "@/features/shared/components/create-question-form";
@@ -35,7 +34,7 @@ export const Topics = ({ userId }: TopicsProp) => {
     isLoading: questionsLoading,
     refetch,
   } = useGetQuestions({ topicId: topicId || "" });
-  const { data: topic } = useGetTopic({ topicId: topicId || "" });
+  const { data: topic } = useGetTopic({ data: {topicId: topicId!, userId: userId!}});
   const { data: threads } = useGetThreadsByTopic({ topicId: topicId || "" });
 
   const handleCreateQuestion = (data: FormData) => {
@@ -52,6 +51,8 @@ export const Topics = ({ userId }: TopicsProp) => {
       refetch();
     }
   }, [refetch, topicId]);
+
+
 
   // temp
   if (!topic || questionsLoading) return <p>Loading...</p>;
@@ -83,7 +84,7 @@ export const Topics = ({ userId }: TopicsProp) => {
       <div className="mt-4 h-full">
         {activeTab === "Answer" ? (
           questions && questions.length > 0 ? (
-            <QuestionCardList questions={sampleQuestions} />
+            <QuestionCardList questions={questions} />
           ) : (
             <Insight />
           )

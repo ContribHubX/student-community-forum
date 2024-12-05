@@ -12,7 +12,7 @@ import { useUpdateThread } from "@/features/thread/api/update-thread";
 export const CreateThreadRoute = () => {
   const { authState } = useAuth();
   const { threadId } = useParams();
-  const { data: thread } = useGetThreadByID(threadId, {});
+  const { data: thread } = useGetThreadByID({threadId: threadId || ""});
   const { mutate: createThread } = useCreateThread({});
   const { mutate: updateThread } = useUpdateThread({});
 
@@ -28,6 +28,7 @@ export const CreateThreadRoute = () => {
     updateThread(data);
   };
 
+
   return (
     <MainLayout LeftSidebar={LeftSidebar}>
       <section
@@ -38,7 +39,7 @@ export const CreateThreadRoute = () => {
         <ThreadForm
           thread={thread}
           handleFormSubmit={handleCreateThread}
-          userId={authState.user.id}
+          user={authState.user}
         />
       </section>
     </MainLayout>

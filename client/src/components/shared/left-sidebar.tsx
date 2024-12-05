@@ -1,93 +1,15 @@
 import newest from "@/assets/sidebar/newest.svg";
 import popular from "@/assets/sidebar/popular.svg";
-import design from "@/assets/sidebar/topics/design.svg";
-import bitcoin from "@/assets/sidebar/topics/bitcoin.svg";
-import innovation from "@/assets/sidebar/topics/innovation.svg";
-import tutorial from "@/assets/sidebar/topics/tutorial.svg";
-import business from "@/assets/sidebar/topics/business.svg";
-import javascript from "@/assets/sidebar/topics/javascript.svg";
-
-import bitcoin2 from "@/assets/sidebar/groups/bitcoin02.svg";
-import blogging from "@/assets/sidebar/groups/blogging.svg";
-import uc from "@/assets/sidebar/groups/uc.svg";
-import uccebu from "@/assets/sidebar/groups/universityofcebu.svg";
 
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { SideBarItem } from "../ui/sidebar-item";
+import { popularTagsData, popularGroupsData } from "@/features/shared/data/topic-group";
+import { useGetTopics } from "@/features/topic/api";
 
-const popularTagsData = [
-  {
-    title: "#javascript",
-    description: "82,645 posts",
-    icon: javascript,
-    iconBgColor: "#5A4F43", // Color for #javascript
-  },
-  {
-    title: "#bitcoin",
-    description: "75,922 posts",
-    icon: bitcoin,
-    iconBgColor: "#473E3B", // Color for #bitcoin
-  },
-  {
-    title: "#design",
-    description: "65,523 posts",
-    icon: design,
-    iconBgColor: "#444F5F", // Color for #design
-  },
-  {
-    title: "#innovation",
-    description: "49,029 posts",
-    icon: innovation,
-    iconBgColor: "#574D42", // Color for #innovation
-  },
-  {
-    title: "#tutorial",
-    description: "65,523 posts",
-    icon: tutorial,
-    iconBgColor: "#335248", // Color for #tutorial
-  },
-  {
-    title: "#business",
-    description: "62,945 posts",
-    icon: business,
-    iconBgColor: "#46475B", // Color for #business
-  },
-];
-
-const popularGroupsData = [
-  {
-    title: "c/universityofcebu",
-    description: "82,645 posts",
-    icon: uccebu,
-    iconBgColor: "white", // Example color
-  },
-  {
-    title: "c/bitcoin",
-    description: "62,845 posts",
-    icon: bitcoin2,
-    iconBgColor: "white", // Example color
-  },
-  {
-    title: "c/programming",
-    description: "62,645 posts",
-    icon: "path/to/programming-icon.svg",
-    iconBgColor: "white", // Example color
-  },
-  {
-    title: "c/blogging",
-    description: "52,645 posts",
-    icon: blogging,
-    iconBgColor: "white", // Example color
-  },
-  {
-    title: "c/uc",
-    description: "82,645 posts",
-    icon: uc,
-    iconBgColor: "#ffffff", // Example color
-  },
-];
 
 export const LeftSidebar = () => {
+  const { data: topics } = useGetTopics({});
+  
   return (
     <SidebarLayout
       className="hidden flex-col gap-6
@@ -126,14 +48,14 @@ export const LeftSidebar = () => {
       >
         <h1>Popular Topics</h1>
 
-        {popularTagsData.map((popularTag, index) => {
+        {topics && topics.length > 0 && topics.slice(0, popularTagsData.length).map((topics, index) => {
           return (
             <SideBarItem
-              key={index}
-              title={popularTag.title}
-              description={popularTag.description}
-              icon={popularTag.icon}
-              iconBgcolor={popularTag.iconBgColor}
+              key={topics.id}
+              title={topics.name}
+              description={popularTagsData[index].description}
+              icon={popularTagsData[index].icon}
+              iconBgcolor={popularTagsData[index].iconBgColor}
             />
           );
         })}

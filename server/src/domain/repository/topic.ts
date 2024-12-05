@@ -2,7 +2,7 @@ import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
 import { TopicTable, TopicFollowersTable } from "@/database/schema/topic";
-import { ITopic, ITopicDto, ITopicFollowersDto, ITopicUserFollow } from "../interfaces/ITopic";
+import { ITopic, ITopicDto, ITopicFollowersDto, ITopicGetByIdDto, ITopicUserFollow } from "../interfaces/ITopic";
 import { AppError } from "@/libs/app-error";
 import { eq, sql } from "drizzle-orm";
 import { IUser } from "../interfaces/IUser";
@@ -34,7 +34,7 @@ class TopicRepository {
 
                 if (!topicId) throw new AppError("Error creating topic", 500);
 
-                const topic = await this.getTopicById(topicId);
+                const topic = await this.getTopicById({topicId});
                 resolve(topic);
             } catch (error: any) {
                 reject(new AppError(error, 500));
@@ -69,7 +69,7 @@ class TopicRepository {
                     columns: {},
                     extras: {
                         followerCount: sql<number>`(
-                            SELECT COUNT(topic_i) FROM topic_followers
+                            SELECT COUNT(topic_id) FROM topic_followers
                             WHERE ${TopicTable.id} = ${TopicFollowersTable.topicId}
                              
                         )`.as("follower_count")
@@ -89,14 +89,25 @@ class TopicRepository {
      * @returns A Promise that resolves with the topic or undefined if not found.
      * @throws AppError if fetching fails.
      */
-    public getTopicById(topicId: string): Promise<ITopic | undefined> {
+    public getTopicById(dto: ITopicGetByIdDto): Promise<ITopic | undefined> {
         return new Promise(async (resolve, reject) => {
             try {
                 const topic = await this.db.query.TopicTable.findFirst({
-                    where: eq(TopicTable.id, topicId),
+                    where: eq(TopicTable.id, dto.topicId),
                     with: { createdBy: true },
+                    extras: {
+                        isFollowing: sql<boolean>`EXISTS (
+                            SELECT 1
+                            FROM ${schema.TopicFollowersTable} 
+                            WHERE topic_id = ${dto.topicId} 
+                            AND follower_id = ${dto.userId}
+                        )`.as("is_following"),
+                    }
                 });
-                resolve(topic as unknown as ITopic);
+                resolve({
+                    ...topic,
+                    isFollowing: topic?.isFollowing || false,
+                } as unknown as ITopic);
             } catch (error: any) {
                 reject(new AppError(error, 500));
             }

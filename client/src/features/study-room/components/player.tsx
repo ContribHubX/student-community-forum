@@ -68,10 +68,12 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
             // Wait for the video to start playing
             const waitForPlayingState = () => {
               const playStartTime = performance.now();
-              const elapsedTime = (playStartTime - startTime) / 1000; 
+              const elapsedTime = (playStartTime - startTime) / 1000;
               setLoadTime(elapsedTime);
 
-              console.log(`Video started playing after ${elapsedTime.toFixed(2)} seconds`);
+              console.log(
+                `Video started playing after ${elapsedTime.toFixed(2)} seconds`,
+              );
 
               // Seek to video.time + elapsedTime
               const seekTime = video.time + elapsedTime;
@@ -85,7 +87,7 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
                 clearInterval(checkStateInterval);
                 waitForPlayingState();
               }
-            }, 100); 
+            }, 100);
           },
           onStateChange: (event: any) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
@@ -120,7 +122,10 @@ export const ScenePlayer = ({ socket, video }: ScenePlayerProps) => {
         <div className="iframe" ref={playerRef}></div>
       </div>
       {loadTime !== null && (
-        <p>Time taken for the video to start playing: {loadTime.toFixed(2)} seconds</p>
+        <p>
+          Time taken for the video to start playing: {loadTime.toFixed(2)}{" "}
+          seconds
+        </p>
       )}
     </Fragment>
   );
