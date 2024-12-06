@@ -16,6 +16,7 @@ import { TopicCard } from "./topic-card";
 import { useGetTopic } from "../api/get-topic";
 import { formDataToObject } from "@/utils";
 import { useGetThreadsByTopic } from "../api/get-threads-by-topic";
+import { toast } from "react-toastify";
 
 interface TopicsProp {
   userId: string;
@@ -27,7 +28,15 @@ export const Topics = ({ userId }: TopicsProp) => {
   const { topicId } = useParams();
   const [activeTab, setActiveTab] = useState<ActiveTabType>("Answer");
   const { isOpen: isModalOpen, close: closeModal } = useDisclosure();
-  const { mutate: createQuestion } = useCreateQuestion({});
+
+  const { mutate: createQuestion } = useCreateQuestion({
+    mutationConfig: {
+      onSuccess: (response) => {
+        toast.success(response.message);
+      },
+    },
+  });
+
   const { mutate: createThread } = useCreateThread({});
   const {
     data: questions,

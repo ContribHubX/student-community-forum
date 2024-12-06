@@ -9,7 +9,7 @@ import { useAuth } from "@/hooks/use-auth";
 // TODO make colors in study room constant
 // TODO finalize communities route
 
-export const HomeRoute = () => {  
+export const HomeRoute = () => {
   const { authState } = useAuth();
 
   if (!authState?.user?.id) return <p>Loading...</p>;

@@ -18,13 +18,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BsFillTagsFill } from "react-icons/bs";
+import { handleFormErrors } from "@/utils";
 
 interface CreateQuestionFormProp {
   initialTopic?: Topic;
   initialTitleVal?: string;
   userId: string;
   handleFormSubmit: (data: FormData) => void;
-} 
+}
 
 export const CreateQuestionForm = ({
   initialTopic,
@@ -34,10 +35,13 @@ export const CreateQuestionForm = ({
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const [tags, setTags] = useState<string[]>([]);
+
   const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
-  const [selectedTopic, setSelectedTopic] = useState<string>(initialTopic?.id || "");
+  const [selectedTopic, setSelectedTopic] = useState<string>(
+    initialTopic?.id || "",
+  );
   const { data: topics } = useGetTopics({});
 
   const onSubmit = (data: FieldValues) => {
@@ -54,8 +58,7 @@ export const CreateQuestionForm = ({
       }
     });
 
-    console.log(formData);
-
+    console.log("hello");
     // Submit the form
     handleFormSubmit(formData);
   };
@@ -82,21 +85,24 @@ export const CreateQuestionForm = ({
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, handleFormErrors)}
       className=" dark:bg-gray-800 rounded-lg  space-y-6 text-primary-foreground"
     >
       {/* Title Input */}
       <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
-        >
-          Title
-        </label>
+        <div>
+          <label
+            htmlFor="title"
+            className={`block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300`}
+          >
+            Title
+          </label>
+        </div>
         <input
           {...register("title")}
           id="title"
-          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 focus:ring-accent focus:border-accent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400"
+          className={`w-full px-4 py-3 rounded-lg border bg-gray-100 dark:bg-gray-700 focus:ring-accent focus:border-accent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400
+            border-gray-300 dark:border-gray-600 `}
           placeholder="Enter your question title..."
           defaultValue={initialTitleVal || ""}
         />
@@ -172,9 +178,7 @@ export const CreateQuestionForm = ({
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === ",") {
                 e.preventDefault();
-                handleTagAddition(
-                  (e.target as HTMLInputElement).value.trim(),
-                );
+                handleTagAddition((e.target as HTMLInputElement).value.trim());
                 (e.target as HTMLInputElement).value = "";
               }
             }}

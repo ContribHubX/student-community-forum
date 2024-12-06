@@ -5,15 +5,30 @@ import { useAuth } from "@/hooks/use-auth";
 
 import { ThreadForm } from "@/features/shared/components/create-thread-form";
 import { useCreateThread } from "@/features/shared/api/create-thread";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetThreadByID } from "@/features/thread/api/get-thread";
 import { useUpdateThread } from "@/features/thread/api/update-thread";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export const CreateThreadRoute = () => {
   const { authState } = useAuth();
+  const navigate = useNavigate();
   const { threadId } = useParams();
   const { data: thread } = useGetThreadByID({ threadId: threadId || "" });
-  const { mutate: createThread } = useCreateThread({});
+  const { mutate: createThread } = useCreateThread({
+    mutationConfig: {
+      onSuccess: () => {
+        navigate("/");
+        toast.success("Thread added successfully");
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+        }
+      },
+    },
+  });
   const { mutate: updateThread } = useUpdateThread({});
 
   if (!authState?.user?.id) return <p>Loading...</p>;

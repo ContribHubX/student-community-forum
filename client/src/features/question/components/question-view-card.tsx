@@ -19,7 +19,6 @@ export const QuestionViewCard = ({
   currentUser,
   question,
 }: QuestionViewCardProp) => {
-
   return (
     <div className="w-full bg-primary rounded-xl p-8 shadow-lg dark:shadow-gray-900 text-primary-foreground transition-all duration-300 hover:shadow-xl">
       <div className="space-y-6">
@@ -75,10 +74,7 @@ export const QuestionViewCard = ({
             </DialogContent>
           </Dialog>
           <div>
-            <AnswerPrompt
-                question={question}
-                user={currentUser}
-            />
+            <AnswerPrompt question={question} user={currentUser} />
           </div>
         </div>
       </div>
@@ -86,25 +82,30 @@ export const QuestionViewCard = ({
   );
 };
 
-
 interface AnswerPromptProps {
   user: User | undefined;
   question: Question;
 }
 
 const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
-  const { mutate: createThread } = useCreateThread({});
+  const { mutate: createThread } = useCreateThread({
+    mutationConfig: {
+      onSuccess: () => {
+        console.log("hello");
+      },
+    },
+  });
 
   const handleCreateThread = (data: FormData) => {
     data.append("questionId", question.id);
     createThread(data);
+
+    console.log("helllo");
   };
   if (!user) return <p>Loading...</p>;
 
   return (
-    <div
-      className="flex items-center space-x-4 cursor-pointer group"
-    >
+    <div className="flex items-center space-x-4 cursor-pointer group">
       <Avatar className="w-10 h-10">
         <AvatarImage src={user.attachment} />
       </Avatar>
@@ -114,7 +115,7 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
         </p>
         <p className="text-sm text-muted-foreground">Share your knowledge</p>
       </div>
-      
+
       <Dialog>
         <DialogTrigger>
           <Button

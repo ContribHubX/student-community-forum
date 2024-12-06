@@ -37,6 +37,8 @@ export const TextEditor = ({
   useEffect(() => {
     if (initialContent && initialContent !== value) {
       setValue(initialContent);
+    } else if (initialContent === "") {
+      setValue(initialContent);
     }
   }, [initialContent]);
 
@@ -56,6 +58,7 @@ export const TextEditor = ({
     parseHtml();
   }, [value]);
 
+  console.log("value: ", value);
   useEffect(() => {
     handleChange(contentData);
   }, [contentData]);

@@ -207,6 +207,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
             variant="ghost"
             size="sm"
             className="flex items-center space-x-1"
+            onClick={() => navigate(`/thread/${thread.id}`)}
           >
             <MessageSquare className="h-4 w-4" />
             <span className="text-sm">19 comments</span>

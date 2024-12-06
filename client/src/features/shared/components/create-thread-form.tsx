@@ -20,6 +20,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Thread, User } from "@/types";
+import { useNavigate } from "react-router-dom";
+import { handleFormErrors } from "@/utils";
 
 interface ThreadFormProp {
   thread?: Thread;
@@ -40,12 +42,16 @@ export const ThreadForm = ({
 
   const { data: communities } = useGetUserCommunities({ userId: user.id });
 
+  const navigate = useNavigate();
+
   const { register, handleSubmit, setValue, watch } = useForm<CreateThreadType>(
     {
       resolver: zodResolver(createThreadSchema),
     },
   );
+
   const title = watch("title", initialTitleVal || thread?.title || "");
+  const content = watch("content", initialTitleVal || thread?.content || "");
 
   useEffect(() => {
     if (!thread || !thread.tags) return;
@@ -71,8 +77,6 @@ export const ThreadForm = ({
       }
     });
 
-    console.log(formData);
-
     handleFormSubmit(formData);
   };
 
@@ -94,12 +98,28 @@ export const ThreadForm = ({
     setTags(tags.filter((t) => t !== tag));
   };
 
+  const handleCancel = () => {
+    const hasUnsavedChanges =
+      title || (content !== "" && content !== "<p><br></p>") || tags.length > 0;
+
+    if (hasUnsavedChanges) {
+      const isDiscard = confirm(
+        "Are you sure you want to discard your unsaved changes?",
+      );
+      if (isDiscard) {
+        navigate("/");
+        return;
+      }
+    }
+
+    navigate("/");
+  };
   // md:grid-cols-[2.5fr_1fr]
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1fr]  gap-4 rounded-lg py-2 ">
       {/* Form Section */}
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, handleFormErrors)}
         className="pb-4 text-primary-foreground bg-primary rounded-lg"
       >
         <div className="p-6  rounded-lg space-y-4">
@@ -156,7 +176,8 @@ export const ThreadForm = ({
               </SelectContent>
             </Select>
 
-            <h2 className="font-semibold mt-3 mb-1">Title</h2>
+            <h2 className="font-semibold mb-1 mt-3">Title</h2>
+
             <input
               {...register("title")}
               className="w-full px-4 py-2 rounded-md outline-none focus:border-accent bg-primary 
@@ -165,7 +186,8 @@ export const ThreadForm = ({
               defaultValue={initialTitleVal || thread?.title || initialTitleVal}
             />
 
-            <h2 className=" font-semibold mt-3 mb-1">Content</h2>
+            <h2 className=" font-semibold mb-1 mt-3">Content</h2>
+
             <TextEditor
               initialContent={thread?.content || ""}
               handleChange={handleContentChange}
@@ -217,7 +239,15 @@ export const ThreadForm = ({
         </div>
 
         {/* Submit Button */}
-        <div className="flex justify-end mr-5">
+        <div className="flex justify-end mr-5 gap-3">
+          <Button
+            onClick={handleCancel}
+            type="button"
+            className="bg-container hover:bg-accent hover:text-accent-foreground  
+            border-2 border-slate-300  dark:border-none"
+          >
+            Cancel
+          </Button>
           <Button type="submit" className="bg-accent text-accent-foreground">
             {thread ? "Edit Post" : "Create Post"}
           </Button>

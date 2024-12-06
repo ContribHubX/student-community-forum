@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 /**
  * @credits ChatGpt
  * Converts base64 to actual file
@@ -98,4 +100,13 @@ export const extractVideoId = (url: string) => {
     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
   const match = url.match(regex);
   return match ? match[1] : null;
+};
+
+// Utility function to get all the errors of zod
+export const handleFormErrors = (errors: Record<string, any>) => {
+  Object.values(errors).forEach((error) => {
+    if (error?.message) {
+      toast.error(error.message);
+    }
+  });
 };

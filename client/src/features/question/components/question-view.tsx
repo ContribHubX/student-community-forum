@@ -9,7 +9,6 @@ import { User } from "@/types";
 
 import { FaEnvelopeOpenText } from "react-icons/fa6";
 
-
 interface QuestionViewProp {
   user: User;
 }
@@ -17,12 +16,14 @@ interface QuestionViewProp {
 export const QuestionView = ({ user }: QuestionViewProp) => {
   const { questionId } = useParams();
   const { data: question } = useGetQuestion({ questionId: questionId || "" });
-  const { data: answers } = useGetQuestionAnswers({ questionId: questionId || "" });
+  const { data: answers } = useGetQuestionAnswers({
+    questionId: questionId || "",
+  });
 
   // temp
   if (!question || !answers) return <p>Loading...</p>;
 
-  console.log(answers)
+  console.log(answers);
 
   return (
     <div>
@@ -37,9 +38,7 @@ export const QuestionView = ({ user }: QuestionViewProp) => {
         </div>
 
         <div className="mt-6">
-          <ThreadCardList 
-            threads={answers}
-          />
+          <ThreadCardList threads={answers} />
         </div>
       </div>
 
