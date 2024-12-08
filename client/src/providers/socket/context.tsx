@@ -10,11 +10,16 @@ import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-user
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType, GroupTimerState } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType, GroupTimerState, Question } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
 import { getNotificationQueryOptions } from "@/features/notification/api/get-notifications";
 import { getChatsQueryOptions } from "@/features/study-room/api/get-chats";
+import { getQuestionsQueryOptions } from "@/features/shared/api/get-all-question";
+import { getQuestionAnswersQueryOptions } from "@/features/question/api/get-question-answers";
+import { getBoardMembersQueryOptions } from "@/features/workspace/api/get-board-members";
+import { getCommunityByIdQueryOptions } from "@/features/community/api/get-community";
+import { getEventsQueryOptions } from "@/features/event/api/get-events";
 ;
 
 export type SocketContextState = {
@@ -35,14 +40,17 @@ export enum OPERATION {
   ADD_NEW_COMMENT,
   ADD_NEW_REACTION,
   ADD_NEW_REQUEST,
+  ADD_NEW_QUESTION,
   ADD_NEW_TOPIC_FOLLOWER,
   ADD_NEW_BOARD,
   ADD_TASK,
   UPDATE_TASK,
+  DELETE_TASK,
   INITIALIZE_BOARDS,
   UPDATE_USER_POSITION,
   INIT_BOARD_USERS,
   ADD_NEW_USER_TO_BOARD,
+  ADD_NEW_MEMBER,
   REMOVE_USER_TO_BOARD,
   ADD_QUESTION_VOTE,
   ADD_NEW_NOTIF,
@@ -53,7 +61,9 @@ export enum OPERATION {
   PLAY_NEXT_VIDEO,
   SYNC_VIDEO_CLOCK,
   PLAY_VIDEO,
-  TIMER_SYNC
+  TIMER_SYNC,
+  JOIN_COMMUNITY,
+  ADD_COMMUNITY_EVENT
 }
 
 type Actions =
@@ -78,6 +88,10 @@ type Actions =
       payload: { request: PendingQuestionRequest; queryClient: QueryClient };
     }
   | {
+      type: OPERATION.ADD_NEW_QUESTION;
+      payload: { question: Question; queryClient: QueryClient };
+    }
+  | {
       type: OPERATION.ADD_NEW_TOPIC_FOLLOWER;
       payload: { data: TopicUserFollow; queryClient: QueryClient };
     }
@@ -94,6 +108,10 @@ type Actions =
     payload: { data: Task; queryClient: QueryClient };
   }
   | {
+    type: OPERATION.DELETE_TASK;
+    payload: { data: Task; queryClient: QueryClient };
+  }
+  | {
     type: OPERATION.INITIALIZE_BOARDS;
     payload: { data: Board[] };
   }
@@ -104,6 +122,10 @@ type Actions =
   | {
     type: OPERATION.ADD_NEW_USER_TO_BOARD;
     payload: { data: BoardState & {boardId: string} };
+  }
+  | {
+    type: OPERATION.ADD_NEW_MEMBER;
+    payload: { data: { member: User, board: Board } , queryClient: QueryClient };
   }
   | {
     type: OPERATION.INIT_BOARD_USERS;
@@ -153,6 +175,14 @@ type Actions =
     type: OPERATION.TIMER_SYNC;
     payload: { time: GroupTimerState, roomId: string };
   }
+  | {
+    type: OPERATION.JOIN_COMMUNITY;
+    payload: { communityId: string, queryClient: QueryClient };
+  }
+  | {
+    type: OPERATION.ADD_COMMUNITY_EVENT;
+    payload: { communityId: string, queryClient: QueryClient };
+  }
 
 
 /**
@@ -187,7 +217,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       const { thread, queryClient } = action.payload;
       
       // TODO this if's statements should be extracted in some helper func para limpyo tan awn yawa!
-      if (!thread.communityId && !thread.topicId && !thread.questionId) {
+      if (!thread.topicId && !thread.questionId) {
         queryClient.setQueryData(
           getThreadsQueryOptions().queryKey,
           (oldThreads: Thread[] | undefined) => {
@@ -203,8 +233,17 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
             return oldUsers ? [...oldUsers, thread.createdBy] : undefined;
           }
         );
+
+        // for answers
+        queryClient.setQueryData(
+          getQuestionAnswersQueryOptions(thread.questionId).queryKey,
+          (oldThreads: Thread[] | undefined) => {
+            return oldThreads ? [thread, ...oldThreads] : undefined;
+          }
+        );
       }
 
+     
       return { ...state };
     }
 
@@ -351,6 +390,22 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
     }
 
     /**
+     * 
+     */
+    case OPERATION.ADD_NEW_QUESTION: { 
+      const { question, queryClient } = action.payload;
+      const qK = question.topic?.id || undefined;
+      queryClient.setQueryData(
+        getQuestionsQueryOptions(qK).queryKey,
+        (oldQuestion: Question[] | undefined) => {
+          return oldQuestion ? [question, ...oldQuestion] : undefined;
+        }
+      );
+
+      return { ...state };      
+    }
+
+    /**
      * Adds a new follower to a topic and updates the followers list in the cache.
      * Updates the query data in the React Query cache for the topic's followers.
      *
@@ -417,6 +472,24 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         getTasksQueryOptions(data.boardId.toString()).queryKey,
         (oldTask: Task[] | undefined) => {
           const updatedTask = oldTask?.map(task => task.id === data.id ? data : task);   
+          return updatedTask;
+        }
+      );
+
+      return { ...state };      
+    }
+
+    /**
+     * 
+     * @param action.payload.data - The board object representing the new board.
+     * @param action.payload.queryClient - The React Query client instance to update the cache.
+     */
+    case OPERATION.DELETE_TASK: { 
+      const { data, queryClient } = action.payload;
+      queryClient.setQueryData(
+        getTasksQueryOptions(data.boardId.toString()).queryKey,
+        (oldTask: Task[] | undefined) => {
+          const updatedTask = oldTask?.filter(task => task.id !== data.id);   
           return updatedTask;
         }
       );
@@ -518,6 +591,22 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       }
       
       return { ...state, boards: updatedBoards };
+    }
+
+     /**
+     * 
+     */
+     case OPERATION.ADD_NEW_MEMBER: {
+      const { data, queryClient } = action.payload;
+    
+      queryClient.setQueryData(
+        getBoardMembersQueryOptions(data.board.id).queryKey,
+        (oldMembers: User[] | undefined) => {   
+          return oldMembers ? [data.member, ...oldMembers] : undefined;
+        }
+      );
+
+      return { ...state };   
     }
 
     /**
@@ -692,7 +781,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       return { ...state, rooms: updatedRooms };   
     }
 
-     /**
+    /**
      * 
      */
     case OPERATION.TIMER_SYNC: { 
@@ -704,6 +793,26 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       
       return { ...state, rooms: updatedRooms };   
     }
+
+    /**
+     * 
+     */
+    case OPERATION.JOIN_COMMUNITY: { 
+      const { communityId, queryClient } = action.payload; 
+      queryClient.invalidateQueries({ queryKey: getCommunityByIdQueryOptions(communityId).queryKey })
+      return { ...state}
+    }
+
+    
+    /**
+     * 
+     */
+    case OPERATION.ADD_COMMUNITY_EVENT: { 
+      const { communityId, queryClient } = action.payload; 
+      queryClient.invalidateQueries({ queryKey: getEventsQueryOptions(communityId).queryKey })
+      return { ...state}
+    }
+
 
     /**
      * Default case: Returns the current state if no matching action type is found.

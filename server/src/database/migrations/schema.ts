@@ -1,4 +1,4 @@
-import { mysqlTable, mysqlSchema, tinyint,  AnyMySqlColumn, foreignKey, primaryKey, varchar, text, timestamp, mysqlEnum, unique, int, mediumtext, index } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, tinyint,AnyMySqlColumn, foreignKey, primaryKey, varchar, text, timestamp, mysqlEnum, unique, int, mediumtext } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const board = mysqlTable("board", {
@@ -18,7 +18,7 @@ export const board = mysqlTable("board", {
 export const boardMembers = mysqlTable("board_members", {
 	id: varchar({ length: 255 }).notNull(),
 	memberId: varchar("member_id", { length: 255 }).notNull().references(() => user.id),
-	boardId: varchar("board_id", { length: 255 }).notNull().references(() => board.id),
+	boardId: varchar("board_id", { length: 255 }).notNull().references(() => board.id, { onDelete: "cascade" } ),
 },
 (table) => {
 	return {
@@ -31,8 +31,8 @@ export const chat = mysqlTable("chat", {
 	message: varchar({ length: 255 }).notNull(),
 	type: mysqlEnum(['message','indicator']).default('message'),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
-	createdBy: varchar("created_by", { length: 255 }).notNull(),
-	roomId: varchar("room_id", { length: 255 }),
+	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
+	roomId: varchar("room_id", { length: 255 }).references(() => studyRoom.id),
 },
 (table) => {
 	return {
@@ -63,8 +63,8 @@ export const community = mysqlTable("community", {
 	id: varchar({ length: 255 }).notNull(),
 	name: varchar({ length: 100 }).notNull(),
 	description: varchar({ length: 255 }),
-	banner: varchar({ length: 255 }),
-	icon: varchar({ length: 255 }),
+	banner: text(),
+	icon: text(),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 },
 (table) => {
@@ -96,10 +96,10 @@ export const question = mysqlTable("question", {
 	id: varchar({ length: 255 }).notNull(),
 	title: varchar({ length: 100 }).notNull(),
 	content: text(),
+	isDownvoted: tinyint("is_downvoted").default(0),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 	topicId: varchar("topic_id", { length: 255 }).references(() => topics.id),
-	isDownvoted: tinyint("is_downvoted").default(0),
 },
 (table) => {
 	return {
@@ -139,7 +139,7 @@ export const studyRoom = mysqlTable("study_room", {
 	description: text(),
 	attachment: text(),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
-	createdBy: varchar("created_by", { length: 255 }).notNull(),
+	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 },
 (table) => {
 	return {
@@ -154,10 +154,10 @@ export const task = mysqlTable("task", {
 	description: text(),
 	attachment: text(),
 	status: mysqlEnum(['todo','doing','finished']).default('todo'),
+	sequence: int(),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
 	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
-	boardId: varchar("board_id", { length: 255 }).notNull().references(() => board.id),
-	sequence: int(),
+	boardId: varchar("board_id", { length: 255 }).notNull().references(() => board.id, { onDelete: "cascade" } ),
 },
 (table) => {
 	return {
@@ -168,7 +168,7 @@ export const task = mysqlTable("task", {
 export const taskAssignee = mysqlTable("task_assignee", {
 	id: varchar({ length: 255 }).notNull(),
 	assigneeId: varchar("assignee_id", { length: 255 }).notNull().references(() => user.id),
-	taskId: varchar("task_id", { length: 255 }).notNull().references(() => task.id),
+	taskId: varchar("task_id", { length: 255 }).notNull().references(() => task.id, { onDelete: "cascade" } ),
 },
 (table) => {
 	return {
@@ -202,7 +202,6 @@ export const threadReaction = mysqlTable("thread_reaction", {
 },
 (table) => {
 	return {
-		threadTagsThreadIdThreadIdFk: index("thread_tags_thread_id_thread_id_fk").on(table.threadId),
 		threadReactionId: primaryKey({ columns: [table.id], name: "thread_reaction_id"}),
 	}
 });
@@ -210,7 +209,7 @@ export const threadReaction = mysqlTable("thread_reaction", {
 export const threadTags = mysqlTable("thread_tags", {
 	id: varchar({ length: 255 }).notNull(),
 	name: varchar({ length: 50 }).notNull(),
-	threadId: varchar("thread_id", { length: 255 }),
+	threadId: varchar("thread_id", { length: 255 }).references(() => thread.id),
 },
 (table) => {
 	return {
@@ -223,7 +222,7 @@ export const todo = mysqlTable("todo", {
 	name: varchar({ length: 100 }).notNull(),
 	isDone: tinyint("is_done").default(0),
 	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
-	createdBy: varchar("created_by", { length: 255 }).notNull(),
+	createdBy: varchar("created_by", { length: 255 }).notNull().references(() => user.id),
 },
 (table) => {
 	return {
@@ -269,10 +268,4 @@ export const user = mysqlTable("user", {
 	return {
 		userId: primaryKey({ columns: [table.id], name: "user_id"}),
 	}
-});
-
-export const userCommunities = mysqlTable("user_communities", {
-	userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id),
-	communityId: varchar("community_id", { length: 255 }).notNull().references(() => community.id),
-	joinedAt: timestamp("joined_at", { mode: 'string' }).default(sql`(now())`),
 });

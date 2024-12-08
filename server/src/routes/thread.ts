@@ -46,6 +46,8 @@ export default (app: Router) => {
 
   router.get("/topic/:topicId", verifyAuth, threadController.getAllThreadsByTopicHandler); 
 
+  router.get("/community/:communityId", verifyAuth, threadController.getAllThreadsByCommunityHandler); 
+
   router.get("/comment/:threadId", verifyAuth, threadReactionController.getCommentsHandler);
   
 } ;

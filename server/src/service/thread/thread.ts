@@ -93,6 +93,21 @@ class ThreadService {
     }
     
   }
+
+  
+  /**
+   * 
+   * @returns 
+   */
+  public async getAllThreadByCommunity(communityId: string): Promise<IThreadFull[] | undefined> {
+    try {
+       return await this.threadRepo.getAllByCommunity(communityId);
+    } catch (error: any) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error getting threads");
+    }
+    
+  }
 }
 
 export default ThreadService;

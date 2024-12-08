@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useGetVotes } from "@/features/question/api/get-votes";
 import { useCreateVote } from "@/features/question/api/vote";
+import { Badge } from "@/components/ui/badge";
+
 
 interface QuestionCardProp {
   currentUserId: string;
@@ -20,8 +22,8 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
   const { data: votes } = useGetVotes({
     data: { userId: currentUserId.toString(), questionId: question.id },
   });
-  const { mutate: createVote } = useCreateVote({});
 
+  const { mutate: createVote } = useCreateVote({});
   const handleCreateVote = (vote: "up" | "down") => {
     createVote({
       userId: currentUserId,
@@ -44,7 +46,7 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
             >
               <ChevronUp className="h-5 w-5" />
             </Button>
-            <span className="text-lg font-bold text-gray-700">
+            <span className="text-lg font-bold text-muted-foreground">
               {votes?.upvoteCount || 0}
             </span>
             <Button
@@ -61,7 +63,7 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
           <div className="flex-1 space-y-4">
             {/* Header */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+              <div className="flex items-start space-x-4">
                 <Avatar className="h-10 w-10">
                   <AvatarImage
                     src={question.createdBy.attachment}
@@ -82,6 +84,22 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
                     )}
                   </p>
                 </div>
+                {question?.topic && (
+                <Badge
+                  variant="secondary"
+                  className="flex items-center gap-1 px-2 py-1 ml-auto dark:bg-background cursor-pointer"
+                  onClick={() => navigate(`/topic/${question.topic?.id}`)}
+                >
+                  {question?.topic.attachment && (
+                    <img
+                      src={question.topic?.attachment}
+                      alt={`${question.topic?.name} icon`}
+                      className="w-4 h-4 rounded-full"
+                    />
+                  )}
+                  <span>{question?.topic.name}</span>
+                </Badge>
+              )}
               </div>
               <Button
                 variant="outline"

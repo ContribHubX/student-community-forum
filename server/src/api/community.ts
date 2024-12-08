@@ -17,8 +17,8 @@ export default {
     ) {
         const body = req.body;
         
-        const bannerFile = (req.files as any)?.banner[0].path; 
-        const iconFile = (req.files as any)?.icon[0].path;  
+        const bannerFile = (req.files as any)?.banner[0]?.path; 
+        const iconFile = (req.files as any)?.icon[0]?.path;  
 
         try {
             if (bannerFile || iconFile) {
@@ -112,6 +112,27 @@ export default {
         try {
             const communityService = Container.get(CommunityService);
             const response = await communityService.getAllCommunities();
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    /**
+     * Handler to retrieve all members
+     *
+     * @route GET /community/members/:communityId
+     */
+    async getCommunityMembersHandler(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
+        const communityId = req.params.communityId;
+
+        try {
+            const communityService = Container.get(CommunityService);
+            const response = await communityService.getCommunityMembers(communityId);
             res.status(200).json(response);
         } catch (error: any) {
             next(new AppError(error));

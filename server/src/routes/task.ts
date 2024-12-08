@@ -19,5 +19,7 @@ export default (app: Router) => {
 
   router.get("/", verifyAuth, taskController.getAllTasksHandler);
 
-  router.put("/:taskId", verifyAuth, taskController.updateTaskHandler);
+  router.put("/:taskId", verifyAuth, uploadThread.single("attachment"), taskController.updateTaskHandler);
+
+  router.delete("/:taskId", verifyAuth, taskController.deleteTasksHandler);
 }

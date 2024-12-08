@@ -25,3 +25,8 @@ export interface IBoardMemberDto {
     memberId: string;
     boardId: string;
 }
+
+export interface IBoardUpdateNameDto {
+    boardId: string;
+    name: string;
+}

@@ -28,6 +28,7 @@ export interface ITaskDto {
 export interface ITaskUpdateDto extends ITaskDto {
     taskId: string;
     sequence: number;
+    isDragUpdate: boolean;
 }
 
 

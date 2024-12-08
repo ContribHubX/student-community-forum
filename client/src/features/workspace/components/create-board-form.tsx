@@ -1,19 +1,16 @@
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-import {
-  createBoardSchema,
-  CreateBoardType,
-  useCreateBoard,
-} from "../api/create-board";
+import { motion } from 'framer-motion';
+import { createBoardSchema, CreateBoardType, useCreateBoard } from "../api/create-board";
 
 interface CreateBoardFormProp {
   userId: string | undefined;
 }
 
 export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,46 +21,48 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
   });
   const { mutate: createBoard } = useCreateBoard({});
 
-  const onSubmit: SubmitHandler<CreateBoardType> = async (
-    data: CreateBoardType,
-  ) => {
-    // if (errors) {
-
-    // }
-    // validate
+  const onSubmit: SubmitHandler<CreateBoardType> = async (data: CreateBoardType) => {
+    setIsSubmitting(true);
     createBoard({ ...data, createdBy: (userId || "").toString() });
-
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsSubmitting(false);
     reset();
   };
 
-  if (errors.name) {
-    console.log(errors.name.message);
-  }
   return (
-    <form
-      action=""
-      className="space-y-10 w-full font-light text-base"
+    <motion.form
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative space-y-8 w-full max-w-md mx-auto p-8 rounded-lg text-primary-foreground"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <fieldset className="space-y-1">
-        <div className="text-primary-foreground mb-6">
-          <div className="flex  flex-col">
-            <label className="font-semibold text-lg">Name</label>
-            <small className="text-muted-foreground">Project name</small>
-          </div>
-          <div>
-            <input
-              {...register("name")}
-              className=" mt-2 w-full border-b-2 py-2 outline-none focus:border-accent bg-background px-3"
-            />
-          </div>
-        </div>
+      <div className="">
+        <input
+          {...register("name")}
+          className="w-full px-4 py-2 rounded-md border border-input bg-background text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary transition duration-200"
+          placeholder="Enter board name"
+        />
+        {errors.name && (
+          <p className="text-sm text-destructive">{errors.name.message}</p>
+        )}
+      </div>
 
-        <Button className="text-sm font-normal w-full rounded-sm bg-background  hover:bg-accent hover:text-accent-foreground">
-          Continue
-        </Button>
-      </fieldset>
-    </form>
+      <Button 
+        type="submit"
+        className="w-full py-2 px-4 text-primary-foreground hover:bg-accent bg-background hover:text-accent-foreground rounded-md transition duration-200 ease-in-out"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? (
+          <motion.div
+            className="h-5 w-5 rounded-full animate-spin"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+        ) : (
+          'Create Board'
+        )}
+      </Button>
+    </motion.form>
   );
 };

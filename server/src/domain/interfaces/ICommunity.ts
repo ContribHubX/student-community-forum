@@ -29,7 +29,24 @@ export interface ICommunityRule {
 
 export interface ICommunityEvent {
   id: string;
-  description: string;
+  name: string;
   eventDate: Date;
+  tags: ICommunityEventTags[];
+  createdBy: IUser;
+  communityId: string;
+}
+
+export interface ICommunityEventDto {
+  name: string;
+  eventDate: Date;
+  tags: ICommunityEventTags[];
+  createdBy: string;
+  communityId: string;
+}
+
+export interface ICommunityEventTags {
+  id: string;
+  name: string;
+  communityEventId: string;
 }
 

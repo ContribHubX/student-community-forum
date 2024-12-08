@@ -11,6 +11,7 @@ interface QuestionCardListProp {
 export const QuestionCardList = ({ questions }: QuestionCardListProp) => {
   const { authState } = useAuth();
 
+
   return (
     <div>
       <div className="text-primary-foreground flex items-center gap-4 bg-primary rounded-md p-3 my-4">
@@ -24,8 +25,9 @@ export const QuestionCardList = ({ questions }: QuestionCardListProp) => {
         {questions.map((question) => (
           <QuestionCard
             key={question.id}
-            currentUserId={authState?.user?.id || ""}
             question={question}
+            currentUserId={authState?.user?.id || ""}
+    
           />
         ))}
       </div>

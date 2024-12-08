@@ -1,21 +1,36 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { MainLayout } from "@/components/layouts/layout";
 import { CommunityCard } from "@/features/community/components/community-card";
-import { communities } from "@/features/shared/data/communities";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Search, Filter } from "lucide-react";
+import { useGetCommunities } from "@/features/community/api/get-communities";
+import { useAuth } from "@/hooks/use-auth";
+import { CommunityWithMembers } from "@/types";
 
 export const CommunitiesRoute = () => {
+  const { authState } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const [showJoinedOnly, setShowJoinedOnly] = useState(false);
-  const isJoin = false;
+  const { data: communities } = useGetCommunities({});
+  
+  const isJoined = (community: CommunityWithMembers) => {
+    const userId = authState?.user?.id;
+    if (!userId) return false; 
+    return community.members.some((member) => member.user.id === userId);
+  }
 
-  const filteredCommunities = communities.filter(
-    (community) =>
-      community.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!showJoinedOnly || isJoin),
+  const filteredCommunities = communities?.filter(
+    (community) => {
+      const matchesSearch = community.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+      const matchesFilter = showJoinedOnly ? isJoined(community) : true
+      return matchesSearch && matchesFilter;
+      
+    }
   );
 
   return (
@@ -50,7 +65,7 @@ export const CommunitiesRoute = () => {
         </div>
 
         <div className="space-y-4">
-          {filteredCommunities.map((community, index) => (
+          {filteredCommunities?.map((community, index) => (
             <CommunityCard
               key={community.id}
               community={community}
@@ -59,7 +74,7 @@ export const CommunitiesRoute = () => {
           ))}
         </div>
 
-        {filteredCommunities.length === 0 && (
+        {filteredCommunities?.length === 0 && (
           <p className="text-center text-muted-foreground mt-8">
             No communities found.
           </p>

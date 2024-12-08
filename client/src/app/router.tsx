@@ -164,6 +164,13 @@ const createAppRouter = () =>
             return { Component: StudyRoomRoute };
           },
         },
+        {
+          path: "/event",
+          lazy: async () => {
+            const { EventRoute } = await import("./routes/app/event/event");
+            return { Component: EventRoute };
+          },
+        },
       ],
     },
   ]);

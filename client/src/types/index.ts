@@ -64,14 +64,24 @@ export type CommunityWithMembers = Community & {
       user: User;
     },
   ];
+  // members: User[]
 };
+
+export type CommunityTab = "Threads" | "Events" | "Members" |"Media";
+
+export type CommunityEvent = Entity<{
+  name: string;
+  eventDate: Date;
+  tags: string[];
+  communityId: string;
+}>
 
 export type Topic = Entity<{
   name: string;
   attachment: string;
   createdBy: User | null;
   followerCount: number;
-}>;
+}>; 
 
 export type TopicUserFollow = {
   user: User;

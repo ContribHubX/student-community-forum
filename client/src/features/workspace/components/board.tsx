@@ -1,15 +1,19 @@
-import { FaEllipsisH } from "react-icons/fa";
+import { FaEllipsisH, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import { FlexContainer } from "@/components/ui/flex-container";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 
 import { users } from "@/features/shared/data/users";
 import { statusColors } from "../constant";
 
 import { useTheme } from "@/hooks/use-theme";
 import { Board as BoardType } from "@/types";
+import { useDeleteBoard } from "../api/delete-board";
+import { useQueryClient } from "@tanstack/react-query";
+import { getBoardsQueryOptions } from "../api/get-all-boards";
 
 interface BoardProp {
   board: BoardType;
@@ -18,12 +22,19 @@ interface BoardProp {
 export const Board = ({ board }: BoardProp) => {
   const { text, background } = statusColors[board.status];
   const { isDark } = useTheme();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+  const queryClient = useQueryClient();
+  const { mutate: deleteBoard } = useDeleteBoard({
+    mutationConfig: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getBoardsQueryOptions(board.createdBy.id).queryKey })
+      }
+    }
+  });
 
   return (
     <div
       className="h-[200px] rounded-md bg-primary p-3 text-primary-foreground  transition-shadow duration-300 shadow-md"
-      onClick={() => navigate(`/workspace/${board.id}`)}
       // onMouseEnter={(e) => {
       //     e.currentTarget.style.boxShadow = `0px 0px 10px 1px ${text}`;
       // }}
@@ -42,10 +53,37 @@ export const Board = ({ board }: BoardProp) => {
         >
           {board.status}
         </small>
-        <FaEllipsisH className="text-muted-foreground" />
+        <Popover>
+          <PopoverTrigger>
+            <FaEllipsisH className="text-muted-foreground" />
+          </PopoverTrigger>
+          <PopoverContent className="w-[100px] p-0 bg-background rounded-md">
+            <div className="p-2">
+              {(
+                <>
+                  <span
+                    className="rounded-md cursor-pointer p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => ''}
+                  >
+                    <FaTrashAlt className="text-sm" />
+                    <p 
+                      className="text-[.8rem]"
+                      onClick={() => deleteBoard(board.id)}
+                    >
+                      Delete
+                    </p>
+                  </span>
+                </>
+              )}
+            </div>
+          </PopoverContent>
+        </Popover>
       </FlexContainer>
 
-      <div className="ml-1">
+      <div 
+        className="ml-1 cursor-pointer"
+        onClick={() => navigate(`/workspace/${board.id}`)}
+      >
         <FlexContainer className="gap-4 mt-5">
           <div
             className="rounded-full w-[10px] h-[10px]"
@@ -78,3 +116,6 @@ export const Board = ({ board }: BoardProp) => {
     </div>
   );
 };
+
+
+

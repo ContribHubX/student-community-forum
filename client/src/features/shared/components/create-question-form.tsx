@@ -25,6 +25,7 @@ interface CreateQuestionFormProp {
   initialTitleVal?: string;
   userId: string;
   handleFormSubmit: (data: FormData) => void;
+  taggable?: boolean;
 }
 
 export const CreateQuestionForm = ({
@@ -32,6 +33,7 @@ export const CreateQuestionForm = ({
   handleFormSubmit,
   initialTitleVal,
   userId,
+  taggable = false
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const [tags, setTags] = useState<string[]>([]);
@@ -48,7 +50,9 @@ export const CreateQuestionForm = ({
     const formData = new FormData();
     formData.append("createdBy", userId);
     formData.append("topicId", selectedTopic || "");
-    formData.append("tags", JSON.stringify(tags));
+
+    if (taggable) 
+      formData.append("tags", JSON.stringify(tags));
 
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
@@ -166,6 +170,7 @@ export const CreateQuestionForm = ({
       </div>
 
       {/* Tag section */}
+      {taggable && (
       <div className="p-6 border dark:border-gray-500 rounded-lg">
         <h3>Tags</h3>
         <div className="flex items-center border rounded-md mt-2 dark:border-gray-500">
@@ -202,6 +207,7 @@ export const CreateQuestionForm = ({
           ))}
         </div>
       </div>
+      )}
 
       {/* Submit Button */}
       <div className="flex justify-end">

@@ -62,7 +62,8 @@ class ThreadRepository {
           .insert(ThreadTable)
           .values({
             ...dto,
-            communityId: dto.communityId === "" ? null : dto.communityId 
+            communityId: dto.communityId === "" ? null : dto.communityId,
+            topicId: dto.topicId === "" || !dto.topicId ? null : dto.communityId 
           })
           .$returningId();
 
@@ -199,6 +200,33 @@ class ThreadRepository {
             createdBy: true,
           },
           where: eq(ThreadTable.topicId, topicId),
+          orderBy: [desc(ThreadTable.createdAt)],
+        });
+
+        resolve(result as unknown as IThreadFull[]);
+      } catch (error: any) {
+        reject(new AppError(error || "Database error"));
+      }
+    });
+  }
+
+  /**
+   * Fetches all threads by topic from the database.
+   * 
+   * @returns {Promise<IThreadFull[]>} A list of all threads.
+   * @throws {AppError} If a database error occurs.
+   */
+  public getAllByCommunity(communityId: string): Promise<IThreadFull[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await this.db.query.ThreadTable.findMany({
+          extras: {
+            ...this.threadReactionExtras(),
+          },
+          with: {
+            createdBy: true,
+          },
+          where: eq(ThreadTable.communityId, communityId),
           orderBy: [desc(ThreadTable.createdAt)],
         });
 

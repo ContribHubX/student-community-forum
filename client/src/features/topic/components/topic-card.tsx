@@ -43,8 +43,6 @@ export const TopicCard = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleSubmit = (data: FormData) => {
-    data.append("topicId", topic.id || "");
-
     if (postType === "thread") createThread(data);
     else createQuestion(formDataToObject(data) as CreateQuestionType);
   };

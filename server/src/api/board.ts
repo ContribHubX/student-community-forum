@@ -95,5 +95,22 @@ export default {
         } catch (error: any) {
             next(new AppError(error));
         }
+    },
+    
+    /**
+     * Handler to adda new member to a board
+     * 
+     * @route DELETE /boards/:boardId
+     */
+    async deleteBoardHandler(req: Request, res: Response, next: NextFunction) {
+        const boardId = req.params.boardId;
+
+        try {
+            const boardService = Container.get(BoardService);
+            const response = await boardService.deleteBoard(boardId);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
     }
 };

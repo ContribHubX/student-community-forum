@@ -3,18 +3,14 @@ import Container, { Inject, Service } from "typedi";
 import * as schema from "@/database/schema";
 import { BoardTable } from "@/database/schema";
 import { BoardMembersTable } from "@/database/schema";
-import { IBoard, IBoardDto, IBoardMember, IBoardMemberDto } from "../interfaces/IBoard";
+import { IBoard, IBoardDto, IBoardMember, IBoardMemberDto, IBoardUpdateNameDto } from "../interfaces/IBoard";
 import { eq } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import { IUser } from "../interfaces/IUser";
-import UserRepository from "./user";
 
 @Service()
 class BoardRepository {
     private db: MySql2Database<typeof schema>;
-
-    @Inject(() => UserRepository)
-    private userRepo!: UserRepository;
 
     constructor() {
         this.db = Container.get("database");
@@ -150,11 +146,15 @@ class BoardRepository {
                     where: eq(BoardMembersTable.boardId, boardId),
                     columns: {},
                     with: {
-                        member: true
+                        member: true,
+                        board: true
                     },
                 });
+                
+                // extract owner
+                const board = await this.getById(boardId);
 
-                resolve(result.map(res => res.member) as unknown as IUser[]);
+                resolve([...result.map(res => res.member), board?.createdBy] as unknown as IUser[]);
             } catch (error: any) {
                 reject(new AppError(error));
             }
@@ -177,6 +177,52 @@ class BoardRepository {
                 });
 
                 resolve(result.map(res => res.board) as unknown as IBoard[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+    
+    public delete(boardId: string): Promise<IBoard | undefined> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                // check if the board exist
+                const board = await this.getById(boardId);
+
+                if (!board) return reject(new AppError("Board doesn't exist", 404));
+
+                // delete first in board members 
+                await this.db
+                    .delete(BoardMembersTable)
+                    .where(eq(BoardMembersTable.boardId, boardId));
+
+                await this.db
+                    .delete(BoardTable)
+                    .where(eq(BoardTable.id, boardId));
+
+                resolve(board);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    public updateName(dto: IBoardUpdateNameDto): Promise<IBoard | undefined> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                // check if the board exist
+                const board = await this.getById(dto.boardId);
+
+                if (!board) return reject(new AppError("Board doesn't exist", 404));
+
+                await this.db
+                    .update(BoardTable)
+                    .set({
+                        name: dto.name
+                    })
+                    .where(eq(BoardTable.id, dto.boardId));
+
+                resolve(board);
             } catch (error: any) {
                 reject(new AppError(error));
             }

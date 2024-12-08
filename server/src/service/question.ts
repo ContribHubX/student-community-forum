@@ -6,7 +6,7 @@ import { IThread } from "@/domain/interfaces/IThread";
 import { IUser } from "@/domain/interfaces/IUser";
 import EventManager from "@/pubsub/event-manager";
 import NotificationService from "./notification";
-import { NotificationType, QuestionRequestNotificationType } from "@/types";
+import { NotificationType } from "@/types";
 import TopicRepository from "@/domain/repository/topic";
 
 @Service()
@@ -32,6 +32,7 @@ class QuestionService {
     public async createQuestion(dto: IQuestionDto): Promise<IQuestion | undefined> {
         try {
             const question =  await this.questionRepo.create(dto);
+            this.eventManager.publishToMany<IQuestion>("question--new", question);
 
             if (question?.topicId) {
                 // get followers
