@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from "react";
 
 import { FlexContainer } from "@/components/ui/flex-container";
 import {
@@ -16,29 +17,56 @@ import { BsPeople } from "react-icons/bs";
 import { FiPlus } from "react-icons/fi";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useGetBoardMembers } from "../api/get-board-members";
-import { TaskStatusType, User } from "@/types";
+import { Task, TaskStatusType, User } from "@/types";
 import { CreateTaskSchema, useCreateTask } from "../api/create-task";
+import { UpdateTaskType, useUpdateTask } from "../api/update-task";
+import { extractFileName, formDataToObject } from "@/utils";
 
 interface TaskFormProp {
-  currentUserId: string;
+  currentUserId?: string;
   boardId: string;
   type: string;
+  initialTask?: Task;
+  onCancel?: () => void;
 }
 
-export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
+export const TaskForm = ({ currentUserId, boardId, type, initialTask, onCancel }: TaskFormProp) => {
   const { isDark } = useTheme();
   const { data: members } = useGetBoardMembers({ boardId: boardId || "" });
   const { mutate: createTask } = useCreateTask({});
+  const { mutate: updateTask } = useUpdateTask({});
+  const [fileName, setFileName] = useState("");
+
+  console.log(members)
 
   const [formState, setFormState] = useState<CreateTaskSchema>({
     name: "",
     description: "",
     attachment: null,
     status: type as TaskStatusType,
-    createdBy: currentUserId,
+    createdBy: currentUserId || "",
     assignees: [],
     boardId,
   });
+
+  useEffect(() => {
+    if (initialTask) {
+      setFormState({
+        name: initialTask.name || "",
+        description: initialTask.description || "",
+        attachment: null,
+        status: initialTask.status || (type as TaskStatusType),
+        createdBy: initialTask.createdBy.id || currentUserId || "",
+        assignees: initialTask.assignees || [],
+        boardId: initialTask.boardId || boardId,
+      });
+    }
+    
+    if (initialTask?.attachment !== "" && initialTask?.attachment !== undefined) {
+      setFileName(extractFileName(initialTask?.attachment))
+    }
+  }, [initialTask, type, currentUserId, boardId]);
+
 
   const { text, background } =
     statusColors[
@@ -51,6 +79,7 @@ export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
+    setFileName(file?.name || ""); 
     handleInputChange("attachment", file);
   };
 
@@ -77,13 +106,17 @@ export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
     formData.append("description", formState.description);
     formData.append("attachment", formState.attachment || "");
     formData.append("status", type);
-    formData.append("createdBy", currentUserId);
+    formData.append("createdBy", currentUserId || "");
     formData.append("assignees", JSON.stringify(formState.assignees));
     formData.append("boardId", boardId);
 
-    console.log("FormData:", formData);
     // Submit formData via an API request
-    createTask(formData);
+    if (!initialTask)
+      createTask(formData);
+    else 
+      updateTask({...formDataToObject(formData), taskId: initialTask.id, sequence: initialTask.sequence, isDragUpdate: false} as UpdateTaskType);
+
+    console.log(formData)
   };
 
   return (
@@ -189,21 +222,31 @@ export const TaskForm = ({ currentUserId, boardId, type }: TaskFormProp) => {
         <div className="flex gap-3 items-center w-full">
           <CgAttachment className="text-xl" />
           <label className="outline-none w-full  p-2 bg-background rounded-md cursor-pointer flex items-center gap-2">
-            <span className="text-gray-500">Attach a file</span>
+            <span className="text-gray-500">{fileName !== "" ? fileName : "Attach a file"}</span>
             <input
               type="file"
               onChange={handleFileChange}
               className="hidden w-full"
+             
             />
           </label>
         </div>
 
-        <button
-          type="submit"
-          className="bg-background text-primary-foreground px-3 py-2 rounded-md ml-auto"
-        >
-          Submit
-        </button>
+        <div className="flex items-center gap-2 self-end">
+          <button
+            type="button"
+            className="bg-background text-primary-foreground px-3 py-2 rounded-md ml-auto"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="bg-background text-primary-foreground px-3 py-2 rounded-md ml-auto"
+          >
+            Submit
+          </button>
+        </div>
       </form>
     </FlexContainer>
   );

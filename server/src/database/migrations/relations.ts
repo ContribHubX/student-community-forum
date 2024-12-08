@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm/relations";
-import { user, board, boardMembers, comment, thread, community, notification, question, topics, questionRequest, questionVotes, task, taskAssignee, threadReaction, topicFollowers, userCommunities } from "./schema";
+import { user, board, boardMembers, chat, studyRoom, comment, thread, community, notification, question, topics, questionRequest, questionVotes, task, taskAssignee, threadReaction, threadTags, todo, topicFollowers } from "./schema";
 
 export const boardRelations = relations(board, ({one, many}) => ({
 	user: one(user, {
@@ -13,6 +13,7 @@ export const boardRelations = relations(board, ({one, many}) => ({
 export const userRelations = relations(user, ({many}) => ({
 	boards: many(board),
 	boardMembers: many(boardMembers),
+	chats: many(chat),
 	comments: many(comment),
 	communities: many(community),
 	notifications_createdBy: many(notification, {
@@ -29,13 +30,14 @@ export const userRelations = relations(user, ({many}) => ({
 		relationName: "questionRequest_requestedTo_user_id"
 	}),
 	questionVotes: many(questionVotes),
+	studyRooms: many(studyRoom),
 	tasks: many(task),
 	taskAssignees: many(taskAssignee),
 	threads: many(thread),
 	threadReactions: many(threadReaction),
+	todos: many(todo),
 	topicFollowers: many(topicFollowers),
 	topics: many(topics),
-	userCommunities: many(userCommunities),
 }));
 
 export const boardMembersRelations = relations(boardMembers, ({one}) => ({
@@ -45,6 +47,25 @@ export const boardMembersRelations = relations(boardMembers, ({one}) => ({
 	}),
 	user: one(user, {
 		fields: [boardMembers.memberId],
+		references: [user.id]
+	}),
+}));
+
+export const chatRelations = relations(chat, ({one}) => ({
+	user: one(user, {
+		fields: [chat.createdBy],
+		references: [user.id]
+	}),
+	studyRoom: one(studyRoom, {
+		fields: [chat.roomId],
+		references: [studyRoom.id]
+	}),
+}));
+
+export const studyRoomRelations = relations(studyRoom, ({one, many}) => ({
+	chats: many(chat),
+	user: one(user, {
+		fields: [studyRoom.createdBy],
 		references: [user.id]
 	}),
 }));
@@ -87,6 +108,7 @@ export const threadRelations = relations(thread, ({one, many}) => ({
 		references: [topics.id]
 	}),
 	threadReactions: many(threadReaction),
+	threadTags: many(threadTags),
 }));
 
 export const communityRelations = relations(community, ({one, many}) => ({
@@ -95,7 +117,6 @@ export const communityRelations = relations(community, ({one, many}) => ({
 		references: [user.id]
 	}),
 	threads: many(thread),
-	userCommunities: many(userCommunities),
 }));
 
 export const notificationRelations = relations(notification, ({one}) => ({
@@ -197,6 +218,20 @@ export const threadReactionRelations = relations(threadReaction, ({one}) => ({
 	}),
 }));
 
+export const threadTagsRelations = relations(threadTags, ({one}) => ({
+	thread: one(thread, {
+		fields: [threadTags.threadId],
+		references: [thread.id]
+	}),
+}));
+
+export const todoRelations = relations(todo, ({one}) => ({
+	user: one(user, {
+		fields: [todo.createdBy],
+		references: [user.id]
+	}),
+}));
+
 export const topicFollowersRelations = relations(topicFollowers, ({one}) => ({
 	user: one(user, {
 		fields: [topicFollowers.followerId],
@@ -205,16 +240,5 @@ export const topicFollowersRelations = relations(topicFollowers, ({one}) => ({
 	topic: one(topics, {
 		fields: [topicFollowers.topicId],
 		references: [topics.id]
-	}),
-}));
-
-export const userCommunitiesRelations = relations(userCommunities, ({one}) => ({
-	community: one(community, {
-		fields: [userCommunities.communityId],
-		references: [community.id]
-	}),
-	user: one(user, {
-		fields: [userCommunities.userId],
-		references: [user.id]
 	}),
 }));

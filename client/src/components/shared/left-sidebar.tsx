@@ -9,8 +9,12 @@ import {
 } from "@/features/shared/data/topic-group";
 import { useGetTopics } from "@/features/topic/api";
 
+import { FaArrowRightLong } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+
 export const LeftSidebar = () => {
   const { data: topics } = useGetTopics({});
+  const navigate = useNavigate();
 
   return (
     <SidebarLayout
@@ -48,7 +52,13 @@ export const LeftSidebar = () => {
         className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
-        <h1>Popular Topics</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-sm font-medium">Popular Topics</h1>
+          <FaArrowRightLong 
+            className="text-base cursor-pointer hover:text-accent"
+            onClick={() => navigate("/topic-library")}  
+          />
+        </div>
 
         {topics &&
           topics.length > 0 &&
@@ -56,7 +66,7 @@ export const LeftSidebar = () => {
             return (
               <SideBarItem
                 key={topics.id}
-                title={topics.name}
+                title={topics.name.replace(" ", "_").toLowerCase()}
                 description={popularTagsData[index].description}
                 icon={popularTagsData[index].icon}
                 iconBgcolor={popularTagsData[index].iconBgColor}
@@ -70,7 +80,13 @@ export const LeftSidebar = () => {
         shadow-slate-400 shadow-md dark:shadow-gray-900"
         id="sidebar"
       >
-        <h1>Explore Groups</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-sm font-medium">Explore Groups</h1>
+          <FaArrowRightLong 
+            className="text-base cursor-pointer hover:text-accent"
+            onClick={() => navigate("/community/all")} 
+          />
+        </div>
 
         {popularGroupsData.map((popularGroupData, index) => {
           return (

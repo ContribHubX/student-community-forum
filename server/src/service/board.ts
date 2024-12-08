@@ -1,4 +1,4 @@
-import { IBoard, IBoardDto, IBoardMember, IBoardMemberDto } from "@/domain/interfaces/IBoard";
+import { IBoard, IBoardDto, IBoardMember, IBoardMemberDto, IBoardUpdateNameDto } from "@/domain/interfaces/IBoard";
 import { IUser } from "@/domain/interfaces/IUser";
 import BoardRepository from "@/domain/repository/board";
 import { AppError } from "@/libs/app-error";
@@ -74,8 +74,9 @@ class BoardService {
     public async addBoardMember(dto: IBoardMemberDto): Promise<IBoardMember> {
         try {
             const result = await this.boardRepo.addMember(dto);
-
             if (!result) throw new AppError("Error adding board member", 500);
+            
+            this.eventManager.publishToMany<IBoardMember>("board-member--new", result);
 
             // notify user who has been added to board
             await this.notifService.createNotification({
@@ -105,6 +106,24 @@ class BoardService {
     public async getSharedBoards(userId: string): Promise<IBoard[]> {
         try {
             return this.boardRepo.getSharedBoards(userId);
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    public deleteBoard(boardId: string): Promise<IBoard | undefined> {
+        try {
+            return this.boardRepo.delete(boardId);
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    public updateBoardName(dto: IBoardUpdateNameDto): Promise<IBoard | undefined> {
+        try {
+            return this.boardRepo.updateName(dto);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

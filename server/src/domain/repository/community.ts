@@ -5,6 +5,7 @@ import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
 import { CommunityTable, UsersCommunities } from "@/database/schema";
 import { eq } from "drizzle-orm";
+import { IUser } from "../interfaces/IUser";
 
 @Service()
 class CommunityRepository {
@@ -15,7 +16,7 @@ class CommunityRepository {
     }
 
     /**
-     * Adds a new community to the database.
+     * Adds a new community to the database.ack
      *
      * @param dto Community data.
      * @returns The created community or undefined.
@@ -29,6 +30,13 @@ class CommunityRepository {
                     .$returningId();
 
                 const communityId = result[0].id;
+
+                // join user who created 
+                await this.join({
+                    userId: dto.createdBy,
+                    communityId
+                })
+
                 const community = await this.getById(communityId);
                 resolve(community);
             } catch (error: any) {
@@ -42,11 +50,11 @@ class CommunityRepository {
      *
      * @param dto Join community data.
      */
-      public join(dto: IJoinCommunityDto): Promise<void> {
+      public join(dto: IJoinCommunityDto): Promise<string> {
         return new Promise(async (resolve, reject) => {
             try {
-                await this.db.insert(UsersCommunities).values({ ...dto });
-                resolve();
+                await this.db.insert(UsersCommunities).values({ ...dto }).$returningId();
+                resolve(dto.communityId as unknown as string);
             } catch (error: any) {
                 reject(new AppError(error));
             }
@@ -127,14 +135,32 @@ class CommunityRepository {
                     return reject(new AppError("Community not found", 404));
                 }
 
-                const userCreatedComms = await this.db.query.CommunityTable.findMany({
-                    where: eq(CommunityTable.createdBy, userId),
-                    with: {
-                        createdBy: true
-                    }
-                })
+                // const userCreatedComms = await this.db.query.CommunityTable.findMany({
+                //     where: eq(CommunityTable.createdBy, userId),
+                //     with: {
+                //         createdBy: true
+                //     }
+                // })
 
-                resolve([...result.map(res => res.community), ...userCreatedComms] as unknown as ICommunity[]);
+                resolve(result.map(res => res.community) as unknown as ICommunity[]);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    public getMembers(communityId: string): Promise<IUser[]> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db.query.UsersCommunities.findMany({
+                    columns: {},
+                    with: {
+                        user: true,
+                    },
+                    where: eq(UsersCommunities.communityId, communityId)
+                });
+
+                resolve(result.map(res => res.user));
             } catch (error: any) {
                 reject(new AppError(error));
             }

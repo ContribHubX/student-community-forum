@@ -34,7 +34,10 @@ class TopicRepository {
 
                 if (!topicId) throw new AppError("Error creating topic", 500);
 
-                const topic = await this.getTopicById({topicId});
+                // insert owner in follower
+                await this.follow({ followerId: dto.createdBy, topicId });
+
+                const topic = await this.getTopicById({topicId, userId: dto.createdBy});
                 resolve(topic);
             } catch (error: any) {
                 reject(new AppError(error, 500));

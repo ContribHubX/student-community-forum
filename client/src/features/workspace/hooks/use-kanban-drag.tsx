@@ -52,14 +52,14 @@ export const useKanbanDrag = (
       : destinationTasks.length + 1;
 
     // Kayasa nigana ang amaw
-    const taskToBeUpdate: UpdateTaskType & { id?: string } = {
+    const taskToBeUpdate: Partial<UpdateTaskType> & { id?: string } = {
       ...movedTask,
       boardId: boardId,
       taskId: movedTask.id,
       createdBy: movedTask.createdBy.id,
     };
     delete taskToBeUpdate.id;
-    updateTask(taskToBeUpdate);
+    updateTask({...taskToBeUpdate, isDragUpdate: true} as UpdateTaskType);
 
     // Insert the task into its new position
     destinationTasks.splice(destination.index, 0, movedTask);

@@ -82,7 +82,8 @@ class QuestionRepository {
                     result = await this.db.query.QuestionTable.findMany({
                         with: {
                             createdBy: true,
-                            threads: true
+                            threads: true,
+                            topic: true
                         },
                         orderBy: desc(QuestionTable.createdAt)
                     });
@@ -91,7 +92,8 @@ class QuestionRepository {
                         where: eq(schema.QuestionTable.topicId, topicId),
                         with: {
                             createdBy: true,
-                            threads: true
+                            threads: true,
+                            topic: true
                         },
                         orderBy: desc(QuestionTable.createdAt)
                     });
@@ -123,7 +125,11 @@ class QuestionRepository {
                         columns: {},
                         where: eq(QuestionRequestTable.id, requestId),
                         with: { 
-                            question: true,
+                            question: {
+                                with: {
+                                    createdBy: true
+                                }
+                            },
                             requestedBy: true,
                             requestedTo: true
                         }
@@ -151,6 +157,7 @@ class QuestionRepository {
                         question: true,
                         requestedBy: true,
                         requestedTo: true,
+                        
                     },
                     where: eq(schema.QuestionRequestTable.requestedTo, requestedToId),
                 });

@@ -8270,3 +8270,882 @@
 2024-12-05T11:23:34.833Z info: Starting focus timer for 30 minutes.
 2024-12-05T11:24:27.043Z info: No users left in the room. Stopping video playback.
 2024-12-05T11:24:27.043Z info: Timer stopped.
+2024-12-05T22:51:29.782Z info: ✌️ Dependencies injected into container
+2024-12-05T22:51:29.791Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-05T23:07:26.393Z error: Client socket not found
+2024-12-05T23:07:26.416Z error: Client socket not found
+2024-12-05T23:29:57.604Z info: ✌️ Dependencies injected into container
+2024-12-05T23:29:57.611Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-05T23:52:52.511Z error: invalid_token
+2024-12-05T23:52:56.703Z error: invalid_token
+2024-12-05T23:56:11.832Z info: ✌️ Dependencies injected into container
+2024-12-05T23:56:11.841Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:42:36.268Z error: User failed to remove, cause it doenst exist
+2024-12-06T00:47:14.771Z info: ✌️ Dependencies injected into container
+2024-12-06T00:47:14.779Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:48:09.487Z info: ✌️ Dependencies injected into container
+2024-12-06T00:48:09.497Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:51:46.184Z info: ✌️ Dependencies injected into container
+2024-12-06T00:51:46.191Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:55:05.335Z info: ✌️ Dependencies injected into container
+2024-12-06T00:55:05.342Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:55:59.784Z info: ✌️ Dependencies injected into container
+2024-12-06T00:55:59.793Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:58:17.808Z info: ✌️ Dependencies injected into container
+2024-12-06T00:58:17.817Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T00:58:54.988Z info: ✌️ Dependencies injected into container
+2024-12-06T00:58:54.995Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T01:00:19.367Z info: ✌️ Dependencies injected into container
+2024-12-06T01:00:19.374Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T01:00:55.003Z info: ✌️ Dependencies injected into container
+2024-12-06T01:00:55.011Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T01:54:45.144Z info: ✌️ Dependencies injected into container
+2024-12-06T01:54:45.153Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T01:58:25.710Z error: User failed to remove, cause it doenst exist
+2024-12-06T01:58:49.396Z error: User failed to remove, cause it doenst exist
+2024-12-06T01:58:49.397Z error: User failed to remove, cause it doenst exist
+2024-12-06T01:58:59.303Z error: User failed to remove, cause it doenst exist
+2024-12-06T01:58:59.304Z error: User failed to remove, cause it doenst exist
+2024-12-06T01:58:59.305Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:12:55.184Z info: ✌️ Dependencies injected into container
+2024-12-06T02:12:55.191Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T02:13:00.559Z info: ✌️ Dependencies injected into container
+2024-12-06T02:13:00.566Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T02:44:11.084Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:44:13.523Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:44:13.523Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:44:19.097Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:44:19.098Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:44:19.099Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:46:45.739Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:46:45.740Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:46:45.740Z error: User failed to remove, cause it doenst exist
+2024-12-06T02:46:45.740Z error: User failed to remove, cause it doenst exist
+2024-12-06T04:12:30.851Z info: ✌️ Dependencies injected into container
+2024-12-06T04:12:30.858Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:02:58.351Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:03:51.960Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:03:51.960Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:04:08.740Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:04:08.740Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:04:08.741Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:07:01.971Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:09:05.372Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:09:38.362Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:09:38.363Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:10:40.805Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:16:33.702Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:16:33.703Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:16:34.379Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:16:34.380Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:16:34.380Z error: User failed to remove, cause it doenst exist
+2024-12-06T05:31:59.733Z info: ✌️ Dependencies injected into container
+2024-12-06T05:31:59.741Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:33:15.885Z info: ✌️ Dependencies injected into container
+2024-12-06T05:33:15.894Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:33:40.179Z info: ✌️ Dependencies injected into container
+2024-12-06T05:33:40.186Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:34:44.663Z info: ✌️ Dependencies injected into container
+2024-12-06T05:34:44.671Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:37:38.417Z info: ✌️ Dependencies injected into container
+2024-12-06T05:37:38.424Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:40:08.176Z info: ✌️ Dependencies injected into container
+2024-12-06T05:40:08.184Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:40:32.621Z info: ✌️ Dependencies injected into container
+2024-12-06T05:40:32.628Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:41:39.273Z info: ✌️ Dependencies injected into container
+2024-12-06T05:41:39.280Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:41:46.888Z info: ✌️ Dependencies injected into container
+2024-12-06T05:41:46.896Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:43:26.542Z info: ✌️ Dependencies injected into container
+2024-12-06T05:43:26.550Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:47:28.563Z info: ✌️ Dependencies injected into container
+2024-12-06T05:47:28.570Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:49:37.580Z info: ✌️ Dependencies injected into container
+2024-12-06T05:49:37.588Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:53:41.290Z info: ✌️ Dependencies injected into container
+2024-12-06T05:53:41.298Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:54:18.272Z info: ✌️ Dependencies injected into container
+2024-12-06T05:54:18.280Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:54:58.661Z info: ✌️ Dependencies injected into container
+2024-12-06T05:54:58.668Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:56:01.261Z info: ✌️ Dependencies injected into container
+2024-12-06T05:56:01.268Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T05:59:33.851Z info: ✌️ Dependencies injected into container
+2024-12-06T05:59:33.861Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:00:06.827Z info: ✌️ Dependencies injected into container
+2024-12-06T06:00:06.834Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:01:21.755Z info: ✌️ Dependencies injected into container
+2024-12-06T06:01:21.762Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:10:10.258Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:10:13.129Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:11:16.851Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:11:16.853Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:11:20.068Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:11:20.069Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:04.401Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:04.403Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:04.404Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:39.454Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:39.455Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:39.455Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:39.455Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:13:42.094Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:15:55.387Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:15:55.388Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:15:55.388Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:15:55.388Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:15:55.388Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:16:19.948Z info: ✌️ Dependencies injected into container
+2024-12-06T06:16:19.955Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:21:53.840Z info: ✌️ Dependencies injected into container
+2024-12-06T06:21:53.848Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:24:43.274Z info: ✌️ Dependencies injected into container
+2024-12-06T06:24:43.285Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:24:49.344Z info: ✌️ Dependencies injected into container
+2024-12-06T06:24:49.354Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:25:07.741Z info: ✌️ Dependencies injected into container
+2024-12-06T06:25:07.749Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:25:13.794Z info: ✌️ Dependencies injected into container
+2024-12-06T06:25:13.801Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:25:24.152Z info: ✌️ Dependencies injected into container
+2024-12-06T06:25:24.159Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:26:09.413Z info: ✌️ Dependencies injected into container
+2024-12-06T06:26:09.422Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:27:06.561Z info: ✌️ Dependencies injected into container
+2024-12-06T06:27:06.568Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:27:40.327Z info: ✌️ Dependencies injected into container
+2024-12-06T06:27:40.335Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:35:47.530Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:35:48.373Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:35:48.374Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:35:49.351Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:30.375Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:30.376Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:30.376Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:32.822Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:32.830Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:47.410Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:47.419Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:47.419Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:47.420Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:48.854Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:48.855Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:37:48.855Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:21.397Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:21.398Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:21.398Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:21.399Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:21.399Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:24.102Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:24.102Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:24.103Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:38:24.103Z error: User failed to remove, cause it doenst exist
+2024-12-06T06:39:00.994Z info: ✌️ Dependencies injected into container
+2024-12-06T06:39:01.005Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:39:21.990Z info: ✌️ Dependencies injected into container
+2024-12-06T06:39:21.997Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:40:29.331Z info: ✌️ Dependencies injected into container
+2024-12-06T06:40:29.339Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:41:29.325Z info: ✌️ Dependencies injected into container
+2024-12-06T06:41:29.333Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T06:43:50.243Z info: ✌️ Dependencies injected into container
+2024-12-06T06:43:50.251Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T08:05:08.424Z info: ✌️ Dependencies injected into container
+2024-12-06T08:05:08.437Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T08:08:30.078Z info: ✌️ Dependencies injected into container
+2024-12-06T08:08:30.090Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T08:16:06.433Z info: ✌️ Dependencies injected into container
+2024-12-06T08:16:06.459Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T08:17:54.579Z info: ✌️ Dependencies injected into container
+2024-12-06T08:17:54.586Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T08:18:38.470Z info: ✌️ Dependencies injected into container
+2024-12-06T08:18:38.479Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T08:21:15.321Z info: ✌️ Dependencies injected into container
+2024-12-06T08:21:15.328Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T12:41:01.962Z info: ✌️ Dependencies injected into container
+2024-12-06T12:41:01.971Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T13:36:02.418Z info: ✌️ Dependencies injected into container
+2024-12-06T13:36:02.428Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:33:56.110Z info: ✌️ Dependencies injected into container
+2024-12-06T14:33:56.117Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:35:07.965Z info: ✌️ Dependencies injected into container
+2024-12-06T14:35:07.973Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:35:55.447Z info: ✌️ Dependencies injected into container
+2024-12-06T14:35:55.454Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:36:04.275Z info: ✌️ Dependencies injected into container
+2024-12-06T14:36:04.282Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:36:29.426Z info: ✌️ Dependencies injected into container
+2024-12-06T14:36:29.434Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:49:47.132Z info: ✌️ Dependencies injected into container
+2024-12-06T14:49:47.140Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:50:15.349Z info: ✌️ Dependencies injected into container
+2024-12-06T14:50:15.357Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:51:19.141Z info: ✌️ Dependencies injected into container
+2024-12-06T14:51:19.149Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-06T14:51:44.334Z info: ✌️ Dependencies injected into container
+2024-12-06T14:51:44.343Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:02:42.440Z info: ✌️ Dependencies injected into container
+2024-12-07T02:02:42.448Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:11:21.636Z info: ✌️ Dependencies injected into container
+2024-12-07T02:11:21.645Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:13:37.249Z info: ✌️ Dependencies injected into container
+2024-12-07T02:13:37.257Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:13:44.581Z info: ✌️ Dependencies injected into container
+2024-12-07T02:13:44.589Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:14:08.785Z info: ✌️ Dependencies injected into container
+2024-12-07T02:14:08.793Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:14:39.485Z info: ✌️ Dependencies injected into container
+2024-12-07T02:14:39.493Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:15:02.587Z info: ✌️ Dependencies injected into container
+2024-12-07T02:15:02.622Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:16:23.909Z info: ✌️ Dependencies injected into container
+2024-12-07T02:16:23.919Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:16:45.049Z info: ✌️ Dependencies injected into container
+2024-12-07T02:16:45.056Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:17:00.973Z info: ✌️ Dependencies injected into container
+2024-12-07T02:17:00.980Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:39:08.611Z info: ✌️ Dependencies injected into container
+2024-12-07T02:39:08.623Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:39:51.601Z info: ✌️ Dependencies injected into container
+2024-12-07T02:39:51.608Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:42:23.454Z info: ✌️ Dependencies injected into container
+2024-12-07T02:42:23.462Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:42:39.256Z info: ✌️ Dependencies injected into container
+2024-12-07T02:42:39.266Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:43:47.476Z info: ✌️ Dependencies injected into container
+2024-12-07T02:43:47.484Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:43:53.755Z info: ✌️ Dependencies injected into container
+2024-12-07T02:43:53.763Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:44:25.835Z info: ✌️ Dependencies injected into container
+2024-12-07T02:44:25.844Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:45:15.233Z info: ✌️ Dependencies injected into container
+2024-12-07T02:45:15.240Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:45:25.281Z info: ✌️ Dependencies injected into container
+2024-12-07T02:45:25.290Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:46:51.194Z info: ✌️ Dependencies injected into container
+2024-12-07T02:46:51.201Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:47:24.156Z info: ✌️ Dependencies injected into container
+2024-12-07T02:47:24.165Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:50:01.654Z info: ✌️ Dependencies injected into container
+2024-12-07T02:50:01.662Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T02:52:14.313Z info: ✌️ Dependencies injected into container
+2024-12-07T02:52:14.321Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T03:00:31.254Z info: ✌️ Dependencies injected into container
+2024-12-07T03:00:31.261Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T03:00:50.340Z info: ✌️ Dependencies injected into container
+2024-12-07T03:00:50.348Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T03:04:57.435Z info: ✌️ Dependencies injected into container
+2024-12-07T03:04:57.443Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T03:05:16.293Z info: ✌️ Dependencies injected into container
+2024-12-07T03:05:16.301Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T03:12:14.395Z info: ✌️ Dependencies injected into container
+2024-12-07T03:12:14.402Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T03:25:40.664Z info: Starting focus timer for 30 minutes.
+2024-12-07T03:25:40.667Z info: Starting focus timer for 30 minutes.
+2024-12-07T03:26:08.138Z info: No users left in the room. Stopping video playback.
+2024-12-07T03:26:08.139Z info: Timer stopped.
+2024-12-07T03:26:09.753Z info: Starting focus timer for 30 minutes.
+2024-12-07T03:27:30.967Z info: No users left in the room. Stopping video playback.
+2024-12-07T03:27:30.969Z info: Timer stopped.
+2024-12-07T03:27:30.969Z error: User failed to remove, because it doesn't exist.
+2024-12-07T04:15:51.830Z info: ✌️ Dependencies injected into container
+2024-12-07T04:15:51.839Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T04:48:47.438Z info: ✌️ Dependencies injected into container
+2024-12-07T04:48:47.445Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T04:50:09.250Z info: ✌️ Dependencies injected into container
+2024-12-07T04:50:09.257Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T06:39:27.832Z info: ✌️ Dependencies injected into container
+2024-12-07T06:39:27.853Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T06:48:54.082Z info: ✌️ Dependencies injected into container
+2024-12-07T06:48:54.089Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T06:49:44.890Z info: ✌️ Dependencies injected into container
+2024-12-07T06:49:44.898Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T06:50:11.743Z info: ✌️ Dependencies injected into container
+2024-12-07T06:50:11.751Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T06:50:43.475Z info: ✌️ Dependencies injected into container
+2024-12-07T06:50:43.483Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:15:57.269Z info: ✌️ Dependencies injected into container
+2024-12-07T07:15:57.278Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:16:04.745Z info: ✌️ Dependencies injected into container
+2024-12-07T07:16:04.756Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:21:45.654Z info: ✌️ Dependencies injected into container
+2024-12-07T07:21:45.664Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:22:56.662Z info: ✌️ Dependencies injected into container
+2024-12-07T07:22:56.669Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:23:18.268Z info: ✌️ Dependencies injected into container
+2024-12-07T07:23:18.276Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:25:02.838Z info: ✌️ Dependencies injected into container
+2024-12-07T07:25:02.845Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:27:33.110Z info: ✌️ Dependencies injected into container
+2024-12-07T07:27:33.117Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:33:04.204Z info: ✌️ Dependencies injected into container
+2024-12-07T07:33:04.219Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:34:35.725Z info: ✌️ Dependencies injected into container
+2024-12-07T07:34:35.732Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:38:18.628Z info: ✌️ Dependencies injected into container
+2024-12-07T07:38:18.635Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T07:38:25.464Z info: ✌️ Dependencies injected into container
+2024-12-07T07:38:25.472Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T08:56:39.166Z info: ✌️ Dependencies injected into container
+2024-12-07T08:56:39.175Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T09:24:02.007Z info: ✌️ Dependencies injected into container
+2024-12-07T09:24:02.015Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T13:32:32.277Z info: ✌️ Dependencies injected into container
+2024-12-07T13:32:32.285Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T13:34:26.037Z error: Client socket not found
+2024-12-07T13:59:34.888Z error: Client socket not found
+2024-12-07T14:28:00.160Z info: ✌️ Dependencies injected into container
+2024-12-07T14:28:00.171Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T14:30:33.676Z info: ✌️ Dependencies injected into container
+2024-12-07T14:30:33.689Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T14:31:18.446Z info: ✌️ Dependencies injected into container
+2024-12-07T14:31:18.454Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T14:31:33.571Z info: ✌️ Dependencies injected into container
+2024-12-07T14:31:33.582Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-07T14:56:59.653Z info: ✌️ Dependencies injected into container
+2024-12-07T14:56:59.661Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-08T02:31:16.334Z info: ✌️ Dependencies injected into container
+2024-12-08T02:31:16.348Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-08T02:48:35.350Z info: Starting focus timer for 30 minutes.
+2024-12-08T02:48:35.357Z info: Starting focus timer for 30 minutes.
+2024-12-08T02:48:55.051Z info: No users left in the room. Stopping video playback.
+2024-12-08T02:48:55.051Z info: Timer stopped.
+2024-12-08T02:48:56.609Z info: Starting focus timer for 30 minutes.
+2024-12-08T02:52:11.277Z info: No users left in the room. Stopping video playback.
+2024-12-08T02:52:11.277Z info: Timer stopped.
+2024-12-08T02:52:11.278Z error: User failed to remove, because it doesn't exist.
+2024-12-08T02:57:12.945Z error: User failed to remove, cause it doenst exist
+2024-12-08T02:57:17.382Z error: User failed to remove, cause it doenst exist
+2024-12-08T02:57:17.383Z error: User failed to remove, cause it doenst exist
+2024-12-08T02:57:22.852Z error: User failed to remove, cause it doenst exist
+2024-12-08T03:00:36.099Z error: User failed to remove, cause it doenst exist
+2024-12-08T03:00:36.100Z error: User failed to remove, cause it doenst exist
+2024-12-08T03:00:38.782Z error: User failed to remove, cause it doenst exist
+2024-12-08T03:00:38.782Z error: User failed to remove, cause it doenst exist
+2024-12-08T03:00:38.783Z error: User failed to remove, cause it doenst exist
+2024-12-08T03:18:56.629Z info: Starting break timer for 10 minutes.
+2024-12-08T03:28:56.640Z info: Starting focus timer for 30 minutes.
+2024-12-08T03:32:24.516Z error: invalid_token
+2024-12-08T03:41:07.037Z info: ✌️ Dependencies injected into container
+2024-12-08T03:41:07.057Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-08T03:42:53.427Z info: ✌️ Dependencies injected into container
+2024-12-08T03:42:53.434Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-08T03:42:59.092Z info: ✌️ Dependencies injected into container
+2024-12-08T03:42:59.100Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-08T04:35:25.587Z info: ✌️ Dependencies injected into container
+2024-12-08T04:35:25.596Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-08T05:50:47.951Z info: ✌️ Dependencies injected into container
+2024-12-08T05:50:47.959Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        

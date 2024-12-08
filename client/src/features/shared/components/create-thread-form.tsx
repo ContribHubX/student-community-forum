@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createThreadSchema, CreateThreadType } from "../api/create-thread";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FieldValues } from "react-hook-form";
@@ -37,9 +37,7 @@ export const ThreadForm = ({
   const [tags, setTags] = useState<string[]>([]);
   const [selectedCommunity, setSelectedCommunity] = useState<string>("");
   const [previewContent, setPreviewContent] = useState<string>("");
-
-  const { data: communities } = useGetUserCommunities({ userId: user.id });
-
+  const { data: communities } = useGetUserCommunities({ userId: user?.id?.toString() });
   const { register, handleSubmit, setValue, watch } = useForm<CreateThreadType>(
     {
       resolver: zodResolver(createThreadSchema),
@@ -53,7 +51,29 @@ export const ThreadForm = ({
     setTags([...thread.tags.map((tag) => tag.name)]);
   }, [thread, thread?.tags]);
 
-  if (!user) return <p>Loading...</p>;
+  useEffect(() => {
+    if (!thread?.communityId) return;
+
+    setSelectedCommunity(thread.communityId);
+
+  }, [thread?.communityId])
+
+
+  const handleTagAddition = useCallback(
+    (tag: string) => {
+      if (tag && !tags.includes(tag)) {
+        setTags([...tags, tag]);
+      }
+    },
+    [tags]
+  );
+  
+  const handleTagRemoval = useCallback(
+    (tag: string) => {
+      setTags(tags.filter((t) => t !== tag));
+    },
+    [tags]
+  );
 
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
@@ -84,15 +104,7 @@ export const ThreadForm = ({
     setValue("attachment", data.attachment || null);
   };
 
-  const handleTagAddition = (tag: string) => {
-    if (tag && !tags.includes(tag)) {
-      setTags([...tags, tag]);
-    }
-  };
-
-  const handleTagRemoval = (tag: string) => {
-    setTags(tags.filter((t) => t !== tag));
-  };
+  if (!user) return <p>Loading...</p>;
 
   // md:grid-cols-[2.5fr_1fr]
   return (
@@ -128,9 +140,12 @@ export const ThreadForm = ({
           <div className="p-6  rounded-lg border dark:border-gray-500 text-sm">
             {/* Community Selector */}
             <h2 className="font-semibold mb-1">Community</h2>
-            <Select onValueChange={(val: string) => setSelectedCommunity(val)}>
+            <Select 
+              onValueChange={(val: string) => setSelectedCommunity(val)}
+              value={selectedCommunity}
+            >
               <SelectTrigger className="w-[180px] focus:border-accent bg-primary dark:border-gray-500">
-                <SelectValue placeholder="Comm" />
+                <SelectValue placeholder="None" />
               </SelectTrigger>
               <SelectContent className="bg-background border-none overflow-y-hidden">
                 <SelectItem value={"none"}>

@@ -78,6 +78,24 @@ class TaskService {
             throw new AppError(error);
         }
     }
+
+    /**
+     * Deletes a task by its ID, along with its associated assignees.
+     * 
+     * @param {string} taskId
+     * @returns {Promise<ITask>}
+     */
+     public async deleteTask(taskId: string): Promise<ITask | undefined> {
+        try {
+            const result = await this.taskRepo.delete(taskId);
+            this.eventManager.publishToMany<ITask>("task--deleted", result);
+        
+            return result;
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
 }
 
 export default TaskService;

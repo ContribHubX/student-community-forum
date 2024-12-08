@@ -24,12 +24,14 @@ export const QuestionRequestCardList = ({
         <p className="text-sm font-medium">Questions for you</p>
       </div>
 
-      <div className="flex flex-col bg-primary rounded-md p-3">
+      <div className="flex flex-col bg-primary rounded-md ">
         {request?.length ? (
           request?.map((req) => (
             <QuestionRequestCard
               question={req.question}
               requestedBy={req.requestedBy}
+              requestedTo={req.requestedTo}
+              currentUserId={user?.id || ""}
             />
           ))
         ) : (

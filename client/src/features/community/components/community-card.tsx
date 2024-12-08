@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Community } from "@/types";
 import { Users, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface CommunityCardProps {
   community: Community;
@@ -9,6 +10,7 @@ interface CommunityCardProps {
 
 export function CommunityCard({ community, rank }: CommunityCardProps) {
   const isJoined = false;
+  const navigate = useNavigate();
 
   return (
     <div className="flex items-center hover:text-accent-foreground text-primary-foreground space-x-4 p-4 bg-background hover:bg-accent transition-colors rounded-lg">
@@ -22,7 +24,10 @@ export function CommunityCard({ community, rank }: CommunityCardProps) {
           {rank}
         </div>
       </div>
-      <div className="flex-grow">
+      <div 
+        className="flex-grow cursor-pointer"
+        onClick={() => navigate(`/community/${community.id}`)}
+      >
         <h3 className="font-semibold text-lg">{community.name}</h3>
         <p className="text-muted-foreground text-sm flex items-center">
           <Users size={14} className="mr-1" />

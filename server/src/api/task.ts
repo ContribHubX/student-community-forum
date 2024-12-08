@@ -74,10 +74,37 @@ export default {
     async updateTaskHandler(req: Request, res: Response, next: NextFunction) {
         const taskId = req.params.taskId;
         const dto = { ...req.body, taskId };
+        const file = req.file;
+    
+        try {
+            if (dto.assignees && typeof dto.assignees === "string" ) {
+                const parsedAssignees = JSON.parse(dto.assignees);
+                dto.assignees = parsedAssignees;
+            }
+
+            if (file) {
+                dto.attachment = file.path;
+            }
+
+            const taskService = Container.get(TaskService);
+            const response = await taskService.updateTask(dto);
+            res.status(200).json(response);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    /**
+     * Handler to delete task for a specific board.
+     * 
+     * @route DELETE /task/:taskId
+     */
+     async deleteTasksHandler(req: Request, res: Response, next: NextFunction) {
+        const taskId = req.params.taskId as string;
 
         try {
             const taskService = Container.get(TaskService);
-            const response = await taskService.updateTask(dto);
+            const response = await taskService.deleteTask(taskId);
             res.status(200).json(response);
         } catch (error: any) {
             next(new AppError(error));

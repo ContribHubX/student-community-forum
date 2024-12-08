@@ -15,7 +15,7 @@ export const TaskTable = mysqlTable("task", {
     sequence: int("sequence"),
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: varchar("created_by", { length: 255 }).notNull().references(() => UserTable.id), 
-    boardId: varchar("board_id", { length: 255 }).notNull().references(() => BoardTable.id), 
+    boardId: varchar("board_id", { length: 255 }).notNull().references(() => BoardTable.id, { onDelete: "cascade" }), 
 })
 
 export const taskRelations = relations(TaskTable, ({ one, many }) => ({
@@ -34,7 +34,7 @@ export const taskRelations = relations(TaskTable, ({ one, many }) => ({
 export const TaskAssigneeTable = mysqlTable("task_assignee", {
     id: varchar("id", { length: 255 }).primaryKey().notNull().$default(uuidV4),
     assigneeId: varchar("assignee_id", { length: 255 }).notNull().references(() => UserTable.id), 
-    taskId: varchar("task_id", { length: 255 }).notNull().references(() => TaskTable.id)
+    taskId: varchar("task_id", { length: 255 }).notNull().references(() => TaskTable.id, { onDelete: "cascade" })
 })
 
 export const taskAssigneeRelations = relations(TaskAssigneeTable, ({ one }) => ({

@@ -1,4 +1,4 @@
-import { mysqlTable, varchar, timestamp, text, MySqlColumn, mysqlEnum } from "drizzle-orm/mysql-core";
+import { mysqlTable, varchar, timestamp, text, mysqlEnum } from "drizzle-orm/mysql-core";
 import { v4 as uuidV4} from "uuid";
 import { UserTable } from "./user"; 
 import { relations } from "drizzle-orm";
@@ -28,7 +28,7 @@ export const boardRelations = relations(BoardTable, ({ one, many }) => ({
 export const BoardMembersTable = mysqlTable("board_members", {
     id: varchar("id", { length: 255 }).primaryKey().notNull().$default(uuidV4),
     memberId: varchar("member_id", { length: 255 }).notNull().references(() => UserTable.id), 
-    boardId: varchar("board_id", { length: 255 }).notNull().references(() => BoardTable.id)
+    boardId: varchar("board_id", { length: 255 }).notNull().references(() => BoardTable.id, { onDelete: "cascade" })
 })
 
 export const boardMembersRelations = relations(BoardMembersTable, ({ one }) => ({

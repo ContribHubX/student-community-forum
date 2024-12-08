@@ -38,6 +38,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useGetCommunityById } from "@/features/community/api/get-community";
 
 interface ThreadCardProp {
   thread: Thread;
@@ -50,8 +51,10 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   const { data: reaction } = useGetUserReaction({
     data: { threadId: thread.id, userId: userId.toString() || "" },
   });
+  const { data: community } = useGetCommunityById({ id: thread.communityId || ""});
   const { isDark } = useTheme();
   const navigate = useNavigate();
+  
 
   let sanitizedContent = sanitizeContent(thread?.content || "");
   sanitizedContent =
@@ -85,9 +88,9 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
           <AvatarImage src={thread.createdBy?.attachment} alt="User Avatar" />
           <AvatarFallback>UN</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col gap-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-medium">Kidlat 101</span>
+        <div className="flex flex-col gap-0 w-full">
+          <div className="flex items-center gap-2 mb-1 w-full">
+            <span className="text-sm font-medium">{thread.createdBy.name}</span>
             <Badge
               variant="secondary"
               className="text-xs font-normal"
@@ -102,6 +105,22 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                 addSuffix: true,
               })}
             </Badge>
+            {community && (
+            <Badge
+              variant="secondary"
+              className="flex items-center gap-1 px-2 py-1 ml-auto dark:bg-background cursor-pointer"
+              onClick={() => navigate(`/community/${community.id}`)}
+            >
+              {community.icon && (
+                <img
+                  src={community.icon}
+                  alt={`${community.name} icon`}
+                  className="w-4 h-4 rounded-full"
+                />
+              )}
+              <span>{community.name}</span>
+            </Badge>
+           )}
           </div>
           <h3
             className="text-lg font-semibold hover:text-accent cursor-pointer transition-colors duration-200"
@@ -120,7 +139,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
           {thread.tags?.map((tag, index) => (
             <Badge
               key={index}
-              variant="outline"
+            variant="outline"
               className="text-accent-foreground bg-accent border-none p-2"
             >
               {tag.name}

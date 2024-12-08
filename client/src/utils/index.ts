@@ -46,6 +46,32 @@ export const formDataToObject = (formData: FormData): Record<string, any> => {
 };
 
 /**
+ * Converts a plain JavaScript object into a FormData object.
+ *
+ * @param {Record<string, any>} obj
+ * @returns {FormData}
+ */
+export const objectToFormData = (obj: Record<string, any>): FormData => {
+  const formData = new FormData();
+  
+  // Iterate over each key-value pair in the object
+  Object.keys(obj).forEach((key) => {
+    const value = obj[key];
+    
+    // If the value is an array, append each item as a separate field
+    if (Array.isArray(value)) {
+      value.forEach((item) => formData.append(key, item));
+    } else {
+      formData.append(key, value);
+    }
+  });
+  
+  return formData;
+};
+
+
+
+/**
  * Function to blend color with black
  * @credits ChatGPT
  * @param color
@@ -99,3 +125,11 @@ export const extractVideoId = (url: string) => {
   const match = url.match(regex);
   return match ? match[1] : null;
 };
+
+/** 
+ * 
+ */
+export const extractFileName = (url: string): string => {
+  const splitted = url.substring(url.lastIndexOf("/") + 1);
+  return splitted;
+}

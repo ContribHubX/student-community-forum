@@ -11,3 +11,4 @@ export * from "./task";
 export * from "./study-room";
 export * from "./chat";
 export * from "./todo";
+export * from "./event";

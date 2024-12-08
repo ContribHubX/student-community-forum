@@ -133,6 +133,17 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
+        case "question--new":
+          console.log(data);
+          socketDispatch({
+            type: OPERATION.ADD_NEW_QUESTION,
+            payload: {
+              question: data,
+              queryClient,
+            },
+          });
+          break;
+
         case "topic-follow--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_TOPIC_FOLLOWER,
@@ -153,6 +164,17 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
+        case "board-member--new":
+          console.log(data);
+          socketDispatch({
+            type: OPERATION.ADD_NEW_MEMBER,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
+
         case "task--new":
           socketDispatch({
             type: OPERATION.ADD_TASK,
@@ -166,6 +188,16 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
         case "task--updated":
           socketDispatch({
             type: OPERATION.UPDATE_TASK,
+            payload: {
+              data,
+              queryClient,
+            },
+          });
+          break;
+
+        case "task--deleted":
+          socketDispatch({
+            type: OPERATION.DELETE_TASK,
             payload: {
               data,
               queryClient,
@@ -308,6 +340,27 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: {
               time: data.time,
               roomId: data.roomId,
+            },
+          });
+          break;
+
+        case "join-community--new":
+          socketDispatch({
+            type: OPERATION.JOIN_COMMUNITY,
+            payload: {
+              communityId: data.communityId,
+              queryClient
+            },
+          });
+          break;
+
+        case "community-event--new":
+        console.log(data);
+          socketDispatch({
+            type: OPERATION.ADD_COMMUNITY_EVENT,
+            payload: {
+              communityId: data.communityId,
+              queryClient
             },
           });
           break;

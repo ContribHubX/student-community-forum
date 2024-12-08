@@ -5,7 +5,8 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getCommunityById = async (
   id: string | undefined,
-): Promise<CommunityWithMembers> => {
+): Promise<CommunityWithMembers | null> => {
+  if (!id) return null;
   const response = await api.get(`/api/community/${id}`);
   return response.data;
 };
@@ -18,12 +19,12 @@ export const getCommunityByIdQueryOptions = (id: string | undefined) => {
 };
 
 export type getCommunityQueryConfig = {
+  id: string | undefined,
   queryConfig?: QueryConfig<typeof getCommunityById>;
 };
 
 export const useGetCommunityById = (
-  id: string | undefined,
-  { queryConfig }: getCommunityQueryConfig,
+  { id, queryConfig }: getCommunityQueryConfig,
 ) => {
   return useQuery({
     ...getCommunityByIdQueryOptions(id),

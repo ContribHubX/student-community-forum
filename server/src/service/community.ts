@@ -1,6 +1,8 @@
 import { ICommunity, ICommunityDto, IJoinCommunityDto } from "@/domain/interfaces/ICommunity";
+import { IUser } from "@/domain/interfaces/IUser";
 import CommunityRepository from "@/domain/repository/community";
 import { AppError } from "@/libs/app-error";
+import EventManager from "@/pubsub/event-manager";
 import { Service, Inject } from "typedi";
 
 @Service()
@@ -8,6 +10,9 @@ class CommunityService {
     @Inject(() => CommunityRepository) 
     private communityRepo!: CommunityRepository; 
     
+    @Inject(() => EventManager)
+    private eventManager!:EventManager;
+
     /**
      * Creates a new community
      * 
@@ -45,7 +50,8 @@ class CommunityService {
      */
     public async joinCommunity(dto: IJoinCommunityDto): Promise<void> {
         try {
-            await this.communityRepo.join(dto);
+            const result = await this.communityRepo.join(dto);
+            this.eventManager.publishToMany<object>("join-community--new", { communityId: result });
         } catch(error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error); 
@@ -64,6 +70,15 @@ class CommunityService {
     public async getAllCommunities(): Promise<ICommunity[]> {
         try {
             return await this.communityRepo.getAll();
+        } catch(error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error); 
+        }
+    }
+
+    public async getCommunityMembers(communityId: string): Promise<IUser[]> {
+        try {
+            return await this.communityRepo.getMembers(communityId);
         } catch(error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error); 

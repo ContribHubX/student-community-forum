@@ -111,4 +111,21 @@ export default {
       next(new AppError(error));
     }
   },
+
+  /**
+   * Handler to retrieve a threads by community.
+   *
+   * @route GET /community/:communityId
+   */
+  async getAllThreadsByCommunityHandler(req: Request, res: Response, next: NextFunction) {
+    const communityId = req.params.communityId;
+
+    try {
+      const threadService = Container.get(ThreadService);
+      const response = await threadService.getAllThreadByCommunity(communityId);
+      res.status(200).json(response);
+    } catch (error: any) {
+      next(new AppError(error));
+    }
+  },
 };

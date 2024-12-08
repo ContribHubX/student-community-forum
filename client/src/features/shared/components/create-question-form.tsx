@@ -24,27 +24,33 @@ interface CreateQuestionFormProp {
   initialTitleVal?: string;
   userId: string;
   handleFormSubmit: (data: FormData) => void;
-} 
+  taggable?: boolean;
+}
 
 export const CreateQuestionForm = ({
   initialTopic,
   handleFormSubmit,
   initialTitleVal,
   userId,
+  taggable = false
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const [tags, setTags] = useState<string[]>([]);
   const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
-  const [selectedTopic, setSelectedTopic] = useState<string>(initialTopic?.id || "");
+  const [selectedTopic, setSelectedTopic] = useState<string>(
+    initialTopic?.id || "",
+  );
   const { data: topics } = useGetTopics({});
 
   const onSubmit = (data: FieldValues) => {
     const formData = new FormData();
     formData.append("createdBy", userId);
     formData.append("topicId", selectedTopic || "");
-    formData.append("tags", JSON.stringify(tags));
+
+    if (taggable) 
+      formData.append("tags", JSON.stringify(tags));
 
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
@@ -160,6 +166,7 @@ export const CreateQuestionForm = ({
       </div>
 
       {/* Tag section */}
+      {taggable && (
       <div className="p-6 border dark:border-gray-500 rounded-lg">
         <h3>Tags</h3>
         <div className="flex items-center border rounded-md mt-2 dark:border-gray-500">
@@ -172,9 +179,7 @@ export const CreateQuestionForm = ({
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === ",") {
                 e.preventDefault();
-                handleTagAddition(
-                  (e.target as HTMLInputElement).value.trim(),
-                );
+                handleTagAddition((e.target as HTMLInputElement).value.trim());
                 (e.target as HTMLInputElement).value = "";
               }
             }}
@@ -198,6 +203,7 @@ export const CreateQuestionForm = ({
           ))}
         </div>
       </div>
+      )}
 
       {/* Submit Button */}
       <div className="flex justify-end">

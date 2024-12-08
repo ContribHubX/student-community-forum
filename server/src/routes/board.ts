@@ -28,4 +28,6 @@ export default (app: Router) => {
   router.get("/shared", verifyAuth, boardController.getSharedBoardsHandler);
 
   router.get("/:boardId", verifyAuth, boardController.getBoardByIdHandler);
+
+  router.delete("/:boardId", verifyAuth, boardController.deleteBoardHandler);
 }

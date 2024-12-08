@@ -32,7 +32,7 @@ export const SideBarItem = ({
         </div>
 
         <div>
-          <p className="text-sm">{truncateText(title, 23)}</p>
+          <p className="text-sm">{truncateText(title, 15)}</p>
           <p className="text-xs text-muted-foreground font-light">
             {truncateText(description, 22)}
           </p>
