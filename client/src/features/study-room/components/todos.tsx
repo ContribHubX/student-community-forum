@@ -24,6 +24,7 @@ interface TodosProp {
 export const Todos = ({ userId }: TodosProp) => {
   const queryClient = useQueryClient();
   const { data: todos } = useGetTodos({ userId: userId || "" });
+
   const { mutate: createTodo } = useCreateTodo({
     mutationConfig: {
       onSuccess: (data) => {
@@ -36,6 +37,7 @@ export const Todos = ({ userId }: TodosProp) => {
       },
     },
   });
+
   const { mutate: updateTodo } = useUpdateTodo({
     mutationConfig: {
       onSuccess: (data) => {
@@ -120,6 +122,7 @@ const TodoForm = ({ handleSubmit }: TodoFormProp) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSubmit(todo);
+    setTodo("");
   };
 
   return (
@@ -130,6 +133,7 @@ const TodoForm = ({ handleSubmit }: TodoFormProp) => {
       <p className="text-xl">+</p>
       <input
         type="text"
+        value={todo}
         placeholder="Add new task"
         className="bg-transparent border-0 outline-none text-[.8rem]"
         onChange={(e) => {

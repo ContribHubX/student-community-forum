@@ -18,8 +18,8 @@ import { useAuth } from "@/hooks/use-auth";
 // TODO topic creation
 
 export const HomeRoute = () => {
-  const { authState } = useAuth(); 
-
+  const { authState } = useAuth();
+  
   if (!authState?.user?.id) return <p>Loading...</p>;
 
   return (

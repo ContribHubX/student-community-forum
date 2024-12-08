@@ -7,6 +7,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { FormEvent, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 interface CommentFormProps {
   threadId: string | undefined;
@@ -31,7 +33,22 @@ export const CommentForm = ({
     createdBy: "",
   });
 
-  const { mutate: createComment } = useCreateComment({});
+  const { mutate: createComment } = useCreateComment({
+    mutationConfig: {
+      onSuccess: (response) => {
+        toast.success(response.message);
+        setCommentData({
+          content: "",
+          createdBy: "",
+        });
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+        }
+      },
+    },
+  });
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -42,10 +59,7 @@ export const CommentForm = ({
       parentId: parentId ? parentId : null,
     };
     createComment(data);
-    setCommentData({
-      content: "",
-      createdBy: "",
-    });
+
     setIsFocused(false);
 
     if (onSubmitCallback) onSubmitCallback();
@@ -90,6 +104,7 @@ export const CommentForm = ({
             <TextEditor
               handleChange={handleContentChange}
               placeholder={placeholder}
+              initialContent={commentData.content}
             />
             <div className="mt-4 flex justify-end gap-2">
               <Button
@@ -103,6 +118,7 @@ export const CommentForm = ({
               <Button
                 type="submit"
                 size="sm"
+                className="text-accent-foreground"
                 disabled={
                   commentData.content === "" ||
                   commentData.content === "<p><br></p>"

@@ -54,8 +54,6 @@ export const Chats = ({ userId, roomId }: ChatsProp) => {
     });
   }, [roomId, userId]);
 
-  console.log(chatsData);
-
   return (
     <div
       className="sm:col-span-2 md:col-span-1 text-sm rounded-2xl bg-primary md:max-w-[261px] shadow-xl flex-1 flex flex-col"
@@ -111,6 +109,7 @@ const ChatForm = ({ handleSubmit }: ChatFormProp) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSubmit(message);
+    setMessage("");
   };
 
   return (
@@ -121,12 +120,19 @@ const ChatForm = ({ handleSubmit }: ChatFormProp) => {
       <input
         type="text"
         placeholder="Say something..."
+        value={message}
         className="border-0 outline-none bg-transparent w-full"
         onChange={(e) => {
           setMessage(e.target.value);
         }}
       />
-      <TbSend2 className="text-xl text-accent-foreground" />
+      <TbSend2
+        className="text-xl text-accent-foreground cursor-pointer"
+        onClick={() => {
+          handleSubmit(message);
+          setMessage("");
+        }}
+      />
     </form>
   );
 };

@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 /**
  * @credits ChatGpt
  * Converts base64 to actual file
@@ -126,6 +128,16 @@ export const extractVideoId = (url: string) => {
   return match ? match[1] : null;
 };
 
+
+// Utility function to get all the errors of zod
+export const handleFormErrors = (errors: Record<string, any>) => {
+  Object.values(errors).forEach((error) => {
+    if (error?.message) {
+      toast.error(error.message);
+    }
+  });
+};
+
 /** 
  * 
  */
@@ -133,3 +145,4 @@ export const extractFileName = (url: string): string => {
   const splitted = url.substring(url.lastIndexOf("/") + 1);
   return splitted;
 }
+

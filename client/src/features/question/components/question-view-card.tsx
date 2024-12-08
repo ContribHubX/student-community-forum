@@ -87,7 +87,9 @@ export const QuestionViewCard = ({
               </div>
             </DialogContent>
           </Dialog>
-          <AnswerPrompt question={question} user={currentUser} />
+          <div>
+            <AnswerPrompt question={question} user={currentUser} />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -100,14 +102,23 @@ interface AnswerPromptProps {
 }
 
 const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
-  const { mutate: createThread } = useCreateThread({});
+  const { mutate: createThread } = useCreateThread({
+    mutationConfig: {
+      onSuccess: () => {
+        console.log("hello");
+      },
+    },
+  });
 
   const handleCreateThread = (data: FormData) => {
     data.append("questionId", question.id);
     createThread(data);
+
+    console.log("helllo");
   };
 
   return (
+
     <div className="flex items-center space-x-4 group">
       <Avatar className="w-10 h-10 ring-2 ring-blue-500 ring-offset-2">
         <AvatarImage src={user.attachment} />
