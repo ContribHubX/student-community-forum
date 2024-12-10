@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { useGetTopics, useCreateTopic, createTopicSchema } from "../api"
-import { TopicLibraryCard } from "./topic-library-card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { useState } from "react";
+import { useGetTopics, useCreateTopic, createTopicSchema } from "../api";
+import { TopicLibraryCard } from "./topic-library-card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 // import {
 //   Select,
 //   SelectContent,
@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button"
 //   SelectTrigger,
 //   SelectValue,
 // } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { motion, AnimatePresence } from "framer-motion"
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Dialog,
   DialogContent,
@@ -20,10 +20,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -32,25 +32,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { useAuth } from "@/hooks/use-auth"
-
+} from "@/components/ui/form";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "react-toastify";
 
 export const TopicResource = () => {
   const { authState } = useAuth();
-  const { data: topics } = useGetTopics({})
-  const { mutate: createTopic } = useCreateTopic({})
+  const { data: topics } = useGetTopics({});
+  const { mutate: createTopic } = useCreateTopic({
+    mutationConfig: {
+      onSuccess: () => {
+        console.log("topic created!!!");
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  });
 
-  const [searchTerm, setSearchTerm] = useState("")
-  const [showUserTopics, setShowUserTopics] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showUserTopics, setShowUserTopics] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<z.infer<typeof createTopicSchema>>({
     resolver: zodResolver(createTopicSchema),
     defaultValues: {
       name: "",
     },
-  })
+  });
 
   const onSubmit = async (values: z.infer<typeof createTopicSchema>) => {
     if (!authState || !authState.user) return;
@@ -59,29 +68,28 @@ export const TopicResource = () => {
       createTopic({
         name: values.name,
         attachment: values.attachment,
-        createdBy: authState.user.id.toString()
+        createdBy: authState.user.id.toString(),
       });
+      toast.success("Topic created successfully!");
       setIsDialogOpen(false);
       form.reset();
     } catch (error) {
-      console.error("Failed to create topic:", error)
+      console.error("Failed to create topic:", error);
     }
-
-    console.log(values)
-  }
+  };
 
   const filteredTopics = topics?.filter((topic) => {
-    const matchesSearch = topic.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = topic.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesUserTopics = showUserTopics
       ? topic?.createdBy?.id.toString() === authState?.user?.id.toString()
       : true;
     return matchesSearch && matchesUserTopics;
   });
 
-  console.log(topics)
-
   return (
-    <div className="container mx-auto px-4 py-8 text-primary-foreground">
+    <div className="container mx-auto px-4 py-8 text-primary-foreground text-primary-foreground">
       <h1 className="text-4xl font-bold mb-8 text-center">Explore Topics</h1>
 
       <div className="flex flex-col md:flex-row gap-4 mb-8">
@@ -113,9 +121,11 @@ export const TopicResource = () => {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="text-sm text-accent-foreground">Create Topic</Button>
+            <Button className="text-sm text-accent-foreground">
+              Create Topic
+            </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] text-primary-foreground">
             <DialogHeader>
               <DialogTitle>Create New Topic</DialogTitle>
               <DialogDescription>
@@ -123,7 +133,10 @@ export const TopicResource = () => {
               </DialogDescription>
             </DialogHeader>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
                 <FormField
                   control={form.control}
                   name="name"
@@ -131,7 +144,11 @@ export const TopicResource = () => {
                     <FormItem>
                       <FormLabel>Topic Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter topic name" {...field} />
+                        <Input
+                          placeholder="Enter topic name"
+                          {...field}
+                          className="focus:outline-accent dark:border"
+                        />
                       </FormControl>
                       <FormDescription>
                         This is the name of your new topic.
@@ -149,6 +166,7 @@ export const TopicResource = () => {
                       <FormControl>
                         <Input
                           type="file"
+                          className="cursor-pointer"
                           onChange={(e) => field.onChange(e.target.files?.[0])}
                         />
                       </FormControl>
@@ -159,7 +177,9 @@ export const TopicResource = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Save Topic</Button>
+                <Button type="submit" className="text-accent-foreground">
+                  Save Topic
+                </Button>
               </form>
             </Form>
           </DialogContent>
@@ -197,6 +217,5 @@ export const TopicResource = () => {
         <Button className="text-accent-foreground">Load More Topics</Button>
       </div>
     </div>
-  )
-}
-
+  );
+};

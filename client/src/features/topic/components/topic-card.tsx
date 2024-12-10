@@ -42,12 +42,17 @@ export const TopicCard = ({
   const { mutate: follow } = useFollowTopic({});
   const [postType, setPostType] = useState("thread");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState<"Thread | Question" | "">("");
+  const [selectedMethod, setSelectedMethod] = useState<
+    "Thread | Question" | ""
+  >("");
   const navigate = useNavigate();
 
   const handleSubmit = (data: FormData) => {
     if (postType === "thread") createThread(data);
-    else createQuestion(formDataToObject(data) as CreateQuestionType);
+    else {
+      createQuestion(formDataToObject(data) as CreateQuestionType);
+      setIsDialogOpen(false);
+    }
   };
 
   const handleSelectChange = (value: string) => {

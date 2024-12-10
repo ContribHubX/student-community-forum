@@ -33,7 +33,7 @@ export const CreateQuestionForm = ({
   handleFormSubmit,
   initialTitleVal,
   userId,
-  taggable = false
+  taggable = false,
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const [tags, setTags] = useState<string[]>([]);
@@ -51,8 +51,7 @@ export const CreateQuestionForm = ({
     formData.append("createdBy", userId);
     formData.append("topicId", selectedTopic || "");
 
-    if (taggable) 
-      formData.append("tags", JSON.stringify(tags));
+    if (taggable) formData.append("tags", JSON.stringify(tags));
 
     Object.keys(data).forEach((key) => {
       if (data[key] instanceof File) {
@@ -62,10 +61,10 @@ export const CreateQuestionForm = ({
       }
     });
 
-    console.log("hello");
     // Submit the form
     handleFormSubmit(formData);
   };
+
   const handleTagAddition = (tag: string) => {
     if (tag && !tags.includes(tag)) {
       setTags([...tags, tag]);
@@ -171,42 +170,44 @@ export const CreateQuestionForm = ({
 
       {/* Tag section */}
       {taggable && (
-      <div className="p-6 border dark:border-gray-500 rounded-lg">
-        <h3>Tags</h3>
-        <div className="flex items-center border rounded-md mt-2 dark:border-gray-500">
-          <BsFillTagsFill className="text-accent ml-4" />
-          <input
-            type="text"
-            placeholder="Add a tag and press Enter"
-            className="w-full px-4 py-2 rounded-md outline-none focus:border-accent 
+        <div className="p-6 border dark:border-gray-500 rounded-lg">
+          <h3>Tags</h3>
+          <div className="flex items-center border rounded-md mt-2 dark:border-gray-500">
+            <BsFillTagsFill className="text-accent ml-4" />
+            <input
+              type="text"
+              placeholder="Add a tag and press Enter"
+              className="w-full px-4 py-2 rounded-md outline-none focus:border-accent 
           border-[1px]  border-none text-sm bg-primary "
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === ",") {
-                e.preventDefault();
-                handleTagAddition((e.target as HTMLInputElement).value.trim());
-                (e.target as HTMLInputElement).value = "";
-              }
-            }}
-          />
-        </div>
-        <div className="flex flex-wrap mt-4 gap-2">
-          {tags.map((tag, index) => (
-            <span
-              key={index}
-              className="flex items-center px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm"
-            >
-              {tag}
-              <button
-                type="button"
-                onClick={() => handleTagRemoval(tag)}
-                className="ml-2 text-white hover:text-gray-200"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === ",") {
+                  e.preventDefault();
+                  handleTagAddition(
+                    (e.target as HTMLInputElement).value.trim(),
+                  );
+                  (e.target as HTMLInputElement).value = "";
+                }
+              }}
+            />
+          </div>
+          <div className="flex flex-wrap mt-4 gap-2">
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="flex items-center px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm"
               >
-                ✕
-              </button>
-            </span>
-          ))}
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => handleTagRemoval(tag)}
+                  className="ml-2 text-white hover:text-gray-200"
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
       )}
 
       {/* Submit Button */}

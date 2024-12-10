@@ -17,6 +17,7 @@ import { useGetTopic } from "../api/get-topic";
 import { formDataToObject } from "@/utils";
 import { useGetThreadsByTopic } from "../api/get-threads-by-topic";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 interface TopicsProp {
   userId: string;
@@ -31,8 +32,14 @@ export const Topics = ({ userId }: TopicsProp) => {
 
   const { mutate: createQuestion } = useCreateQuestion({
     mutationConfig: {
-      onSuccess: (response) => {
-        toast.success(response.message);
+      onSuccess: () => {
+        toast.success("question submitted");
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          ///error
+          /// toast.error(error.response.data.message)
+        }
       },
     },
   });
@@ -47,7 +54,7 @@ export const Topics = ({ userId }: TopicsProp) => {
     data: { topicId: topicId!, userId: userId! },
   });
   const { data: threads } = useGetThreadsByTopic({ topicId: topicId || "" });
-  
+
   const handleCreateQuestion = (data: FormData) => {
     data.append("topicId", topicId || "");
     createQuestion(formDataToObject(data) as CreateQuestionType);

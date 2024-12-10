@@ -17,47 +17,45 @@ import { useGetEvents } from "@/features/event/api/get-events";
 
 export const Community = () => {
   const { id } = useParams();
-  const { authState } = useAuth();  
+  const { authState } = useAuth();
   const { data: threads } = useGetThreadsByCommunity({ communityId: id || "" });
   const [tabOpen, setChangeTab] = useState<CommunityTab>("Threads");
   const { data: eventsData } = useGetEvents({ communityId: id || "" });
 
-  const { data: community } = useGetCommunityById({ id })
+  const { data: community } = useGetCommunityById({ id });
 
   if (!community || !authState.user) {
     return <div>Loading..</div>;
   }
 
   return (
-    <div className="bg-background text-primary-foreground">
+    <div
+      className="flex flex-col text-primary-foreground bg-background
+    min-h-screen"
+    >
       <Navbar />
-      <main className="">
-        <CommunityView 
-          community={community} 
+
+      <main className="pb-5">
+        <CommunityView
+          community={community}
           userId={authState.user.id}
           onTabChange={(tab: CommunityTab) => setChangeTab(tab)}
           tabOpen={tabOpen}
         />
 
-        <div className="w-[78%] flex flex-1  mx-auto mt-5 gap-5">
+        <div className="w-[78%] flex mx-auto mt-5 gap-5">
           {tabOpen === "Threads" ? (
             <div className="flex flex-col md:flex-row gap-8">
               <div className="min-w-[70%]">
                 <div>
-                  <ThreadActionForm
-                  user={authState.user}
-                />
+                  <ThreadActionForm user={authState.user} />
                 </div>
                 <div>
                   <ThreadCardList threads={threads || []} />
                 </div>
               </div>
 
-
-              <aside
-                className="sticky right-5 top-28 rounded-xl space-y-4"
-                style={{ height: "calc(100vh - 8rem)" }}
-              >
+              <aside className="sticky right-5 top-28 rounded-xl space-y-4 ">
                 <div
                   className="font-light bg-primary rounded-xl shadow-slate-400 shadow-md dark:shadow-gray-900
                 text-sm "
@@ -79,42 +77,43 @@ export const Community = () => {
                   </p>
                   <div className="p-4 flex items-center gap-2">
                     <Avatar>
-                      <AvatarImage 
-                        src={community.createdBy.attachment} />
+                      <AvatarImage src={community.createdBy.attachment} />
                     </Avatar>
                     <p>{community.createdBy.name}</p>
                   </div>
                 </div>
 
                 <div
-                  className="max-h-[450px] overflow-y-auto rounded-xl
+                  className="overflow-y-auto rounded-xl
                 shadow-slate-400 shadow-md dark:shadow-gray-900"
                 >
                   <UpcomingEventsList />
                 </div>
               </aside>
             </div>
-          ): (
+          ) : (
             <div className="w-full mx-auto">
-              <EventCalendar 
-                  events={[
-                    {
-                      id: "1",
-                      name: "UC Intrams",
-                      eventDate: subDays(new Date(), 6),
-                      tags: ["sports", "university"],
-                      communityId: "dfafd"
-                    },
-                    {
-                      id: "2",
-                      name: "UC Days",
-                      eventDate: subDays(new Date(), 15),
-                      tags: ["celebration", "university"],
-                      communityId: "dfafd"
-                    },
-                    ...events, ...eventsData || [] ]}
-                    communityId={community.id}
-                    userId={authState.user.id}
+              <EventCalendar
+                events={[
+                  {
+                    id: "1",
+                    name: "UC Intrams",
+                    eventDate: subDays(new Date(), 6),
+                    tags: ["sports", "university"],
+                    communityId: "dfafd",
+                  },
+                  {
+                    id: "2",
+                    name: "UC Days",
+                    eventDate: subDays(new Date(), 15),
+                    tags: ["celebration", "university"],
+                    communityId: "dfafd",
+                  },
+                  ...events,
+                  ...(eventsData || []),
+                ]}
+                communityId={community.id}
+                userId={authState.user.id}
               />
             </div>
           )}

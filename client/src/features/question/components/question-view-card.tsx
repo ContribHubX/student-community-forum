@@ -5,12 +5,13 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SelectRequest } from "./select-request";
 import { useCreateThread } from "@/features/shared/api/create-thread";
-import { MessageSquare, Eye, ChevronUp, ChevronDown } from 'lucide-react';
+import { MessageSquare, Eye, ChevronUp, ChevronDown } from "lucide-react";
 import { CreateQuestionForm } from "@/features/shared/components/create-question-form";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQuestionQueryOptions } from "../api/get-question";
+import { toast } from "react-toastify";
 
 interface QuestionViewCardProp {
   currentUser: User;
@@ -21,7 +22,7 @@ export const QuestionViewCard = ({
   currentUser,
   question,
 }: QuestionViewCardProp) => {
-  const [isExpanded, setIsExpanded] = useState(true );  
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <motion.div
@@ -71,8 +72,8 @@ export const QuestionViewCard = ({
         </motion.div>
 
         <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
-          <Dialog >
-            <DialogTrigger >
+          <Dialog>
+            <DialogTrigger>
               <Button
                 variant="outline"
                 className="text-sm hover:bg-accent dark:text-accent-foreground hover:text-white transition-colors duration-200"
@@ -80,6 +81,7 @@ export const QuestionViewCard = ({
                 Request Answer
               </Button>
             </DialogTrigger>
+            
             <DialogContent className="p-5 w-[500px] max-h-[600px] dark:border-none bg-primary">
               <div className="mt-6">
                 <SelectRequest
@@ -106,11 +108,14 @@ interface AnswerPromptProps {
 const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   const queryClient = useQueryClient();
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const { mutate: createThread } = useCreateThread({
     mutationConfig: {
       onSuccess: (data) => {
-        console.log("new thread answer: " + JSON.stringify(data, null, 2));
-        queryClient.invalidateQueries({ queryKey: getQuestionQueryOptions(data.questionId || "").queryKey })
+        queryClient.invalidateQueries({
+          queryKey: getQuestionQueryOptions(data.questionId || "").queryKey,
+        });
       },
     },
   });
@@ -118,12 +123,11 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   const handleCreateThread = (data: FormData) => {
     data.append("questionId", question.id);
     createThread(data);
-
-    console.log("helllo");
+    toast.success("Answer submitted!");
+    setIsOpen(false);
   };
 
   return (
-
     <div className="flex items-center space-x-4 group">
       <Avatar className="w-10 h-10 ring-2 ring-blue-500 ring-offset-2">
         <AvatarImage src={user.attachment} />
@@ -137,8 +141,8 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
         </p>
       </div>
 
-      <Dialog>
-        <DialogTrigger>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger onClick={() => setIsOpen(true)}>
           <Button
             className="bg-accent text-white transition-colors duration-200"
             size="sm"
@@ -147,6 +151,7 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
             Answer
           </Button>
         </DialogTrigger>
+
         <DialogContent className="sm:max-w-[600px] bg-primary dark:border-gray-600 lg:max-w-[800px]">
           <CreateQuestionForm
             initialTopic={question.topic}
@@ -160,4 +165,3 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
     </div>
   );
 };
-

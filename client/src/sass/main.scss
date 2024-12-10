@@ -272,3 +272,17 @@ html.dark {
 //   content: '';
 //   bottom: 0;
 // }
+
+.Toastify__close-button {
+  background-color: red;
+}
+
+
+
+.Toastify__toast-icon {
+  color: white;
+}
+
+.Toastify__toast {
+  box-shadow: 0 2px 5px rgba(55, 65, 81, 1); /* shadow-gray-900 equivalent */
+}

@@ -8,7 +8,7 @@ interface ThreadActionFormProp {
 
 export const ThreadActionForm = ({ user }: ThreadActionFormProp) => {
   const navigate = useNavigate();
-
+  
   return (
     <div className="flex p-6 gap-6 rounded-xl bg-primary relative mb-6 shadow-slate-400 shadow-md dark:shadow-gray-900">
         <div className="w-full flex gap-4 items-center">

@@ -7,7 +7,7 @@ export const QuestionViewRoute = () => {
   const { authState } = useAuth();
 
   if (!authState?.user?.id) return <p>Loading...</p>;
-
+  
   return (
     <MainLayout LeftSidebar={Aside}>
       <section className="md:ml-[16rem] lg:mr-[22rem]">

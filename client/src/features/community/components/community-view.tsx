@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 import { motion } from "framer-motion";
 
@@ -9,7 +9,7 @@ import { AvatarImage, Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
 import { users } from "@/features/shared/data/users";
-import { useJoinCommunity } from '../api/join-community';
+import { useJoinCommunity } from "../api/join-community";
 
 interface CommunityViewProps {
   community: CommunityWithMembers;
@@ -18,14 +18,21 @@ interface CommunityViewProps {
   tabOpen: CommunityTab;
 }
 
-export const CommunityView = ({ community, userId, onTabChange, tabOpen }: CommunityViewProps) => {
+export const CommunityView = ({
+  community,
+  userId,
+  onTabChange,
+  tabOpen,
+}: CommunityViewProps) => {
   const [scrollY, setScrollY] = useState(0);
   const { mutate: joinCommunity } = useJoinCommunity({});
 
   const isJoined = (): boolean => {
     if (!community || !userId) return false;
-    return community.members.some(member => member.user.id.toString() === userId.toString())
-  }
+    return community.members.some(
+      (member) => member.user.id.toString() === userId.toString(),
+    );
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -35,7 +42,7 @@ export const CommunityView = ({ community, userId, onTabChange, tabOpen }: Commu
 
   return (
     <section className="relative mx-auto overflow-hidden rounded-b-[40px] shadow-lg">
-      <motion.div 
+      <motion.div
         className="h-[640px] bg-gradient-to-b from-primary to-primary/80 rounded-b-[40px] flex flex-col items-center shadow-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -54,7 +61,7 @@ export const CommunityView = ({ community, userId, onTabChange, tabOpen }: Commu
           <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent" />
         </div>
 
-        <motion.div 
+        <motion.div
           className="absolute w-[86%] mx-auto  bottom-40 flex items-end gap-6 z-10"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -98,14 +105,16 @@ export const CommunityView = ({ community, userId, onTabChange, tabOpen }: Commu
               <Button variant="outline" size="icon" className="rounded-full">
                 <PiDotsThreeOutlineFill className="text-2xl" />
               </Button>
-              <Button 
+              <Button
                 className={`bg-accent text-accent-foreground px-8 py-2 rounded-full  font-medium hover:bg-accent/90 transition-colors
                             ${isJoined() && "dark:bg-primary text-primary-foreground dark:border-background bg-background border-2 border-accent"}  
                 `}
-                onClick={() => joinCommunity({
-                  communityId: community.id,
-                  userId: userId.toString()
-                })}
+                onClick={() =>
+                  joinCommunity({
+                    communityId: community.id,
+                    userId: userId.toString(),
+                  })
+                }
               >
                 {!isJoined() ? "Join" : "Joined"}
               </Button>
@@ -113,12 +122,14 @@ export const CommunityView = ({ community, userId, onTabChange, tabOpen }: Commu
           </div>
 
           <nav className="mt-8 flex gap-8  border-primary-foreground/10">
-            {['Threads', 'Events', 'Members', 'Media'].map((item) => (
+            {["Threads", "Events", "Members", "Media"].map((item) => (
               <Button
                 key={item}
                 variant="ghost"
                 className={`text-primary-foreground/70 hover:text-accent-foreground pb-4 px-2 rounded-none text-sm  ${
-                  tabOpen === item ? 'border-b-2 border-accent text-primary-foreground' : ''
+                  tabOpen === item
+                    ? "border-b-2 border-accent text-primary-foreground"
+                    : ""
                 }`}
                 onClick={() => onTabChange(item as CommunityTab)}
               >
@@ -131,4 +142,3 @@ export const CommunityView = ({ community, userId, onTabChange, tabOpen }: Commu
     </section>
   );
 };
-

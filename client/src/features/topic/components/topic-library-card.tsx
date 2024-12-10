@@ -21,7 +21,7 @@ export const TopicLibraryCard = ({ topic }: TopicLibraryCardProps) => {
       onHoverEnd={() => setIsHovered(false)}
     >
       <Card
-        className="h-[350px] overflow-hidden relative group dark:border-0 shadow-md"
+        className="h-[350px] overflow-hidden relative group dark:border-0 shadow-md cursor-pointer"
         onClick={() => navigate(`/topic/${topic.id}`)}
       >
         <div
