@@ -2,13 +2,22 @@ import arrowbutton from "@/assets/sidebar/arrow-button.svg";
 import { Link } from "react-router-dom";
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { UpcomingEventsList } from "@/features/thread/components/upcoming-events";
-import { recentThreadData } from "@/features/shared/data/recent-thread-data";
+import { useGetThreads } from "@/features/thread/api/get-all-threads";
+
+import { shuffle } from "@/utils";
+import { Thread } from "@/types";
 
 export const RightSidebar = () => {
+  const { data: threads } = useGetThreads({});
+
+  const shuffledThreads = shuffle(threads?.slice(0, 5) || []);
+
   return (
     <SidebarLayout
-      className="hidden flex-col gap-6 lg:flex"
-      width={325}
+      className="hidden flex-col gap-6 lg:flex
+                 lg:w-[270px]
+                 xl:w-[300px]
+      "
       height={"full"}
       position="right-6"
     >
@@ -19,14 +28,17 @@ export const RightSidebar = () => {
         id="sidebar"
       >
         <Link to="">
-          <div className="flex items-center mb-4">
-            <h1>Recent Threads</h1>
+          <div className="flex items-center mb-1">
+            <h1 className="text-sm font-medium">Recent Threads</h1>
             <img src={arrowbutton} alt="" className="h-6" />
           </div>
         </Link>
 
-        {recentThreadData.map((event, index) => {
-          return <RecentThread key={index} iconBgcolor="#EFF5F8" {...event} />;
+        {shuffledThreads?.map((thread) => {
+          return <RecentThread 
+                    key={thread.id}
+                    thread={thread}
+                 />;
         })}
       </div>
     </SidebarLayout>
@@ -34,25 +46,33 @@ export const RightSidebar = () => {
 };
 
 interface RecentThreadProps {
-  title: string;
-  author: string;
-  icon: string;
-  iconBgcolor: string;
+ thread: Thread
 }
 
-const RecentThread = ({ title, author, icon }: RecentThreadProps) => {
+const RecentThread = ({ thread }: RecentThreadProps) => {
+  const attachment =
+  thread.attachment !== null && thread.attachment !== "null"
+    ? thread.attachment
+    : "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3bb5f691632079.5e372adaa9f70.png";
+
+  if (!thread) return <p>Loading...</p>
+
   return (
-    <div className="flex  gap-2">
+    <div className="flex gap-4">
       <div
-        className={`rounded-xl flex p-4 items-center justify-center bg-container`}
+        className={`rounded-lg flex w-[80px] h-[60px] items-center justify-center bg-container`}
       >
-        <img src={icon} alt="" className="h-8 w-8" />
+        <img 
+          src={attachment} 
+          alt="attachment" 
+          className="h-full w-full rounded-lg" 
+        />
       </div>
 
       <div className="flex flex-col flex-1 justify-center">
-        <p className="text-sm">{title}</p>
+        <p className="text-sm">{thread.title}</p>
         <p className="text-xs text-muted-foreground justify-self-end">
-          by {author}
+          by {thread.createdBy.name}
         </p>
       </div>
 
@@ -62,6 +82,7 @@ const RecentThread = ({ title, author, icon }: RecentThreadProps) => {
     </div>
   );
 };
+
 
 // ===BACKUP===
 // ============

@@ -9,6 +9,8 @@ import { MessageSquare, Eye, ChevronUp, ChevronDown } from 'lucide-react';
 import { CreateQuestionForm } from "@/features/shared/components/create-question-form";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
+import { useQueryClient } from "@tanstack/react-query";
+import { getQuestionQueryOptions } from "../api/get-question";
 
 interface QuestionViewCardProp {
   currentUser: User;
@@ -68,9 +70,9 @@ export const QuestionViewCard = ({
           ></p>
         </motion.div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-          <Dialog>
-            <DialogTrigger>
+        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
+          <Dialog >
+            <DialogTrigger >
               <Button
                 variant="outline"
                 className="text-sm hover:bg-accent dark:text-accent-foreground hover:text-white transition-colors duration-200"
@@ -78,7 +80,7 @@ export const QuestionViewCard = ({
                 Request Answer
               </Button>
             </DialogTrigger>
-            <DialogContent className="p-5 w-[500px] max-h-[600px] bg-primary">
+            <DialogContent className="p-5 w-[500px] max-h-[600px] dark:border-none bg-primary">
               <div className="mt-6">
                 <SelectRequest
                   questionId={question.id}
@@ -102,10 +104,13 @@ interface AnswerPromptProps {
 }
 
 const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
+  const queryClient = useQueryClient();
+
   const { mutate: createThread } = useCreateThread({
     mutationConfig: {
-      onSuccess: () => {
-        console.log("hello");
+      onSuccess: (data) => {
+        console.log("new thread answer: " + JSON.stringify(data, null, 2));
+        queryClient.invalidateQueries({ queryKey: getQuestionQueryOptions(data.questionId || "").queryKey })
       },
     },
   });
@@ -142,7 +147,7 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
             Answer
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px] lg:max-w-[800px]">
+        <DialogContent className="sm:max-w-[600px] bg-primary dark:border-gray-600 lg:max-w-[800px]">
           <CreateQuestionForm
             initialTopic={question.topic}
             initialTitleVal={question.title}

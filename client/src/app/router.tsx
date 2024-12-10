@@ -171,6 +171,13 @@ const createAppRouter = () =>
             return { Component: EventRoute };
           },
         },
+        {
+          path: "/profile",
+          lazy: async () => {
+            const { ProfileRoute } = await import("./routes/app/profile");
+            return { Component: ProfileRoute };
+          },
+        },
       ],
     },
   ]);

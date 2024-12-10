@@ -1,6 +1,6 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
-import { IThreadDto, IThreadFull, IThreadUpdateDto } from "../interfaces/IThread";
+import { IThreadDeleteDto, IThreadDto, IThreadFull, IThreadUpdateDto } from "../interfaces/IThread";
 import { ThreadTable, ThreadTagsTable } from "@/database/schema";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
@@ -57,13 +57,12 @@ class ThreadRepository {
   public create(dto: IThreadDto): Promise<IThreadFull | undefined> {
     return new Promise(async (resolve, reject) => {
       try {
-        
         const insertResult = await this.db  
           .insert(ThreadTable)
           .values({
             ...dto,
             communityId: dto.communityId === "" ? null : dto.communityId,
-            topicId: dto.topicId === "" || !dto.topicId ? null : dto.communityId 
+            topicId: dto.topicId === "" || !dto.topicId ? null : dto.topicId 
           })
           .$returningId();
 
@@ -96,7 +95,6 @@ class ThreadRepository {
   }   
 
   public update(dto: IThreadUpdateDto): Promise<IThreadFull | undefined> {
-    console.log(dto.tags)
     return new Promise(async (resolve, reject) => {
       try {
         const thread = await this.findOneById(dto.threadId);
@@ -236,7 +234,29 @@ class ThreadRepository {
       }
     });
   }
-  
+
+  public delete(dto: IThreadDeleteDto): Promise<IThreadFull> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // check if thread exist
+        const thread = await this.findOneById(dto.threadId);
+
+        if (!thread) return reject(new AppError("Thread not found", 404));
+
+        // check if owner
+        if (thread.createdBy.id !== dto.userId) return reject(new AppError("Must be owner of the thread", 400));
+
+        await this.db
+          .delete(ThreadTable)
+          .where(eq(ThreadTable.id, dto.threadId));
+
+        resolve(thread);
+      } catch (error: any) {
+        reject(new AppError(error || "Database error"));
+      }
+    });
+  }
+
   /**
    * Generates additional SQL columns for reaction and comment counts.
    * 

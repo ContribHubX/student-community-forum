@@ -132,6 +132,20 @@ class ThreadInteractionService {
       throw new AppError("Error fetching comments");
     }
   }
+
+  public async deleteComment(commentId: string): Promise<{threadId: string}> {
+    try {
+      const res = await this.threadInteractionRepo.deleteComment(commentId);
+
+      if (res)
+        this.eventManager.publishToMany<{threadId: string}>("comment--delete", res);
+      
+      return res;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error fetching comments");
+    }
+  }
 }
 
 export default ThreadInteractionService;

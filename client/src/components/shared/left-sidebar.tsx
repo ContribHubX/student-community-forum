@@ -5,15 +5,17 @@ import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { SideBarItem } from "../ui/sidebar-item";
 import {
   popularTagsData,
-  popularGroupsData,
 } from "@/features/shared/data/topic-group";
 import { useGetTopics } from "@/features/topic/api";
 
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useGetCommunities } from "@/features/community/api/get-communities";
 
 export const LeftSidebar = () => {
   const { data: topics } = useGetTopics({});
+  const { data: communities } = useGetCommunities({});
+
   const navigate = useNavigate();
 
   return (
@@ -70,6 +72,7 @@ export const LeftSidebar = () => {
                 description={popularTagsData[index].description}
                 icon={popularTagsData[index].icon}
                 iconBgcolor={popularTagsData[index].iconBgColor}
+                link={`/topic/${topics.id}`}
               />
             );
           })}
@@ -88,14 +91,16 @@ export const LeftSidebar = () => {
           />
         </div>
 
-        {popularGroupsData.map((popularGroupData, index) => {
+        {communities?.slice(0, 5).map((popularGroupData, index) => {
           return (
             <SideBarItem
               key={index}
-              title={popularGroupData.title}
+              title={"c/" + popularGroupData.name.replace(" ", "_").toLowerCase()}
               description={popularGroupData.description}
               icon={popularGroupData.icon}
               iconBgcolor="#EFF5F8"
+              imgStyle="rounded-lg"
+              link={`/community/${popularGroupData.id}`}
             />
           );
         })}

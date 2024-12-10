@@ -76,4 +76,16 @@ export default {
         next(new AppError(error));
       }
     },
+
+    async deleteCommentHandler(req: Request, res: Response, next: NextFunction) {
+      const commentId = req.params.commentId;
+
+      try {
+        const threadService = Container.get(ThreadInteractionService);
+        const comments = await threadService.deleteComment(commentId);
+        res.status(200).json(comments);
+      } catch (error: any) {
+        next(new AppError(error));
+      }
+    },
 }

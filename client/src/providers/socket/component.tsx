@@ -93,11 +93,25 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           });
           break;
 
-        case "comment--new":
+        case "thread--delete":
           console.log(data);
+          socketDispatch({
+            type: OPERATION.DELETE_THREAD,
+            payload: { thread: data, queryClient },
+          });
+          break;
+
+        case "comment--new":
           socketDispatch({
             type: OPERATION.ADD_NEW_COMMENT,
             payload: { comment: data, queryClient },
+          });
+          break;
+      
+        case "comment--delete":
+          socketDispatch({
+            type: OPERATION.DELETE_COMMENT,
+            payload: { threadId: data.threadId, queryClient },
           });
           break;
 

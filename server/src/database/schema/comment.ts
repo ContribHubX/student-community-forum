@@ -9,8 +9,8 @@ export const CommentTable = mysqlTable('comment', {
     content: text("content").notNull(),
     createdAt: timestamp("created_at").defaultNow(),
     createdBy: varchar("created_by", { length: 255 }).notNull().references(() => UserTable.id),
-    threadId: varchar("thread_id", { length: 255 }).notNull().references(() => ThreadTable.id),
-    parentId: varchar("parent_id", { length: 255 }).references((): MySqlColumn => CommentTable.id)
+    threadId: varchar("thread_id", { length: 255 }).notNull().references(() => ThreadTable.id, { onDelete: "cascade" }),
+    parentId: varchar("parent_id", { length: 255 }).references((): MySqlColumn => CommentTable.id, { onDelete: "cascade" })
 })
 
 export const CommentTableRelations = relations(CommentTable, ({ one, many }) => ({

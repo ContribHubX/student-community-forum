@@ -7,7 +7,7 @@ import GoogleAuthService from "./google-auth";
 
 @Service()
 class AuthService {
-  private strategies: Record<SocialAuthProvider, ISocialAuthService>;
+  private strategies: Record<Exclude<SocialAuthProvider, "LOCAL">, ISocialAuthService>;
 
   constructor() {
     this.strategies = {

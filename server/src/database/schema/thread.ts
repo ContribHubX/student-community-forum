@@ -29,7 +29,8 @@ export const ThreadTagsTable = mysqlTable("thread_tags", {
   id: varchar("id", { length: 255 }).primaryKey().$default(uuidv4),
   name: varchar("name", { length: 50 }).notNull(),
   threadId: varchar("thread_id", { length: 255 }).references(
-    () => ThreadTable.id,
+    () => ThreadTable.id, 
+    { onDelete: "cascade" }
   ),
 })
 

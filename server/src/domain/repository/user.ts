@@ -81,7 +81,7 @@ class UserRepository {
     return new Promise(async (resolve, reject) => {
       try {
         const user = await this.db.query.UserTable.findFirst({
-          where: and(eq(UserTable.id, id)),
+          where: and(eq(UserTable.id, id.toString())),
         });
 
         resolve(user as IUser);
@@ -126,7 +126,7 @@ class UserRepository {
           password,
           provider,
           attachment,
-        }).where(eq(UserTable.id, dto.id));
+        }).where(eq(UserTable.id, dto.id.toString()));
 
         resolve(user as unknown as IUser);
       } catch (error: any) {

@@ -47,6 +47,7 @@ class NotificationService {
             link = `/topic/${dto.entityId}`;
         }
         
+        
 
         // NOTE wala nani gamit
         // const publisher = await this.userRepo.getById(dto.createdBy);
@@ -142,14 +143,25 @@ class NotificationService {
      * Utility function
      */
     private getQuestionNotificationMessage(actionType: QuestionRequestNotificationType): string {
-        return "requested you to answer a question"
+        switch (actionType) {
+            case "request":
+                return "requested you to answer a question"
+            case "answer":
+                return "answered your question"
+            default:
+                return '';
+        }
     }
 
     /**
      * Utility function
      */
-     private getTopicNotificationMessage(actionType: QuestionRequestNotificationType): string {
+    private getTopicNotificationMessage(actionType: QuestionRequestNotificationType): string {
         return "posted in the topic that you're following"
+    }
+
+    private getAnswerNotificationMessage(): string {
+        return "answered your question."
     }
 }
 

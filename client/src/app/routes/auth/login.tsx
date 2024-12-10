@@ -1,53 +1,67 @@
-import cover from "@/assets/590-removebg-preview.png";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+// import cover from "@/assets/590-removebg-preview.png";
 import { LoginForm } from "@/features/auth/components/login-form";
-import { Link } from "react-router-dom";
+import { SignUpForm } from "@/features/auth/components/signup-form";
+import { Logo } from "@/components/ui/logo";
 
 export const LoginRoute = () => {
+  const [isLogin, setIsLogin] = useState(true);
+
+  const toggleForm = () => setIsLogin(!isLogin);
+
   return (
-    <section
-      className="h-screen w-screen bg-accent p-2 flex gap-5 justify-center
-    md:p-4"
-    >
-      {/* COVER PHOTO SECTION */}
-      <div
-        className="hidden w-full flex-grow place-content-center
-      lg:grid"
+    <section className="min-h-screen w-full bg-gradient-to-br from-blue-500 to-purple-600 p-4 flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white rounded-lg shadow-2xl overflow-hidden flex max-w-4xl w-full"
       >
-        <img src={cover} alt="" /> {/* picture here*/}
-        {/* adjust lang kung gamay ra ang picture */}
-      </div>
-      {/* COVER PHOTO SECTION ENDS*/}
+        {/* COVER PHOTO SECTION */}
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="hidden lg:block lg:w-1/2 bg-blue-100"
+        >
+          {/* <img src={cover} alt="Campus" className="object-cover w-full h-full" /> */}
+        </motion.div>
 
-      {/* LOGIN SECTION */}
-      <div
-        className="bg-white rounded-md p-5 flex flex-col justify-between
-        w-[500px] sm:p-10 lg:w-[650px] lg:p-14"
-      >
-        <div className="flex flex-col items-center">
-          <div className="text-center w-full space-y-5">
-            <div>{/* logo here */}</div>
+        {/* LOGIN/SIGNUP SECTION */}
+        <div className="w-full lg:w-1/2 p-8 sm:p-12">
+          <div className="flex flex-col items-center space-y-6">
+            <Logo className="w-32 h-32 text-accent" />
+            <motion.h1
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="text-3xl font-bold text-gray-800 text-center"
+            >
+              Welcome to StudentHub
+            </motion.h1>
+            <p className="text-gray-600">Please enter your details</p>
 
-            <div className="space-y-2">
-              <p className="font-medium text-2xl">Welcome to CampusConnex!</p>
-              <p className="font-light text-sm text-[#808080]">
-                Please enter your details
-              </p>
-            </div>
+            {isLogin ? <LoginForm /> : <SignUpForm />}
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="text-sm text-gray-600"
+            >
+              {isLogin ? "Don't have an account?" : "Already have an account?"}
+              <button
+                onClick={toggleForm}
+                className="ml-1 text-blue-600 hover:underline focus:outline-none"
+              >
+                {isLogin ? "Sign up" : "Log in"}
+              </button>
+            </motion.p>
           </div>
-
-          <LoginForm />
-          {/* <TestLogin /> */}
         </div>
-
-        <p className="text-center font-light text-base">
-          Dont have an account?{" "}
-          <Link to="">
-            <strong>Sign up</strong>
-          </Link>
-        </p>
-      </div>
-
-      {/* LOGIN SECTION */}
+      </motion.div>
     </section>
   );
 };
+

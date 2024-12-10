@@ -52,7 +52,7 @@ export type Community = Entity<{
 export type Reaction = Entity<{
   type: ReactionType;
   userId: string;
-  threadId: string;
+  thread: Thread;
 }>;
 
 export type ReactionType = "LIKE" | "DISLIKE";
@@ -216,3 +216,8 @@ export type GroupTimerState = {
   time: number;
   formattedTime: string;
 };
+
+export type GlobalEventState = {
+  emittedBy: string;
+  type: "thread" | "topic" | "question"
+}

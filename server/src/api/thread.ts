@@ -27,7 +27,7 @@ export default {
 
       const threadService = Container.get(ThreadService);
       const thread = await threadService.createThread(body);
-      res.status(201).json({ message: "Insert successful", thread });
+      res.status(201).json(thread);
     } catch (error: any) {
       next(new AppError(error));
     }
@@ -123,6 +123,24 @@ export default {
     try {
       const threadService = Container.get(ThreadService);
       const response = await threadService.getAllThreadByCommunity(communityId);
+      res.status(200).json(response);
+    } catch (error: any) {
+      next(new AppError(error));
+    }
+  },
+
+  /**
+   * Handler to retrieve a threads by community.
+   *
+   * @route DELETE /thread?threadId&userId
+   */
+  async deleteThreadHandler(req: Request, res: Response, next: NextFunction) {
+    const threadId = req.query.threadId as string;  
+    const userId = req.query.userId as string;
+
+    try {
+      const threadService = Container.get(ThreadService);
+      const response = await threadService.deleteThread({userId, threadId});
       res.status(200).json(response);
     } catch (error: any) {
       next(new AppError(error));

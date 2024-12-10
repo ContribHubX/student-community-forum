@@ -9,6 +9,6 @@ export interface ISocialAuthService {
 
 export interface ILocalAuthService {
   register(dto: IUserRegisterDto): Promise<void>;
-  login(dto: IUserLoginDto): Promise<IUser>;
+  login(dto: IUserLoginDto): Promise<{ user: IUser; token: string }>;
 }
 

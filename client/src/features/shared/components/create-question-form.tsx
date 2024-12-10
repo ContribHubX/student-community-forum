@@ -90,7 +90,7 @@ export const CreateQuestionForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit, handleFormErrors)}
-      className=" dark:bg-gray-800 rounded-lg  space-y-6 text-primary-foreground"
+      className="bg-primary rounded-lg  space-y-6 text-primary-foreground"
     >
       {/* Title Input */}
       <div>
@@ -105,7 +105,7 @@ export const CreateQuestionForm = ({
         <input
           {...register("title")}
           id="title"
-          className={`w-full px-4 py-3 rounded-lg border bg-gray-100 dark:bg-gray-700 focus:ring-accent focus:border-accent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400
+          className={`w-full px-4 py-3 rounded-lg border bg-gray-100 dark:bg-primary focus:ring-accent focus:border-accent text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400
             border-gray-300 dark:border-gray-600 `}
           placeholder="Enter your question title..."
           defaultValue={initialTitleVal || ""}
@@ -114,7 +114,7 @@ export const CreateQuestionForm = ({
 
       <div className="relative">
         <Select onValueChange={(val: string) => setSelectedTopic(val)}>
-          <SelectTrigger className="w-full focus:border-accent bg-primary px-4 py-6 dark:border-gray-500 bg-gray-100">
+          <SelectTrigger className="w-full focus:border-accent bg-primary px-4 py-6 dark:bg-primary border-gray-300 dark:border-gray-600 bg-gray-100">
             {selectedTopic || initialTopic ? (
               <div className="flex items-center gap-3">
                 <img

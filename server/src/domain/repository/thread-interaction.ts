@@ -43,7 +43,10 @@ class ThreadInteractionRepository {
                     .query
                     .ThreadReaction
                     .findFirst({
-                        where: eq(schema.ThreadReaction.id, reactionId)
+                        where: eq(schema.ThreadReaction.id, reactionId),
+                        with: {
+                            thread: true,
+                        }
                     });
 
                 resolve(createdReaction as IThreadReaction);
@@ -227,6 +230,31 @@ class ThreadInteractionRepository {
 
                 resolve(isAlreadyReacted as unknown as ThreadReactionType);
                
+            } catch (error: any) {
+                reject(error);
+            }
+        });
+    }
+
+    public deleteComment(commentId: string): Promise<{ threadId: string }> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                // get comment first
+                const comment = await this.db
+                    .query
+                    .CommentTable
+                    .findFirst({
+                        where: eq(schema.CommentTable.id, commentId)
+                    })
+
+                if (!comment) return reject(new AppError("Comment doesn't exist", 404));
+                
+                // delete comment
+                await this.db 
+                    .delete(schema.CommentTable)
+                    .where(eq(schema.CommentTable.id, commentId));
+               
+                resolve({ threadId: comment.threadId });
             } catch (error: any) {
                 reject(error);
             }

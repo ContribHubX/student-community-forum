@@ -5,26 +5,30 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Comment } from "@/types";
 import { CommentForm } from "@/features/thread/components/comment-form";
 import { formatDistanceToNow } from "date-fns";
-import { ThumbsUp, MessageSquare, MoreHorizontal, Heart } from "lucide-react";
+import { ThumbsUp, MessageSquare, MoreHorizontal, Heart } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { CommentList } from "./comment-list";
 import { useCommentContext } from "../hooks/use-comment-context";
+import { useDeleteComment } from "../api/delete-comment";
 
 interface CommentItemProps {
   comment: Comment;
+  depth?: number;
 }
 
-export const CommentItem = ({ comment }: CommentItemProps) => {
+export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [showReplies, setShowReplies] = useState(true);
   const { state } = useCommentContext();
+  const { mutate: deleteComment } = useDeleteComment({});
 
   if (!comment) return <p>Loading...</p>;
 
@@ -34,47 +38,42 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
     return dateA - dateB;
   });
 
-  //bg-primary hover:shadow-md transition-shadow
+  const hasReplies = replies.length > 0;
+
   return (
-    <div className="mt-[-30px]">
-      <Card className="overflow-hidden duration-300 bg-background shadow-none border-0">
-        <CardContent className="p-4 pb-0">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className={`relative ${depth > 0 ? 'ml-6' : ''}`}
+    >
+      <Card className="overflow-hidden duration-300 bg-gradient-to-br from-primary to-primary/80 shadow-md dark:bg-primary dark:border-none  hover:shadow-lg transition-all border border-primary/10">
+        <CardContent className="p-4">
           <div className="flex items-start gap-4">
-            <div className="flex items-center flex-col">
-              <Avatar className="w-12 h-12 border-2 border-primary">
-                <AvatarImage
-                  src={comment.createdBy.attachment}
-                  alt={comment.createdBy.name}
-                />
-                <AvatarFallback>
-                  {comment.createdBy.name.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              {comment?.replies?.length !== 0 && (
-                <div className="avatar-line w-[1px] h-[50px] bg-[#9ca1de]" />
-              )}
-            </div>
-            <div className="flex-1 space-y-2 ">
+            <Avatar className="w-10 h-10 border-2 border-primary shadow-md">
+              <AvatarImage src={comment.createdBy.attachment} alt={comment.createdBy.name} />
+              <AvatarFallback>{comment.createdBy.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div className="flex-1 space-y-2">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg">
-                    {comment.createdBy.name}
-                  </h3>
+                  <h3 className="font-semibold text-lg text-primary-foreground">{comment.createdBy.name}</h3>
                   <span className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(new Date(comment.createdAt), {
-                      addSuffix: true,
-                    })}
+                    {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
                   </span>
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-muted-foreground hover:text-primary">
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur-sm border border-primary/20">
                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => deleteComment({ commentId: comment.id })}>
+                      Delete
+                    </DropdownMenuItem>
                     <DropdownMenuItem>Report</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -86,12 +85,12 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="px-4 py-2 mmuted/50 flex items-center justify-between">
+        <CardFooter className="px-4 py-2 -mt-4 flex items-center justify-between bg-primary/5">
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="sm"
-              className="gap-1 text-muted-foreground hover:text-primary"
+              className="gap-1 text-muted-foreground hover:text-primary transition-colors"
               onClick={() => setIsLiked(!isLiked)}
             >
               <motion.div
@@ -100,7 +99,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
                 transition={{ duration: 0.2 }}
               >
                 {isLiked ? (
-                  <Heart className="w-4 h-4 fill-primary text-primary" />
+                  <Heart className="w-4 h-4 fill-primary text-accent" />
                 ) : (
                   <ThumbsUp className="w-4 h-4" />
                 )}
@@ -110,7 +109,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
             <Button
               variant="ghost"
               size="sm"
-              className="gap-1 text-muted-foreground hover:text-primary"
+              className="gap-1 text-muted-foreground hover:text-primary transition-colors"
               onClick={() => setShowReplyForm(!showReplyForm)}
             >
               <MessageSquare className="w-4 h-4" />
@@ -119,39 +118,51 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
           </div>
           <span className="text-xs text-muted-foreground">5 likes</span>
         </CardFooter>
+      </Card>
+      <AnimatePresence>
         {showReplyForm && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="px-4 pb-4"
+            className="mt-4"
           >
             <CommentForm
               threadId={comment.threadId}
               parentId={comment.id}
               placeholder="Write your reply..."
-              onSubmitCallback={() => setShowReplyForm(!showReplyForm)}
+              onSubmitCallback={() => setShowReplyForm(false)}
             />
           </motion.div>
         )}
-      </Card>
-      {/* nested shit */}
-
-      {replies?.length > 0 && (
-        <>
-          <div className="flex">
-            <button
-              className="collapse-line "
-              aria-label="Hide Replies"
-              onClick={() => ""}
-            />
-            <div className="pl-8 flex-1">
-              <CommentList comments={replies} />
-            </div>
-          </div>
-        </>
+      </AnimatePresence>
+      {hasReplies && (
+        <div className="mt-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-primary-foregroundry hover:text-accent-foreground transition-colors"
+            onClick={() => setShowReplies(!showReplies)}
+          >
+            {showReplies ? "Hide Replies" : `Show ${replies.length} Replies`}
+          </Button>
+          <AnimatePresence>
+            {showReplies && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4"
+              >
+                <CommentList comments={replies} depth={depth + 1} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       )}
-    </div>
+    </motion.div>
   );
 };
+

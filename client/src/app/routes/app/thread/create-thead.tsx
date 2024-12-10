@@ -18,8 +18,12 @@ export const CreateThreadRoute = () => {
   const { data: thread } = useGetThreadByID({ threadId: threadId || "" });
   const { mutate: createThread } = useCreateThread({
     mutationConfig: {
-      onSuccess: () => {
-        navigate("/");
+      onSuccess: (thread) => {
+        if ((!thread.communityId || thread.communityId === "null") && (thread.topicId && thread.topicId  !== "null"))
+          navigate(`/topic/${thread.topicId}`);
+        else
+          navigate("/");
+
         toast.success("Thread added successfully");
       },
       onError: (error) => {

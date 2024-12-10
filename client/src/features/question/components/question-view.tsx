@@ -4,7 +4,6 @@ import { useGetQuestion } from "../api/get-question";
 import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { useGetQuestionAnswers } from "../api/get-question-answers";
 import { User } from "@/types";
-import { FaEnvelopeOpenText } from "react-icons/fa6";
 import { MessageCircle } from 'lucide-react';
 
 

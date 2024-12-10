@@ -49,6 +49,11 @@ export interface IThreadUpdateDto extends IThreadDto {
   threadId: string
 }
 
+export interface IThreadDeleteDto {
+  userId: string;
+  threadId: string;
+}
+
 export interface IThreadReactionDto {
   threadId: string,
   userId: string,

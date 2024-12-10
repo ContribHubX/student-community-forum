@@ -39,6 +39,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useGetCommunityById } from "@/features/community/api/get-community";
+import { useDeleteThread } from "../api/delete-thread";
 
 interface ThreadCardProp {
   thread: Thread;
@@ -48,6 +49,7 @@ interface ThreadCardProp {
 export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   const [isImageExpanded, setIsImageExpanded] = useState(false);
   const { mutate: addReaction } = useCreateReaction({});
+  const { mutate: deleteThread } = useDeleteThread({});
   const { data: reaction } = useGetUserReaction({
     data: { threadId: thread.id, userId: userId.toString() || "" },
   });
@@ -170,7 +172,9 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex justify-between items-center">
+      <CardFooter className={`flex justify-between items-center -mb-2 
+            ${thread.attachment !== "null" ? "-mt-1" : "-mt-5 -mb-1"}
+        `}>
         <div className="flex items-center space-x-4">
           <TooltipProvider>
             <Tooltip>
@@ -215,6 +219,9 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                       }}
                     />
                   </Button>
+                  <span className="text-sm font-medium mx-1">
+                    {thread.dislikeCount}
+                  </span>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -229,14 +236,17 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
             onClick={() => navigate(`/thread/${thread.id}`)}
           >
             <MessageSquare className="h-4 w-4" />
-            <span className="text-sm">19 comments</span>
+            <span className="text-sm">{thread.commentCount || 0} comments</span>
           </Button>
         </div>
         <div>
           <ThreadMenu
             onEdit={() => navigate(`/thread-action/${thread.id}`)}
-            onDelete={() => ""}
-            isCurrentUserThread={userId === thread?.createdBy?.id}
+            onDelete={() => deleteThread({
+              threadId: thread.id,
+              userId
+            })}
+            isCurrentUserThread={userId.toString() === thread?.createdBy?.id.toString()}
           />
         </div>
       </CardFooter>
@@ -262,7 +272,7 @@ export const ThreadMenu = ({
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[100px] p-0">
+      <PopoverContent className="w-[100px] p-0 bg-primary dark:bg-background dark:border-none">
         <div className="p-2">
           {isCurrentUserThread ? (
             <>

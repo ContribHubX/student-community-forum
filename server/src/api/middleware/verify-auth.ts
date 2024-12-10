@@ -5,6 +5,7 @@ import { INSTROSPECTION_URL } from "@/types/enums";
 import Container from "typedi";
 import { Logger } from "winston";
 import { parseAuthToken } from "@/libs/security";
+import jwt from "jsonwebtoken";
 
 export async function verifyAuth(
   req: Request,
@@ -23,6 +24,7 @@ export async function verifyAuth(
     const { provider, accessToken } = parseAuthToken(token);
 
     let response;
+
     switch (provider) {
       case "GOOGLE":
         response = await verifyGoogleToken(accessToken);
@@ -30,12 +32,14 @@ export async function verifyAuth(
       case "GITHUB":
         response = await verifyGithubToken(accessToken);
         break;
+      case "LOCAL":
+        return next();
       default:
         throw new AppError("Unsupported provider", 401);
     }
 
-    if (!response.ok) {
-      const errorBody: any = await response.json();
+    if (!response?.ok) {
+      const errorBody: any = await response?.json();
       logger.error(errorBody.error);
       throw new AppError("Invalid or expired access token", 401);
     }
@@ -66,4 +70,13 @@ async function verifyGithubToken(accessToken: string) {
     },
   });
   return response;
+}
+
+async function verifyLocalToken(accessToken: string) {
+  try {
+    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET || "defaultSecretKey");
+    return { ok: true, decoded };
+  } catch (error) {
+    return { ok: false, error: "Invalid or expired token" };
+  }
 }

@@ -22,7 +22,7 @@ export const ThreadRoute = () => {
 
   return (
     <CommentContextProvider>
-      <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
+      <MainLayout LeftSidebar={LeftSidebar} >
         <section
           className="
                     md:ml-[16rem] lg:mr-[22rem]"
@@ -49,7 +49,7 @@ export const ThreadRoute = () => {
             <CommentForm
               threadId={id}
               placeholder="Share your thoughts..."
-              isComment
+              
             />
             <Comments />
           </div>
@@ -59,6 +59,7 @@ export const ThreadRoute = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RightSidebar = () => {
   return (
     <SidebarLayout

@@ -6,6 +6,7 @@ export const ProtectedRoute = ({ children }: PropsWithChildren) => {
   const { authState } = useAuth();
   const navigate = useNavigate();
 
+
   useEffect(() => {
     if (!authState.user) navigate("/auth");
     // else navigate("/");

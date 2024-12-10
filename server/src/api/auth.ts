@@ -71,19 +71,27 @@ export default {
    */
   async getMyDetails(req: Request, res: Response, next: NextFunction) {
     const authService: AuthService = Container.get(AuthService);
+    const localAuthService: LocalAuthService = Container.get(LocalAuthService);
     const token = req.cookies.token;
 
     if (!token) {
       res.status(401).json({
         message: "User must login",
       });
-
       return;
     }
 
     try {
       const { provider, accessToken } = parseAuthToken(token);
-      const user = await authService.getMyDetails(provider, accessToken);
+      let user;
+
+      if (provider === "LOCAL") {
+        user = await localAuthService.getUserDetailsFromToken(accessToken);
+        res.status(200).json(user);
+        return;
+      }
+
+      user = await authService.getMyDetails(provider, accessToken);
       res.status(200).json(user);
     } catch (error) {
       console.error("Error during user data retrieval:", error);
@@ -91,16 +99,43 @@ export default {
     }
   },
 
-  // for local authentication
+
+  // local register
   async register(req: Request, res: Response, next: NextFunction) {
     const localAuthService: LocalAuthService = Container.get(LocalAuthService);
     const body = req.body;
-
+    const file = req.file;
+  
     try {
+      if (file) {
+        body.attachment = file.path;
+      }
+
       await localAuthService.register(body);
-      res.status(201).json({ message: "Register successfull" });
+      res.status(201).json({ message: "Registration successful" });
     } catch (error: any) {
       next(new AppError(error));
     }
   },
+  
+  // local login
+  async login(req: Request, res: Response, next: NextFunction) {
+    const localAuthService: LocalAuthService = Container.get(LocalAuthService);
+    const body = req.body;
+  
+    try {
+      const { user, token } = await localAuthService.login(body);
+  
+      // Set JWT as a cookie
+      res.cookie("token", `LOCAL_${token}`, {
+        httpOnly: true,
+        maxAge: 3600000, 
+      });
+  
+      res.status(200).json({ user, token });
+    } catch (error: any) {
+      next(new AppError(error));
+    }
+  }
+  
 };

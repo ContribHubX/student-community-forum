@@ -24,7 +24,7 @@ export const QuestionRequestCardList = ({
         <p className="text-sm font-medium">Questions for you</p>
       </div>
 
-      <div className="flex flex-col bg-primary rounded-md ">
+      <div className="flex flex-col  gap-4 rounded-md ">
         {request?.length ? (
           request?.map((req) => (
             <QuestionRequestCard

@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
+import { Thread } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -19,7 +20,7 @@ export type CreateThreadType = z.infer<typeof createThreadSchema> & {
   createdBy: string;
 };
 
-const createThread = async (data: FormData) => {
+const createThread = async (data: FormData): Promise<Thread> => {
   const response = await api.post("http://localhost:3000/api/thread", data, {
     headers: {
       "Content-Type": "multipart/form-data",

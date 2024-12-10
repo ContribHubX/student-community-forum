@@ -1,8 +1,11 @@
-import { IThreadFull, IThreadDto, IThreadUpdateDto } from "@/domain/interfaces/IThread";
+import { IThreadFull, IThreadDto, IThreadUpdateDto, IThreadDeleteDto } from "@/domain/interfaces/IThread";
 import ThreadRepository from "@/domain/repository/thread";
 import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
 import EventManager from "@/pubsub/event-manager";
+import NotificationService from "../notification";
+import QuestionService from "../question";
+import { NotificationType } from "@/types";
 
 /**
  * Service responsible for handling thread-related operations.
@@ -14,6 +17,12 @@ class ThreadService {
 
   @Inject(() => EventManager)
   private eventManager!: EventManager;  
+
+  @Inject(() => NotificationService)
+  private notifService!: NotificationService;
+
+  @Inject(() => QuestionService)
+  private questionService!: QuestionService;
 
     
   /**
@@ -27,6 +36,23 @@ class ThreadService {
     try {
       const thread = await this.threadRepo.create(dto);
       this.eventManager.publishToMany<IThreadFull>("thread--new", thread);
+
+      // notify user that someones answering his/here question
+      if (thread?.questionId) {
+        // get user who created the question
+        const question = await this.questionService.getQuestionById(thread.questionId);
+
+        if (!question?.createdBy) return;
+
+        await this.notifService.createNotification({
+          entityId: thread.questionId,
+          entityType: "question",
+          type: "answer" as NotificationType,
+          createdBy: thread.createdBy.id,
+          receiveBy: question.createdBy.id,
+        });
+      }
+
       return thread;
     } catch (error: any) {
       if (error instanceof AppError) throw error;
@@ -102,6 +128,21 @@ class ThreadService {
   public async getAllThreadByCommunity(communityId: string): Promise<IThreadFull[] | undefined> {
     try {
        return await this.threadRepo.getAllByCommunity(communityId);
+    } catch (error: any) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error getting threads");
+    }
+    
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  public async deleteThread(dto: IThreadDeleteDto): Promise<void> {
+    try {
+      const threadDeleted = await this.threadRepo.delete(dto);
+      this.eventManager.publishToMany<IThreadFull>("thread--delete", threadDeleted);
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Error getting threads");

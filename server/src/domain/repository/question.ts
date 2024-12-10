@@ -3,7 +3,7 @@ import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
 import { IQuestion, IQuestionDto, IQuestionRequest, IQuestionRequestDto, IQuestionUpvoteDto, IQuestionVote, IQuestionVoteStats } from "../interfaces/IQuestion";
 import { AppError } from "@/libs/app-error";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { IThread } from "../interfaces/IThread";
 import { IUser } from "../interfaces/IUser";
 import { QuestionRequestTable, QuestionTable, QuestionVotesTable } from "@/database/schema";
@@ -176,6 +176,9 @@ class QuestionRepository {
                     .query
                     .ThreadTable
                     .findMany({
+                        extras: {
+                            ...this.threadReactionExtras(),
+                        },
                         with: { 
                             createdBy: true,
                             tags: true
@@ -299,6 +302,31 @@ class QuestionRepository {
                 reject(new AppError(error));
             }
         });
+    }
+
+    /**
+   * Generates additional SQL columns for reaction and comment counts.
+   * 
+   * @private
+   * @returns {Object} An object containing SQL expressions for like, dislike, and comment counts.
+   */
+    private threadReactionExtras() {
+        return {
+        likeCount: sql<number>`(
+            SELECT COUNT(*) FROM thread_reaction 
+            WHERE thread_reaction.thread_id = ${schema.ThreadTable.id} 
+            AND thread_reaction.type = 'LIKE'
+        )`.as("like_count"),
+        dislikeCount: sql<number>`(
+            SELECT COUNT(*) FROM thread_reaction 
+            WHERE thread_reaction.thread_id = ${schema.ThreadTable.id} 
+            AND thread_reaction.type = 'DISLIKE'
+        )`.as("dislike_count"),
+        commentCount: sql<number>`(
+            SELECT COUNT(*) FROM comment
+            WHERE thread_id = ${schema.ThreadTable.id} 
+        )`.as("comment_count"),
+        };
     }
 }
 

@@ -29,7 +29,7 @@ export const SidebarLayout = ({
       id="sidebar-container"
       style={{
         height: calculatedHeight,
-        width: width ? width : "220px",
+        width: width
       }}
     >
       {children}

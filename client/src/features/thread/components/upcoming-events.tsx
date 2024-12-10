@@ -9,8 +9,8 @@ export const UpcomingEventsList = () => {
       id="sidebar"
     >
       <Link to="">
-        <div className="flex items-center mb-4">
-          <h1>Upcoming Events</h1>
+        <div className="flex items-center mb-1">
+          <h1 className="text-sm font-medium">Upcoming Events</h1>
         </div>
       </Link>
 

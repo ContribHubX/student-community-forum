@@ -10,7 +10,7 @@ const getThreadsByTopic = async (topicId: string): Promise<Thread[]> => {
 
 export const getThreadsByTopicQueryOptions = (topicId: string) => {
   return queryOptions({
-    queryKey: ["thread", topicId],
+    queryKey: ["thread-topic", topicId],
     queryFn: () => getThreadsByTopic(topicId),
   });
 };

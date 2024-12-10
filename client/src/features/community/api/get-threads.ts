@@ -12,7 +12,7 @@ const getThreads = async (
 
 export const getThreadsByCommunityQueryOptions = (communityId: string) => {
   return queryOptions({
-    queryKey: ["threads", communityId],
+    queryKey: ["community-threads", communityId],
     queryFn: () => getThreads(communityId),
   });
 };

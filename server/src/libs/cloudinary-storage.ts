@@ -16,6 +16,8 @@ const getCloudinaryFolder = (type: UPLOAD_TYPE) => {
       return "topics";
     case "task":
       return "tasks";
+    case "profile":
+      return "profile";
     default:
       return "uploads";
   }
@@ -71,5 +73,10 @@ export const uploadTopic = multer({
 
 export const uploadTask = multer({
   storage: createStorage("task"),
+  limits: { fieldSize: uploadLimit },  
+});
+
+export const uploadProfile = multer({
+  storage: createStorage("profile"),
   limits: { fieldSize: uploadLimit },  
 });

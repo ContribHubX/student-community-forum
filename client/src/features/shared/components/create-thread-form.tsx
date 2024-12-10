@@ -22,6 +22,7 @@ import {
 import { Thread, User } from "@/types";
 import { useNavigate } from "react-router-dom";
 import { handleFormErrors } from "@/utils";
+import { useGetTopics } from "@/features/topic/api";
 
 interface ThreadFormProp {
   thread?: Thread;
@@ -38,9 +39,11 @@ export const ThreadForm = ({
 }: ThreadFormProp) => {
   const [tags, setTags] = useState<string[]>([]);
   const [selectedCommunity, setSelectedCommunity] = useState<string>("");
+  const [selectedTopic, setSelectedTopic] = useState<string>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
   const { data: communities } = useGetUserCommunities({ userId: user.id });
+  const { data: topics } = useGetTopics({});
 
   const navigate = useNavigate();
 
@@ -49,6 +52,8 @@ export const ThreadForm = ({
       resolver: zodResolver(createThreadSchema),
     },
   );
+
+  console.log(communities);
 
   const title = watch("title", initialTitleVal || thread?.title || "");
   const content = watch("content", initialTitleVal || thread?.content || "");
@@ -63,8 +68,13 @@ export const ThreadForm = ({
     if (!thread?.communityId) return;
 
     setSelectedCommunity(thread.communityId);
-
   }, [thread?.communityId])
+
+  useEffect(() => {
+    if (!thread?.topicId) return;
+
+    setSelectedTopic(thread.topicId);
+  }, [thread?.topicId])
 
 
   const handleTagAddition = useCallback(
@@ -89,6 +99,9 @@ export const ThreadForm = ({
     if (selectedCommunity !== "none" && selectedCommunity !== "") {
       formData.append("communityId", selectedCommunity);
     }
+    if (selectedTopic !== "none" && selectedTopic !== "") {
+      formData.append("topicId", selectedTopic);
+    }
     formData.append("tags", JSON.stringify(tags));
 
     Object.keys(data).forEach((key) => {
@@ -99,6 +112,8 @@ export const ThreadForm = ({
       }
     });
 
+    console.log(formData);
+    
     handleFormSubmit(formData);
   };
 
@@ -161,37 +176,75 @@ export const ThreadForm = ({
 
           <div className="p-6  rounded-lg border dark:border-gray-500 text-sm">
             {/* Community Selector */}
-            <h2 className="font-semibold mb-1">Community</h2>
-            <Select 
-              onValueChange={(val: string) => setSelectedCommunity(val)}
-              value={selectedCommunity}
-            >
-              <SelectTrigger className="w-[180px] focus:border-accent bg-primary dark:border-gray-500">
-                <SelectValue placeholder="None" />
-              </SelectTrigger>
-              <SelectContent className="bg-background border-none overflow-y-hidden">
-                <SelectItem value={"none"}>
-                  <p>None</p>
-                </SelectItem>
-                {communities &&
-                  communities.map((comm) => (
-                    <SelectItem
-                      key={comm.id}
-                      value={comm.id}
-                      className="outline-none"
-                    >
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={comm.icon}
-                          alt="icon"
-                          className="w-[20px] h-[20px] rounded-full"
-                        />
-                        <p>{comm.name}</p>
-                      </div>
+            <div className="flex items-center gap-3">
+              <div>
+                <h2 className="font-semibold mb-1">Community</h2>
+                <Select
+                  onValueChange={(val: string) => setSelectedCommunity(val)}
+                  value={selectedCommunity}
+                >
+                  <SelectTrigger className="w-[180px] focus:border-accent bg-primary dark:border-gray-500">
+                    <SelectValue placeholder="None" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-none overflow-y-hidden">
+                    <SelectItem value={"none"}>
+                      <p>None</p>
                     </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
+                    {communities &&
+                      communities.map((comm) => (
+                        <SelectItem
+                          key={comm.id}
+                          value={comm.id}
+                          className="outline-none"
+                        >
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={comm.icon}
+                              alt="icon"
+                              className="w-[20px] h-[20px] rounded-full"
+                            />
+                            <p>{comm.name}</p>
+                          </div>
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              {/* Topic Selector */}
+              <div>
+                <h2 className="font-semibold mb-1">Topic</h2>
+                <Select
+                  onValueChange={(val: string) => setSelectedTopic(val)}
+                  value={selectedTopic}
+                >
+                  <SelectTrigger className="w-[180px] focus:border-accent bg-primary dark:border-gray-500">
+                    <SelectValue placeholder="None" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-none overflow-y-hidden">
+                    <SelectItem value={"none"}>
+                      <p>None</p>
+                    </SelectItem>
+                    {topics &&
+                      topics.map((topic) => (
+                        <SelectItem
+                          key={topic.id}
+                          value={topic.id}
+                          className="outline-none"
+                        >
+                          <div className="flex items-center gap-3">
+                            <img
+                              src={topic.attachment}
+                              alt="icon"
+                              className="w-[20px] h-[20px] rounded-full"
+                            />
+                            <p className="">{topic.name.substring(0, 12)}</p>
+                          </div>
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
 
             <h2 className="font-semibold mb-1 mt-3">Title</h2>
 

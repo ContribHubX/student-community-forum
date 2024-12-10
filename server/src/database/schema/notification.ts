@@ -4,7 +4,7 @@ import { UserTable } from "./user";
 import { relations } from "drizzle-orm";
 
 export const EntityType = mysqlEnum("entity_type", ["thread", "task", "question", "board", "topic"]);
-export const NotificationType = mysqlEnum("type", ["like", "dislike", "comment", "reply", "request", "added", "new"]);
+export const NotificationType = mysqlEnum("type", ["like", "dislike", "comment", "reply", "request", "added", "new", "answer"]);
 
 export const NotificationTable = mysqlTable("notification", {
     id: varchar("id", { length: 255 }).primaryKey().notNull().$default(uuidV4),

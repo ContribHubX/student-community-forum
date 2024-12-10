@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 interface SidebarItemProps {
   title: string;
@@ -8,6 +8,7 @@ interface SidebarItemProps {
   iconBgcolor: string;
   containerStyle?: string;
   link?: string;
+  imgStyle?: string;
 }
 
 export const SideBarItem = ({
@@ -17,18 +18,22 @@ export const SideBarItem = ({
   iconBgcolor,
   containerStyle,
   link,
+  imgStyle
 }: SidebarItemProps) => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
   };
   return (
     <Link to={link || ""}>
-      <div className={clsx(`flex gap-2 p-1 rounded-lg`, containerStyle)}>
+      <div className={cn(`flex gap-2 p-1 rounded-lg`, containerStyle)}>
         <div
           className={`rounded-xl h-8 w-8 flex items-center justify-center`}
           style={{ backgroundColor: iconBgcolor }}
         >
-          <img src={icon} alt="" className="h-5" />
+          <img 
+            src={icon} 
+            alt="" 
+            className={cn("h-5", imgStyle)} />
         </div>
 
         <div>

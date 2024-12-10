@@ -23,6 +23,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { useFollowTopic } from "../api/follow-topic";
+import { useNavigate } from "react-router-dom";
 
 interface TopicCardProp {
   userId: string;
@@ -41,6 +42,8 @@ export const TopicCard = ({
   const { mutate: follow } = useFollowTopic({});
   const [postType, setPostType] = useState("thread");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState<"Thread | Question" | "">("");
+  const navigate = useNavigate();
 
   const handleSubmit = (data: FormData) => {
     if (postType === "thread") createThread(data);
@@ -51,7 +54,11 @@ export const TopicCard = ({
     setPostType(value);
     if (value === "question") {
       setIsDialogOpen(true);
+    } else {
+      navigate("/thread-action/create");
     }
+
+    setSelectedMethod("");
   };
 
   const handleFollow = () => {
@@ -105,7 +112,7 @@ export const TopicCard = ({
       </CardContent>
       <CardFooter className="p-6 pt-0 flex justify-between items-center">
         <div className="">
-          <Select onValueChange={handleSelectChange}>
+          <Select onValueChange={handleSelectChange} value={selectedMethod}>
             <SelectTrigger className="hover:bg-accent group ">
               <Button
                 variant="outline"
@@ -123,7 +130,7 @@ export const TopicCard = ({
           </Select>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="sm:max-w-[600px] min-w-[730px] bg-primary">
+          <DialogContent className="sm:max-w-[600px] min-w-[730px] bg-primary border-none shadow-lg">
             <CreateQuestionForm
               initialTopic={topic}
               userId={userId}

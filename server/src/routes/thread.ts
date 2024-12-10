@@ -38,6 +38,10 @@ export default (app: Router) => {
     threadReactionController.commentThreadHandler
   )
 
+  router.delete("/", verifyAuth, threadController.deleteThreadHandler);
+
+  router.delete("/comment/:commentId", verifyAuth, threadReactionController.deleteCommentHandler);
+
   router.get("/", verifyAuth, threadController.getAllThreadsHandler);
 
   router.get("/check", verifyAuth, threadReactionController.isAlreadyReactedHandler);

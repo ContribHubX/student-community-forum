@@ -146,3 +146,19 @@ export const extractFileName = (url: string): string => {
   return splitted;
 }
 
+/**
+ * Shuffle alogorithm
+ */
+export function shuffle (elements: any[]): any[] {
+  let counter = elements.length - 1;
+  
+  while (counter > 0) {
+    const temp = elements[counter];
+    elements[counter] = elements[0];
+    elements[0] = temp;
+    counter--;
+  }
+
+  return elements;
+  
+}

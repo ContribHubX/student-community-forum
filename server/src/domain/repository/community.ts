@@ -4,7 +4,7 @@ import { ICommunity, ICommunityDto, IJoinCommunityDto } from "../interfaces/ICom
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
 import { CommunityTable, UsersCommunities } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { IUser } from "../interfaces/IUser";
 
 @Service()
@@ -53,6 +53,19 @@ class CommunityRepository {
       public join(dto: IJoinCommunityDto): Promise<string> {
         return new Promise(async (resolve, reject) => {
             try {
+                // check first if user already joins the community
+                const isJoin = await this.db
+                    .query
+                    .UsersCommunities
+                    .findFirst({
+                        where: and(
+                            eq(UsersCommunities.communityId, dto.communityId),
+                            eq(UsersCommunities.userId, dto.userId)
+                        )
+                    });
+
+                if (isJoin) return reject(new AppError("User already joined", 400)); 
+
                 await this.db.insert(UsersCommunities).values({ ...dto }).$returningId();
                 resolve(dto.communityId as unknown as string);
             } catch (error: any) {
