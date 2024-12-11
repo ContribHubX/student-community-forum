@@ -9723,3 +9723,212 @@
                 🛡️  Server listening on port: 3000 🛡️
             ################################################      
         
+2024-12-10T06:43:36.321Z info: ✌️ Dependencies injected into container
+2024-12-10T06:43:36.329Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-10T07:25:27.559Z error: Client socket not found
+2024-12-10T13:53:50.569Z info: ✌️ Dependencies injected into container
+2024-12-10T13:53:50.593Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-10T23:40:24.888Z info: ✌️ Dependencies injected into container
+2024-12-10T23:40:24.898Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-11T00:52:35.003Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:53:55.985Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:53:55.985Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:30.101Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:30.101Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:30.102Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:58.463Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:58.463Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:58.464Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:56:58.464Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:16.310Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:16.311Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:16.311Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:16.311Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:16.311Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:18.713Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:18.713Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:18.713Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:18.714Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:18.714Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:18.714Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.873Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.873Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.874Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.874Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.874Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.875Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:37.875Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.939Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.940Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.940Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.940Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.941Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.941Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.941Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:58:44.942Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.057Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.057Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.057Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.058Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.058Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.058Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.059Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.059Z error: User failed to remove, cause it doenst exist
+2024-12-11T00:59:10.059Z error: User failed to remove, cause it doenst exist
+2024-12-11T01:13:19.469Z info: Starting focus timer for 30 minutes.
+2024-12-11T01:13:19.471Z info: Starting focus timer for 30 minutes.
+2024-12-11T01:13:35.483Z info: No users left in the room. Stopping video playback.
+2024-12-11T01:13:35.487Z info: Timer stopped.
+2024-12-11T01:23:16.940Z info: Starting focus timer for 30 minutes.
+2024-12-11T01:24:09.861Z info: No users left in the room. Stopping video playback.
+2024-12-11T01:24:09.862Z info: Timer stopped.
+2024-12-11T01:53:16.953Z info: Starting break timer for 10 minutes.
+2024-12-11T01:57:16.259Z info: ✌️ Dependencies injected into container
+2024-12-11T01:57:16.266Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-11T02:10:09.464Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:10:09.467Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:15:44.359Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:15:44.359Z info: Timer stopped.
+2024-12-11T02:15:47.333Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:15:47.334Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:19:26.325Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:19:26.326Z info: Timer stopped.
+2024-12-11T02:19:35.872Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:19:35.873Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:23:53.417Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:23:53.418Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:23:53.418Z info: Timer stopped.
+2024-12-11T02:23:53.449Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:28:41.760Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:28:41.762Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:28:41.762Z info: Timer stopped.
+2024-12-11T02:28:41.763Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:28:44.152Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:28:59.691Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:28:59.692Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:28:59.693Z info: Timer stopped.
+2024-12-11T02:28:59.693Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:28:59.693Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:29:02.470Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:29:36.176Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:29:36.179Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:29:36.179Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:29:36.179Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:29:36.180Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:29:36.180Z info: Timer stopped.
+2024-12-11T02:29:36.190Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:31:03.192Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:03.193Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:03.193Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:03.193Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:03.194Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:31:03.194Z info: Timer stopped.
+2024-12-11T02:31:03.194Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:03.224Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:31:16.897Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:16.897Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:16.898Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:16.899Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:16.899Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:31:16.900Z info: Timer stopped.
+2024-12-11T02:31:16.900Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:16.900Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:16.908Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:31:35.182Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.184Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.258Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.258Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.260Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:31:35.260Z info: Timer stopped.
+2024-12-11T02:31:35.260Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.260Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.260Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:31:35.261Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:33:37.819Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.820Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.820Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.821Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.821Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:33:37.821Z info: Timer stopped.
+2024-12-11T02:33:37.821Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.821Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.821Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.822Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:33:37.872Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:38:51.991Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.992Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.992Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.992Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.992Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:38:51.993Z info: Timer stopped.
+2024-12-11T02:38:51.993Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.993Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.993Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.993Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:51.993Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:38:52.062Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:43:11.784Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.815Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.818Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.836Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.851Z info: No users left in the room. Stopping video playback.
+2024-12-11T02:43:11.870Z info: Timer stopped.
+2024-12-11T02:43:11.871Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.871Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.871Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.871Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.871Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:11.872Z error: User failed to remove, because it doesn't exist.
+2024-12-11T02:43:15.221Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:45:47.346Z info: Starting break timer for 10 minutes.
+2024-12-11T02:55:47.354Z info: Starting focus timer for 30 minutes.
+2024-12-11T02:58:44.194Z info: Starting break timer for 10 minutes.
+2024-12-11T03:08:44.200Z info: Starting focus timer for 30 minutes.
+2024-12-11T03:13:15.228Z info: Starting break timer for 10 minutes.
+2024-12-11T03:16:45.186Z info: No users left in the room. Stopping video playback.
+2024-12-11T03:16:45.187Z info: Timer stopped.
+2024-12-11T03:16:45.325Z info: Starting focus timer for 30 minutes.
+2024-12-11T03:16:46.940Z info: No users left in the room. Stopping video playback.
+2024-12-11T03:16:46.940Z info: Timer stopped.
+2024-12-11T03:16:46.940Z error: User failed to remove, because it doesn't exist.
+2024-12-11T03:16:46.942Z info: Starting focus timer for 30 minutes.
+2024-12-11T03:18:21.870Z info: No users left in the room. Stopping video playback.
+2024-12-11T03:18:21.874Z info: Timer stopped.
+2024-12-11T03:18:21.874Z error: User failed to remove, because it doesn't exist.
+2024-12-11T03:18:21.875Z error: User failed to remove, because it doesn't exist.
+2024-12-11T03:18:21.909Z info: Starting focus timer for 30 minutes.
+2024-12-11T03:21:40.456Z info: new host: ShinjiCodeEVA
+2024-12-11T03:21:40.457Z error: User failed to remove, because it doesn't exist.
+2024-12-11T03:21:40.458Z error: User failed to remove, because it doesn't exist.
+2024-12-11T03:21:40.458Z error: User failed to remove, because it doesn't exist.
+2024-12-11T04:36:05.287Z info: ✌️ Dependencies injected into container
+2024-12-11T04:36:05.295Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-11T04:37:55.181Z error: Client socket not found
+2024-12-11T05:10:21.536Z info: Starting focus timer for 30 minutes.
+2024-12-11T05:10:21.539Z info: Starting focus timer for 30 minutes.
+2024-12-11T05:16:54.219Z info: new host: ShinjiCodeEVA
+2024-12-11T05:21:46.614Z error: User failed to remove, because it doesn't exist.
+2024-12-11T05:24:24.531Z error: User failed to remove, because it doesn't exist.
+2024-12-11T05:24:24.532Z error: User failed to remove, because it doesn't exist.
+2024-12-11T05:24:35.018Z info: No users left in the room. Stopping video playback.
+2024-12-11T05:24:35.019Z info: Timer stopped.

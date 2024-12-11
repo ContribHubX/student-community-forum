@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import { motion } from "framer-motion";
 // import cover from "@/assets/590-removebg-preview.png";
 import { LoginForm } from "@/features/auth/components/login-form";
 import { SignUpForm } from "@/features/auth/components/signup-form";
@@ -64,4 +64,3 @@ export const LoginRoute = () => {
     </section>
   );
 };
-

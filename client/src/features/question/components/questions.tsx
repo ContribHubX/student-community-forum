@@ -8,30 +8,34 @@ import { useEffect, useRef } from "react";
 export const Questions = () => {
   const { data: questions } = useGetQuestions({});
 
-  const questionsRef = useRef<HTMLDivElement>(null)
-  const { isVisible, showIndicator, handleIndicatorClick } = useNewPostIndicator({ elementRef: questionsRef });
+  const questionsRef = useRef<HTMLDivElement>(null);
+  const { isVisible, showIndicator, handleIndicatorClick } =
+    useNewPostIndicator({ elementRef: questionsRef });
   const { socketState } = useSocketProvider();
 
   useEffect(() => {
-    if (!socketState || !socketState.globalEvent || socketState.globalEvent?.type !== "question") return;
-      showIndicator()
-  }, [socketState.globalEvent])
+    if (
+      !socketState ||
+      !socketState.globalEvent ||
+      socketState.globalEvent?.type !== "question"
+    )
+      return;
+    showIndicator();
+  }, [socketState.globalEvent]);
 
   // temp
   if (!questions) return <p>Loading...</p>;
 
   return (
-    <div>
-      <div
-        ref={questionsRef}
-      >
+    <div className="-mt-4">
+      <div ref={questionsRef}>
         <QuestionCardList questions={questions} />
       </div>
-      <NewPostIndicator 
-          type="question" 
-          showIndicator={isVisible}
-          handleIndicatorClick={handleIndicatorClick}
-        />
+      <NewPostIndicator
+        type="question"
+        showIndicator={isVisible}
+        handleIndicatorClick={handleIndicatorClick}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ThemeToggle } from "../ui/theme-toggle";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
@@ -24,6 +24,9 @@ import { ThreadSearchResults } from "../ui/search-result";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Thread } from "@/types";
 
+import { Logo } from "../ui/logo";
+
+
 export const Navbar = () => {
   const { authState, authDispatch } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +46,7 @@ export const Navbar = () => {
     if (debouncedSearchTerm) {
       setIsSearching(true);
       const results = threads?.filter((thread) =>
-        thread?.tags?.filter((tag) =>
+        thread?.tags?.some((tag) =>
           tag.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
         ),
       );
@@ -71,16 +74,19 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 bg-primary px-10 py-4 flex items-center justify-between w-full z-50 text-primary-foreground">
-      <div>LOGO</div>
-      <div className="flex items-center justify-end gap-6 min-w-full pr-10">
+    <nav className="fixed top-0 bg-primary px-6   py-4 flex items-center justify-between  w-full z-50 text-primary-foreground">
+      <div className="flex items-center justify-center gap-3">
+        <Logo className="w-6 h-6 text-accent" />
+        <h1 className="font-medium text-lg hidden sm:block">StudentHub</h1>
+      </div>
+      <div className="flex items-center gap-6 ">
         <div
-          className="bg-background rounded-xl py-2 pl-4 pr-1 flex relative items-center justify-between gap-2"
+          className="bg-background rounded-xl py-2 pl-4 pr-1 relative items-center justify-between gap-2 hidden md:flex"
           ref={searchRef}
         >
           <input
             type="text"
-            className="bg-background outline-none text-sm font-light text-primary-foreground w-[500px]"
+            className="bg-background outline-none text-sm font-light text-primary-foreground md:w-[300px] lg:w-[500px]"
             placeholder="Search threads..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -96,7 +102,7 @@ export const Navbar = () => {
           )}
         </div>
 
-        <div className="flex items-center gap-4 justify-items-center">
+        <div className="flex items-center gap-2  md:gap-4">
           <div className="flex gap-2">
             <ThemeToggle />
           </div>
@@ -124,10 +130,6 @@ export const Navbar = () => {
           </DropdownMenu>
 
           <NotificationDropdown userId={authState.user?.id || ""} />
-
-          {/* <p onClick={() => toast.success("Test")} className="border ">
-            Toast
-          </p> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="cursor-pointer">

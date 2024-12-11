@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Comment } from "@/types";
 import { CommentForm } from "@/features/thread/components/comment-form";
 import { formatDistanceToNow } from "date-fns";
-import { ThumbsUp, MessageSquare, MoreHorizontal, Heart } from 'lucide-react';
+import { ThumbsUp, MessageSquare, MoreHorizontal, Heart } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,32 +46,50 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className={`relative ${depth > 0 ? 'ml-6' : ''}`}
+      className={`relative ${depth > 0 ? "ml-6" : ""}`}
     >
       <Card className="overflow-hidden duration-300 bg-gradient-to-br from-primary to-primary/80 shadow-md dark:bg-primary dark:border-none  hover:shadow-lg transition-all border border-primary/10">
         <CardContent className="p-4">
           <div className="flex items-start gap-4">
             <Avatar className="w-10 h-10 border-2 border-primary shadow-md">
-              <AvatarImage src={comment.createdBy.attachment} alt={comment.createdBy.name} />
-              <AvatarFallback>{comment.createdBy.name.charAt(0)}</AvatarFallback>
+              <AvatarImage
+                src={comment.createdBy.attachment}
+                alt={comment.createdBy.name}
+              />
+              <AvatarFallback>
+                {comment.createdBy.name.charAt(0)}
+              </AvatarFallback>
             </Avatar>
             <div className="flex-1 space-y-2">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-semibold text-lg text-primary-foreground">{comment.createdBy.name}</h3>
+                  <h3 className="font-semibold text-lg text-primary-foreground">
+                    {comment.createdBy.name}
+                  </h3>
                   <span className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                    {formatDistanceToNow(new Date(comment.createdAt), {
+                      addSuffix: true,
+                    })}
                   </span>
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-muted-foreground hover:text-primary">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 text-muted-foreground hover:text-primary"
+                    >
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur-sm border border-primary/20">
+                  <DropdownMenuContent
+                    align="end"
+                    className="bg-background/95 backdrop-blur-sm border border-primary/20"
+                  >
                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => deleteComment({ commentId: comment.id })}>
+                    <DropdownMenuItem
+                      onClick={() => deleteComment({ commentId: comment.id })}
+                    >
                       Delete
                     </DropdownMenuItem>
                     <DropdownMenuItem>Report</DropdownMenuItem>
@@ -90,7 +108,7 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
             <Button
               variant="ghost"
               size="sm"
-              className="gap-1 text-muted-foreground hover:text-primary transition-colors"
+              className="gap-1 text-muted-foreground hover:text-primary text-sm transition-colors"
               onClick={() => setIsLiked(!isLiked)}
             >
               <motion.div
@@ -109,10 +127,10 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
             <Button
               variant="ghost"
               size="sm"
-              className="gap-1 text-muted-foreground hover:text-primary transition-colors"
+              className="gap-1 text-muted-foreground text-sm hover:text-primary transition-colors"
               onClick={() => setShowReplyForm(!showReplyForm)}
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4 text-sm" />
               Reply
             </Button>
           </div>
@@ -133,6 +151,7 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
               parentId={comment.id}
               placeholder="Write your reply..."
               onSubmitCallback={() => setShowReplyForm(false)}
+              isReply 
             />
           </motion.div>
         )}
@@ -165,4 +184,3 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
     </motion.div>
   );
 };
-

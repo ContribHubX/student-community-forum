@@ -13,14 +13,15 @@ import { useSocketProvider } from "@/hooks/use-socket-provider";
 // DONE make task deletion realtime
 // DONE joing user community
 // DONE merge community by nnz (focus on community sa)
-// DONE when voting in a community page like and dislike count doesnt reflect 
+// DONE when voting in a community page like and dislike count doesnt reflect
 // DONE creating threads through topic page should make the form display the initial topic
-// DONE navigate to topic page if creating a thread in that topic 
+// DONE navigate to topic page if creating a thread in that topic
 // DONE dix displaying multiple community when creating thread
 // DONE add realtime indicator when creating a questiona and thread
 // DONE local register
 // DONE make profile page
 
+// TODO fix bug's on mj's dev test
 // TODO make it responsive up to laptop size // not yet implemented in question page
 // TODO decde whether to expand the topic-view-card horizontally
 // TODO toast and navigate to homepage after edit thread
@@ -32,38 +33,62 @@ import { useSocketProvider } from "@/hooks/use-socket-provider";
 // TODO impl study room new features
 // TODO add community and topic in thread card
 // TODO setup seeders data
-// TODO make colors in study room constant 
-// TODO finalize communities route   
+// TODO make colors in study room constant
+// TODO finalize communities route
 // TODO topic creation
 // TODO fix when voting a question
 
 export const HomeRoute = () => {
   const { authState } = useAuth();
-  const threadsRef = useRef<HTMLDivElement>(null)
-  const { isVisible, showIndicator, handleIndicatorClick } = useNewPostIndicator({ elementRef: threadsRef });
+  const threadsRef = useRef<HTMLDivElement>(null);
+  const { isVisible, showIndicator, handleIndicatorClick } =
+    useNewPostIndicator({ elementRef: threadsRef });
   const { socketState } = useSocketProvider();
 
   useEffect(() => {
-    if (!socketState || !socketState.globalEvent || socketState.globalEvent.type !== "thread") return;
-    
-      showIndicator()
-  }, [socketState.globalEvent])
+    if (
+      !socketState ||
+      !socketState.globalEvent ||
+      socketState.globalEvent.type !== "thread"
+    )
+      return;
+
+    showIndicator();
+  }, [socketState.globalEvent]);
 
   if (!authState?.user?.id) return <p>Loading...</p>;
+
+  // return (
+  //   <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
+  //     <section
+  //       className="bg-background border-3 border-black
+  //       md:ml-[16rem] 
+  //       lg:mr-[18rem]
+  //       xl:mr-[20rem]
+  //       "
+  //       ref={threadsRef}
+  //     >
+  //       <Threads />
+  //       <NewPostIndicator
+  //         type="thread"
+  //         showIndicator={isVisible}
+  //         handleIndicatorClick={handleIndicatorClick}
+  //       />
+  //     </section>
+  //   </MainLayout>
+  // );
 
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section
         className="bg-background border-3 border-black
-        md:ml-[16rem] 
-        lg:mr-[18rem]
-        xl:mr-[20rem]
+      
         "
         ref={threadsRef}
       >
         <Threads />
-        <NewPostIndicator 
-          type="thread" 
+        <NewPostIndicator
+          type="thread"
           showIndicator={isVisible}
           handleIndicatorClick={handleIndicatorClick}
         />
@@ -71,4 +96,3 @@ export const HomeRoute = () => {
     </MainLayout>
   );
 };
-

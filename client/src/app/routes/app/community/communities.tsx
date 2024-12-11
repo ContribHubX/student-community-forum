@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { MainLayout } from "@/components/layouts/layout";
 import { CommunityCard } from "@/features/community/components/community-card";
 import { Input } from "@/components/ui/input";
@@ -14,24 +14,21 @@ export const CommunitiesRoute = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showJoinedOnly, setShowJoinedOnly] = useState(false);
   const { data: communities } = useGetCommunities({});
-  
+
   const isJoined = (community: CommunityWithMembers) => {
     const userId = authState?.user?.id;
-    if (!userId) return false; 
+    if (!userId) return false;
     return community.members.some((member) => member.user.id === userId);
-  }
+  };
 
-  const filteredCommunities = communities?.filter(
-    (community) => {
-      const matchesSearch = community.name
+  const filteredCommunities = communities?.filter((community) => {
+    const matchesSearch = community.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
-      const matchesFilter = showJoinedOnly ? isJoined(community) : true
-      return matchesSearch && matchesFilter;
-      
-    }
-  );
+    const matchesFilter = showJoinedOnly ? isJoined(community) : true;
+    return matchesSearch && matchesFilter;
+  });
 
   return (
     <MainLayout>

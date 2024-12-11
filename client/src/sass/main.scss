@@ -6,9 +6,23 @@
 @tailwind components;
 @tailwind utilities;
 
+
 * {
   font-family: "Poppins", sans-serif;
+  
 }
+
+
+@layer base {
+  body {
+    @apply bg-background
+  }
+
+  * {
+    @apply transition-colors;
+  }
+}
+
 
 html.dark {
   #sidebar {

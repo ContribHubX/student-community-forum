@@ -11,7 +11,7 @@ export const TopicRoute = () => {
 
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RelatedTopics}>
-      <section className="md:ml-[16rem] lg:mr-[22rem]">
+      <section className="">
         <Topics userId={authState.user.id} />
       </section>
     </MainLayout>

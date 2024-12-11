@@ -55,11 +55,11 @@ export const formDataToObject = (formData: FormData): Record<string, any> => {
  */
 export const objectToFormData = (obj: Record<string, any>): FormData => {
   const formData = new FormData();
-  
+
   // Iterate over each key-value pair in the object
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
-    
+
     // If the value is an array, append each item as a separate field
     if (Array.isArray(value)) {
       value.forEach((item) => formData.append(key, item));
@@ -67,11 +67,9 @@ export const objectToFormData = (obj: Record<string, any>): FormData => {
       formData.append(key, value);
     }
   });
-  
+
   return formData;
 };
-
-
 
 /**
  * Function to blend color with black
@@ -128,7 +126,6 @@ export const extractVideoId = (url: string) => {
   return match ? match[1] : null;
 };
 
-
 // Utility function to get all the errors of zod
 export const handleFormErrors = (errors: Record<string, any>) => {
   Object.values(errors).forEach((error) => {
@@ -138,20 +135,20 @@ export const handleFormErrors = (errors: Record<string, any>) => {
   });
 };
 
-/** 
- * 
+/**
+ *
  */
 export const extractFileName = (url: string): string => {
   const splitted = url.substring(url.lastIndexOf("/") + 1);
   return splitted;
-}
+};
 
 /**
  * Shuffle alogorithm
  */
-export function shuffle (elements: any[]): any[] {
+export function shuffle(elements: any[]): any[] {
   let counter = elements.length - 1;
-  
+
   while (counter > 0) {
     const temp = elements[counter];
     elements[counter] = elements[0];
@@ -160,5 +157,4 @@ export function shuffle (elements: any[]): any[] {
   }
 
   return elements;
-  
 }

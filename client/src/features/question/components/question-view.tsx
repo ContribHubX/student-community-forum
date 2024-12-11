@@ -1,11 +1,10 @@
 import { useParams } from "react-router-dom";
 import { QuestionViewCard } from "./question-view-card";
 import { useGetQuestion } from "../api/get-question";
-import { ThreadCardList } from "@/features/shared/components/thread-card-list";
+import { QuestionAnswerList } from "./question-view-answer-list";
 import { useGetQuestionAnswers } from "../api/get-question-answers";
 import { User } from "@/types";
-import { MessageCircle } from 'lucide-react';
-
+import { MessageCircle } from "lucide-react";
 
 interface QuestionViewProp {
   user: User;
@@ -23,7 +22,7 @@ export const QuestionView = ({ user }: QuestionViewProp) => {
   if (!question || !answers) return <p>Loading...</p>;
 
   return (
-    <div className="min-h-screen"  >
+    <div className="min-h-screen">
       <div className="max-w-4xl mx-auto space-y-8">
         <QuestionViewCard currentUser={user} question={question} />
 
@@ -36,10 +35,9 @@ export const QuestionView = ({ user }: QuestionViewProp) => {
         </div>
 
         <div className="space-y-4">
-          <ThreadCardList threads={answers} />
+          <QuestionAnswerList threads={answers} />
         </div>
       </div>
     </div>
   );
 };
-

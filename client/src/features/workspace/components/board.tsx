@@ -4,7 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { FlexContainer } from "@/components/ui/flex-container";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@radix-ui/react-popover";
 
 import { users } from "@/features/shared/data/users";
 import { statusColors } from "../constant";
@@ -22,14 +26,16 @@ interface BoardProp {
 export const Board = ({ board }: BoardProp) => {
   const { text, background } = statusColors[board.status];
   const { isDark } = useTheme();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { mutate: deleteBoard } = useDeleteBoard({
     mutationConfig: {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: getBoardsQueryOptions(board.createdBy.id).queryKey })
-      }
-    }
+        queryClient.invalidateQueries({
+          queryKey: getBoardsQueryOptions(board.createdBy.id).queryKey,
+        });
+      },
+    },
   });
 
   return (
@@ -59,14 +65,14 @@ export const Board = ({ board }: BoardProp) => {
           </PopoverTrigger>
           <PopoverContent className="w-[100px] p-0 bg-background rounded-md">
             <div className="p-2">
-              {(
+              {
                 <>
                   <span
                     className="rounded-md cursor-pointer p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
-                    onClick={() => ''}
+                    onClick={() => ""}
                   >
                     <FaTrashAlt className="text-sm" />
-                    <p 
+                    <p
                       className="text-[.8rem]"
                       onClick={() => deleteBoard(board.id)}
                     >
@@ -74,13 +80,13 @@ export const Board = ({ board }: BoardProp) => {
                     </p>
                   </span>
                 </>
-              )}
+              }
             </div>
           </PopoverContent>
         </Popover>
       </FlexContainer>
 
-      <div 
+      <div
         className="ml-1 cursor-pointer"
         onClick={() => navigate(`/workspace/${board.id}`)}
       >
@@ -116,6 +122,3 @@ export const Board = ({ board }: BoardProp) => {
     </div>
   );
 };
-
-
-

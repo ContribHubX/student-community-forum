@@ -25,7 +25,7 @@ export const RoomCard = ({ room }: RoomCardProp) => {
 
   return (
     <Card
-      className="min-w-[400px] min-h-[300px] max-h-[400px]  overflow-hidden relative group flex flex-col dark:border-0 hover:shadow-lg transition-shadow duration-300"
+      className="min-w-[300px] md:min-w-[400px] min-h-[300px] max-h-[400px]  overflow-hidden relative group flex flex-col dark:border-0 hover:shadow-lg transition-shadow duration-300"
       onClick={() => navigate(`/study-room/${room.id}`)}
     >
       <div

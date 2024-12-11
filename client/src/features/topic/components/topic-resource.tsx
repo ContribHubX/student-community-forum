@@ -50,6 +50,7 @@ export const TopicResource = () => {
     },
   });
 
+
   const [searchTerm, setSearchTerm] = useState("");
   const [showUserTopics, setShowUserTopics] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -87,6 +88,7 @@ export const TopicResource = () => {
       : true;
     return matchesSearch && matchesUserTopics;
   });
+
 
   return (
     <div className="container mx-auto px-4 py-8 text-primary-foreground text-primary-foreground">

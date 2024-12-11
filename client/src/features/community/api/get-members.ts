@@ -3,8 +3,8 @@ import { QueryConfig } from "@/lib/react-query";
 import { CommunityWithMembers } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-const getMembers = async ( 
- communityId: string
+const getMembers = async (
+  communityId: string,
 ): Promise<CommunityWithMembers[]> => {
   const response = await api.get(`/api/community/members/${communityId}`);
   return response.data;
@@ -18,13 +18,14 @@ export const getMembersQueryOptions = (communityId: string) => {
 };
 
 export type getMembersQueryConfig = {
-  communityId: string,
+  communityId: string;
   queryConfig?: QueryConfig<typeof getMembers>;
 };
 
-export const useGetMembers = (
-  { communityId, queryConfig }: getMembersQueryConfig,
-) => {
+export const useGetMembers = ({
+  communityId,
+  queryConfig,
+}: getMembersQueryConfig) => {
   return useQuery({
     ...getMembersQueryOptions(communityId),
     ...queryConfig,

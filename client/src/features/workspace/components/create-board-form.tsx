@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { motion } from 'framer-motion';
-import { createBoardSchema, CreateBoardType, useCreateBoard } from "../api/create-board";
+import { motion } from "framer-motion";
+import {
+  createBoardSchema,
+  CreateBoardType,
+  useCreateBoard,
+} from "../api/create-board";
 
 interface CreateBoardFormProp {
   userId: string | undefined;
@@ -21,7 +25,9 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
   });
   const { mutate: createBoard } = useCreateBoard({});
 
-  const onSubmit: SubmitHandler<CreateBoardType> = async (data: CreateBoardType) => {
+  const onSubmit: SubmitHandler<CreateBoardType> = async (
+    data: CreateBoardType,
+  ) => {
     setIsSubmitting(true);
     createBoard({ ...data, createdBy: (userId || "").toString() });
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -48,7 +54,7 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
         )}
       </div>
 
-      <Button 
+      <Button
         type="submit"
         className="w-full py-2 px-4 text-primary-foreground hover:bg-accent bg-background hover:text-accent-foreground rounded-md transition duration-200 ease-in-out"
         disabled={isSubmitting}
@@ -60,7 +66,7 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
         ) : (
-          'Create Board'
+          "Create Board"
         )}
       </Button>
     </motion.form>

@@ -62,7 +62,7 @@ export const CommunityView = ({
         </div>
 
         <motion.div
-          className="absolute w-[86%] mx-auto  bottom-40 flex items-end gap-6 z-10"
+          className="absolute w-full px-4 md:px-0 md:w-[86%] mx-auto  bottom-40 flex items-end gap-6 z-10  max-w-[1400px]"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
@@ -80,7 +80,7 @@ export const CommunityView = ({
           </div>
         </motion.div>
 
-        <div className="px-8 mt-24 w-[86%] mx-auto">
+        <div className="md:px-8 mt-24 w-full px-4  md:w-[86%] max-w-[1400px]">
           <div className="flex justify-between items-center">
             <div className="flex -space-x-3">
               {users.slice(0, 5).map((member, index) => (

@@ -12,9 +12,7 @@ type DeleteTaskMutationOption = {
   mutationConfig?: MutationConfig<typeof deleteTask>;
 };
 
-export const useDeleteTask = ({
-  mutationConfig,
-}: DeleteTaskMutationOption) => {
+export const useDeleteTask = ({ mutationConfig }: DeleteTaskMutationOption) => {
   const { ...restConfig } = mutationConfig || {};
 
   return useMutation({

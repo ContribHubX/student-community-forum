@@ -4,13 +4,13 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 
 export const createEventSchema = z.object({
-    name: z.string().min(2, {
-        message: 'Description must be at least 2 characters.',
-    }),
-    eventDate: z.date({
-        required_error: 'A date of event is required.',
-    }),
-    tags: z.string().optional(),
+  name: z.string().min(2, {
+    message: "Description must be at least 2 characters.",
+  }),
+  eventDate: z.date({
+    required_error: "A date of event is required.",
+  }),
+  tags: z.string().optional(),
 });
 
 export type FormSchema = z.infer<typeof createEventSchema>;

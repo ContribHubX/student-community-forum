@@ -35,7 +35,7 @@ export const SelectRequest = ({
   };
 
   return (
-    <div className="text-primary-foreground">
+    <div className="text-primary-foreground mt-6">
       <div className="relative">
         <IoIosSearch className="text-xl text-muted-foreground mt-3 left-3 absolute" />
         <input

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NewPostIndicatorProps {
   type: "thread" | "question" | "topic";
@@ -7,12 +7,15 @@ interface NewPostIndicatorProps {
   handleIndicatorClick: () => void;
 }
 
-export const NewPostIndicator = ({ type, showIndicator, handleIndicatorClick }: NewPostIndicatorProps) => {
+export const NewPostIndicator = ({
+  type,
+  showIndicator,
+  handleIndicatorClick,
+}: NewPostIndicatorProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-        setIsVisible(showIndicator);
-    
+    setIsVisible(showIndicator);
   }, [showIndicator]);
 
   return (
@@ -22,8 +25,8 @@ export const NewPostIndicator = ({ type, showIndicator, handleIndicatorClick }: 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-           className="fixed bottom-6 left-[50%] -translate-x-1/2 z-50 flex justify-center items-center"
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="fixed bottom-6 left-[50%] -translate-x-1/2 z-50 flex justify-center items-center"
           onClick={() => {
             handleIndicatorClick();
             setIsVisible(false);
@@ -44,9 +47,7 @@ export const NewPostIndicator = ({ type, showIndicator, handleIndicatorClick }: 
                 d="M5 10l7-7m0 0l7 7m-7-7v18"
               />
             </svg>
-            <span className="font-semibold">
-                New {type}
-            </span>
+            <span className="font-semibold">New {type}</span>
           </div>
         </motion.div>
       )}

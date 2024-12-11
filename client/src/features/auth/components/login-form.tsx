@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Github } from 'lucide-react';
+import { Github } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,11 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const { authDispatch } = useAuth();
 
-  const { handleSubmit, register, formState: { errors } } = useForm<FormSchema>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormSchema>({
     resolver: zodResolver(loginSchema),
   });
 
@@ -28,8 +32,8 @@ export const LoginForm = () => {
       onSuccess: (data) => {
         authDispatch({
           type: OPERATION.LOGIN_USER,
-          payload: { user: data.user, accessToken: data.token }
-        })
+          payload: { user: data.user, accessToken: data.token },
+        });
         navigate("/");
       },
       onError: (error) => {
@@ -53,8 +57,12 @@ export const LoginForm = () => {
   return (
     <Tabs defaultValue="email" className="w-full max-w-sm">
       <TabsList className="grid w-full grid-cols-2 bg-[#eff5f8]">
-        <TabsTrigger className="text-[#858ead]" value="email">Email</TabsTrigger>
-        <TabsTrigger className="text-[#858ead]" value="social">Social</TabsTrigger>
+        <TabsTrigger className="text-[#858ead]" value="email">
+          Email
+        </TabsTrigger>
+        <TabsTrigger className="text-[#858ead]" value="social">
+          Social
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="email" className="">
         <motion.form
@@ -72,7 +80,9 @@ export const LoginForm = () => {
               placeholder="john@example.com"
               {...register("email")}
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -83,7 +93,9 @@ export const LoginForm = () => {
               placeholder="Enter your password"
               {...register("password")}
             />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
@@ -132,4 +144,3 @@ export const LoginForm = () => {
     </Tabs>
   );
 };
-

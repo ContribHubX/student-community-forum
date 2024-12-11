@@ -34,28 +34,28 @@ export const Community = () => {
     min-h-screen"
     >
       <Navbar />
-
-      <main className="pb-5">
+      <main>
         <CommunityView
           community={community}
           userId={authState.user.id}
           onTabChange={(tab: CommunityTab) => setChangeTab(tab)}
           tabOpen={tabOpen}
         />
-
-        <div className="w-[78%] flex mx-auto mt-5 gap-5">
+        <div className="px-4 md:px-0 w-full md:w-[78%] flex flex-1  mx-auto mt-5 gap-5">
           {tabOpen === "Threads" ? (
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row gap-8 mx-auto">
               <div className="min-w-[70%]">
                 <div>
                   <ThreadActionForm user={authState.user} />
                 </div>
-                <div>
+                <div className="mt-4">
                   <ThreadCardList threads={threads || []} />
                 </div>
               </div>
-
-              <aside className="sticky right-5 top-28 rounded-xl space-y-4 ">
+              <aside
+                className="sticky right-5 top-28 rounded-xl space-y-4"
+                style={{ height: "calc(100vh - 8rem)" }}
+              >
                 <div
                   className="font-light bg-primary rounded-xl shadow-slate-400 shadow-md dark:shadow-gray-900
                 text-sm "

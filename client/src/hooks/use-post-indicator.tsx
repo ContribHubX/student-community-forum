@@ -4,7 +4,9 @@ interface UseNewPostIndicatorProps {
   elementRef: React.RefObject<HTMLDivElement>;
 }
 
-export const useNewPostIndicator = ({ elementRef }: UseNewPostIndicatorProps) => {
+export const useNewPostIndicator = ({
+  elementRef,
+}: UseNewPostIndicatorProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const showIndicator = useCallback(() => setIsVisible(true), []);

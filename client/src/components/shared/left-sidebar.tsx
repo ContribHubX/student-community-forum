@@ -3,9 +3,7 @@ import popular from "@/assets/sidebar/popular.svg";
 
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { SideBarItem } from "../ui/sidebar-item";
-import {
-  popularTagsData,
-} from "@/features/shared/data/topic-group";
+import { popularTagsData } from "@/features/shared/data/topic-group";
 import { useGetTopics } from "@/features/topic/api";
 
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -20,90 +18,92 @@ export const LeftSidebar = () => {
 
   return (
     <SidebarLayout
-      className="hidden flex-col gap-6
-      lg:flex"
-      width={230}
+     
       height={"full"}
-      position="left-50"
+      
     >
-      <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
-        id="sidebar"
-      >
-        <SideBarItem
-          title="Newest and Recent"
-          description="Find the latest updates"
-          icon={newest}
-          iconBgcolor="primary"
-        />
-        <SideBarItem
-          title="Popular of the day"
-          description="Shots featured duringasjdkashduikasd"
-          icon={popular}
-          iconBgcolor="#EFF5F8"
-        />
-        <SideBarItem
-          title="Popular of the day"
-          description="Shots featured duringasjdkashduikasd"
-          icon={newest}
-          iconBgcolor="#EFF5F8"
-        />
-      </div>
-
-      <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
-        id="sidebar"
-      >
-        <div className="flex items-center justify-between">
-          <h1 className="text-sm font-medium">Popular Topics</h1>
-          <FaArrowRightLong 
-            className="text-base cursor-pointer hover:text-accent"
-            onClick={() => navigate("/topic-library")}  
+      <div className="w-full flex flex-col gap-4">
+        <div
+          className="bg-primary text-primary-foreground rounded-2xl p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900
+            flex flex-col
+          "
+          id="sidebar"
+        >
+          <SideBarItem
+            title="Newest"
+            description="Find the latest updates"
+            icon={newest}
+            iconBgcolor="primary"
+            link={"/"}
+          />
+          <SideBarItem
+            title="Popular"
+            description="Shots featured duringasjdkashduikasd"
+            icon={popular}
+            iconBgcolor="#EFF5F8"
+            link={"/popular"}
+          />
+          <SideBarItem
+            title="Popular"
+            description="Shots featured duringasjdkashduikasd"
+            icon={newest}
+            iconBgcolor="#EFF5F8"
           />
         </div>
-
-        {topics &&
-          topics.length > 0 &&
-          topics.slice(0, popularTagsData.length).map((topics, index) => {
+        <div
+          className=" bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
+          id="sidebar"
+        >
+          <div className="flex items-center justify-between">
+            <h1 className="text-sm font-medium">Popular Topics</h1>
+            <FaArrowRightLong
+              className="text-base cursor-pointer hover:text-accent"
+              onClick={() => navigate("/topic-library")}
+            />
+          </div>
+          {topics &&
+            topics.length > 0 &&
+            topics.slice(0, popularTagsData.length).map((topics, index) => {
+              return (
+                <SideBarItem
+                  key={topics.id}
+                  title={topics.name.replace(" ", "_").toLowerCase()}
+                  description={popularTagsData[index].description}
+                  icon={popularTagsData[index].icon}
+                  iconBgcolor={popularTagsData[index].iconBgColor}
+                  link={`/topic/${topics.id}`}
+                />
+              );
+            })}
+        </div>
+        <div
+          className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4
+          shadow-slate-400 shadow-md dark:shadow-gray-900 "
+          id="sidebar"
+        >
+          <div className="flex items-center justify-between">
+            <h1 className="text-sm font-medium">Explore Groups</h1>
+            <FaArrowRightLong
+              className="text-base cursor-pointer hover:text-accent"
+              onClick={() => navigate("/community/all")}
+            />
+          </div>
+          {communities?.slice(0, 5).map((popularGroupData, index) => {
             return (
               <SideBarItem
-                key={topics.id}
-                title={topics.name.replace(" ", "_").toLowerCase()}
-                description={popularTagsData[index].description}
-                icon={popularTagsData[index].icon}
-                iconBgcolor={popularTagsData[index].iconBgColor}
-                link={`/topic/${topics.id}`}
+                key={index}
+                title={
+                  "c/" + popularGroupData.name.replace(" ", "_").toLowerCase()
+                }
+                description={popularGroupData.description}
+                icon={popularGroupData.icon}
+                iconBgcolor="#EFF5F8"
+                imgStyle="rounded-lg"
+                link={`/community/${popularGroupData.id}`}
               />
             );
           })}
-      </div>
-
-      <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 
-        shadow-slate-400 shadow-md dark:shadow-gray-900"
-        id="sidebar"
-      >
-        <div className="flex items-center justify-between">
-          <h1 className="text-sm font-medium">Explore Groups</h1>
-          <FaArrowRightLong 
-            className="text-base cursor-pointer hover:text-accent"
-            onClick={() => navigate("/community/all")} 
-          />
         </div>
-
-        {communities?.slice(0, 5).map((popularGroupData, index) => {
-          return (
-            <SideBarItem
-              key={index}
-              title={"c/" + popularGroupData.name.replace(" ", "_").toLowerCase()}
-              description={popularGroupData.description}
-              icon={popularGroupData.icon}
-              iconBgcolor="#EFF5F8"
-              imgStyle="rounded-lg"
-              link={`/community/${popularGroupData.id}`}
-            />
-          );
-        })}
       </div>
     </SidebarLayout>
     // <aside
@@ -116,3 +116,5 @@ export const LeftSidebar = () => {
     // </aside>
   );
 };
+
+

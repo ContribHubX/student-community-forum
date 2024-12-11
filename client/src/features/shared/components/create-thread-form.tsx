@@ -68,14 +68,13 @@ export const ThreadForm = ({
     if (!thread?.communityId) return;
 
     setSelectedCommunity(thread.communityId);
-  }, [thread?.communityId])
+  }, [thread?.communityId]);
 
   useEffect(() => {
     if (!thread?.topicId) return;
 
     setSelectedTopic(thread.topicId);
-  }, [thread?.topicId])
-
+  }, [thread?.topicId]);
 
   const handleTagAddition = useCallback(
     (tag: string) => {
@@ -83,14 +82,14 @@ export const ThreadForm = ({
         setTags([...tags, tag]);
       }
     },
-    [tags]
+    [tags],
   );
-  
+
   const handleTagRemoval = useCallback(
     (tag: string) => {
       setTags(tags.filter((t) => t !== tag));
     },
-    [tags]
+    [tags],
   );
 
   const onSubmit = (data: FieldValues) => {
@@ -113,7 +112,7 @@ export const ThreadForm = ({
     });
 
     console.log(formData);
-    
+
     handleFormSubmit(formData);
   };
 

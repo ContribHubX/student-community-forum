@@ -29,7 +29,7 @@ export const Todos = ({ userId }: TodosProp) => {
     mutationConfig: {
       onSuccess: (data) => {
         queryClient.setQueryData(
-          getTodosQueryOptions(userId.toString()).queryKey,
+          getTodosQueryOptions(data.createdBy.toString()).queryKey,
           (oldTodos: Todo[] | undefined) => {
             return oldTodos ? [data, ...oldTodos] : undefined;
           },
@@ -37,6 +37,8 @@ export const Todos = ({ userId }: TodosProp) => {
       },
     },
   });
+
+  console.log(todos)
 
   const { mutate: updateTodo } = useUpdateTodo({
     mutationConfig: {

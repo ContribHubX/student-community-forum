@@ -18,16 +18,18 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { CommunityEvent } from "@/types";
 import { useAuth } from "@/hooks/use-auth";
 
+
 interface EventCalendarProps {
   events: CommunityEvent[];
   communityId: string;
 }
 
-export const EventCalendar = ({ events, communityId }: EventCalendarProps) => {
-  const { authState } = useAuth();
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+export const EventCalendar = ({
+  events,
+  communityId,
+  userId,
+}: EventCalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -56,8 +58,8 @@ export const EventCalendar = ({ events, communityId }: EventCalendarProps) => {
   };
 
   return (
-    <Card className="min-w-full mx-auto bg-primary dark:border-none">
-      <CardContent className="p-6">
+    <Card className="w-fit mx-auto bg-primary dark:border-none max-w-[1000px] ">
+      <CardContent className="p-6 min-w-[1000px] overflow-x-auto">
         <div className="flex justify-between items-center mb-6">
           <Button variant="outline" size="icon" onClick={goToPreviousMonth}>
             <ChevronLeft className="h-4 w-4" />
@@ -70,7 +72,7 @@ export const EventCalendar = ({ events, communityId }: EventCalendarProps) => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-7 gap-4 mb-4">
+        <div className="grid grid-cols-7 gap-4 mb-4 ">
           {daysOfWeek.map((day) => (
             <div
               key={day}
@@ -125,7 +127,7 @@ export const EventCalendar = ({ events, communityId }: EventCalendarProps) => {
               <CreateEventForm
                 submitCallback={() => setIsDialogOpen(false)}
                 communityId={communityId}
-                userId={authState.user?.id}
+                userId={userId}
               />
             </DialogContent>
           </Dialog>

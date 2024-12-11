@@ -33,7 +33,7 @@ interface NotificationDropdownProp {
 export const NotificationDropdown = ({ userId }: NotificationDropdownProp) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
-  
+
   const { data: notifications } = useGetNotifications({ userId: userId || "" });
 
   const toggleExpand = () => {

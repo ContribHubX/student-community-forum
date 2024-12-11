@@ -128,7 +128,7 @@ export const TopicCard = ({
                 Create Post
               </Button>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="dark:border-none bg-primary">
               <SelectItem value="thread">Thread</SelectItem>
               <SelectItem value="question">Question</SelectItem>
             </SelectContent>

@@ -15,7 +15,7 @@ export const BoardViewRoute = () => {
 
   return (
     <KanbanLayout hideNavbar={hideNavbar}>
-      <section className="bg-background border-3 border-black px-4">
+      <section className="bg-background border-3 border-black">
         <KanbanBoard toggleNavbar={toggleNavbar} currentUser={authState.user} />
       </section>
     </KanbanLayout>

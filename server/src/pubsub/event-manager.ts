@@ -52,7 +52,7 @@ class EventManager {
    * @param clientId
    */
   publishToOne<T>(identifier: string, data: T, clientId: string): void {
-    const client = this.clients.get(clientId);
+    const client = this.clients.get(clientId.toString());
 
     if (!client) {
       this.logger.error("Client socket not found");

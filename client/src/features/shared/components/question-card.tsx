@@ -11,7 +11,6 @@ import { useGetVotes } from "@/features/question/api/get-votes";
 import { useCreateVote } from "@/features/question/api/vote";
 import { Badge } from "@/components/ui/badge";
 
-
 interface QuestionCardProp {
   currentUserId: string;
   question: Question;
@@ -34,9 +33,8 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
 
   return (
     <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
-      <CardContent className="p-6">
-        <div className="flex items-start space-x-6">
-          {/* Voting Section */}
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex items-start space-x-4 sm:space-x-6">
           <div className="flex flex-col items-center space-y-2">
             <Button
               variant="ghost"
@@ -74,32 +72,34 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-sm font-medium text-primary-foreground">
-                    {question.createdBy.name}
-                  </p>
+                  <div className="flex items-start sm:items-center flex-col sm:flex-row gap-2">
+                    <p className="text-sm font-medium text-primary-foreground">
+                      {question.createdBy.name}
+                    </p>
+                    {question?.topic && (
+                    <Badge
+                      variant="secondary"
+                      className="flex items-center gap-1 px-2 py-1 ml-auto dark:bg-background cursor-pointer"
+                      onClick={() => navigate(`/topic/${question.topic?.id}`)}
+                    >
+                      {question?.topic.attachment && (
+                        <img
+                          src={question.topic?.attachment}
+                          alt={`${question.topic?.name} icon`}
+                          className="w-4 h-4 rounded-full"
+                        />
+                      )}
+                      <span>{question?.topic.name}</span>
+                    </Badge>
+                    )}
+                  </div>
                   <p className="text-xs text-gray-500">
-                    {new Date(question.createdAt).toLocaleDateString(
+                    {new Date(question.createdAt || new Date()).toLocaleDateString(
                       undefined,
                       { year: "numeric", month: "short", day: "numeric" },
                     )}
                   </p>
                 </div>
-                {question?.topic && (
-                <Badge
-                  variant="secondary"
-                  className="flex items-center gap-1 px-2 py-1 ml-auto dark:bg-background cursor-pointer"
-                  onClick={() => navigate(`/topic/${question.topic?.id}`)}
-                >
-                  {question?.topic.attachment && (
-                    <img
-                      src={question.topic?.attachment}
-                      alt={`${question.topic?.name} icon`}
-                      className="w-4 h-4 rounded-full"
-                    />
-                  )}
-                  <span>{question?.topic.name}</span>
-                </Badge>
-              )}
               </div>
               <Button
                 variant="outline"
@@ -113,7 +113,7 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
 
             {/* Question Content */}
             <div>
-              <h3 className="text-xl font-semibold text-primary-foreground leading-snug mb-2">
+              <h3 className="text-base sm:text-xl font-semibold text-primary-foreground leading-snug mb-2">
                 {question.title}
               </h3>
               <p

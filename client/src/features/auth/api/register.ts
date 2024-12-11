@@ -23,8 +23,8 @@ export type FormSchema = z.infer<typeof registerSchema>;
 const register = async (data: FormData) => {
   const response = await api.post("/api/auth/register", data, {
     headers: {
-        "Content-Type": "multipart/form-data"
-    }
+      "Content-Type": "multipart/form-data",
+    },
   });
   return response.data;
 };
@@ -33,9 +33,7 @@ type RegisterMutationOption = {
   mutationConfig?: MutationConfig<typeof register>;
 };
 
-export const useRegister = ({
-  mutationConfig,
-}: RegisterMutationOption) => {
+export const useRegister = ({ mutationConfig }: RegisterMutationOption) => {
   const { ...restConfig } = mutationConfig || {};
 
   return useMutation({

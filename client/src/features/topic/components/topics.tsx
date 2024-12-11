@@ -74,7 +74,7 @@ export const Topics = ({ userId }: TopicsProp) => {
   if (!topic || questionsLoading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="">
       <div>
         <TopicCard
           userId={userId}

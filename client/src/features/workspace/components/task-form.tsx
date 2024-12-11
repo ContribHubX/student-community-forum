@@ -30,14 +30,20 @@ interface TaskFormProp {
   onCancel?: () => void;
 }
 
-export const TaskForm = ({ currentUserId, boardId, type, initialTask, onCancel }: TaskFormProp) => {
+export const TaskForm = ({
+  currentUserId,
+  boardId,
+  type,
+  initialTask,
+  onCancel,
+}: TaskFormProp) => {
   const { isDark } = useTheme();
   const { data: members } = useGetBoardMembers({ boardId: boardId || "" });
   const { mutate: createTask } = useCreateTask({});
   const { mutate: updateTask } = useUpdateTask({});
   const [fileName, setFileName] = useState("");
 
-  console.log(members)
+  console.log(members);
 
   const [formState, setFormState] = useState<CreateTaskSchema>({
     name: "",
@@ -61,12 +67,14 @@ export const TaskForm = ({ currentUserId, boardId, type, initialTask, onCancel }
         boardId: initialTask.boardId || boardId,
       });
     }
-    
-    if (initialTask?.attachment !== "" && initialTask?.attachment !== undefined) {
-      setFileName(extractFileName(initialTask?.attachment))
+
+    if (
+      initialTask?.attachment !== "" &&
+      initialTask?.attachment !== undefined
+    ) {
+      setFileName(extractFileName(initialTask?.attachment));
     }
   }, [initialTask, type, currentUserId, boardId]);
-
 
   const { text, background } =
     statusColors[
@@ -79,7 +87,7 @@ export const TaskForm = ({ currentUserId, boardId, type, initialTask, onCancel }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
-    setFileName(file?.name || ""); 
+    setFileName(file?.name || "");
     handleInputChange("attachment", file);
   };
 
@@ -111,12 +119,16 @@ export const TaskForm = ({ currentUserId, boardId, type, initialTask, onCancel }
     formData.append("boardId", boardId);
 
     // Submit formData via an API request
-    if (!initialTask)
-      createTask(formData);
-    else 
-      updateTask({...formDataToObject(formData), taskId: initialTask.id, sequence: initialTask.sequence, isDragUpdate: false} as UpdateTaskType);
+    if (!initialTask) createTask(formData);
+    else
+      updateTask({
+        ...formDataToObject(formData),
+        taskId: initialTask.id,
+        sequence: initialTask.sequence,
+        isDragUpdate: false,
+      } as UpdateTaskType);
 
-    console.log(formData)
+    console.log(formData);
   };
 
   return (
@@ -222,12 +234,13 @@ export const TaskForm = ({ currentUserId, boardId, type, initialTask, onCancel }
         <div className="flex gap-3 items-center w-full">
           <CgAttachment className="text-xl" />
           <label className="outline-none w-full  p-2 bg-background rounded-md cursor-pointer flex items-center gap-2">
-            <span className="text-gray-500">{fileName !== "" ? fileName : "Attach a file"}</span>
+            <span className="text-gray-500">
+              {fileName !== "" ? fileName : "Attach a file"}
+            </span>
             <input
               type="file"
               onChange={handleFileChange}
               className="hidden w-full"
-             
             />
           </label>
         </div>

@@ -19,13 +19,14 @@ export const getCommunityByIdQueryOptions = (id: string | undefined) => {
 };
 
 export type getCommunityQueryConfig = {
-  id: string | undefined,
+  id: string | undefined;
   queryConfig?: QueryConfig<typeof getCommunityById>;
 };
 
-export const useGetCommunityById = (
-  { id, queryConfig }: getCommunityQueryConfig,
-) => {
+export const useGetCommunityById = ({
+  id,
+  queryConfig,
+}: getCommunityQueryConfig) => {
   return useQuery({
     ...getCommunityByIdQueryOptions(id),
     ...queryConfig,

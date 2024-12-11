@@ -23,7 +23,7 @@ export const PopularRoute = () => {
         <div>
           <Rooms />
         </div>
-        <div className="lg:mr-[22rem] mt-4">
+        <div className="lg:mr-[22rem] mt-4 ">
           <ThreadCardList threads={threads || []} />
         </div>
       </section>

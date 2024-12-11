@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface SidebarLayoutProps {
-  position: `left-${number}` | `right-${number}`;
+  position?: `left-${number}` | `right-${number}`;
   height?: "full" | "auto" | number;
   children: ReactNode;
   className?: string;
@@ -9,7 +9,6 @@ interface SidebarLayoutProps {
 }
 
 export const SidebarLayout = ({
-  position,
   height,
   children,
   width,
@@ -23,13 +22,26 @@ export const SidebarLayout = ({
     calculatedHeight = "number";
   }
 
+  // return (
+  //   <aside
+  //     className={`fixed overflow-y-auto ${position} ${className} rounded-2xl`}
+  //     id="sidebar-container"
+  //     style={{
+  //       height: calculatedHeight,
+  //       width: width,
+  //     }}
+  //   >
+  //     {children}
+  //   </aside>
+  // );
+
   return (
     <aside
-      className={`fixed overflow-y-auto ${position} ${className} rounded-2xl`}
+      className={`overflow-y-auto  ${className} rounded-2xl`}
       id="sidebar-container"
       style={{
         height: calculatedHeight,
-        width: width
+        width: width,
       }}
     >
       {children}
