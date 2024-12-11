@@ -6,6 +6,7 @@ import { User } from "@/types";
 
 import { useGetUsers } from "@/features/shared/api/get-all-users";
 import { useCreateRequest } from "../api/create-request";
+import { toast } from "react-toastify";
 
 interface SelectRequestProp {
   questionId: string;
@@ -17,7 +18,13 @@ export const SelectRequest = ({
   currentUserId,
 }: SelectRequestProp) => {
   const { data: users } = useGetUsers({});
-  const { mutate: createRequest } = useCreateRequest({});
+  const { mutate: createRequest } = useCreateRequest({
+    mutationConfig: {
+      onSuccess: (response) => {
+        toast.success(response.message);
+      },
+    },
+  });
 
   const handleCreate = (selectedUser: User) => {
     createRequest({

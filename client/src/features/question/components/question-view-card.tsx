@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
 import { getQuestionQueryOptions } from "../api/get-question";
+import { toast } from "react-toastify";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -175,6 +176,8 @@ interface AnswerPromptProps {
 const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   const queryClient = useQueryClient();
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const { mutate: createThread } = useCreateThread({
     mutationConfig: {
       onSuccess: (data) => {
@@ -189,6 +192,10 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   const handleCreateThread = (data: FormData) => {
     data.append("questionId", question.id);
     createThread(data);
+    toast.success("Answer submitted!");
+    setIsOpen(false);
+  };
+
   };
 
   return (
@@ -219,4 +226,3 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
     </div>
   );
 };
-

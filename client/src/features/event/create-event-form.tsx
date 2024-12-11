@@ -25,15 +25,19 @@ import {
   createEventSchema,
   useCreateEvent,
 } from "./api/create-event";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 interface CreateEventFormProp {
   communityId: string;
-  userId: string;
+  userId: string | undefined;
+  submitCallback: () => void;
 }
 
 export const CreateEventForm = ({
   communityId,
   userId,
+  submitCallback,
 }: CreateEventFormProp) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(createEventSchema),
@@ -42,7 +46,18 @@ export const CreateEventForm = ({
       tags: "",
     },
   });
-  const { mutate: createEvent } = useCreateEvent({});
+  const { mutate: createEvent } = useCreateEvent({
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success("Event created successfully!");
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          console.log(error.response);
+        }
+      },
+    },
+  });
 
   function onSubmit(values: FormSchema) {
     console.log(values);
@@ -55,6 +70,7 @@ export const CreateEventForm = ({
     };
 
     createEvent(formattedValues as CreateEventType);
+    submitCallback();
     // toast({
     //   title: 'Event created',
     //   name: 'Your event has been successfully created.',

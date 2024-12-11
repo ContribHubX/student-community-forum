@@ -116,7 +116,9 @@ export const Navbar = () => {
             <DropdownMenuContent className="w-56 bg-primary dark:bg-background dark:border-muted-foreground">
               <DropdownMenuLabel>Create</DropdownMenuLabel>
               <DropdownMenuSeparator className="dark:bg-muted-foreground" />
-              <DropdownMenuItem onClick={() => {}}>
+              <DropdownMenuItem
+                onClick={() => navigate("/thread-action/create")}
+              >
                 <MdCreate className="mr-2 h-4 w-4" />
                 <span>Thread</span>
               </DropdownMenuItem>
@@ -128,7 +130,6 @@ export const Navbar = () => {
           </DropdownMenu>
 
           <NotificationDropdown userId={authState.user?.id || ""} />
-
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="cursor-pointer">

@@ -49,7 +49,10 @@ export const TopicCard = ({
 
   const handleSubmit = (data: FormData) => {
     if (postType === "thread") createThread(data);
-    else createQuestion(formDataToObject(data) as CreateQuestionType);
+    else {
+      createQuestion(formDataToObject(data) as CreateQuestionType);
+      setIsDialogOpen(false);
+    }
   };
 
   const handleSelectChange = (value: string) => {

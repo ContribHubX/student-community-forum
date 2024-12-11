@@ -29,7 +29,10 @@ export const Community = () => {
   }
 
   return (
-    <div className="bg-background text-primary-foreground">
+    <div
+      className="flex flex-col text-primary-foreground bg-background
+    min-h-screen"
+    >
       <Navbar />
       <main>
         <CommunityView
@@ -38,7 +41,6 @@ export const Community = () => {
           onTabChange={(tab: CommunityTab) => setChangeTab(tab)}
           tabOpen={tabOpen}
         />
-
         <div className="px-4 md:px-0 w-full md:w-[78%] flex flex-1  mx-auto mt-5 gap-5">
           {tabOpen === "Threads" ? (
             <div className="flex flex-col md:flex-row gap-8 mx-auto">
@@ -50,7 +52,6 @@ export const Community = () => {
                   <ThreadCardList threads={threads || []} />
                 </div>
               </div>
-
               <aside
                 className="sticky right-5 top-28 rounded-xl space-y-4"
                 style={{ height: "calc(100vh - 8rem)" }}
@@ -83,7 +84,7 @@ export const Community = () => {
                 </div>
 
                 <div
-                  className="max-h-[450px] overflow-y-auto rounded-xl
+                  className="overflow-y-auto rounded-xl
                 shadow-slate-400 shadow-md dark:shadow-gray-900"
                 >
                   <UpcomingEventsList />

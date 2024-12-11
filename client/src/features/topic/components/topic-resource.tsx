@@ -34,11 +34,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useAuth } from "@/hooks/use-auth";
+import { toast } from "react-toastify";
 
 export const TopicResource = () => {
   const { authState } = useAuth();
   const { data: topics } = useGetTopics({});
-  const { mutate: createTopic } = useCreateTopic({});
+  const { mutate: createTopic } = useCreateTopic({
+    mutationConfig: {
+      onSuccess: () => {
+        console.log("topic created!!!");
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  });
+
 
   const [searchTerm, setSearchTerm] = useState("");
   const [showUserTopics, setShowUserTopics] = useState(false);
@@ -60,13 +71,12 @@ export const TopicResource = () => {
         attachment: values.attachment,
         createdBy: authState.user.id.toString(),
       });
+      toast.success("Topic created successfully!");
       setIsDialogOpen(false);
       form.reset();
     } catch (error) {
       console.error("Failed to create topic:", error);
     }
-
-    console.log(values);
   };
 
   const filteredTopics = topics?.filter((topic) => {
@@ -79,10 +89,9 @@ export const TopicResource = () => {
     return matchesSearch && matchesUserTopics;
   });
 
-  console.log(topics);
 
   return (
-    <div className="container mx-auto px-4 py-8 text-primary-foreground">
+    <div className="container mx-auto px-4 py-8 text-primary-foreground text-primary-foreground">
       <h1 className="text-4xl font-bold mb-8 text-center">Explore Topics</h1>
 
       <div className="flex flex-col md:flex-row gap-4 mb-8">
@@ -118,7 +127,7 @@ export const TopicResource = () => {
               Create Topic
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] text-primary-foreground">
             <DialogHeader>
               <DialogTitle>Create New Topic</DialogTitle>
               <DialogDescription>
@@ -137,7 +146,11 @@ export const TopicResource = () => {
                     <FormItem>
                       <FormLabel>Topic Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter topic name" {...field} />
+                        <Input
+                          placeholder="Enter topic name"
+                          {...field}
+                          className="focus:outline-accent dark:border"
+                        />
                       </FormControl>
                       <FormDescription>
                         This is the name of your new topic.
@@ -155,6 +168,7 @@ export const TopicResource = () => {
                       <FormControl>
                         <Input
                           type="file"
+                          className="cursor-pointer"
                           onChange={(e) => field.onChange(e.target.files?.[0])}
                         />
                       </FormControl>
@@ -165,7 +179,9 @@ export const TopicResource = () => {
                     </FormItem>
                   )}
                 />
-                <Button type="submit">Save Topic</Button>
+                <Button type="submit" className="text-accent-foreground">
+                  Save Topic
+                </Button>
               </form>
             </Form>
           </DialogContent>

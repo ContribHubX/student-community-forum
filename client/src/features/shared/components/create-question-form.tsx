@@ -61,10 +61,10 @@ export const CreateQuestionForm = ({
       }
     });
 
-    console.log("hello");
     // Submit the form
     handleFormSubmit(formData);
   };
+
   const handleTagAddition = (tag: string) => {
     if (tag && !tags.includes(tag)) {
       setTags([...tags, tag]);

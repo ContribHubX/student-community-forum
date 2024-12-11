@@ -3,6 +3,9 @@ html.dark {
   // --primary: #262D34;
   // --pimary-foreground: #FFFFFF;
   // --accent: #533de0;
+  --toastify-color-light: #1e252b !important;
+
+  --toastify-text-color-light: white !important;
 
   --gradient-start: rgba(30, 37, 43, 0.5);
   --gradient-end: rgba(38, 45, 52, 0.8);
@@ -36,4 +39,8 @@ html.dark {
   --chart-3: 30 80% 55%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
+
+  .Toastify__close-button > svg {
+    color: white;
+  }
 }
