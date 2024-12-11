@@ -42,7 +42,9 @@ export const TopicCard = ({
   const { mutate: follow } = useFollowTopic({});
   const [postType, setPostType] = useState("thread");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState<"Thread | Question" | "">("");
+  const [selectedMethod, setSelectedMethod] = useState<
+    "Thread | Question" | ""
+  >("");
   const navigate = useNavigate();
 
   const handleSubmit = (data: FormData) => {
@@ -123,7 +125,7 @@ export const TopicCard = ({
                 Create Post
               </Button>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="dark:border-none bg-primary">
               <SelectItem value="thread">Thread</SelectItem>
               <SelectItem value="question">Question</SelectItem>
             </SelectContent>

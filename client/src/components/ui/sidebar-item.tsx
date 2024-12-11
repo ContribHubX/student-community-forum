@@ -9,6 +9,8 @@ interface SidebarItemProps {
   containerStyle?: string;
   link?: string;
   imgStyle?: string;
+  showDesc?: boolean;
+  descStyle?: string;
 }
 
 export const SideBarItem = ({
@@ -18,27 +20,26 @@ export const SideBarItem = ({
   iconBgcolor,
   containerStyle,
   link,
-  imgStyle
+  imgStyle,
+  descStyle,
+  showDesc = true
 }: SidebarItemProps) => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
   };
   return (
     <Link to={link || ""}>
-      <div className={cn(`flex gap-2 p-1 rounded-lg`, containerStyle)}>
+      <div className={cn(`flex  gap-1 xs:gap-2 p-1 rounded-lg hover:bg-background items-center`, containerStyle)}>
         <div
           className={`rounded-xl h-8 w-8 flex items-center justify-center`}
           style={{ backgroundColor: iconBgcolor }}
         >
-          <img 
-            src={icon} 
-            alt="" 
-            className={cn("h-5", imgStyle)} />
+          <img src={icon} alt="" className={cn("h-5", imgStyle)} />
         </div>
 
-        <div>
+        <div className={cn("", descStyle)}>
           <p className="text-sm">{truncateText(title, 15)}</p>
-          <p className="text-xs text-muted-foreground font-light">
+          <p className={`text-xs text-muted-foreground font-light ${!showDesc && "hidden"}`}>
             {truncateText(description, 22)}
           </p>
         </div>

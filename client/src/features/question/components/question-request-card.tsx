@@ -14,10 +14,14 @@ interface QuestionCardProp {
   currentUserId: string;
   question: Question;
   requestedBy: User;
-  requestedTo: User
+  requestedTo: User;
 }
 
-export const QuestionRequestCard = ({ question, currentUserId, requestedBy }: QuestionCardProp) => {
+export const QuestionRequestCard = ({
+  question,
+  currentUserId,
+  requestedBy,
+}: QuestionCardProp) => {
   const navigate = useNavigate();
   const { data: votes } = useGetVotes({
     data: { userId: currentUserId.toString(), questionId: question.id },
@@ -32,7 +36,7 @@ export const QuestionRequestCard = ({ question, currentUserId, requestedBy }: Qu
     });
   };
 
-  console.log(question)
+  console.log(question);
 
   return (
     <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
@@ -76,15 +80,17 @@ export const QuestionRequestCard = ({ question, currentUserId, requestedBy }: Qu
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                <div className="flex items-center space-x-2">
-                  <p className="text-sm font-medium text-primary-foreground">
-                    <span className="text-accent font-semibold">{requestedBy.name}</span>
-                    <span> requested you to answer this question</span>
-                  </p>
-                  <span className="px-2 py-1 text-xs font-medium text-white bg-accent rounded-full">
-                    Request
-                  </span>
-                </div>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-sm font-medium text-primary-foreground">
+                      <span className="text-accent font-semibold">
+                        {requestedBy.name}
+                      </span>
+                      <span> requested you to answer this question</span>
+                    </p>
+                    <span className="px-2 py-1 text-xs font-medium text-white bg-accent rounded-full">
+                      Request
+                    </span>
+                  </div>
 
                   <p className="text-xs text-gray-500">
                     {new Date(question.createdAt).toLocaleDateString(

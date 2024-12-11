@@ -60,8 +60,6 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
         {state.boards?.map((board) => <Board key={board.id} board={board} />)}
       </div>
 
-    
-
       {/* shared */}
       <FlexContainer className="justify-between  text-sm text-primary-foreground mt-8">
         <FlexContainer className="gap-3">
@@ -92,12 +90,12 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
   );
 };
 
-import { Plus } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { Plus } from "lucide-react";
+import { motion } from "framer-motion";
 
 const CreateBoardCard = () => {
   return (
-    <motion.div 
+    <motion.div
       className="bg-primary text-primary-foreground rounded-lg px-6 py-5 h-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out cursor-pointer overflow-hidden"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -173,4 +171,3 @@ const CreateBoardCard = () => {
 };
 
 export default CreateBoardCard;
-

@@ -19,8 +19,12 @@ export const Insight = () => {
 
   return (
     <SidebarLayout
-      className="hidden lg:flex"
-      width={325}
+      className="
+        lg:w-[270px]
+        xl:w-[300px]
+        hidden
+        lg:block
+      "
       height="full"
       position="right-6"
     >
@@ -48,7 +52,7 @@ export const Insight = () => {
                 Ask Now
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] lg:max-w-[800px]">
+            <DialogContent className="sm:max-w-[600px] lg:max-w-[800px] bg-primary dark:border-none">
               <CreateQuestionForm
                 initialTopic={undefined}
                 userId={authState.user?.id || ""}

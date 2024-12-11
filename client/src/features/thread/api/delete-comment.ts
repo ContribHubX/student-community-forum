@@ -3,11 +3,11 @@ import { MutationConfig } from "@/lib/react-query";
 import { useMutation } from "@tanstack/react-query";
 
 export type DeleteCommentType = {
-    commentId: string;
+  commentId: string;
 };
 
 const deleteComment = async (data: DeleteCommentType): Promise<void> => {
-  const response = await api.delete(`/api/thread/comment/${data.commentId}`)
+  const response = await api.delete(`/api/thread/comment/${data.commentId}`);
   return response.data;
 };
 

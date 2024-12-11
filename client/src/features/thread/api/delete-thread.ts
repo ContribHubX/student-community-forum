@@ -8,7 +8,9 @@ export type DeleteThreadType = {
 };
 
 const deleteThread = async (data: DeleteThreadType): Promise<void> => {
-  const response = await api.delete(`/api/thread?threadId=${data.threadId}&userId=${data.userId}`)
+  const response = await api.delete(
+    `/api/thread?threadId=${data.threadId}&userId=${data.userId}`,
+  );
   return response.data;
 };
 

@@ -17,12 +17,12 @@ import { useGetEvents } from "@/features/event/api/get-events";
 
 export const Community = () => {
   const { id } = useParams();
-  const { authState } = useAuth();  
+  const { authState } = useAuth();
   const { data: threads } = useGetThreadsByCommunity({ communityId: id || "" });
   const [tabOpen, setChangeTab] = useState<CommunityTab>("Threads");
   const { data: eventsData } = useGetEvents({ communityId: id || "" });
 
-  const { data: community } = useGetCommunityById({ id })
+  const { data: community } = useGetCommunityById({ id });
 
   if (!community || !authState.user) {
     return <div>Loading..</div>;
@@ -31,28 +31,25 @@ export const Community = () => {
   return (
     <div className="bg-background text-primary-foreground">
       <Navbar />
-      <main className="">
-        <CommunityView 
-          community={community} 
+      <main>
+        <CommunityView
+          community={community}
           userId={authState.user.id}
           onTabChange={(tab: CommunityTab) => setChangeTab(tab)}
           tabOpen={tabOpen}
         />
 
-        <div className="w-[78%] flex flex-1  mx-auto mt-5 gap-5">
+        <div className="px-4 md:px-0 w-full md:w-[78%] flex flex-1  mx-auto mt-5 gap-5">
           {tabOpen === "Threads" ? (
-            <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col md:flex-row gap-8 mx-auto">
               <div className="min-w-[70%]">
                 <div>
-                  <ThreadActionForm
-                  user={authState.user}
-                />
+                  <ThreadActionForm user={authState.user} />
                 </div>
-                <div>
+                <div className="mt-4">
                   <ThreadCardList threads={threads || []} />
                 </div>
               </div>
-
 
               <aside
                 className="sticky right-5 top-28 rounded-xl space-y-4"
@@ -79,8 +76,7 @@ export const Community = () => {
                   </p>
                   <div className="p-4 flex items-center gap-2">
                     <Avatar>
-                      <AvatarImage 
-                        src={community.createdBy.attachment} />
+                      <AvatarImage src={community.createdBy.attachment} />
                     </Avatar>
                     <p>{community.createdBy.name}</p>
                   </div>
@@ -94,27 +90,29 @@ export const Community = () => {
                 </div>
               </aside>
             </div>
-          ): (
+          ) : (
             <div className="w-full mx-auto">
-              <EventCalendar 
-                  events={[
-                    {
-                      id: "1",
-                      name: "UC Intrams",
-                      eventDate: subDays(new Date(), 6),
-                      tags: ["sports", "university"],
-                      communityId: "dfafd"
-                    },
-                    {
-                      id: "2",
-                      name: "UC Days",
-                      eventDate: subDays(new Date(), 15),
-                      tags: ["celebration", "university"],
-                      communityId: "dfafd"
-                    },
-                    ...events, ...eventsData || [] ]}
-                    communityId={community.id}
-                    userId={authState.user.id}
+              <EventCalendar
+                events={[
+                  {
+                    id: "1",
+                    name: "UC Intrams",
+                    eventDate: subDays(new Date(), 6),
+                    tags: ["sports", "university"],
+                    communityId: "dfafd",
+                  },
+                  {
+                    id: "2",
+                    name: "UC Days",
+                    eventDate: subDays(new Date(), 15),
+                    tags: ["celebration", "university"],
+                    communityId: "dfafd",
+                  },
+                  ...events,
+                  ...(eventsData || []),
+                ]}
+                communityId={community.id}
+                userId={authState.user.id}
               />
             </div>
           )}

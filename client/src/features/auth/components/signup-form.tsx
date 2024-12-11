@@ -28,7 +28,7 @@ export const SignUpForm = () => {
     }
 
     try {
-      registerUser(formData); 
+      registerUser(formData);
       reset();
     } catch (error) {
       console.error("Registration failed:", error);
@@ -71,8 +71,8 @@ export const SignUpForm = () => {
           onChange={(e) => {
             const file = e.target.files?.[0];
             if (file) {
-              setFile(file); 
-              setValue("attachment", file); 
+              setFile(file);
+              setValue("attachment", file);
             }
           }}
         />

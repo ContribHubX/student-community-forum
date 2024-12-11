@@ -15,7 +15,7 @@ export const loginSchema = z.object({
 export type FormSchema = z.infer<typeof loginSchema>;
 
 const login = async (data: FormSchema) => {
-  const response = await api.post("/api/auth/login", data)
+  const response = await api.post("/api/auth/login", data);
   return response.data;
 };
 
@@ -23,9 +23,7 @@ type LoginMutationOption = {
   mutationConfig?: MutationConfig<typeof login>;
 };
 
-export const useLogin = ({
-  mutationConfig,
-}: LoginMutationOption) => {
+export const useLogin = ({ mutationConfig }: LoginMutationOption) => {
   const { ...restConfig } = mutationConfig || {};
 
   return useMutation({

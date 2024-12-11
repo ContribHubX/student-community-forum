@@ -1,12 +1,12 @@
-import { ThreadCard } from "@/features/thread/components/thread-card";
+import { QuestionAnswerCard } from "./question-answer-card";
 import { useAuth } from "@/hooks/use-auth";
 import { Thread } from "@/types";
 
-interface ThreadCardListProp {
+interface QuestionAnswerListProp {
   threads: Thread[];
 }
 
-export const ThreadCardList = ({ threads }: ThreadCardListProp) => {
+export const QuestionAnswerList = ({ threads }: QuestionAnswerListProp) => {
   const { authState } = useAuth();
 
   // Temporary only
@@ -15,9 +15,9 @@ export const ThreadCardList = ({ threads }: ThreadCardListProp) => {
   }
 
   return (
-    <div className="flex flex-col items-start gap-4">
+    <div className="flex flex-col items-center gap-4">
       {threads.map((thread) => (
-        <ThreadCard
+        <QuestionAnswerCard
           key={thread.id}
           thread={thread}
           userId={authState?.user?.id || ""}

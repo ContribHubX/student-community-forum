@@ -11,7 +11,7 @@ const getUserCommunities = async (
 };
 
 export const getUserCommunitiesQueryOptions = (userId: string | undefined) => {
-  console.log(userId)
+  console.log(userId);
   return queryOptions({
     queryKey: ["user-communities", userId],
     queryFn: () => getUserCommunities(userId),

@@ -107,7 +107,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: { comment: data, queryClient },
           });
           break;
-      
+
         case "comment--delete":
           socketDispatch({
             type: OPERATION.DELETE_COMMENT,
@@ -363,18 +363,18 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             type: OPERATION.JOIN_COMMUNITY,
             payload: {
               communityId: data.communityId,
-              queryClient
+              queryClient,
             },
           });
           break;
 
         case "community-event--new":
-        console.log(data);
+          console.log(data);
           socketDispatch({
             type: OPERATION.ADD_COMMUNITY_EVENT,
             payload: {
               communityId: data.communityId,
-              queryClient
+              queryClient,
             },
           });
           break;

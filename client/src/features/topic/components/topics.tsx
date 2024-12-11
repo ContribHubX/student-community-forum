@@ -47,7 +47,7 @@ export const Topics = ({ userId }: TopicsProp) => {
     data: { topicId: topicId!, userId: userId! },
   });
   const { data: threads } = useGetThreadsByTopic({ topicId: topicId || "" });
-  
+
   const handleCreateQuestion = (data: FormData) => {
     data.append("topicId", topicId || "");
     createQuestion(formDataToObject(data) as CreateQuestionType);
@@ -67,7 +67,7 @@ export const Topics = ({ userId }: TopicsProp) => {
   if (!topic || questionsLoading) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="">
       <div>
         <TopicCard
           userId={userId}

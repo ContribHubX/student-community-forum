@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { ThemeToggle } from "../ui/theme-toggle"
-import { Avatar, AvatarImage } from "../ui/avatar"
-import { useAuth } from "@/hooks/use-auth"
-import { NotificationDropdown } from "@/features/notification/components/notication-dropdown"
-import { IoSearch } from "react-icons/io5"
+import React, { useState, useEffect, useRef } from "react";
+import { ThemeToggle } from "../ui/theme-toggle";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { useAuth } from "@/hooks/use-auth";
+import { NotificationDropdown } from "@/features/notification/components/notication-dropdown";
+import { IoSearch } from "react-icons/io5";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,70 +11,82 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MdDashboard, MdCreate } from "react-icons/md"
-import { CommunityForm } from "@/features/community/components/communit-form"
-import { Modal } from "../ui/modal"
-import { Button } from "../ui/button"
-import { CgProfile, CgLogOut } from "react-icons/cg"
-import { useNavigate } from "react-router-dom"
-import { OPERATION } from "@/providers/auth/context"
-import { useGetThreads } from '@/features/thread/api/get-all-threads'
-import { ThreadSearchResults } from '../ui/search-result'
-import { useDebounce } from "@/hooks/use-debounce"
-import { Thread } from "@/types"
+} from "@/components/ui/dropdown-menu";
+import { MdDashboard, MdCreate } from "react-icons/md";
+import { CommunityForm } from "@/features/community/components/communit-form";
+import { Modal } from "../ui/modal";
+import { Button } from "../ui/button";
+import { CgProfile, CgLogOut } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
+import { OPERATION } from "@/providers/auth/context";
+import { useGetThreads } from "@/features/thread/api/get-all-threads";
+import { ThreadSearchResults } from "../ui/search-result";
+import { useDebounce } from "@/hooks/use-debounce";
+import { Thread } from "@/types";
+
+import { Logo } from "../ui/logo";
+
 
 export const Navbar = () => {
-  const { authState, authDispatch } = useAuth()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const navigate = useNavigate()
-  const { data: threads } = useGetThreads({})
-  const [searchTerm, setSearchTerm] = useState("")
-  const [searchResults, setSearchResults] = useState<Thread[]>([])
-  const [isSearching, setIsSearching] = useState(false)
-  const searchRef = useRef<HTMLDivElement>(null)
-  const debouncedSearchTerm = useDebounce(searchTerm, 300)
+  const { authState, authDispatch } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const { data: threads } = useGetThreads({});
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<Thread[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   const handleCommunityFormModal = () => {
-    setIsModalOpen(!isModalOpen)
-  }
+    setIsModalOpen(!isModalOpen);
+  };
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      setIsSearching(true)
+      setIsSearching(true);
       const results = threads?.filter((thread) =>
-        thread?.tags?.filter(tag => 
-          tag.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-        )
-      )
-      setSearchResults(results || [])
-      setIsSearching(false)
+        thread?.tags?.some((tag) =>
+          tag.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
+        ),
+      );
+      setSearchResults(results || []);
+      setIsSearching(false);
     } else {
-      setSearchResults([])
+      setSearchResults([]);
     }
-  }, [debouncedSearchTerm, threads])
+  }, [debouncedSearchTerm, threads]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setSearchResults([])
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setSearchResults([]);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <nav className="fixed top-0 bg-primary px-10 py-4 flex items-center justify-between w-full z-50 text-primary-foreground">
-      <div>LOGO</div>
-      <div className="flex items-center justify-end gap-6 min-w-full pr-10">
-        <div className="bg-background rounded-xl py-2 pl-4 pr-1 flex relative items-center justify-between gap-2" ref={searchRef}>
+    <nav className="fixed top-0 bg-primary px-6   py-4 flex items-center justify-between  w-full z-50 text-primary-foreground">
+      <div className="flex items-center justify-center gap-3">
+        <Logo className="w-6 h-6 text-accent" />
+        <h1 className="font-medium text-lg hidden sm:block">StudentHub</h1>
+      </div>
+      <div className="flex items-center gap-6 ">
+        <div
+          className="bg-background rounded-xl py-2 pl-4 pr-1 relative items-center justify-between gap-2 hidden md:flex"
+          ref={searchRef}
+        >
           <input
             type="text"
-            className="bg-background outline-none text-sm font-light text-primary-foreground w-[500px]"
+            className="bg-background outline-none text-sm font-light text-primary-foreground md:w-[300px] lg:w-[500px]"
             placeholder="Search threads..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -90,7 +102,7 @@ export const Navbar = () => {
           )}
         </div>
 
-        <div className="flex items-center gap-4 justify-items-center">
+        <div className="flex items-center gap-2  md:gap-4">
           <div className="flex gap-2">
             <ThemeToggle />
           </div>
@@ -116,7 +128,7 @@ export const Navbar = () => {
           </DropdownMenu>
 
           <NotificationDropdown userId={authState.user?.id || ""} />
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="cursor-pointer">
@@ -133,12 +145,14 @@ export const Navbar = () => {
                 <CgProfile className="mr-0 h-4 w-4" />
                 <span>Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => {
-                authDispatch({
-                  type: OPERATION.LOGOUT_USER,
-                  payload: null
-                })
-              }}>
+              <DropdownMenuItem
+                onClick={() => {
+                  authDispatch({
+                    type: OPERATION.LOGOUT_USER,
+                    payload: null,
+                  });
+                }}
+              >
                 <CgLogOut className="mr-0 h-4 w-4" />
                 <span>Logout</span>
               </DropdownMenuItem>
@@ -158,6 +172,5 @@ export const Navbar = () => {
         </Modal>
       </div>
     </nav>
-  )
-}
-
+  );
+};

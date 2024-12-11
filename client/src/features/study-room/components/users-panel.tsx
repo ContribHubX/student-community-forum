@@ -4,17 +4,19 @@ import { User } from "@/types";
 import { PiMicrophoneSlashLight } from "react-icons/pi";
 import { IoEllipsisHorizontalSharp } from "react-icons/io5";
 import { HiOutlinePlus } from "react-icons/hi";
+import { TiArrowRightOutline } from "react-icons/ti";
 
 interface UsersPanelProp {
   users: User[];
+  handleShowboard: () => void;
 }
 
 // TODO implement user invite
 
-export const UsersPanel = ({ users }: UsersPanelProp) => {
+export const UsersPanel = ({ handleShowboard, users }: UsersPanelProp) => {
   return (
     <div
-      className="p-3 md:bg-background rounded-2xl 
+      className="p-3 md:bg-background rounded-2xl relative 
          md:h-[98vh] flex md:flex-col justify-between md:justify-normal"
     >
       <div
@@ -36,6 +38,15 @@ export const UsersPanel = ({ users }: UsersPanelProp) => {
           className="max-w-[80px] rounded-2xl"
         />
       </div>
+
+      <div
+        className="absolute -right-9 top-1/2 transform -translate-y-1/2 
+                  bg-primary w-[30px] h-[30px] flex items-center justify-center 
+                  rounded-tr-[50%] rounded-br-[50%] clip-path-cone"
+        onClick={handleShowboard}
+      >
+        <TiArrowRightOutline className="text-2xl text-white" />
+    </div>
     </div>
   );
 };

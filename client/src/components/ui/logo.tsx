@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export const Logo = ({ className }: { className?: string }) => {
   return (
@@ -35,4 +35,3 @@ export const Logo = ({ className }: { className?: string }) => {
     </motion.svg>
   );
 };
-

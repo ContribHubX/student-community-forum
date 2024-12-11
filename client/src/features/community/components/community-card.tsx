@@ -24,7 +24,7 @@ export function CommunityCard({ community, rank }: CommunityCardProps) {
           {rank}
         </div>
       </div>
-      <div 
+      <div
         className="flex-grow cursor-pointer"
         onClick={() => navigate(`/community/${community.id}`)}
       >

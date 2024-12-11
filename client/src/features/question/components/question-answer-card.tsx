@@ -22,9 +22,6 @@ import {
   ChevronUp,
   Bookmark,
   Share2,
-  Facebook,
-  Twitter,
-  Linkedin,
 } from "lucide-react";
 import { GrEdit } from "react-icons/gr";
 import { FaTrashAlt } from "react-icons/fa";
@@ -32,9 +29,9 @@ import { FaTrashAlt } from "react-icons/fa";
 import { ReactionType, Thread } from "@/types";
 import { statusColors } from "@/features/workspace/constant";
 import { sanitizeContent } from "@/utils";
-import { useCreateReaction } from "../api/create-reaction";
-import { useGetUserReaction } from "../api/get-reaction";
-import { Link, useNavigate } from "react-router-dom";
+import { useCreateReaction } from "@/features/thread/api/create-reaction";
+import { useGetUserReaction } from "@/features/thread/api/get-reaction";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/hooks/use-theme";
 
 import { TbArrowBigDown } from "react-icons/tb";
@@ -44,14 +41,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useGetCommunityById } from "@/features/community/api/get-community";
-import { useDeleteThread } from "../api/delete-thread";
+import { useDeleteThread } from "@/features/thread/api/delete-thread";
 
 interface ThreadCardProp {
   thread: Thread;
   userId: string;
 }
 
-export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
+export const QuestionAnswerCard = ({ userId, thread }: ThreadCardProp) => {
   const [isImageExpanded, setIsImageExpanded] = useState(false);
   const { mutate: addReaction } = useCreateReaction({});
   const { mutate: deleteThread } = useDeleteThread({});
@@ -90,18 +87,18 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   };
 
   return (
-    <Card className="w-full hover:shadow-lg transition-shadow duration-300 bg-primary dark:border-none max-w-[850px]">
+    <Card className="w-full hover:shadow-lg transition-shadow duration-300 bg-primary dark:border-none">
       <CardHeader className="flex flex-row items-start space-y-0 gap-4">
         <Avatar className="w-10 h-10">
           <AvatarImage src={thread.createdBy?.attachment} alt="User Avatar" />
           <AvatarFallback>UN</AvatarFallback>
         </Avatar>
         <div className="flex flex-col gap-0 w-full">
-          <div className="flex items-start xs:items-center gap-2 mb-1 w-full flex-col xs:flex-row">
+          <div className="flex items-center gap-2 mb-1 w-full">
             <span className="text-sm font-medium">{thread.createdBy.name}</span>
             <Badge
               variant="secondary"
-              className="text-xs  font-normal"
+              className="text-xs font-normal"
               style={{
                 color: statusColors["archived"].text,
                 backgroundColor: !isDark
@@ -183,7 +180,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
             ${thread.attachment !== "null" ? "-mt-1" : "-mt-5 -mb-1"}
         `}
       >
-        <div className="flex items-center xs:space-x-4">
+        <div className="flex items-center space-x-4">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -197,7 +194,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                     onMouseLeave={() => setUpHovered(false)}
                   >
                     <TbArrowBigDown
-                      className="text-3xl rotate-180  text-white"
+                      className="text-3xl rotate-180 text-white"
                       style={{
                         color:
                           isDark || isUpHovered || reactionFlag("LIKE")
@@ -244,22 +241,20 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
             onClick={() => navigate(`/thread/${thread.id}`)}
           >
             <MessageSquare className="h-4 w-4" />
-            <span className="text-sm flex items-center gap-3">
-              <span>{thread.commentCount || 0} </span>
-              <span className="hidden md:block">comments</span>
-            </span>
+            <span className="text-sm">{thread.commentCount || 0} comments</span>
           </Button>
         </div>
-        <div className="flex items-center sm:space-x-2">
+        <div className="flex items-center space-x-2">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
-                <ShareOptions threadId={thread.id} />
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Share2 className="h-4 w-4" />
+                </Button>
               </TooltipTrigger>
               <TooltipContent>Share</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -321,73 +316,6 @@ export const ThreadMenu = ({
           ) : (
             <span>Hide</span>
           )}
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-};
-
-
-
-interface ShareOptionsProps {
-  threadId: string;
-}
-
-export const ShareOptions = ({ threadId }: ShareOptionsProps) => {
-  const shareOptions = [
-    { icon: Facebook, label: "Facebook", action: () => shareTo("facebook") },
-    { icon: Twitter, label: "Twitter", action: () => shareTo("twitter") },
-    { icon: Linkedin, label: "LinkedIn", action: () => shareTo("linkedin") },
-    { icon: Link, label: "Copy Link", action: () => copyLink() },
-  ];
-
-  const shareTo = (platform: string) => {
-    const url = `https://example.com/thread/${threadId}`;
-    switch (platform) {
-      case "facebook":
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
-        break;
-      case "twitter":
-        window.open(`https://twitter.com/intent/tweet?url=${url}`, "_blank");
-        break;
-      case "linkedin":
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank");
-        break;
-    }
-  };
-
-  const copyLink = () => {
-    navigator.clipboard.writeText(`https://example.com/thread/${threadId}`);
-    alert("Link copied to clipboard!");
-  };
-
-  return (
-    <Popover>
-      <PopoverTrigger>
-        <Button variant="ghost" size="icon">
-          <Share2 className="h-4 w-4" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[150px] p-2 rounded-lg bg-primary dark:bg-dark dark:border-none">
-        <div className="flex flex-col gap-2">
-          {shareOptions.map((option, index) => (
-            <TooltipProvider key={index}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="flex items-center gap-2 justify-start w-full px-3 hover:bg-accent hover:text-accent-foreground rounded-md"
-                    onClick={option.action}
-                  >
-                    <option.icon className="h-4 w-4" to="" />
-                    <span className="text-sm">{option.label}</span>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>{option.label}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          ))}
         </div>
       </PopoverContent>
     </Popover>

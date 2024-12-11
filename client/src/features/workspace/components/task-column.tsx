@@ -60,10 +60,10 @@ export const TaskColumn = ({
       </div>
 
       <div className={`${!isOpen && "hidden"}  mt-6`}>
-        <TaskForm 
-          currentUserId={currentUserId} 
-          boardId={boardId} 
-          type={type} 
+        <TaskForm
+          currentUserId={currentUserId}
+          boardId={boardId}
+          type={type}
           onCancel={toggle}
         />
       </div>

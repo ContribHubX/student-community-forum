@@ -12,7 +12,7 @@ import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { TbSend2 } from "react-icons/tb";
 
-// import { chats } from "../data/chats";
+import { chats } from "../data/chats";
 import { User } from "@/types";
 import { useGetChats } from "../api/get-chats";
 import { useCreateChat } from "../api/create-chat";
@@ -79,7 +79,7 @@ export const Chats = ({ userId, roomId }: ChatsProp) => {
         // }}
       >
         <div className="flex flex-col gap-2">
-          {chatsData?.map((chat) => (
+          {[...chats, ...chatsData || []]?.map((chat) => (
             <div key={chat.id}>
               {chat.type === "indicator" ? (
                 <Indicator user={chat.createdBy} />

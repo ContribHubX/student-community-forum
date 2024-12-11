@@ -28,15 +28,19 @@ export type UpdateTaskType = z.infer<typeof updateTaskSchema> & {
 };
 
 const updateTask = async (data: UpdateTaskType): Promise<Task> => {
-  let response; 
+  let response;
   if (data.isDragUpdate) {
-    response = await api.put(`/api/task/${data.taskId}`, data); 
+    response = await api.put(`/api/task/${data.taskId}`, data);
   } else {
-    response = await api.put(`/api/task/${data.taskId}`, objectToFormData(data), {
-      headers: {
-        "Content-Type": "multipart/form-data",
+    response = await api.put(
+      `/api/task/${data.taskId}`,
+      objectToFormData(data),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
-    }); 
+    );
   }
 
   return response.data;

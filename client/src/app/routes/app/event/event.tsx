@@ -8,9 +8,7 @@ export const EventRoute = () => {
     <div className="bg-background h-screen w-screen flex flex-col pt-[5rem] text-primary-foreground">
       <Navbar></Navbar>
       <div className="flex-1 w-[90%] mx-auto pt-5 gap-2">
-        <EventCalendar
-          events={events}
-        />
+        <EventCalendar events={events} />
       </div>
     </div>
   );

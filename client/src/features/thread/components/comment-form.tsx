@@ -1,18 +1,22 @@
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { TextEditor } from "@/components/shared/text-editor"
-import { Button } from "@/components/ui/button"
-import { toast } from "react-toastify"
-import { AxiosError } from "axios"
-import { CreateThreadType, useCreateComment } from "@/features/thread/api/create-comment"
-import { useAuth } from "@/hooks/use-auth"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { TextEditor } from "@/components/shared/text-editor";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import {
+  CreateThreadType,
+  useCreateComment,
+} from "@/features/thread/api/create-comment";
+import { useAuth } from "@/hooks/use-auth";
 
 interface CommentFormProps {
-  threadId: string | undefined
-  parentId?: string | undefined
-  placeholder: string
-  isComment?: boolean
-  onSubmitCallback?: () => void
+  threadId: string | undefined;
+  parentId?: string | undefined;
+  placeholder: string;
+  isComment?: boolean;
+  isReply?: boolean;
+  onSubmitCallback?: () => void;
 }
 
 export const CommentForm = ({
@@ -20,69 +24,69 @@ export const CommentForm = ({
   parentId,
   placeholder,
   isComment = false,
+  isReply,
   onSubmitCallback,
 }: CommentFormProps) => {
-  const [showEditor, setShowEditor] = useState(false)
-  const { authState } = useAuth()
+  const [showEditor, setShowEditor] = useState(false);
+  
+  const { authState } = useAuth();
 
   const [commentData, setCommentData] = useState<CreateThreadType>({
     content: "",
     createdBy: "",
-  })
+  });
 
   const { mutate: createComment } = useCreateComment({
     mutationConfig: {
       onSuccess: (response) => {
-        toast.success(response.message)
+        toast.success(response.message);
         setCommentData({
           content: "",
           createdBy: "",
-        })
-        setShowEditor(false)
+        });
+        setShowEditor(false);
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
-          toast.error(error.response?.data.message)
+          toast.error(error.response?.data.message);
         }
       },
     },
-  })
+  });
 
   const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
       content: commentData.content,
       createdBy: authState.user?.id.toString(),
       threadId: threadId,
       parentId: parentId ? parentId : null,
-    }
-    createComment(data)
+    };
+    createComment(data);
 
-    if (onSubmitCallback) onSubmitCallback()
-  }
+    if (onSubmitCallback) onSubmitCallback();
+  };
 
   const handleCancel = () => {
     if (commentData.content !== "" && commentData.content !== "<p><br></p>") {
       const isDiscard = confirm(
-        "Are you sure you want to discard your unsaved changes?"
-      )
+        "Are you sure you want to discard your unsaved changes?",
+      );
 
       if (isDiscard) {
-        setShowEditor(false)
-        setCommentData({ content: "", createdBy: "" })
-        return
+        setCommentData({ content: "", createdBy: "" });
+        return;
       }
     }
-
-    setShowEditor(false)
-  }
+    setShowEditor(false);
+  };
 
   const handleContentChange = (data: Partial<CreateThreadType>) => {
     setCommentData((prevData) => ({
       ...prevData,
       ...data,
-    }))
-  }
+    }));
+  };
 
   return (
     <form
@@ -90,7 +94,7 @@ export const CommentForm = ({
       onSubmit={onSubmit}
     >
       <AnimatePresence>
-        {isComment || showEditor ? (
+        {isComment || isReply || showEditor ? (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -137,6 +141,5 @@ export const CommentForm = ({
         )}
       </AnimatePresence>
     </form>
-  )
-}
-
+  );
+};

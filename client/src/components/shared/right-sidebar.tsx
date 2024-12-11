@@ -14,9 +14,10 @@ export const RightSidebar = () => {
 
   return (
     <SidebarLayout
-      className="hidden flex-col gap-6 lg:flex
+      className="flex-col gap-6 lg:flex hidden
                  lg:w-[270px]
-                 xl:w-[300px]
+                 xl:w-[300px] 
+                 
       "
       height={"full"}
       position="right-6"
@@ -35,10 +36,7 @@ export const RightSidebar = () => {
         </Link>
 
         {shuffledThreads?.map((thread) => {
-          return <RecentThread 
-                    key={thread.id}
-                    thread={thread}
-                 />;
+          return <RecentThread key={thread.id} thread={thread} />;
         })}
       </div>
     </SidebarLayout>
@@ -46,26 +44,26 @@ export const RightSidebar = () => {
 };
 
 interface RecentThreadProps {
- thread: Thread
+  thread: Thread;
 }
 
 const RecentThread = ({ thread }: RecentThreadProps) => {
   const attachment =
-  thread.attachment !== null && thread.attachment !== "null"
-    ? thread.attachment
-    : "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3bb5f691632079.5e372adaa9f70.png";
+    thread.attachment !== null && thread.attachment !== "null"
+      ? thread.attachment
+      : "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3bb5f691632079.5e372adaa9f70.png";
 
-  if (!thread) return <p>Loading...</p>
+  if (!thread) return <p>Loading...</p>;
 
   return (
     <div className="flex gap-4">
       <div
         className={`rounded-lg flex w-[80px] h-[60px] items-center justify-center bg-container`}
       >
-        <img 
-          src={attachment} 
-          alt="attachment" 
-          className="h-full w-full rounded-lg" 
+        <img
+          src={attachment}
+          alt="attachment"
+          className="h-full w-full rounded-lg"
         />
       </div>
 
@@ -82,7 +80,6 @@ const RecentThread = ({ thread }: RecentThreadProps) => {
     </div>
   );
 };
-
 
 // ===BACKUP===
 // ============

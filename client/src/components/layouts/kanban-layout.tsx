@@ -8,7 +8,7 @@ interface LayoutProps {
 
 export const KanbanLayout = ({ children, hideNavbar }: LayoutProps) => {
   return (
-    <div className={`pt-${hideNavbar ? "[0]" : "[5rem]"}`}>
+    <div className={`pt-${hideNavbar ? "[0]" : "[5rem]"} `}>
       {!hideNavbar && <Navbar />}
       <main
         className="z-10 bg-background flex-1 flex flex-col p-6 gap-6"

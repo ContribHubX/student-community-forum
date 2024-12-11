@@ -8,10 +8,7 @@ export type JoinCommunitySchema = {
 };
 
 const joinCommunity = async (data: JoinCommunitySchema) => {
-  const response = await api.post(
-    "/api/community/join",
-    data,
-  );
+  const response = await api.post("/api/community/join", data);
 
   return response.data;
 };

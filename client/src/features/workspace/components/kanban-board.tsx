@@ -90,14 +90,14 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <div className="canvas" />
-        <div className="w-fit mx-auto bg-primary p-2 text-xs rounded-xl flex items-center gap-1">
+        <div className="mt-0 w-fit mx-auto bg-primary p-2 text-xs rounded-xl flex items-center gap-1">
           <div className="w-[6px] h-[6px] bg-[#00FF00] rounded-lg" />
           <LiaUserSolid className="text-xl text-muted-foreground" />
           <p className="text-muted-foreground">
             {socketState.boards[boardId]?.length || 0}
           </p>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-4">
           <div className="flex items-center gap-3">
             {users.slice(0, 4).map((user, index) => (
               <Avatar
@@ -194,7 +194,7 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-3 max-w-[1000px] gap-4 mx-auto">
+      <div className="mt-6 grid grid-cols-3 max-w-[1000px] gap-4 mx-auto min-w-[800px] overflow-x-scroll">
         {["todo", "doing", "finished"].map((type) => (
           <Droppable key={type} droppableId={type}>
             {(provided) => (

@@ -59,7 +59,7 @@ export const useKanbanDrag = (
       createdBy: movedTask.createdBy.id,
     };
     delete taskToBeUpdate.id;
-    updateTask({...taskToBeUpdate, isDragUpdate: true} as UpdateTaskType);
+    updateTask({ ...taskToBeUpdate, isDragUpdate: true } as UpdateTaskType);
 
     // Insert the task into its new position
     destinationTasks.splice(destination.index, 0, movedTask);

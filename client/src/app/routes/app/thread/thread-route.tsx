@@ -22,10 +22,9 @@ export const ThreadRoute = () => {
 
   return (
     <CommentContextProvider>
-      <MainLayout LeftSidebar={LeftSidebar} >
+      <MainLayout LeftSidebar={LeftSidebar}>
         <section
-          className="
-                    md:ml-[16rem] lg:mr-[22rem]"
+          className=""
         >
           <div className="space-y-4 text-primary-foreground">
             <ThreadView thread={thread} />
@@ -34,7 +33,7 @@ export const ThreadRoute = () => {
                 <MessageCircle className="w-5 h-5" />
                 {5} Comments
               </h2>
-              <div className="flex gap-2">
+              <div className="gap-2 hidden md:flex ">
                 <Button variant="outline" size="sm" className="text-xs">
                   Popular
                 </Button>
@@ -46,10 +45,9 @@ export const ThreadRoute = () => {
                 </Button>
               </div>
             </div>
-            <CommentForm
-              threadId={id}
-              placeholder="Share your thoughts..."
-              
+            <CommentForm 
+              threadId={id} 
+              placeholder="Share your thoughts..." 
             />
             <Comments />
           </div>

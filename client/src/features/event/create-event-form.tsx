@@ -1,9 +1,9 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -12,37 +12,48 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { CreateEventType, FormSchema, createEventSchema, useCreateEvent} from './api/create-event'
-
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  CreateEventType,
+  FormSchema,
+  createEventSchema,
+  useCreateEvent,
+} from "./api/create-event";
 
 interface CreateEventFormProp {
   communityId: string;
   userId: string;
 }
 
-export const CreateEventForm = ({ communityId, userId }: CreateEventFormProp) => {
+export const CreateEventForm = ({
+  communityId,
+  userId,
+}: CreateEventFormProp) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(createEventSchema),
     defaultValues: {
-      name: '',
-      tags: '',
+      name: "",
+      tags: "",
     },
-  })
+  });
   const { mutate: createEvent } = useCreateEvent({});
 
   function onSubmit(values: FormSchema) {
-    console.log(values)
+    console.log(values);
 
     const formattedValues = {
       ...values,
       tags: values?.tags?.replace(" ", "").split(","),
       communityId,
-      createdBy: userId
-    }
-    
+      createdBy: userId,
+    };
+
     createEvent(formattedValues as CreateEventType);
     // toast({
     //   title: 'Event created',
@@ -52,7 +63,10 @@ export const CreateEventForm = ({ communityId, userId }: CreateEventFormProp) =>
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 text-primary-foreground">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 text-primary-foreground"
+      >
         <FormField
           control={form.control}
           name="name"
@@ -79,13 +93,13 @@ export const CreateEventForm = ({ communityId, userId }: CreateEventFormProp) =>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      variant={'outline'}
+                      variant={"outline"}
                       className={`w-[240px] pl-3 text-left font-normal ${
-                        !field.value && 'text-muted-foreground'
+                        !field.value && "text-muted-foreground"
                       }`}
                     >
                       {field.value ? (
-                        format(field.value, 'PPP')
+                        format(field.value, "PPP")
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -93,14 +107,17 @@ export const CreateEventForm = ({ communityId, userId }: CreateEventFormProp) =>
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 dark:border-none" align="start">
+                <PopoverContent
+                  className="w-auto p-0 dark:border-none"
+                  align="start"
+                >
                   <Calendar
-                    className='bg-primary rounded-md'
+                    className="bg-primary rounded-md"
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) =>
-                      date < new Date() || date < new Date('1900-01-01')
+                      date < new Date() || date < new Date("1900-01-01")
                     }
                     initialFocus
                   />
@@ -129,9 +146,10 @@ export const CreateEventForm = ({ communityId, userId }: CreateEventFormProp) =>
             </FormItem>
           )}
         />
-        <Button className='text-sm text-accent-foreground' type="submit">Create Event</Button>
+        <Button className="text-sm text-accent-foreground" type="submit">
+          Create Event
+        </Button>
       </form>
     </Form>
-  )
-}
-
+  );
+};

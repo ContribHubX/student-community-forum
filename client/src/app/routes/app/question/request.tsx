@@ -9,7 +9,7 @@ export const RequestRoute = () => {
 
   return (
     <MainLayout LeftSidebar={Aside} RightSidebar={RelatedTopics}>
-      <section className="md:ml-[16rem] lg:mr-[22rem]">
+      <section className="">
         <QuestionRequestCardList user={authState.user} />
       </section>
     </MainLayout>

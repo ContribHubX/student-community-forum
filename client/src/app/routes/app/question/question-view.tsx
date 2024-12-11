@@ -10,7 +10,8 @@ export const QuestionViewRoute = () => {
 
   return (
     <MainLayout LeftSidebar={Aside}>
-      <section className="md:ml-[16rem] lg:mr-[22rem]">
+      <section className="
+        ">
         <div>
           <QuestionView user={authState.user} />
         </div>
