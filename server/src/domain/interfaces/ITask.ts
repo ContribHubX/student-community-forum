@@ -12,7 +12,7 @@ export interface ITask {
     createdAt: Date;
     createdBy: IUser;
     assignees: IUser[]; 
-    boardId: IBoard;
+    boardId: string;
 }
 
 export interface ITaskDto {

@@ -24,7 +24,7 @@ async function startServer() {
   (await import("./loaders/express")).default({ app });
 
   serverListener = app
-    .listen(port, () => {
+    .listen(port as number, "0.0.0.0", () => {
       Logger.info(`
             ################################################
                 🛡️  Server listening on port: ${port} 🛡️

@@ -262,6 +262,16 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         );
       }
 
+
+      if (thread.topicId) {
+        queryClient.setQueryData(
+          getThreadsByTopicQueryOptions(thread.topicId).queryKey,
+          (oldThreads: Thread[] | undefined) => {
+            return oldThreads ? [thread, ...oldThreads] : undefined;
+          }
+        );
+      }
+
       
       return { ...state, globalEvent: { emittedBy: thread.createdBy?.id, type: "thread" } };
     }
@@ -533,13 +543,15 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
      */
     case OPERATION.UPDATE_TASK: { 
       const { data, queryClient } = action.payload;
-      queryClient.setQueryData(
-        getTasksQueryOptions(data.boardId.toString()).queryKey,
-        (oldTask: Task[] | undefined) => {
-          const updatedTask = oldTask?.map(task => task.id === data.id ? data : task);   
-          return updatedTask;
-        }
-      );
+      // queryClient.setQueryData(
+      //   getTasksQueryOptions(data.boardId.toString()).queryKey,
+      //   (oldTask: Task[] | undefined) => {
+      //     const updatedTask = oldTask?.map(task => task.id === data.id ? data : task);   
+      //     return updatedTask;
+      //   }
+      // );
+
+      queryClient.invalidateQueries({ queryKey: getTasksQueryOptions(data.boardId.toString()).queryKey });
 
       return { ...state };      
     }

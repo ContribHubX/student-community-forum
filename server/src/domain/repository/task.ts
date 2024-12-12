@@ -2,7 +2,7 @@ import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
 import { TaskTable, TaskAssigneeTable } from "@/database/schema";
-import { and, eq, gte, ne, sql } from "drizzle-orm";
+import { and, eq, gt, gte, lt, lte, ne, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
 import { ITask, ITaskDto, ITaskUpdateDto } from "../interfaces/ITask";
 
@@ -33,10 +33,13 @@ class TaskRepository {
                             lastSeq: sql<number>`MAX(${TaskTable.sequence})`.as("last_seq"),
                         })
                         .from(TaskTable)
-                        .where(eq(TaskTable.status, status));
+                        .where(and(
+                            eq(TaskTable.status, status),
+                            eq(TaskTable.boardId, boardId)
+                        ));
     
                     const lastSeq = sequenceResult[0]?.lastSeq || 0;
-    
+
                     // Insert the task
                     const [insertedTask] = await trx
                         .insert(TaskTable)
@@ -165,11 +168,18 @@ class TaskRepository {
      */
     public update(dto: ITaskUpdateDto): Promise<ITask> {
         const { taskId, name, description, attachment, status, sequence, assignees, isDragUpdate = false } = dto;
-        
+
+        console.log(sequence);
+
         // kayasa nigana ang giatay
         return new Promise(async (resolve, reject) => {
             try {
+                // Get the current task
+                const currentTask = await this.getById(taskId);
+                if (!currentTask) return reject(new AppError("Task not found", 404));
+        
                 await this.db.transaction(async (tx) => {
+                    // Update the task's details
                     const result = await tx
                         .update(TaskTable)
                         .set({
@@ -180,32 +190,81 @@ class TaskRepository {
                             sequence,
                         })
                         .where(eq(TaskTable.id, taskId));
-    
-                    if (!result) {
-                        return reject(new AppError("Task update failed", 400));
-                    }
-    
-                    // Update the sequence of tasks that have a greater sequence than the updated task
+        
+                    if (!result) throw new AppError("Task update failed", 400);
+        
+                    // Handle sequence adjustments only if this is a drag update
                     if (isDragUpdate) {
-                        await tx
-                            .update(TaskTable)
-                            .set({
-                                sequence: sql`${TaskTable.sequence} + 1` ,
-                            })
-                            .where(
-                                and(
-                                    gte(TaskTable.sequence, sequence),
-                                    eq(TaskTable.status, status),     
-                                    ne(TaskTable.id, taskId)         
-                                )
-                            );
+                        if (currentTask.status !== status) {
+                            // Task moved to a new column
+                            // Decrement sequence in the old column
+                            await tx
+                                .update(TaskTable)
+                                .set({
+                                    sequence: sql`${TaskTable.sequence} - 1`,
+                                })
+                                .where(
+                                    and(
+                                        gte(TaskTable.sequence, currentTask.sequence),
+                                        eq(TaskTable.status, currentTask.status),
+                                        ne(TaskTable.id, taskId)
+                                    )
+                                );
+        
+                            // Increment sequence in the new column
+                            await tx
+                                .update(TaskTable)
+                                .set({
+                                    sequence: sql`${TaskTable.sequence} + 1`,
+                                })
+                                .where(
+                                    and(
+                                        gte(TaskTable.sequence, sequence),
+                                        eq(TaskTable.status, status),
+                                        ne(TaskTable.id, taskId)
+                                    )
+                                );
+                        } else {
+                            // Task moved within the same column
+                            if (sequence > currentTask.sequence) {
+                                // Task moved downwards
+                                await tx
+                                    .update(TaskTable)
+                                    .set({
+                                        sequence: sql`${TaskTable.sequence} - 1`,
+                                    })
+                                    .where(
+                                        and(
+                                            gt(TaskTable.sequence, currentTask.sequence),
+                                            lte(TaskTable.sequence, sequence),
+                                            eq(TaskTable.status, status),
+                                            ne(TaskTable.id, taskId)
+                                        )
+                                    );
+                            } else if (sequence < currentTask.sequence) {
+                                // Task moved upwards
+                                await tx
+                                    .update(TaskTable)
+                                    .set({
+                                        sequence: sql`${TaskTable.sequence} + 1`,
+                                    })
+                                    .where(
+                                        and(
+                                            lt(TaskTable.sequence, currentTask.sequence),
+                                            gte(TaskTable.sequence, sequence),
+                                            eq(TaskTable.status, status),
+                                            ne(TaskTable.id, taskId)
+                                        )
+                                    );
+                            }
+                        }
                     }
-    
-                    // Update assignees kung naa
+        
+                    // Update assignees if provided
                     if (assignees?.length) {
-                        // Clear existing assignees for the task
+                        // Clear existing assignees
                         await tx.delete(TaskAssigneeTable).where(eq(TaskAssigneeTable.taskId, taskId));
-    
+        
                         // Insert new assignees
                         await Promise.all(
                             assignees.map((user) =>
@@ -217,13 +276,14 @@ class TaskRepository {
                         );
                     }
                 });
-
+        
                 const updatedTask = await this.getById(taskId);
                 resolve(updatedTask);
             } catch (error: any) {
-                reject(new AppError(error));
+                reject(new AppError(error.message || "Unknown error occurred"));
             }
         });
+        
     }
 
     /**

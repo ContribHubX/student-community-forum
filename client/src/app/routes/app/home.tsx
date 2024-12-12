@@ -81,9 +81,7 @@ export const HomeRoute = () => {
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
       <section
-        className="bg-background border-3 border-black
-      
-        "
+        className="bg-background border-3 border-black"
         ref={threadsRef}
       >
         <Threads />

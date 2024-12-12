@@ -75,6 +75,8 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
     };
   }, [boardId, currentUser, socketState.socket]);
 
+  console.log(boardId)
+
   useEffect(() => {
     if (!state || !boardId) return;
 
@@ -85,6 +87,8 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
   }, [state, boardId, currentUser.id]);
 
   if (!taskData || !boardId) return <p>Loading...</p>;
+
+  console.log(taskData)
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -121,7 +125,7 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
                   <FaPlus className="text-xl font-thin " />
                 </div>
               </PopoverTrigger>
-              <PopoverContent className="bg-primary dark:border-muted-foreground border-[1px]">
+              <PopoverContent className="bg-primary dark:border-gray-600 border-[1px]">
                 <div className="flex flex-col gap-3">
                   {allUsers?.map((user) => {
                     return (

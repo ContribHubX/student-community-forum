@@ -43,8 +43,6 @@ export const TaskForm = ({
   const { mutate: updateTask } = useUpdateTask({});
   const [fileName, setFileName] = useState("");
 
-  console.log(members);
-
   const [formState, setFormState] = useState<CreateTaskSchema>({
     name: "",
     description: "",
@@ -209,7 +207,7 @@ export const TaskForm = ({
                 <FiPlus className="text-lg hover:text-accent" />
               </div>
             </PopoverTrigger>
-            <PopoverContent className="bg-primary dark:border-muted-foreground border-[1px]">
+            <PopoverContent className="bg-primary dark:border-gray-600 border-[1px]">
               <div className="flex flex-col gap-3">
                 {members?.map((user) => (
                   <div
