@@ -13,6 +13,8 @@ import { useLogin, loginSchema, FormSchema } from "../api/login";
 import { useAuth } from "@/hooks/use-auth";
 import { OPERATION } from "@/providers/auth/context";
 import { loginSocialProvider } from "../api/use-social-login";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +29,7 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutate: loginUser } = useLogin({
+  const { mutate: loginUser, isPending } = useLogin({
     mutationConfig: {
       onSuccess: (data) => {
         authDispatch({
@@ -35,9 +37,13 @@ export const LoginForm = () => {
           payload: { user: data.user, accessToken: data.token },
         });
         navigate("/");
+        toast.success("Login successfully!");
       },
       onError: (error) => {
         console.error("Login failed:", error);
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+        }
       },
     },
   });
@@ -56,14 +62,22 @@ export const LoginForm = () => {
 
   return (
     <Tabs defaultValue="email" className="w-full max-w-sm">
-      <TabsList className="grid w-full grid-cols-2 bg-[#eff5f8]">
-        <TabsTrigger className="text-[#858ead]" value="email">
+      <TabsList className="grid w-full grid-cols-2 bg-[#eff5f8] ">
+        <TabsTrigger
+          className="text-[#858ead] aria-selected:bg-blue-300"
+          value="email"
+        >
           Email
         </TabsTrigger>
-        <TabsTrigger className="text-[#858ead]" value="social">
+
+        <TabsTrigger
+          className="text-[#858ead] aria-selected:text-[#533de0] aria-selected:font-bold aria-selected:bg-red-900"
+          value="social"
+        >
           Social
         </TabsTrigger>
       </TabsList>
+
       <TabsContent value="email" className="">
         <motion.form
           initial={{ opacity: 0 }}
@@ -78,6 +92,7 @@ export const LoginForm = () => {
               id="email"
               type="email"
               placeholder="john@example.com"
+              className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
               {...register("email")}
             />
             {errors.email && (
@@ -90,6 +105,7 @@ export const LoginForm = () => {
             <Input
               id="password"
               type="password"
+              className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
               placeholder="Enter your password"
               {...register("password")}
             />
@@ -98,16 +114,20 @@ export const LoginForm = () => {
             )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Log in"}
+          <Button
+            type="submit"
+            className="w-full text-white"
+            disabled={isPending}
+          >
+            {isPending ? "Logging in..." : "Log in"}
           </Button>
         </motion.form>
       </TabsContent>
       <TabsContent value="social">
-        <div className="space-y-4">
+        <div className="space-y-4 ">
           <Button
             variant="outline"
-            className="w-full"
+            className="w-full bg-[#eff5f8] border-slate-500"
             onClick={() => loginSocialProvider("google")}
           >
             <svg viewBox="0 0 24 24" className="mr-2 h-6 w-6">
@@ -131,9 +151,10 @@ export const LoginForm = () => {
             </svg>
             Continue with Google
           </Button>
+
           <Button
             variant="outline"
-            className="w-full"
+            className="w-full text-white"
             onClick={() => loginSocialProvider("github")}
           >
             <Github className="mr-2 h-5 w-5" />

@@ -4,9 +4,10 @@ import { NewPostIndicator } from "@/components/ui/new-post-indicator";
 import { useNewPostIndicator } from "@/hooks/use-post-indicator";
 import { useSocketProvider } from "@/hooks/use-socket-provider";
 import { useEffect, useRef } from "react";
+import { MyLoader } from "@/components/shared/loader";
 
 export const Questions = () => {
-  const { data: questions } = useGetQuestions({});
+  const { data: questions, isFetching } = useGetQuestions({});
 
   const questionsRef = useRef<HTMLDivElement>(null);
   const { isVisible, showIndicator, handleIndicatorClick } =
@@ -23,8 +24,9 @@ export const Questions = () => {
     showIndicator();
   }, [socketState.globalEvent]);
 
-  // temp
-  if (!questions) return <p>Loading...</p>;
+  if (!questions || isFetching) {
+    return <MyLoader />;
+  }
 
   return (
     <div className="-mt-4">

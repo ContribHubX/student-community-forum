@@ -4,7 +4,7 @@ import { HomeLayout } from "@/components/layouts/home-layout";
 
 export const WorkspaceRoute = () => {
   const { authState } = useAuth();
-
+  
   return (
     <HomeLayout>
       <section className="bg-background border-3 border-black px-4">

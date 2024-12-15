@@ -97,9 +97,15 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
           break;
 
         case "thread--delete":
-          console.log(data);
           socketDispatch({
             type: OPERATION.DELETE_THREAD,
+            payload: { thread: data, queryClient },
+          });
+          break;
+
+        case "thread--update":
+          socketDispatch({
+            type: OPERATION.UPDATE_THREAD,
             payload: { thread: data, queryClient },
           });
           break;
@@ -171,7 +177,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             },
           });
           break;
-          
+
         case "question--deleted":
           console.log(data);
           socketDispatch({
@@ -418,38 +424,38 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             type: OPERATION.ADD_DISCUSSION_USER,
             payload: {
               user: data.user,
-              discussionId: data.discussionId
+              discussionId: data.discussionId,
             },
           });
           break;
-        
+
         case "user-discussion--left":
-          console.log(data); 
+          console.log(data);
           socketDispatch({
             type: OPERATION.REMOVE_DISCUSSION_USER,
             payload: {
               user: data.user,
-              discussionId: data.discussionId
+              discussionId: data.discussionId,
             },
           });
           break;
 
         case "discussion-argument--new":
-          socketDispatch({  
+          socketDispatch({
             type: OPERATION.ADD_DISCUSSION_ARGUMENT,
             payload: {
-              argument : data.argument,
-              discussionId: data.discussionId
+              argument: data.argument,
+              discussionId: data.discussionId,
             },
           });
           break;
 
         case "discussion-argument--react":
-          socketDispatch({  
+          socketDispatch({
             type: OPERATION.ADD_ARGUMENT_REACTION,
             payload: {
-              argument : data.argument,
-              discussionId: data.discussionId
+              argument: data.argument,
+              discussionId: data.discussionId,
             },
           });
           break;

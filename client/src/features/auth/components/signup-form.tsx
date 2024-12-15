@@ -6,12 +6,33 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegister, FormSchema, registerSchema } from "../api/register";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { mutate: registerUser } = useRegister({});
-  const { handleSubmit, register, reset, setValue } = useForm<FormSchema>({
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<FormSchema>({
     resolver: zodResolver(registerSchema),
+  });
+  const { mutate: registerUser } = useRegister({
+    mutationConfig: {
+      onSuccess: (data) => {
+        toast.success(data.message);
+        reset();
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+        }
+      },
+    },
   });
 
   const [file, setFile] = useState<File | null>(null);
@@ -29,7 +50,6 @@ export const SignUpForm = () => {
 
     try {
       registerUser(formData);
-      reset();
     } catch (error) {
       console.error("Registration failed:", error);
     } finally {
@@ -47,24 +67,49 @@ export const SignUpForm = () => {
     >
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
-        <Input {...register("name")} id="name" placeholder="John Doe" />
+        {errors.name && (
+          <p className="text-red-500 text-sm">{errors.name.message}</p>
+        )}
+        <Input
+          {...register("name")}
+          id="name"
+          placeholder="John Doe"
+          className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
+        />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 ">
         <Label htmlFor="email">Email</Label>
+        {errors.name && (
+          <p className="text-red-500 text-sm">{errors.name.message}</p>
+        )}
         <Input
           {...register("email")}
           id="email"
           type="email"
           placeholder="john@example.com"
+          className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
         />
       </div>
       <div className="space-y-2">
         <Label htmlFor="password">Password</Label>
-        <Input {...register("password")} id="password" type="password" />
+        {errors.password && (
+          <p className="text-red-500 text-sm">{errors.password.message}</p>
+        )}
+        <Input
+          {...register("password")}
+          id="password"
+          type="password"
+          className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
+        />
       </div>
+
       <div className="space-y-2">
         <Label htmlFor="attachment">Profile Picture</Label>
+        {errors.attachment && (
+          <p className="text-red-500 text-sm">{errors.attachment.message}</p>
+        )}
         <Input
+          className="bg-[#eff5f8] file:text-black"
           id="attachment"
           type="file"
           accept="image/*"

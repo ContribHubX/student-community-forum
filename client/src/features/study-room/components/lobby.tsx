@@ -45,12 +45,16 @@ export const Lobby = ({ user }: LobbyProp) => {
     };
   }, [room, socketState.socket, user]);
 
-
-  const handleShowPanel = useCallback((value: string) => setShowPanel(value === "true") , []);
+  const handleShowPanel = useCallback(
+    (value: string) => setShowPanel(value === "true"),
+    [],
+  );
 
   return (
     <div>
-      <div className={`z-[11] relative flex ${!showPanel ? "px-0" :"px-2"} flex-col md:flex-row justify-between gap-0 py-2 mt-12 md:mt-0 `}>
+      <div
+        className={`z-[11] relative flex ${!showPanel ? "px-0" : "px-2"} flex-col md:flex-row justify-between gap-0 py-2 mt-12 md:mt-0 `}
+      >
         <motion.div
           className=""
           initial={{ x: 0 }}
@@ -62,11 +66,11 @@ export const Lobby = ({ user }: LobbyProp) => {
             handleShowboard={() => setShowWhiteboard(true)}
           />
         </motion.div>
-          
+
         <motion.div
-            initial={{ x: 0 }}
-            animate={{ x: showPanel ? 0 : "100%" }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+          initial={{ x: 0 }}
+          animate={{ x: showPanel ? 0 : "100%" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
         >
           <Activities roomId={roomId || ""} />
         </motion.div>
@@ -88,9 +92,7 @@ export const Lobby = ({ user }: LobbyProp) => {
       )}
 
       <div className="absolute bg-transparent w-screen h-svh  top-0 ">
-        <LobbyOptions
-          handleShowPanel={handleShowPanel}
-        />
+        <LobbyOptions handleShowPanel={handleShowPanel} />
       </div>
     </div>
   );

@@ -3,26 +3,21 @@ import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { useGetThreads } from "@/features/thread/api/get-all-threads";
 import { Rooms } from "@/features/study-room/components/rooms";
 
-import { useAuth } from "@/hooks/use-auth";
 import { MainLayout } from "@/components/layouts/layout";
 import { Thread } from "@/types";
 
 export const PopularRoute = () => {
-  const { authState } = useAuth();
   const { data: threads } = useGetThreads({});
 
-  if (!authState?.user?.id) return <p>Loading...</p>;
-
   const sortedThreads = (threads || []).sort(
-    (a: Thread, b: Thread) => 
-      (b.likeCount + b.dislikeCount) - (a.likeCount + a.dislikeCount)
+    (a: Thread, b: Thread) =>
+      b.likeCount + b.dislikeCount - (a.likeCount + a.dislikeCount),
   );
 
-
   return (
-    <MainLayout 
+    <MainLayout
       LeftSidebar={LeftSidebar}
-      // RightSidebar={} 
+      // RightSidebar={}
       className="overflow-x-hidden"
     >
       <section

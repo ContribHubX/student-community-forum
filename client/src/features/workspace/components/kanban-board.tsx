@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 import { FaPlus } from "react-icons/fa6";
 import { TiEye, TiEyeOutline } from "react-icons/ti";
 import { FaExpandArrowsAlt } from "react-icons/fa";
 import { LiaUserSolid } from "react-icons/lia";
+
+import { MyLoader } from "@/components/shared/loader";
 
 import { TaskColumn } from "./task-column";
 import { TaskStatusType, User } from "@/types";
@@ -38,6 +39,7 @@ import { useAddBoardMember } from "../api/add-board-member";
 import { statusColors } from "../constant";
 import { useTheme } from "@/hooks/use-theme";
 import { useBoardContext } from "../hooks/use-board-context";
+import { IoMdArrowBack } from "react-icons/io";
 
 // TODO napay bug ang giatay kung mo drag sa same column mo duplicate
 
@@ -65,6 +67,8 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
 
   const [isRealTimeCursorVisible, setIsRealTimeCursorVisible] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!socketState.socket || !socketState.socket.connected) return;
 
@@ -84,8 +88,6 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
     };
   }, [boardId, currentUser, socketState.socket]);
 
-  console.log(boardId);
-
   useEffect(() => {
     if (!state || !boardId) return;
 
@@ -95,12 +97,14 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
     setBoardOwner(board?.createdBy);
   }, [state, boardId, currentUser.id]);
 
-  if (!taskData || !boardId) return <p>Loading...</p>;
-
-  console.log(taskData);
+  if (!taskData || !boardId) return <MyLoader />;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <IoMdArrowBack
+        className="text-primary-foreground cursor-pointer text-2xl"
+        onClick={() => navigate("/workspace")}
+      />
       <div>
         <div className="canvas" />
         <div className="mt-0 w-fit mx-auto bg-primary p-2 text-xs rounded-xl flex items-center gap-1">
@@ -196,24 +200,30 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
               }}
               value={isRealTimeCursorVisible.toString()}
             >
-            <SelectTrigger className="flex border-none text-2xl w-8 items-center p-0 gap-3 [&>svg]:hidden">
-              <div className="flex items-center gap-3">
-                {isRealTimeCursorVisible ? (
-                  <TiEye className="text-green-500 hover:text-accent" />
-                ) : (
-                  <TiEyeOutline className="text-red-500 hover:text-accent" />
-                )}
-                <div className="h-[20px] w-[1px] bg-muted-foreground" />
-              </div>
-            </SelectTrigger>
-            <SelectContent className="rounded-md shadow-md">
-              <SelectItem value="true" className="hover:bg-accent hover:text-white">
-                Cursor Visible
-              </SelectItem>
-              <SelectItem value="false" className="hover:bg-accent hover:text-white">
-                Cursor Hidden
-              </SelectItem>
-            </SelectContent>
+              <SelectTrigger className="flex border-none text-2xl w-8 items-center p-0 gap-3 [&>svg]:hidden">
+                <div className="flex items-center gap-3">
+                  {isRealTimeCursorVisible ? (
+                    <TiEye className="text-green-500 hover:text-accent" />
+                  ) : (
+                    <TiEyeOutline className="text-red-500 hover:text-accent" />
+                  )}
+                  <div className="h-[20px] w-[1px] bg-muted-foreground" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="rounded-md shadow-md">
+                <SelectItem
+                  value="true"
+                  className="hover:bg-accent hover:text-white"
+                >
+                  Cursor Visible
+                </SelectItem>
+                <SelectItem
+                  value="false"
+                  className="hover:bg-accent hover:text-white"
+                >
+                  Cursor Hidden
+                </SelectItem>
+              </SelectContent>
             </Select>
             <div className="hover:bg-accent w-[30px] text-primary-foreground hover:text-white rounded-md h-[30px] flex items-center justify-center">
               <FaExpandArrowsAlt

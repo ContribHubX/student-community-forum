@@ -19,7 +19,7 @@ import { getQuestionAnswersQueryOptions } from "@/features/question/api/get-ques
 import { getBoardMembersQueryOptions } from "@/features/workspace/api/get-board-members";
 import { getCommunityByIdQueryOptions } from "@/features/community/api/get-community";
 import { getEventsQueryOptions } from "@/features/event/api/get-events";
-import { getThreadsByCommunityQueryOptions } from "@/features/community/api/get-threads";
+import { getThreadsByCommunityQueryOptions, useGetThreadsByCommunity } from "@/features/community/api/get-threads";
 import { getThreadsByTopicQueryOptions } from "@/features/topic/api/get-threads-by-topic";
 
 export type SocketContextState = {
@@ -41,6 +41,7 @@ export const defaultSocketContextState: SocketContextState = {
 export enum OPERATION {
   UPDATE_SOCKET,
   ADD_NEW_THREAD,
+  UPDATE_THREAD,
   DELETE_THREAD,
   ADD_NEW_COMMENT,
   DELETE_COMMENT,
@@ -79,6 +80,7 @@ export enum OPERATION {
   ADD_DISCUSSION_ARGUMENT,
   ADD_ARGUMENT_REACTION,
   RESET_REACTED_ARGUMENT,
+
 }
 
 type Actions =
@@ -88,6 +90,11 @@ type Actions =
     }
   | {
       type: OPERATION.DELETE_THREAD;
+      payload: { thread: Thread; queryClient: QueryClient };
+    }
+
+  | {
+      type: OPERATION.UPDATE_THREAD;
       payload: { thread: Thread; queryClient: QueryClient };
     }
   | {
@@ -313,7 +320,15 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         );
       }
 
-      
+      if (thread.communityId) {
+        queryClient.setQueryData(
+          getThreadsByCommunityQueryOptions(thread.communityId).queryKey,
+          (oldThreads: Thread[] | undefined) => {
+            return oldThreads ? [thread, ...oldThreads] : undefined;
+          }
+        );
+      }
+  
       return { ...state, globalEvent: { emittedBy: thread.createdBy?.id, type: "thread" } };
     }
 
@@ -331,6 +346,30 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       if (thread.questionId) {
         queryClient.invalidateQueries({ queryKey: getQuestionAnswersQueryOptions(thread.questionId).queryKey })
       }
+      
+      if (thread.communityId) {
+        queryClient.invalidateQueries({ queryKey:  getThreadsByCommunityQueryOptions(thread.communityId).queryKey  })
+      }
+
+      return { ...state };
+    }
+
+    case OPERATION.UPDATE_THREAD: {
+      const { thread, queryClient } = action.payload;
+
+      if (thread?.communityId) {
+        queryClient.invalidateQueries({ queryKey: getThreadsByCommunityQueryOptions(thread.communityId).queryKey })
+      }
+
+      if (thread?.questionId) {
+        queryClient.invalidateQueries({ queryKey: getQuestionAnswersQueryOptions(thread.questionId).queryKey })
+      }
+
+      if (thread?.topicId) {
+        queryClient.invalidateQueries({ queryKey: getThreadsByTopicQueryOptions(thread.topicId).queryKey })
+      }
+      
+      queryClient.invalidateQueries({ queryKey: getThreadsQueryOptions().queryKey });
 
       return { ...state };
     }

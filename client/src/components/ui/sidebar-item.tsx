@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { IconType } from "react-icons/lib";
+import React from "react";
 
 interface SidebarItemProps {
   title: string;
-  icon: string;
+  icon: string | IconType;
   description: string;
   iconBgcolor: string;
   containerStyle?: string;
@@ -39,7 +41,11 @@ export const SideBarItem = ({
           className={`rounded-xl h-8 w-8 flex items-center justify-center`}
           style={{ backgroundColor: iconBgcolor }}
         >
-          <img src={icon} alt="" className={cn("h-5", imgStyle)} />
+          {typeof icon === "string" ? (
+            <img src={icon} alt="" className={cn("h-5", imgStyle)} />
+          ) : (
+            React.createElement(icon)
+          )}
         </div>
 
         <div className={cn("text-sm", descStyle)}>

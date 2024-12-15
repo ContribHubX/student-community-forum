@@ -4,6 +4,7 @@ import { KanbanLayout } from "@/components/layouts/kanban-layout";
 import { KanbanBoard } from "@/features/workspace/components/kanban-board";
 
 import { useAuth } from "@/hooks/use-auth";
+import { MyLoader } from "@/components/shared/loader";
 
 export const BoardViewRoute = () => {
   const { authState } = useAuth();
@@ -11,7 +12,7 @@ export const BoardViewRoute = () => {
 
   const toggleNavbar = () => setHideNavbar((prev) => !prev);
 
-  if (!authState.user) return <p>Loading...</p>;
+  if (!authState.user) return <MyLoader />;
 
   return (
     <KanbanLayout hideNavbar={hideNavbar}>

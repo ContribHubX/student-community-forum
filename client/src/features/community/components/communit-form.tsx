@@ -12,6 +12,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface CommunityFormProps {
   userId: string;
@@ -22,11 +23,14 @@ export const CommunityForm = ({
   userId,
   handleCommunityModal,
 }: CommunityFormProps) => {
+  const navigate = useNavigate();
+
   const { mutate: createCommunity, isPending } = useCreateCommunity({
     mutationConfig: {
       onSuccess: (data) => {
         toast.success(data.message);
         handleCommunityModal();
+        navigate(`/community/${data.community.id}`);
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
@@ -132,7 +136,11 @@ export const CommunityForm = ({
         </Button>
 
         {step === 2 ? (
-          <Button type="submit" disabled={isPending} className="px-5">
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="px-5 text-accent-foreground"
+          >
             Submit
           </Button>
         ) : (
@@ -142,7 +150,7 @@ export const CommunityForm = ({
               nextStep();
             }}
             type="button"
-            className="px-5"
+            className="px-5 text-accent-foreground"
           >
             Next
           </Button>

@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useNewPostIndicator } from "@/hooks/use-post-indicator";
 import { useSocketProvider } from "@/hooks/use-socket-provider";
 
+import { MyLoader } from "@/components/shared/loader";
 // DONE make task deletion realtime
 // DONE joing user community
 // DONE merge community by nnz (focus on community sa)
@@ -21,9 +22,8 @@ import { useSocketProvider } from "@/hooks/use-socket-provider";
 // DONE local register
 // DONE make profile page
 
-
 // TODO live discussion capability
-// TODO user's can share the live discussion, study room in a general thread 
+// TODO user's can share the live discussion, study room in a general thread
 
 // TODO add user saved
 // TODO add names in cursors in kanban, the picture is in my messenger
@@ -64,7 +64,9 @@ export const HomeRoute = () => {
     showIndicator();
   }, [socketState.globalEvent]);
 
-  if (!authState?.user?.id) return <p>Loading...</p>;
+  if (!authState?.user?.id) {
+    <MyLoader />;
+  }
 
   // return (
   //   <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>

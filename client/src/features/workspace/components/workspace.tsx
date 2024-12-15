@@ -20,7 +20,7 @@ interface WorkspaceProp {
 
 export const Workspace = ({ userId }: WorkspaceProp) => {
   const { state } = useBoardContext();
-
+  
   return (
     <div>
       <FlexContainer className="justify-between  text-sm text-primary-foreground">

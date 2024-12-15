@@ -27,7 +27,7 @@ export const Community = () => {
   const { data: threads } = useGetThreadsByCommunity({ communityId: id || "" });
   
   const { data: eventsData } = useGetEvents({ communityId: id || "" });
-  
+
   const { data: community } = useGetCommunityById({ id });
 
   const { data: members } = useGetMembers({ communityId: id || "" });
@@ -36,19 +36,18 @@ export const Community = () => {
 
   const { socketState } = useSocketProvider();
 
-
   //console.log(socketState?.discussions[id]?.users.length);
 
   useEffect(() => {
     if (!id || !socketState) return;
     setActiveUsers(socketState.discussions[id]?.users.length || 0);
     console.log(socketState.discussions[id]?.users);
-  }, [id, socketState])
-  
+  }, [id, socketState]);
+
   if (!community || !authState.user) {
     return <div>Loading..</div>;
   }
-  
+
   const isJoined = (): boolean => {
     if (!community || !authState.user) return false;
     return community.members.some(
@@ -67,12 +66,15 @@ export const Community = () => {
           tabOpen={tabOpen}
           isJoined={isJoined()}
         />
-         <div className="px-4 md:px-0 w-full md:w-[78%] flex flex-1 mx-auto mt-5 gap-5">
+        <div className="px-4 md:px-0 w-full md:w-[78%] flex flex-1 mx-auto mt-5 gap-5">
           {tabOpen === "Threads" && (
-            <div className="flex flex-col md:flex-row gap-8 mx-auto">
+            <div className="w-full flex flex-col md:flex-row gap-8">
               <div className="min-w-[70%]">
                 <div>
-                  <ThreadActionForm user={authState.user} />
+                  <ThreadActionForm
+                    user={authState.user}
+                    community={community}
+                  />
                 </div>
                 <div className="mt-4">
                   <ThreadCardList threads={threads || []} />
@@ -82,12 +84,12 @@ export const Community = () => {
                 className="sticky right-5 top-28 rounded-xl space-y-4"
                 style={{ height: "calc(100vh - 8rem)" }}
               >
-                <LiveDiscussionCard 
-                  communityId={community.id} 
-                  activeUsers={activeUsers} 
+                <LiveDiscussionCard
+                  communityId={community.id}
+                  activeUsers={activeUsers}
                   isJoined={isJoined()}
                 />
-                
+
                 <div className="bg-primary rounded-xl shadow-slate-400 shadow-md dark:shadow-gray-900 text-sm">
                   <p className="py-2 px-4 border-b-[0.5px] border-[#878484] border-opacity-50">
                     Details
@@ -151,4 +153,3 @@ export const Community = () => {
     </div>
   );
 };
-

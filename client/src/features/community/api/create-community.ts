@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
+import { Community } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -26,7 +27,9 @@ export const createCommunitySchema = z.object({
 
 export type CreateCommunityType = z.infer<typeof createCommunitySchema> & {};
 
-const createCommunity = async (data: FormData) => {
+const createCommunity = async (
+  data: FormData,
+): Promise<{ message: string; community: Community }> => {
   const response = await api.post("api/community", data, {
     headers: {
       "Content-Type": "multipart/form-data",

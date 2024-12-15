@@ -23,26 +23,33 @@ import { Thread, User } from "@/types";
 import { useNavigate } from "react-router-dom";
 import { handleFormErrors } from "@/utils";
 import { useGetTopics } from "@/features/topic/api";
+import { CreateThreadPreview } from "@/features/thread/components/create-thread-preview";
 
 interface ThreadFormProp {
   thread?: Thread;
   initialTitleVal?: string;
   user: User;
   handleFormSubmit: (data: FormData) => void;
+  initialCommunity?: string;
 }
 
 export const ThreadForm = ({
   thread,
   handleFormSubmit,
   initialTitleVal,
+  initialCommunity,
   user,
 }: ThreadFormProp) => {
   const [tags, setTags] = useState<string[]>([]);
-  const [selectedCommunity, setSelectedCommunity] = useState<string>("");
+  const [selectedCommunity, setSelectedCommunity] = useState<string>(
+    initialCommunity ? initialCommunity : "",
+  );
+
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
   const { data: communities } = useGetUserCommunities({ userId: user.id });
+
   const { data: topics } = useGetTopics({});
 
   const navigate = useNavigate();
@@ -52,8 +59,6 @@ export const ThreadForm = ({
       resolver: zodResolver(createThreadSchema),
     },
   );
-
-  console.log(communities);
 
   const title = watch("title", initialTitleVal || thread?.title || "");
   const content = watch("content", initialTitleVal || thread?.content || "");
@@ -135,13 +140,13 @@ export const ThreadForm = ({
         "Are you sure you want to discard your unsaved changes?",
       );
       if (isDiscard) {
-        navigate("/");
+        navigate(-1);
         return;
       }
     }
-
-    navigate("/");
   };
+
+  console.log("selected topic: ", selectedTopic);
   // md:grid-cols-[2.5fr_1fr]
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1fr]  gap-4 rounded-lg py-2">
@@ -175,17 +180,19 @@ export const ThreadForm = ({
 
           <div className="p-2 sm:p-3 md:p-6  rounded-lg border dark:border-gray-500 text-sm">
             {/* Community Selector */}
-            <div className="flex items-start sm:items-center gap-3 
+            <div
+              className="flex items-start sm:items-center gap-3 
               flex-col
               sm:flex-row
-            ">
+            "
+            >
               <div>
                 <h2 className="font-semibold mb-1">Community</h2>
                 <Select
                   onValueChange={(val: string) => setSelectedCommunity(val)}
                   value={selectedCommunity}
                 >
-                  <SelectTrigger className="w-[180px] focus:border-accent bg-primary dark:border-gray-500">
+                  <SelectTrigger className="w-auto focus:border-accent bg-primary dark:border-gray-500">
                     <SelectValue placeholder="None" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-none overflow-y-hidden">
@@ -216,10 +223,12 @@ export const ThreadForm = ({
               <div>
                 <h2 className="font-semibold mb-1">Topic</h2>
                 <Select
-                  onValueChange={(val: string) => setSelectedTopic(val)}
+                  onValueChange={(val: string) => {
+                    setSelectedTopic(val);
+                  }}
                   value={selectedTopic}
                 >
-                  <SelectTrigger className="w-[180px] focus:border-accent bg-primary dark:border-gray-500">
+                  <SelectTrigger className="focus:border-accent bg-primary dark:border-gray-500">
                     <SelectValue placeholder="None" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-none overflow-y-hidden">
@@ -326,36 +335,11 @@ export const ThreadForm = ({
         </div>
       </form>
 
-      {/* Preview Panel */}
-      <div className="p-6 text-primary-foreground bg-primary shadow-md rounded-lg h-fit">
-        <h2 className="text-lg font-semibold mb-4">Post Preview</h2>
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            <span className="font-semibold">Community:</span>{" "}
-            {selectedCommunity || "None selected"}
-          </p>
-
-          <h3 className="text-xl font-bold">{title || "No Title Yet"}</h3>
-
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-3 py-1 bg-accent text-white rounded-full text-sm"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div
-            className="mt-4 border rounded-md p-4 bg-primary  dark:border-muted-foreground"
-            dangerouslySetInnerHTML={{
-              __html: previewContent || "<p>No content added yet</p>",
-            }}
-          />
-        </div>
-      </div>
+      <CreateThreadPreview
+        communityId={selectedCommunity}
+        tags={tags}
+        previewContent={previewContent}
+      />
     </div>
   );
 };

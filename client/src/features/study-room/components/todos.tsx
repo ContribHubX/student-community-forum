@@ -74,19 +74,20 @@ export const Todos = ({ userId }: TodosProp) => {
           <SelectTrigger className="text-[.8rem] max-w-[80px] p-0 flex font-medium bg-transparent border-0 px-0 h-4">
             <SelectValue placeholder="My Task" />
           </SelectTrigger>
-          <SelectContent className="border-0 ">
+          <SelectContent className="border-0 bg-[#1e252b] text-accent-foreground">
             <SelectItem value="group">Group Task</SelectItem>
             <SelectItem value="personl">My Task</SelectItem>
           </SelectContent>
         </Select>
       </div>
-      <div className="p-4 pb-2">
-        <ScrollArea className="max-h-[150px]">
-          <div className="flex flex-col gap-3">
+
+      <div className="p-4">
+        <ScrollArea className="  ">
+          <div className="max-h-[170px] flex flex-col gap-3 ">
             {[...(todos || []), ...tasks].map((task) => (
               <div
                 key={task.id}
-                className="flex items-center  text-primary-foreground gap-3"
+                className="flex items-center text-accent-foreground gap-3"
               >
                 <Checkbox
                   id={task.id}

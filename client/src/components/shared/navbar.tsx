@@ -23,6 +23,7 @@ import { useGetThreads } from "@/features/thread/api/get-all-threads";
 import { ThreadSearchResults } from "../ui/search-result";
 import { useDebounce } from "@/hooks/use-debounce";
 import { Thread } from "@/types";
+import { MdWorkspaces } from "react-icons/md";
 
 import { Logo } from "../ui/logo";
 import { Menu } from "lucide-react";
@@ -87,11 +88,15 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
         >
           <Menu size={24} />
         </button>
-        <div className="flex items-center justify-center gap-3">
+        <div
+          className="flex items-center justify-center gap-3 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
           <Logo className="w-6 h-6 text-accent" />
           <h1 className="font-medium text-lg hidden sm:block">StudentHub</h1>
         </div>
       </div>
+
       <div className="flex items-center gap-6 ">
         <div
           className="bg-background rounded-xl py-2 pl-4 pr-1 relative items-center justify-between gap-2 hidden md:flex"
@@ -119,6 +124,15 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
           <div className="flex gap-2">
             <ThemeToggle />
           </div>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-2xl"
+            onClick={() => navigate("/workspace")}
+          >
+            <MdWorkspaces className="text-3xl" />
+          </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

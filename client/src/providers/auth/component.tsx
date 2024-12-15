@@ -6,6 +6,7 @@ import {
   OPERATION,
 } from "./context";
 import { api } from "@/lib/axios";
+import { MyLoader } from "@/components/shared/loader";
 
 const AuthContextComponent = ({ children }: PropsWithChildren) => {
   const [authState, authDispatch] = useReducer(
@@ -36,7 +37,7 @@ const AuthContextComponent = ({ children }: PropsWithChildren) => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <MyLoader />;
   }
 
   return (

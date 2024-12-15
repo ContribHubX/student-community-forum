@@ -11,13 +11,18 @@ import { Button } from "@/components/ui/button";
 import { CommentForm } from "@/features/thread/components/comment-form";
 import { MessageCircle } from "lucide-react";
 import { CommentContextProvider } from "@/features/thread/provider/comment";
+import SyncLoader from "react-spinners/SyncLoader";
 
 export const ThreadRoute = () => {
   const { id } = useParams();
   const { data: thread, isFetching } = useGetThreadByID({ threadId: id || "" });
 
   if (!thread || isFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <SyncLoader size={20} color="#533de0" />
+      </div>
+    );
   }
 
   return (

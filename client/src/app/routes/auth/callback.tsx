@@ -11,8 +11,6 @@ export const OAuthCallback = () => {
 
   const { provider } = useParams();
 
-  console.log("prov:" + provider);
-
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {

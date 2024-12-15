@@ -18,6 +18,7 @@ import { formDataToObject } from "@/utils";
 import { useGetThreadsByTopic } from "../api/get-threads-by-topic";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { MyLoader } from "@/components/shared/loader";
 
 interface TopicsProp {
   userId: string;
@@ -71,7 +72,7 @@ export const Topics = ({ userId }: TopicsProp) => {
   }, [refetch, topicId]);
 
   // temp
-  if (!topic || questionsLoading) return <p>Loading...</p>;
+  if (!topic || questionsLoading) return <MyLoader />;
 
   return (
     <div className="">

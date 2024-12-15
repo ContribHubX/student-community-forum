@@ -40,6 +40,7 @@ export const LoginRoute = () => {
             >
               Welcome to StudentHub
             </motion.h1>
+            
             <p className="text-gray-600">Please enter your details</p>
 
             {isLogin ? <LoginForm /> : <SignUpForm />}

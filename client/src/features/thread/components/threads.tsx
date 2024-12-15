@@ -7,15 +7,17 @@ import { SideBarItem } from "@/components/ui/sidebar-item";
 
 import newest from "@/assets/sidebar/newest.svg";
 import popular from "@/assets/sidebar/popular.svg";
+import { MyLoader } from "@/components/shared/loader";
 
 export const Threads = () => {
   const { authState } = useAuth();
-  const { data: threads } = useGetThreads({});
+  const { data: threads, isFetching } = useGetThreads({});
 
   if (!authState.user) return <p>Loading...</p>;
 
-  console.log(threads);
-
+  if (isFetching) {
+    return <MyLoader />;
+  }
   return (
     <div className="flex flex-col gap-4">
       <div className="md:hidden">

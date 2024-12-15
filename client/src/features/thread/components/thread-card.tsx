@@ -48,7 +48,11 @@ import { useDeleteThread } from "../api/delete-thread";
 import { useSavedThread } from "../api/save-thread";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { createReactionMutationConfig, saveThreadMutationConfig } from "../optimistic-mutations";
+import {
+  createReactionMutationConfig,
+  saveThreadMutationConfig,
+} from "../optimistic-mutations";
+import { toast } from "react-toastify";
 
 interface ThreadCardProp {
   thread: Thread;
@@ -60,14 +64,20 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   const [isImageExpanded, setIsImageExpanded] = useState(false);
 
   const { mutate: addReaction } = useCreateReaction({
-      mutationConfig: createReactionMutationConfig(queryClient, userId, thread)
+    mutationConfig: createReactionMutationConfig(queryClient, userId, thread),
   });
 
-  const { mutate: saveThread  } = useSavedThread({
-    mutationConfig: saveThreadMutationConfig(queryClient, thread)
+  const { mutate: saveThread } = useSavedThread({
+    mutationConfig: saveThreadMutationConfig(queryClient, thread),
   });
 
-  const { mutate: deleteThread } = useDeleteThread({});
+  const { mutate: deleteThread } = useDeleteThread({
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success("Post deleted successfully");
+      },
+    },
+  });
 
   const { data: reaction } = useGetUserReaction({
     data: { threadId: thread.id, userId: userId.toString() || "" },
@@ -116,7 +126,9 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
           <div className="flex flex-col gap-0 w-full ">
             <div className="flex items-start justify-between">
               <div className="flex items-start xs:items-center gap-2  w-full flex-col xs:flex-row">
-                <span className="text-sm font-medium">{thread.createdBy.name}</span>
+                <span className="text-sm font-medium">
+                  {thread.createdBy.name}
+                </span>
                 <Badge
                   variant="secondary"
                   className="text-xs  font-normal"
@@ -127,9 +139,12 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                       : "#1e252b",
                   }}
                 >
-                  {formatDistanceToNow(new Date(thread.createdAt || new Date()), {
-                    addSuffix: true,
-                  })}
+                  {formatDistanceToNow(
+                    new Date(thread.createdAt || new Date()),
+                    {
+                      addSuffix: true,
+                    },
+                  )}
                 </Badge>
               </div>
               {community && (
@@ -145,7 +160,9 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                       className="w-4 h-4 rounded-full"
                     />
                   )}
-                  <span className="hidden sm:block whitespace-nowrap">{community.name}</span>
+                  <span className="hidden sm:block whitespace-nowrap">
+                    {community.name}
+                  </span>
                 </Badge>
               )}
             </div>
@@ -277,7 +294,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
         <div className="flex items-center sm:space-x-2">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger >
+              <TooltipTrigger>
                 <ShareOptions threadId={thread.id} />
               </TooltipTrigger>
               <TooltipContent>Share</TooltipContent>
@@ -287,17 +304,19 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className={`${thread.isSaved && "bg-accent text-accent-foreground"} disabled:opacity-100`}
-                  onClick={() => saveThread({
-                    userId,
-                    threadId: thread.id
-                  })}
+                  onClick={() =>
+                    saveThread({
+                      userId,
+                      threadId: thread.id,
+                    })
+                  }
                   disabled={thread.isSaved}
                 >
-                  <Bookmark className={`h-4 w-4` } />
+                  <Bookmark className={`h-4 w-4`} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Save</TooltipContent>
@@ -309,7 +328,6 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
             isCurrentUserThread={
               userId.toString() === thread?.createdBy?.id.toString()
             }
-
           />
         </div>
       </CardFooter>

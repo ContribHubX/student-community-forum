@@ -10,12 +10,16 @@ import { useGetThreadByID } from "@/features/thread/api/get-thread";
 import { useUpdateThread } from "@/features/thread/api/update-thread";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { updateThreadMutationConfig } from "@/features/thread/optimistic-mutations";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const CreateThreadRoute = () => {
   const { authState } = useAuth();
   const navigate = useNavigate();
   const { threadId } = useParams();
   const { data: thread } = useGetThreadByID({ threadId: threadId || "" });
+  const queryClient = useQueryClient();
+
   const { mutate: createThread } = useCreateThread({
     mutationConfig: {
       onSuccess: (thread) => {
@@ -23,9 +27,11 @@ export const CreateThreadRoute = () => {
           (!thread.communityId || thread.communityId === "null") &&
           thread.topicId &&
           thread.topicId !== "null"
-        )
+        ) {
           navigate(`/topic/${thread.topicId}`);
-        else navigate("/");
+        } else if (thread.communityId) {
+          navigate(`/community/${thread.communityId}`);
+        } else navigate("/");
 
         toast.success("Thread added successfully");
       },
@@ -36,12 +42,21 @@ export const CreateThreadRoute = () => {
       },
     },
   });
-  const { mutate: updateThread } = useUpdateThread({});
+
+  const updateCallback = () => {
+    toast.success("Post edited successfully");
+    navigate("/");
+  };
+
+  const { mutate: updateThread } = useUpdateThread({
+    mutationConfig: updateThreadMutationConfig(queryClient, updateCallback),
+  });
 
   if (!authState?.user?.id) return <p>Loading...</p>;
 
   const handleCreateThread = (data: FormData) => {
-    if (!threadId || threadId === "create") {
+    if (!threadId || threadId === "create" || threadId.startsWith("create_")) {
+      console.log("data: ", data);
       createThread(data);
       return;
     }
@@ -49,6 +64,8 @@ export const CreateThreadRoute = () => {
     data.append("threadId", threadId);
     updateThread(data);
   };
+
+  const communityId = threadId?.split("_")[1];
 
   return (
     <MainLayout
@@ -64,6 +81,9 @@ export const CreateThreadRoute = () => {
           thread={thread}
           handleFormSubmit={handleCreateThread}
           user={authState.user}
+          initialCommunity={
+            threadId?.startsWith("create_") ? communityId : undefined
+          }
         />
       </section>
     </MainLayout>

@@ -8,7 +8,7 @@ export const TopicRoute = () => {
   const { authState } = useAuth();
 
   if (!authState?.user?.id) return <p>Loading...</p>;
-
+  
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RelatedTopics}>
       <section className="">

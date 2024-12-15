@@ -5,6 +5,7 @@ import { QuestionAnswerList } from "./question-view-answer-list";
 import { useGetQuestionAnswers } from "../api/get-question-answers";
 import { User } from "@/types";
 import { MessageCircle } from "lucide-react";
+import { MyLoader } from "@/components/shared/loader";
 
 interface QuestionViewProp {
   user: User;
@@ -17,7 +18,7 @@ export const QuestionView = ({ user }: QuestionViewProp) => {
     questionId: questionId || "",
   });
 
-  if (!question || !answers) return <p>Loading...</p>;
+  if (!question || !answers) return <MyLoader />;
 
   return (
     <div className="min-h-screen">
