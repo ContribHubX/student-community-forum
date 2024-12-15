@@ -4,42 +4,46 @@ import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { UpcomingEventsList } from "@/features/thread/components/upcoming-events";
 import { useGetThreads } from "@/features/thread/api/get-all-threads";
 
+import { ScrollArea } from "../ui/scroll-area";
+
 import { shuffle } from "@/utils";
 import { Thread } from "@/types";
 
 export const RightSidebar = () => {
   const { data: threads } = useGetThreads({});
 
-  const shuffledThreads = shuffle(threads?.slice(0, 5) || []);
+  // Ensure threads is an array before calling slice
+  const shuffledThreads = Array.isArray(threads) ? shuffle(threads.slice(0, 5)) : [];
 
   return (
-    <SidebarLayout
-      className="flex-col gap-6 lg:flex hidden
-                 lg:w-[270px]
-                 xl:w-[300px] 
-                 
-      "
-      height={"full"}
-      position="right-6"
-    >
-      <UpcomingEventsList />
-
-      <div
-        className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
-        id="sidebar"
+    <ScrollArea className="h-full  pr-4">
+      <SidebarLayout
+        className="flex-col gap-6 lg:flex
+                   lg:w-[245px]
+                   xl:w-[290px]
+                  
+      
+        "
+        height={"full"}
+        position="right-6"
       >
-        <Link to="">
-          <div className="flex items-center mb-1">
-            <h1 className="text-sm font-medium">Recent Threads</h1>
-            <img src={arrowbutton} alt="" className="h-6" />
-          </div>
-        </Link>
-
-        {shuffledThreads?.map((thread) => {
-          return <RecentThread key={thread.id} thread={thread} />;
-        })}
-      </div>
-    </SidebarLayout>
+        <UpcomingEventsList />
+        <div
+          className="bg-primary text-primary-foreground rounded-2xl flex flex-col p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900"
+          id="sidebar"
+        >
+          <Link to="">
+            <div className="flex items-center mb-1">
+              <h1 className="text-sm font-medium">Recent Threads</h1>
+              <img src={arrowbutton} alt="" className="h-6" />
+            </div>
+          </Link>
+          {shuffledThreads?.map((thread) => {
+            return <RecentThread key={thread.id} thread={thread} />;
+          })}
+        </div>
+      </SidebarLayout>
+    </ScrollArea>
   );
 };
 

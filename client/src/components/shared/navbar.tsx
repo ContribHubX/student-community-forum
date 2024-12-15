@@ -25,9 +25,13 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { Thread } from "@/types";
 
 import { Logo } from "../ui/logo";
+import { Menu } from "lucide-react";
 
+interface NavbarProp {
+  toggleSidebar?: () => void;
+}
 
-export const Navbar = () => {
+export const Navbar = ({ toggleSidebar }: NavbarProp) => {
   const { authState, authDispatch } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -74,10 +78,19 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 bg-primary px-6   py-4 flex items-center justify-between  w-full z-50 text-primary-foreground">
-      <div className="flex items-center justify-center gap-3">
-        <Logo className="w-6 h-6 text-accent" />
-        <h1 className="font-medium text-lg hidden sm:block">StudentHub</h1>
+    <nav className="fixed top-0 bg-primary px-3 md:px-6   py-4 flex items-center justify-between  w-full z-50 text-primary-foreground">
+      <div className="flex items-center gap-2">
+        <button
+          onClick={toggleSidebar}
+          className="z-50 rounded-full bg-primary p-2 text-primary-foreground shadow-md transition-all duration-300 ease-in-out hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 md:hidden"
+          aria-label="Toggle sidebar"
+        >
+          <Menu size={24} />
+        </button>
+        <div className="flex items-center justify-center gap-3">
+          <Logo className="w-6 h-6 text-accent" />
+          <h1 className="font-medium text-lg hidden sm:block">StudentHub</h1>
+        </div>
       </div>
       <div className="flex items-center gap-6 ">
         <div

@@ -1,29 +1,41 @@
-import csps from "@/assets/sidebar/csps-logo.png";
-import uc from "@/assets/sidebar/groups/uc.svg";
+// import csps from "@/assets/sidebar/csps-logo.png";
+// import uc from "@/assets/sidebar/groups/uc.svg";
 
-export const upcomingEventsData = [
+
+const generateId = () => crypto.randomUUID();
+
+export default [
   {
-    title: "Intramurals 2024",
-    location: "UC - Sanciangko, Cebu",
-    icon: uc,
-    date: "7",
-    month: "FEB",
-    tags: ["university", "intrams", "cebu"],
+    id: generateId(),
+    name: "Intramurals 2024",
+    eventDate: new Date(2024, 1, 7), // Note: Months are 0-indexed in JS Date
+    communityId: generateId(),
+    tags: [
+      { id: generateId(), name: "university", communityEventId: generateId() },
+      { id: generateId(), name: "intrams", communityEventId: generateId() },
+      { id: generateId(), name: "cebu", communityEventId: generateId() },
+    ],
   },
   {
-    title: "Aquaintance 2024",
-    location: "UC - Sanciangko, Cebu",
-    icon: csps,
-    date: "3",
-    month: "FEB",
-    tags: ["university", "aquaintance", "seaside"],
+    id: generateId(),
+    name: "Acquaintance 2024",
+    eventDate: new Date(2024, 1, 3),
+    communityId: generateId(),
+    tags: [
+      { id: generateId(), name: "university", communityEventId: generateId() },
+      { id: generateId(), name: "acquaintance", communityEventId: generateId() },
+      { id: generateId(), name: "seaside", communityEventId: generateId() },
+    ],
   },
   {
-    title: "Halloween 2024",
-    location: "UC - Sanciangko, Cebu",
-    icon: uc,
-    date: "5",
-    month: "FEB",
-    tags: ["university", "halloween", "seaside"],
+    id: generateId(),
+    name: "Halloween 2024",
+    eventDate: new Date(2024, 1, 5),
+    communityId: generateId(),
+    tags: [
+      { id: generateId(), name: "university", communityEventId: generateId() },
+      { id: generateId(), name: "halloween", communityEventId: generateId() },
+      { id: generateId(), name: "seaside", communityEventId: generateId() },
+    ],
   },
 ];

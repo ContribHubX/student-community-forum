@@ -21,6 +21,7 @@ export type Thread = Entity<{
   likeCount: number;
   dislikeCount: number;
   commentCount: number;
+  isSaved: boolean;
   tags?: Tag[];
   communityId: string | null;
   topicId: string | null;
@@ -72,9 +73,14 @@ export type CommunityTab = "Threads" | "Events" | "Members" | "Media";
 export type CommunityEvent = Entity<{
   name: string;
   eventDate: Date;
-  tags: string[];
+  tags: CommunityEventTag[];
   communityId: string;
 }>;
+
+export type CommunityEventTag = Entity<{
+  name: string;
+  communityEventId: string;
+}>
 
 export type Topic = Entity<{
   name: string;
@@ -221,3 +227,26 @@ export type GlobalEventState = {
   emittedBy: string;
   type: "thread" | "topic" | "question";
 };
+
+export type Argument = Entity<{
+  content: string;
+  createdBy: User;
+  likeCount: number;
+  dislikeCount: number;
+  position: { x: number, y: number };
+  tags: ArgumentTag[];
+  communityId: string;
+}>
+
+export type ArgumentTag = Entity<{
+  name: string; 
+  argumentId: string;
+}>
+
+export type DiscussionState = {
+  community: Community;
+  arguments: Argument[];
+  currentArgument: Argument | undefined; 
+  currentArgumentModified: Argument | undefined;
+  users: User[];  
+}

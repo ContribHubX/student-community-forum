@@ -17,6 +17,13 @@ export interface IQuestionCreation extends IQuestion {
     requestedTo: string
 }
 
+export interface IUpdateQuestionDto {
+    id: string;
+    title: string;
+    content: string;
+    topicId?: string;  
+}
+
 export interface IQuestionRequest {
     requestedBy: IUser,
     requestedTo: IUser,

@@ -1,3 +1,4 @@
+import { ICommunity } from "@/domain/interfaces/ICommunity";
 import { IStudyRoom } from "@/domain/interfaces/IStudyRoom";
 import { IUser } from "@/domain/interfaces/IUser";
 import type Client from "@/pubsub/client";
@@ -59,3 +60,7 @@ export type TaskStatusType = "todo" | "doing" | "finished";
 export type ChatType = "message" | "indicator";
 
 export type StudyRoomClient = Omit<KanbanClient, "color"> & { room: IStudyRoom };
+
+export type DiscussionClientOption =  Omit<ClientEventOptions, "userId"> & { community: ICommunity, user: IUser };
+
+export type DiscussionClient = Omit<DiscussionClientOption, "community">; 

@@ -10,6 +10,7 @@ export interface IThread {
   communityId: string | null;
   tags?: IThreadTag[];
   topicId: string | null;
+  isSaved: boolean;
   questionId: string | null;
 }
 
@@ -54,6 +55,9 @@ export interface IThreadDeleteDto {
   threadId: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ISaveThreadDto extends IThreadDeleteDto {}
+
 export interface IThreadReactionDto {
   threadId: string,
   userId: string,
@@ -63,4 +67,24 @@ export interface IThreadReactionDto {
 export interface IAlreadyReactedDto {
   userId: string,
   threadId: string 
+}
+
+export interface IGetByTopicDto {
+  userId: string;
+  topicId: string;
+}
+
+export interface IGetByCommunityDto {
+  userId: string;
+  communityId: string;
+}
+
+export interface IGetByQuestionDto {
+  userId: string;
+  questionId: string;
+}
+
+export interface IGetByIdDto {
+  userId: string;
+  threadId: string;
 }

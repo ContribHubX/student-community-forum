@@ -1,11 +1,11 @@
 import { api } from "@/lib/axios";
 import { QueryConfig } from "@/lib/react-query";
-import { CommunityWithMembers } from "@/types";
+import {  User } from "@/types";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
 const getMembers = async (
   communityId: string,
-): Promise<CommunityWithMembers[]> => {
+): Promise<User[]> => {
   const response = await api.get(`/api/community/members/${communityId}`);
   return response.data;
 };

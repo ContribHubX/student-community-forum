@@ -1,3 +1,5 @@
+import { ThreadCard } from "@/features/thread/components/thread-card";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { QuestionAnswerCard } from "./question-answer-card";
 import { useAuth } from "@/hooks/use-auth";
 import { Thread } from "@/types";
@@ -16,8 +18,16 @@ export const QuestionAnswerList = ({ threads }: QuestionAnswerListProp) => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      {threads.map((thread) => (
+      {/* {threads.map((thread) => (
         <QuestionAnswerCard
+          key={thread.id}
+          thread={thread}
+          userId={authState?.user?.id || ""}
+        />
+      ))} */}
+
+      {threads.map((thread) => (
+        <ThreadCard
           key={thread.id}
           thread={thread}
           userId={authState?.user?.id || ""}

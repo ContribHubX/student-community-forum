@@ -16,6 +16,7 @@ interface CommunityViewProps {
   userId: string;
   onTabChange: (tab: CommunityTab) => void;
   tabOpen: CommunityTab;
+  isJoined: boolean;
 }
 
 export const CommunityView = ({
@@ -23,17 +24,12 @@ export const CommunityView = ({
   userId,
   onTabChange,
   tabOpen,
+  isJoined
 }: CommunityViewProps) => {
   const [scrollY, setScrollY] = useState(0);
   const { mutate: joinCommunity } = useJoinCommunity({});
 
-  const isJoined = (): boolean => {
-    if (!community || !userId) return false;
-    return community.members.some(
-      (member) => member.user.id.toString() === userId.toString(),
-    );
-  };
-
+ 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -107,7 +103,7 @@ export const CommunityView = ({
               </Button>
               <Button
                 className={`bg-accent text-accent-foreground px-8 py-2 rounded-full  font-medium hover:bg-accent/90 transition-colors
-                            ${isJoined() && "dark:bg-primary text-primary-foreground dark:border-background bg-background border-2 border-accent"}  
+                            ${isJoined && "dark:bg-primary text-primary-foreground dark:border-background bg-background border-2 border-accent"}  
                 `}
                 onClick={() =>
                   joinCommunity({
@@ -116,7 +112,7 @@ export const CommunityView = ({
                   })
                 }
               >
-                {!isJoined() ? "Join" : "Joined"}
+                {!isJoined ? "Join" : "Joined"}
               </Button>
             </div>
           </div>

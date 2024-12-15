@@ -11,8 +11,6 @@ interface QuestionViewProp {
 }
 
 export const QuestionView = ({ user }: QuestionViewProp) => {
-
-  
   const { questionId } = useParams();
   const { data: question } = useGetQuestion({ questionId: questionId || "" });
   const { data: answers } = useGetQuestionAnswers({
@@ -23,10 +21,9 @@ export const QuestionView = ({ user }: QuestionViewProp) => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className=" mx-auto space-y-8">
         <QuestionViewCard currentUser={user} question={question} />
 
-        
         <div className="flex items-center gap-3 mb-4">
           <MessageCircle className="text-2xl text-accent" />
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">

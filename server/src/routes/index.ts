@@ -9,10 +9,15 @@ import user from "./user";
 import board from "./board";
 import task from "./task";
 import studyRoom from "./study-room";
+import { attachCurrentUser } from "@/api/middleware";
 
 export default () => {
   const app = Router();
+  
   auth(app);
+
+  app.use(attachCurrentUser);
+
   thread(app);
   notification(app);
   community(app);

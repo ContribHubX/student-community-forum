@@ -10,7 +10,7 @@ export type CreateRequestSchema = {
 
 const createRequest = async (data: CreateRequestSchema) => {
   const response = await api.post(
-    "http://localhost:3000/api/question/request",
+    "/api/question/request",
     data,
   );
 

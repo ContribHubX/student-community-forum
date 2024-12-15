@@ -13,5 +13,5 @@ export const useDisclosure = () => {
     setOpen(!isOpen);
   }, [isOpen]);
 
-  return { isOpen, open, close, toggle };
+  return { isOpen, open, close, toggle, setOpen };
 };

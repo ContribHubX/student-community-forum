@@ -1,10 +1,10 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
 import * as schema from "@/database/schema";
-import { IQuestion, IQuestionDto, IQuestionRequest, IQuestionRequestDto, IQuestionUpvoteDto, IQuestionVote, IQuestionVoteStats } from "../interfaces/IQuestion";
+import { IQuestion, IQuestionDto, IQuestionRequest, IQuestionRequestDto, IQuestionUpvoteDto, IQuestionVote, IQuestionVoteStats, IUpdateQuestionDto } from "../interfaces/IQuestion";
 import { AppError } from "@/libs/app-error";
 import { and, desc, eq, sql } from "drizzle-orm";
-import { IThread } from "../interfaces/IThread";
+import { IGetByQuestionDto, IThread } from "../interfaces/IThread";
 import { IUser } from "../interfaces/IUser";
 import { QuestionRequestTable, QuestionTable, QuestionVotesTable } from "@/database/schema";
 
@@ -32,6 +32,59 @@ class QuestionRepository {
                 const questionId = result[0].id;
 
                 resolve(this.getById(questionId));
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+     /**
+     * Updates a question in the database.
+     * 
+     * @param questionId - The ID of the question to update.
+     * @param dto - The data transfer object containing updated question details.
+     * @returns A promise that resolves to the updated question.
+     */
+     public update(dto: IUpdateQuestionDto): Promise<IQuestion | undefined> {
+        const { id, title, content, topicId } = dto;
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .update(QuestionTable)
+                    .set({
+                        id, title, content,
+                        topicId,
+                    })
+                    .where(eq(QuestionTable.id, id))
+
+                if (!result[0]) {
+                    return reject(new AppError("Question not found", 404));
+                }
+
+                const updatedQuestion = await this.getById(dto.id);
+
+                resolve(updatedQuestion);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    /**
+     * Deletes a question from the database.
+     * 
+     * @param questionId - The ID of the question to delete.
+     * @returns A promise that resolves when the deletion is complete.
+     */
+      public delete(questionId: string): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.db
+                    .delete(QuestionTable)
+                    .where(eq(QuestionTable.id, questionId));
+
+                resolve();
             } catch (error: any) {
                 reject(new AppError(error));
             }
@@ -169,7 +222,7 @@ class QuestionRepository {
         });
     }
 
-    public getThreadsByQuestionId(questionId: string): Promise<IThread[]> {
+    public getThreadsByQuestionId(dto: IGetByQuestionDto): Promise<IThread[]> {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await this.db
@@ -177,13 +230,13 @@ class QuestionRepository {
                     .ThreadTable
                     .findMany({
                         extras: {
-                            ...this.threadReactionExtras(),
+                            ...this.threadReactionExtras(dto.userId),
                         },
                         with: { 
                             createdBy: true,
                             tags: true
                         },
-                        where: eq(schema.ThreadTable.questionId, questionId),
+                        where: eq(schema.ThreadTable.questionId, dto.questionId),
                         orderBy: desc(schema.ThreadTable.createdAt)
                     });
                 
@@ -310,7 +363,7 @@ class QuestionRepository {
    * @private
    * @returns {Object} An object containing SQL expressions for like, dislike, and comment counts.
    */
-    private threadReactionExtras() {
+    private threadReactionExtras(userId: string) {
         return {
         likeCount: sql<number>`(
             SELECT COUNT(*) FROM thread_reaction 
@@ -326,6 +379,14 @@ class QuestionRepository {
             SELECT COUNT(*) FROM comment
             WHERE thread_id = ${schema.ThreadTable.id} 
         )`.as("comment_count"),
+        isSaved: sql<boolean>`(
+              SELECT EXISTS (
+                  SELECT 1 
+                  FROM saved_thread
+                  WHERE thread_id = ${schema.ThreadTable.id} 
+                    AND user_id = ${userId}
+              )
+          )`.as("is_saved"),
         };
     }
 }

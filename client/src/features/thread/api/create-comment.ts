@@ -13,7 +13,7 @@ export type CreateThreadType = z.infer<typeof createCommentSchema> & {
 
 const createComment = async (data: any) => {
   const response = await api.post(
-    "http://localhost:3000/api/thread/comment",
+    "/api/thread/comment",
     data,
     {},
   );

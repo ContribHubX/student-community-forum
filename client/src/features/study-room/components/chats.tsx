@@ -56,7 +56,9 @@ export const Chats = ({ userId, roomId }: ChatsProp) => {
 
   return (
     <div
-      className="sm:col-span-2 md:col-span-1 text-sm rounded-2xl bg-primary md:max-w-[261px] shadow-xl flex-1 flex flex-col"
+      className="sm:col-span-2 md:col-span-1 text-sm rounded-2xl bg-[#262d34] md:max-w-[261px] shadow-xl flex-1 flex flex-col
+       
+      // "
       style={{
         minHeight: "calc(100% - 80%)",
       }}
@@ -79,7 +81,7 @@ export const Chats = ({ userId, roomId }: ChatsProp) => {
         // }}
       >
         <div className="flex flex-col gap-2">
-          {[...chats, ...chatsData || []]?.map((chat) => (
+          {[...chats, ...(chatsData || [])]?.map((chat) => (
             <div key={chat.id}>
               {chat.type === "indicator" ? (
                 <Indicator user={chat.createdBy} />

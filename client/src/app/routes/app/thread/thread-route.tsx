@@ -23,9 +23,7 @@ export const ThreadRoute = () => {
   return (
     <CommentContextProvider>
       <MainLayout LeftSidebar={LeftSidebar}>
-        <section
-          className=""
-        >
+        <section className="">
           <div className="space-y-4 text-primary-foreground">
             <ThreadView thread={thread} />
             <div className="flex items-center justify-between">
@@ -45,10 +43,7 @@ export const ThreadRoute = () => {
                 </Button>
               </div>
             </div>
-            <CommentForm 
-              threadId={id} 
-              placeholder="Share your thoughts..." 
-            />
+            <CommentForm threadId={id} placeholder="Share your thoughts..." />
             <Comments />
           </div>
         </section>

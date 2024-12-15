@@ -1,8 +1,8 @@
 import { Service, Inject } from "typedi";
 import QuestionRepository from "@/domain/repository/question";
 import { AppError } from "@/libs/app-error";
-import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuestionCreation, IQuestionVote, IQuestionUpvoteDto, IQuestionVoteStats } from "@/domain/interfaces/IQuestion";
-import { IThread } from "@/domain/interfaces/IThread";
+import { IQuestion, IQuestionDto, IQuestionRequestDto, IQuestionRequest, IQuestionVote, IQuestionUpvoteDto, IQuestionVoteStats, IUpdateQuestionDto } from "@/domain/interfaces/IQuestion";
+import { IGetByQuestionDto, IThread } from "@/domain/interfaces/IThread";
 import { IUser } from "@/domain/interfaces/IUser";
 import EventManager from "@/pubsub/event-manager";
 import NotificationService from "./notification";
@@ -53,6 +53,40 @@ class QuestionService {
 
             return question;
 
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    /**
+     * Updates a question.
+     * 
+     * @param questionId - The ID of the question to update.
+     * @param dto - Data transfer object for updating the question.
+     * @returns {Promise<IQuestion>} The updated question.
+     */
+    public async updateQuestion(dto: IUpdateQuestionDto): Promise<IQuestion | undefined> {
+        try {
+            const updatedQuestion = await this.questionRepo.update(dto);
+            this.eventManager.publishToMany<IQuestion>("question--updated", updatedQuestion);  
+            return updatedQuestion;
+        } catch (error: any) {
+            if (error instanceof AppError) throw error;
+            throw new AppError(error);
+        }
+    }
+
+    /**
+     * Deletes a question.
+     * 
+     * @param questionId 
+     * @returns {Promise<void>}
+     */
+    public async deleteQuestion(questionId: string): Promise<void> {
+        try {
+            await this.questionRepo.delete(questionId); 
+            this.eventManager.publishToMany<string>("question--deleted", questionId);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);
@@ -131,9 +165,9 @@ class QuestionService {
         }
     }
 
-    public async getThreadsByQuestionId(questionId: string): Promise<IThread[]> {
+    public async getThreadsByQuestionId(dto: IGetByQuestionDto): Promise<IThread[]> {
         try {
-            return await this.questionRepo.getThreadsByQuestionId(questionId);
+            return await this.questionRepo.getThreadsByQuestionId(dto);
         } catch (error: any) {
             if (error instanceof AppError) throw error;
             throw new AppError(error);

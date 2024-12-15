@@ -8,7 +8,7 @@ import {
 
 export const TopicLibraryRoute = () => {
   return (
-    <div>
+    <div >
       <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-background dark:to-primary mt-10">
         <header className="text-primary-foreground py-16">

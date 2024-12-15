@@ -14,6 +14,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger
+} from "@/components/ui/select"
 
 import { Scene } from "./scene";
 import { VideoType, StudyRoom } from "@/types";
@@ -22,7 +28,12 @@ import { Input } from "@/components/ui/input";
 import { extractVideoId } from "@/utils";
 import { useSocketProvider } from "@/hooks/use-socket-provider";
 
-export const LobbyOptions = () => {
+
+interface LobbyOptionsProp {
+  handleShowPanel: (value: string) => void;
+}
+
+export const LobbyOptions = ({ handleShowPanel }: LobbyOptionsProp) => {
   const { roomId } = useParams();
   const { socketState } = useSocketProvider();
   const [video, setVideo] = useState<VideoType>({} as VideoType);
@@ -45,7 +56,10 @@ export const LobbyOptions = () => {
 
       <div className="flex flex-col items-center  mt-2 justify-between h-full">
         <div className="relative z-[12]">
-          <LobbyHeader name={room.name} />
+          <LobbyHeader 
+            name={room.name} 
+            handleShowPanel={handleShowPanel}
+          />
         </div>
         <div className="relative  py-1 px-2 bg-canvas rounded-full flex mb-2 z-[12]">
           <div>
@@ -59,10 +73,13 @@ export const LobbyOptions = () => {
 
 interface LobbyHeaderProp {
   name: string;
+  handleShowPanel: (value: string) => void;
 }
 
-const LobbyHeader = ({ name }: LobbyHeaderProp) => {
+const LobbyHeader = ({ handleShowPanel, name }: LobbyHeaderProp) => {
   const navigate = useNavigate();
+
+
 
   return (
     <div className="cursor-pointer py-2 px-3 bg-black/80 rounded-full flex items-center gap-3">
@@ -74,7 +91,25 @@ const LobbyHeader = ({ name }: LobbyHeaderProp) => {
         <LuGlobe className="text-2xl" />
         <span className="font-yuji ">{name}</span>
       </div>
-      <FaEllipsis className="cursor-pointer text-lg text-accent-foreground" />
+      <Select
+        onValueChange={(value) => {
+          handleShowPanel(value)
+        }}
+      >
+        <SelectTrigger className="p-0 [&>svg]:hidden border-none w-4 bg-transparent">
+          <div>
+            <FaEllipsis className="cursor-pointer text-lg text-accent-foreground" />
+          </div>
+        </SelectTrigger>
+        <SelectContent className="bg-[#1e252b] border-none">
+          <SelectItem value="true">
+            Show panels
+          </SelectItem>
+          <SelectItem value="false">
+            Hide panels
+          </SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 };
@@ -161,7 +196,7 @@ const MusicManager = ({ video }: MusicManagerProp) => {
 
   return (
     <div className="flex gap-4 items-center rounded-full py-3 px-4 bg-black/80 text-white backdrop-blur-sm">
-      <div className="relative w-12 h-12">
+      <div className="relative w-8 h-8 md:w-12 md:h-12">
         <div
           ref={diskRef}
           className="w-full h-full rounded-full overflow-hidden transition-transform duration-200 ease-linear"

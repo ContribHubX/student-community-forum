@@ -21,6 +21,14 @@ import { useSocketProvider } from "@/hooks/use-socket-provider";
 // DONE local register
 // DONE make profile page
 
+
+// TODO live discussion capability
+// TODO user's can share the live discussion, study room in a general thread 
+
+// TODO add user saved
+// TODO add names in cursors in kanban, the picture is in my messenger
+// DECIDE live polls feature
+
 // TODO fix bug's on mj's dev test
 // TODO make it responsive up to laptop size // not yet implemented in question page
 // TODO decde whether to expand the topic-view-card horizontally
@@ -62,7 +70,7 @@ export const HomeRoute = () => {
   //   <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
   //     <section
   //       className="bg-background border-3 border-black
-  //       md:ml-[16rem] 
+  //       md:ml-[16rem]
   //       lg:mr-[18rem]
   //       xl:mr-[20rem]
   //       "
@@ -80,10 +88,7 @@ export const HomeRoute = () => {
 
   return (
     <MainLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
-      <section
-        className="bg-background border-3 border-black"
-        ref={threadsRef}
-      >
+      <section className="bg-background border-3 border-black" ref={threadsRef}>
         <Threads />
         <NewPostIndicator
           type="thread"

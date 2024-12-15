@@ -29,7 +29,7 @@ export default {
       const thread = await threadService.createThread(body);
       res.status(201).json(thread);
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
     }
   },
 
@@ -54,7 +54,7 @@ export default {
       const thread = await threadService.updateThread(body);
       res.status(201).json({ message: "Update successful", thread });
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
     }
   },
 
@@ -73,10 +73,10 @@ export default {
 
     try {
       const threadService = Container.get(ThreadService);
-      const response = await threadService.getThreadById(threadId);
+      const response = await threadService.getThreadById({ userId: req.currentUser.id, threadId });
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
     }
   },
 
@@ -87,11 +87,11 @@ export default {
    */
   async getAllThreadsHandler(req: Request, res: Response, next: NextFunction) {
     try {
-      const threadService = Container.get(ThreadService);
-      const response = await threadService.getAllThread();
+      const threadService = Container.get(ThreadService);;
+      const response = await threadService.getAllThread(req.currentUser.id);
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
     }
   },
 
@@ -105,10 +105,10 @@ export default {
 
     try {
       const threadService = Container.get(ThreadService);
-      const response = await threadService.getAllThreadByTopic(topicId);
+      const response = await threadService.getAllThreadByTopic({ userId: req.currentUser.id, topicId });
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
     }
   },
 
@@ -122,10 +122,10 @@ export default {
 
     try {
       const threadService = Container.get(ThreadService);
-      const response = await threadService.getAllThreadByCommunity(communityId);
+      const response = await threadService.getAllThreadByCommunity({ userId: req.currentUser.id, communityId });
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
     }
   },
 
@@ -143,7 +143,22 @@ export default {
       const response = await threadService.deleteThread({userId, threadId});
       res.status(200).json(response);
     } catch (error: any) {
-      next(new AppError(error));
+      next(error);
+    }
+  },
+
+  /**
+   * Handler to retrieve a threads by community.
+   *
+   * @route POST /thread/save
+   */
+   async saveThreadHandler(req: Request, res: Response, next: NextFunction) {
+    try {
+      const threadService = Container.get(ThreadService);
+      const response = await threadService.saveThread(req.body);
+      res.status(200).json(response);
+    } catch (error: any) {
+      next(error);
     }
   },
 };

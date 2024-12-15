@@ -151,7 +151,7 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
               parentId={comment.id}
               placeholder="Write your reply..."
               onSubmitCallback={() => setShowReplyForm(false)}
-              isReply 
+              isReply
             />
           </motion.div>
         )}

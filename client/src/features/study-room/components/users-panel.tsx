@@ -6,6 +6,7 @@ import { IoEllipsisHorizontalSharp } from "react-icons/io5";
 import { HiOutlinePlus } from "react-icons/hi";
 import { TiArrowRightOutline } from "react-icons/ti";
 
+
 interface UsersPanelProp {
   users: User[];
   handleShowboard: () => void;
@@ -16,11 +17,11 @@ interface UsersPanelProp {
 export const UsersPanel = ({ handleShowboard, users }: UsersPanelProp) => {
   return (
     <div
-      className="p-3 md:bg-background rounded-2xl relative 
-         md:h-[98vh] flex md:flex-col justify-between md:justify-normal"
+      className="p-3 md:bg-[#1e252b] rounded-2xl relative 
+         md:h-[98vh] flex md:flex-col gap-3 justify-between md:justify-normal"
     >
       <div
-        className={`flex items-center gap-5 
+        className={`flex items-center gap-5 w-[100svh] sm:w-full overflow-x-auto
           md:flex-col
           md:flex-1
       `}
@@ -28,8 +29,10 @@ export const UsersPanel = ({ handleShowboard, users }: UsersPanelProp) => {
         {users.slice(0, 5).map((user) => (
           <UserTab key={user.id} user={user} />
         ))}
-        <div className="w-[70px] h-[70px] flex items-center justify-center rounded-full bg-primary">
-          <HiOutlinePlus className="text-[2rem] font-thin text-accent-foreground" />
+        <div className="min-w-[70px] min-h-[70px] flex items-center justify-center rounded-full bg-[#262d34]">
+          <HiOutlinePlus 
+            className="text-[2rem] font-thin text-accent-foreground" 
+          />
         </div>
       </div>
       <div className="">
@@ -41,12 +44,12 @@ export const UsersPanel = ({ handleShowboard, users }: UsersPanelProp) => {
 
       <div
         className="absolute -right-9 top-1/2 transform -translate-y-1/2 
-                  bg-primary w-[30px] h-[30px] flex items-center justify-center 
+                  bg-[#262d34] w-[30px] h-[30px] flex items-center justify-center 
                   rounded-tr-[50%] rounded-br-[50%] clip-path-cone"
         onClick={handleShowboard}
       >
         <TiArrowRightOutline className="text-2xl text-white" />
-    </div>
+      </div>
     </div>
   );
 };

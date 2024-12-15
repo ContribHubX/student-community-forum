@@ -56,13 +56,12 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       screens: {
-        xs: "420px"
-      }
+        xs: "420px",
+      },
     },
     fontFamily: {
       yuji: ["Yuji Mai", "serif"],
     },
-  
   },
   plugins: [
     require("tailwindcss-animate"),

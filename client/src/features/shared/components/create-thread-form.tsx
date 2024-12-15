@@ -144,13 +144,13 @@ export const ThreadForm = ({
   };
   // md:grid-cols-[2.5fr_1fr]
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1fr]  gap-4 rounded-lg py-2 ">
+    <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1fr]  gap-4 rounded-lg py-2">
       {/* Form Section */}
       <form
         onSubmit={handleSubmit(onSubmit, handleFormErrors)}
         className="pb-4 text-primary-foreground bg-primary rounded-lg"
       >
-        <div className="p-6  rounded-lg space-y-4">
+        <div className="p-2 sm:p-3 md:p-6  rounded-lg space-y-4">
           <div className="flex py-2 px-3 justify-between rounded-lg items-center gap-3 border dark:border-gray-500">
             <div className="flex items-center gap-3">
               <Avatar>
@@ -173,9 +173,12 @@ export const ThreadForm = ({
             </div>
           </div>
 
-          <div className="p-6  rounded-lg border dark:border-gray-500 text-sm">
+          <div className="p-2 sm:p-3 md:p-6  rounded-lg border dark:border-gray-500 text-sm">
             {/* Community Selector */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-start sm:items-center gap-3 
+              flex-col
+              sm:flex-row
+            ">
               <div>
                 <h2 className="font-semibold mb-1">Community</h2>
                 <Select

@@ -21,7 +21,7 @@ export type UpdateThreadType = z.infer<typeof updateThreadSchema> & {
 };
 
 const updateThread = async (data: FormData) => {
-  const response = await api.put("http://localhost:3000/api/thread", data, {
+  const response = await api.put("/api/thread", data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

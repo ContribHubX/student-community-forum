@@ -51,16 +51,15 @@ export const CreateThreadRoute = () => {
   };
 
   return (
-    <MainLayout LeftSidebar={LeftSidebar}
+    <MainLayout
+      LeftSidebar={LeftSidebar}
       contentStyle="
-            md:ml-[15rem]
+            md:ml-[16rem]
             lg:mr-0
             xl:mr-0
       "
     >
-      <section
-        className="bg-background border-3"
-      >
+      <section className="bg-background border-3">
         <ThreadForm
           thread={thread}
           handleFormSubmit={handleCreateThread}

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authController from "@/api/auth";
 import { uploadProfile } from "@/libs/cloudinary-storage";
+import { attachCurrentUser } from "@/api/middleware";
 
 const router = Router();
 

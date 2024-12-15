@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 
 const createVote = async (data: QuestionVote) => {
   const response = await api.post(
-    "http://localhost:3000/api/question/vote",
+    "/api/question/vote",
     data,
   );
 

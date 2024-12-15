@@ -1,16 +1,19 @@
 import { Service } from "typedi";
 import KanbanRoom from "./kanban-room";
-import { KanbanClientOption, StudyRoomClient } from "@/types";
+import { DiscussionClientOption, KanbanClientOption, StudyRoomClient } from "@/types";
 import StudyRoom from "./study-room";
+import DiscussionRoom from "./discussion-room";
 
 @Service()
 class RoomManager {
     private kanbanRooms: KanbanRoom[];
     private studyRooms: StudyRoom[];
-    
+    private discussionRooms: DiscussionRoom[];
+
     constructor() { 
         this.kanbanRooms = [];
         this.studyRooms = [];
+        this.discussionRooms = [];
     }
 
      /**
@@ -43,6 +46,24 @@ class RoomManager {
             const newRoom = new StudyRoom(data.room.id, data.room);
             newRoom.connect(data);
             this.studyRooms.push(newRoom);
+            return;
+        } 
+
+        existingRoom.connect(data);
+    }
+
+    /**
+     * Adds a client to a discussion room, creating the room if it doesn't exist.
+     * 
+     * @param data - {DiscussionClientOption}
+     */
+    joinDiscussionRoom(data: DiscussionClientOption) {
+        const existingRoom = this.discussionRooms.find(room => room.details.id === data.community.id);
+    
+        if (!existingRoom) {
+            const newRoom = new DiscussionRoom(data.community);
+            newRoom.connect(data);
+            this.discussionRooms.push(newRoom);
             return;
         } 
 

@@ -10,13 +10,13 @@ export const ThreadCardList = ({ threads }: ThreadCardListProp) => {
   const { authState } = useAuth();
 
   // Temporary only
-  if (!threads || !authState.user) {
+  if (!threads || !authState.user || !threads.length) {
     return <p>Loading...</p>;
-  }
+  } 
 
   return (
     <div className="flex flex-col items-start gap-4">
-      {threads.map((thread) => (
+      {threads?.map((thread) => (
         <ThreadCard
           key={thread.id}
           thread={thread}

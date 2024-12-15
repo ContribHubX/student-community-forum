@@ -21,7 +21,7 @@ export type CreateThreadType = z.infer<typeof createThreadSchema> & {
 };
 
 const createThread = async (data: FormData): Promise<Thread> => {
-  const response = await api.post("http://localhost:3000/api/thread", data, {
+  const response = await api.post("/api/thread", data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

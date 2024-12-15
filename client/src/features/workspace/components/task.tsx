@@ -7,7 +7,7 @@ import { Task as TaskType } from "@/types";
 import { TaskForm } from "./task-form";
 
 import { FaEllipsisH, FaTrashAlt } from "react-icons/fa";
-import { LuMessagesSquare } from "react-icons/lu";
+// import { LuMessagesSquare } from "react-icons/lu";
 import { GrAttachment, GrEdit } from "react-icons/gr";
 
 import {
@@ -121,10 +121,10 @@ export const Task = ({ task }: TaskProp) => {
             </FlexContainer>
 
             <FlexContainer className="text-muted-foreground items-start w-fit mb-2">
-              <FlexContainer>
+              {/* <FlexContainer>
                 <LuMessagesSquare className="text-lg" />
                 <span className="text-xs ml-[-6px]">{12}</span>
-              </FlexContainer>
+              </FlexContainer> */}
 
               <FlexContainer>
                 <GrAttachment className="text-sm" />

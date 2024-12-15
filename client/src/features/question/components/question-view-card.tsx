@@ -4,7 +4,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SelectRequest } from "./select-request";
 import { useCreateThread } from "@/features/shared/api/create-thread";
-import { MessageSquare, Eye, ChevronUp, ChevronDown, Share2 } from 'lucide-react';
+import {
+  MessageSquare,
+  Eye,
+  ChevronUp,
+  ChevronDown,
+  Share2,
+} from "lucide-react";
 import { CreateQuestionForm } from "@/features/shared/components/create-question-form";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +19,12 @@ import { getQuestionQueryOptions } from "../api/get-question";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useGetVotes } from "../api/get-votes";
 import { useCreateVote } from "../api/vote";
 
@@ -30,7 +41,7 @@ export const QuestionViewCard = ({
   const { data: votes } = useGetVotes({
     data: { userId: currentUser.id.toString(), questionId: question.id },
   });
-  
+
   const { mutate: createVote } = useCreateVote({});
   const handleCreateVote = (vote: "up" | "down") => {
     createVote({
@@ -42,7 +53,7 @@ export const QuestionViewCard = ({
 
   return (
     <Card className="w-full bg-card  shadow-lg hover:shadow-xl dark:border-none transition-shadow duration-300">
-      <CardContent className="p-6 bg-primary rounded-lg">
+      <CardContent className="p-6 bg-primary rounded-t-lg">
         <div className="flex items-start space-x-4">
           <div className="flex flex-col items-center space-y-2">
             <TooltipProvider>
@@ -58,7 +69,7 @@ export const QuestionViewCard = ({
                       <ChevronUp className="h-5 w-5" />
                     </Button>
                     <span className="text-lg font-bold text-muted-foreground">
-                        {votes?.upvoteCount || 0}
+                      {votes?.upvoteCount || 0}
                     </span>
                   </>
                 </TooltipTrigger>
@@ -83,21 +94,28 @@ export const QuestionViewCard = ({
             </TooltipProvider>
           </div>
           <div className="flex-grow">
-            <h2 className="text-2xl font-bold text-primary-foreground mb-2">{question.title}</h2>
+            <h2 className="text-2xl font-bold text-primary-foreground mb-2">
+              {question.title}
+            </h2>
             <div className="flex flex-wrap items-center gap-2 mb-4">
               {question.topic !== null && (
-              <Badge variant="secondary" className="px-2 py-1 flex items-center gap-2 text-xs font-semibold">
-                <img
+                <Badge
+                  variant="secondary"
+                  className="px-2 py-1 flex items-center gap-2 text-xs font-semibold"
+                >
+                  <img
                     src={question?.topic?.attachment}
                     alt={`${question?.topic?.name} icon`}
                     className="w-4 h-4 rounded-full"
                   />
-                <span>{question.topic?.name}</span>
-              </Badge>
+                  <span>{question.topic?.name}</span>
+                </Badge>
               )}
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <MessageSquare className="w-4 h-4" />
-                <span className="text-sm">{question.threads?.length || 0} answers</span>
+                <span className="text-sm">
+                  {question.threads?.length || 0} answers
+                </span>
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Eye className="w-4 h-4" />
@@ -137,11 +155,19 @@ export const QuestionViewCard = ({
         </div>
       </CardContent>
       <Separator className="my-0" />
-      <CardFooter className="flex justify-between items-center rounded-md bg-primary px-6 py-2">
+      <CardFooter className="flex justify-between gap-2 rounded-b-lg bg-primary px-6 py-2
+        flex-col items-start
+        sm:flex-row sm:items-center
+      ">
         <div className="flex space-x-2">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="default" className="rounded-full text-sm bg-background">Request Answer</Button>
+              <Button
+                variant="default"
+                className="rounded-full text-sm bg-background"
+              >
+                Request Answer
+              </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px] bg-primary dark:border-none">
               <SelectRequest
@@ -153,7 +179,11 @@ export const QuestionViewCard = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" className="rounded-full border-none"  >
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full border-none"
+                >
                   <Share2 className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
@@ -192,7 +222,8 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   };
 
   return (
-    <div className="flex items-center space-x-4 bg-background rounded-full px-4 py-2 hover:bg-secondary transition-colors duration-200">
+    <div className="flex items-center space-x-4 bg-background rounded-full px-4 py-2 hover:bg-secondary transition-colors duration-200
+    ">
       <Avatar className="h-8 w-8 ring-2 ring-primary">
         <AvatarImage src={user.attachment} alt={user.name} />
         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
@@ -204,9 +235,15 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
       </div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="default" size="sm" className="rounded-full text-accent-foreground text-sm">Answer</Button>
+          <Button
+            variant="default"
+            size="sm"
+            className="rounded-full text-accent-foreground text-sm"
+          >
+            Answer
+          </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px] lg:max-w-[800px] bg-primary dark:border-none">
+        <DialogContent className="max-w-[400px] sm:max-w-[600px] lg:max-w-[800px] bg-primary dark:border-none">
           <CreateQuestionForm
             initialTopic={question.topic}
             initialTitleVal={question.title}

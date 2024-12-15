@@ -5,12 +5,11 @@ import { QueryClient } from "@tanstack/react-query";
 import { getThreadsQueryOptions } from "@/features/thread/api/get-all-threads";
 import { getCommentsQueryOptions } from "@/features/thread/api/get-thread-comments";
 import { getThreadByIdQueryOptions } from "@/features/thread/api/get-thread";
-import { getUserReactionQueryOptions } from "@/features/thread/api/get-reaction";
 import { getUsersByQuestionQueryOptions } from "@/features/question/api/get-users-by-question";
 import { getPendingRequestQueryOptions } from "@/features/question/api/get-pending-request";
 import { getTopicFollowersQueryOptions } from "@/features/topic/api/get-followers";
 
-import { Comment, PendingQuestionRequest, Reaction, ReactionType, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType, GroupTimerState, Question, GlobalEventState } from "@/types";
+import { Comment, PendingQuestionRequest, Reaction, Thread, Notification, TopicUserFollow, User, Board, Task, BoardState, DiscussionState, RoomState, QuestionVote, QuestionVoteStats, Chat, VideoType, GroupTimerState, Question, GlobalEventState, Argument } from "@/types";
 import { getBoardsQueryOptions } from "@/features/workspace/api/get-all-boards";
 import { getTasksQueryOptions } from "@/features/workspace/api/get-all-tasks";import { getVotesQueryOptions } from "@/features/question/api/get-votes";
 import { getNotificationQueryOptions } from "@/features/notification/api/get-notifications";
@@ -22,12 +21,12 @@ import { getCommunityByIdQueryOptions } from "@/features/community/api/get-commu
 import { getEventsQueryOptions } from "@/features/event/api/get-events";
 import { getThreadsByCommunityQueryOptions } from "@/features/community/api/get-threads";
 import { getThreadsByTopicQueryOptions } from "@/features/topic/api/get-threads-by-topic";
-;
 
 export type SocketContextState = {
   socket: Socket | undefined;
   boards: Record<string, BoardState[]>;
   rooms: Record<string, RoomState>;
+  discussions: Record<string, DiscussionState>; 
   globalEvent: GlobalEventState | undefined;
 };
 
@@ -35,6 +34,7 @@ export const defaultSocketContextState: SocketContextState = {
   socket: undefined,
   boards: {},
   rooms: {},
+  discussions: {},
   globalEvent: undefined
 };
 
@@ -47,6 +47,8 @@ export enum OPERATION {
   ADD_NEW_REACTION,
   ADD_NEW_REQUEST,
   ADD_NEW_QUESTION,
+  UPDATE_QUESTION,
+  DELETE_QUESTION,
   ADD_NEW_TOPIC_FOLLOWER,
   ADD_NEW_BOARD,
   ADD_TASK,
@@ -70,7 +72,13 @@ export enum OPERATION {
   TIMER_SYNC,
   JOIN_COMMUNITY,
   ADD_COMMUNITY_EVENT,
-  EMIT_GLOBAL_EVENT
+  EMIT_GLOBAL_EVENT,
+  INIT_COMMUNITY_DISCUSSION,
+  ADD_DISCUSSION_USER,
+  REMOVE_DISCUSSION_USER, 
+  ADD_DISCUSSION_ARGUMENT,
+  ADD_ARGUMENT_REACTION,
+  RESET_REACTED_ARGUMENT,
 }
 
 type Actions =
@@ -106,6 +114,14 @@ type Actions =
       type: OPERATION.ADD_NEW_QUESTION;
       payload: { question: Question; queryClient: QueryClient };
     }
+  | {
+    type: OPERATION.UPDATE_QUESTION;
+    payload: { question: Question; queryClient: QueryClient };
+  }
+  | {
+    type: OPERATION.DELETE_QUESTION;
+    payload: { questionId: string; queryClient: QueryClient };
+  }
   | {
       type: OPERATION.ADD_NEW_TOPIC_FOLLOWER;
       payload: { data: TopicUserFollow; queryClient: QueryClient };
@@ -202,6 +218,31 @@ type Actions =
     type: OPERATION.EMIT_GLOBAL_EVENT;
     payload: { data: GlobalEventState };
   }
+  | {
+    type: OPERATION.INIT_COMMUNITY_DISCUSSION;
+    payload: { data: DiscussionState };
+  }
+  | {
+    type: OPERATION.ADD_DISCUSSION_USER;
+    payload: { user: User, discussionId: string };
+  }
+  | {
+    type: OPERATION.REMOVE_DISCUSSION_USER;
+    payload: { user: User, discussionId: string };
+  }
+  | {
+    type: OPERATION.ADD_DISCUSSION_ARGUMENT;
+    payload: { argument: Argument, discussionId: string };
+  }
+  | {
+    type: OPERATION.ADD_ARGUMENT_REACTION;
+    payload: { argument: Argument, discussionId: string };
+  }
+  | {
+    type: OPERATION.RESET_REACTED_ARGUMENT;
+    payload: { discussionId: string };
+  }
+  
 
 
 /**
@@ -303,27 +344,7 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
      */
     case OPERATION.ADD_NEW_COMMENT: {
       const { comment, queryClient } = action.payload;
-      // queryClient.setQueryData(
-      //   getCommentsQueryOptions(comment.threadId).queryKey,
-      //   (oldComments: Comment[] | undefined) => {
-      //     if (!oldComments) return [comment]; 
-
-      //     if (!comment.parentId)
-      //       return [comment, ...oldComments]; 
-
-      //     // if reply
-      //     return oldComments.map(comm => {
-      //       if(comm.id === comment.parentId) {
-      //         return {
-      //           ...comm,
-      //           replies: [...comm.replies || [], comment]
-      //         }
-      //       }
-
-      //       return comm;
-      //     })
-      //   }
-      // );
+  
       queryClient.setQueryData(
         getCommentsQueryOptions(comment.threadId).queryKey,
         (oldComments: Comment[] | undefined) => {
@@ -355,52 +376,9 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
      * @param action.payload.queryClient - The React Query client instance to update the cache.
      */
     case OPERATION.ADD_NEW_REACTION: {
-      const { currentUserId, reaction, queryClient } = action.payload;
-
-      // Update the thread's like and dislike counts
-      queryClient.setQueryData(
-        getThreadByIdQueryOptions(reaction.thread.id).queryKey,
-        (currentThread: Thread | undefined) => {
-          if (!currentThread) return currentThread;
-
-          return {
-            ...currentThread,
-            likeCount: reaction.type === "LIKE" 
-              ? currentThread.likeCount + 1 
-              : currentThread.likeCount,
-            dislikeCount: reaction.type === "DISLIKE" 
-              ? currentThread.dislikeCount + 1 
-              : currentThread.dislikeCount,
-          };
-        }
-      );
+      const { reaction, queryClient } = action.payload;
 
       if (reaction.thread?.communityId) {
-      //    queryClient.setQueryData(
-      //   getThreadsByCommunityQueryOptions(reaction.thread.communityId.toString()).queryKey,
-      //   (currentThreads: Thread[] | undefined) => {
-      //     if (!currentThreads) return currentThreads;
-
-      //     const updatedThreads = currentThreads.map(thread => {
-      //       if (thread.id === reaction.thread.id) {
-      //         thread.likeCount = reaction.type === "LIKE" 
-      //           ? thread.likeCount + 1 
-      //           : thread.likeCount
-
-      //         thread.dislikeCount = reaction.type === "DISLIKE" 
-      //           ? thread.dislikeCount + 1 
-      //           : thread.dislikeCount
-      //       }
-
-      //       return thread;
-      //     })
-          
-      //     return [
-      //       ...updatedThreads
-      //     ];
-      //   }
-      // );
-
         queryClient.invalidateQueries({ queryKey: getThreadsByCommunityQueryOptions(reaction.thread.communityId).queryKey })
       }
 
@@ -412,23 +390,8 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         queryClient.invalidateQueries({ queryKey: getThreadsByTopicQueryOptions(reaction.thread.topicId).queryKey })
       }
 
-
       queryClient.invalidateQueries({ queryKey: getThreadsQueryOptions().queryKey });
-      //queryClient.invalidateQueries({ queryKey: getThreadByIdQueryOptions(reaction.threadId).queryKey });
-
-      // Update the user's current reaction for the thread
-      queryClient.setQueryData(
-        getUserReactionQueryOptions({ userId: reaction.userId, threadId: reaction.thread.id }).queryKey,
-        (currentReaction: { type: ReactionType } | undefined) => {
-          if (!currentReaction) return currentReaction;
-
-          return {
-            type: currentUserId.toString() === reaction.userId.toString()
-              ? reaction.type 
-              : currentReaction?.type,
-          };
-        }
-      );
+      queryClient.invalidateQueries({ queryKey: getThreadByIdQueryOptions(reaction.thread.id).queryKey });
 
       return { ...state };     
     }
@@ -475,9 +438,29 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
         );
       }
 
-    
-
       return { ...state, globalEvent: { emittedBy: question.createdBy?.id, type: "question" }  };      
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.UPDATE_QUESTION: { 
+      const { queryClient } = action.payload;
+     
+      queryClient.invalidateQueries({ queryKey: getQuestionsQueryOptions().queryKey })
+
+      return { ...state };      
+    }
+
+     /**
+     * 
+     */
+     case OPERATION.DELETE_QUESTION: { 
+      const { queryClient } = action.payload;
+     
+      queryClient.invalidateQueries({ queryKey: getQuestionsQueryOptions().queryKey })
+
+      return { ...state };      
     }
 
     /**
@@ -898,6 +881,120 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
       return {...state, globalEvent: {emittedBy, type}}
     }
 
+    /**
+     * @param action.payload.data - The discussion object representing the community. 
+     */
+    case OPERATION.INIT_COMMUNITY_DISCUSSION: { 
+      const { data } = action.payload;
+      
+      const updateDiscussions = {...state.discussions};
+
+      if (!updateDiscussions[data.community.id]) 
+        updateDiscussions[data.community.id] = {} as DiscussionState;
+      
+      updateDiscussions[data.community.id].users = [...data.users];
+      updateDiscussions[data.community.id].community = {...data.community};
+      updateDiscussions[data.community.id].arguments = [...data.arguments];
+
+      return { ...state, discussions: updateDiscussions };      
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.ADD_DISCUSSION_ARGUMENT: { 
+      const { argument, discussionId } = action.payload;
+      
+      const updateDiscussions = {...state.discussions};
+
+      if (!updateDiscussions[discussionId]) 
+        updateDiscussions[discussionId] = {} as DiscussionState;
+      
+      updateDiscussions[discussionId].arguments = [argument, 
+        ...updateDiscussions[discussionId].arguments
+      ];
+
+      updateDiscussions[discussionId].currentArgument = argument;
+
+      return { ...state, discussions: updateDiscussions };      
+    }
+
+     /**
+     * 
+     */
+    case OPERATION.ADD_ARGUMENT_REACTION: { 
+      const { argument, discussionId } = action.payload;
+      
+      const updateDiscussions = {...state.discussions};
+
+      if (!updateDiscussions[discussionId]) 
+        updateDiscussions[discussionId] = {} as DiscussionState;
+      
+      updateDiscussions[discussionId].arguments =  
+        updateDiscussions[discussionId].arguments.map(arg => {
+          if (arg.id === argument.id) 
+              return argument;
+          return arg;
+        })
+      
+
+      updateDiscussions[discussionId].currentArgumentModified = argument;
+
+      return { ...state, discussions: updateDiscussions };      
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.ADD_DISCUSSION_USER: { 
+      const { user, discussionId } = action.payload;
+      
+      const updateDiscussions = {...state.discussions};
+
+      if (!updateDiscussions[discussionId]) 
+        updateDiscussions[discussionId] = {} as DiscussionState;
+      
+      updateDiscussions[discussionId].users = [user, 
+        ...updateDiscussions[discussionId].users
+      ];
+
+      return { ...state, discussions: updateDiscussions };      
+    }
+
+    /**
+     * 
+     */
+    case OPERATION.REMOVE_DISCUSSION_USER: { 
+      const { user, discussionId } = action.payload;
+      
+      const updateDiscussions = {...state.discussions};
+
+      if (!updateDiscussions[discussionId]) 
+        updateDiscussions[discussionId] = {} as DiscussionState;
+      
+      updateDiscussions[discussionId].users = updateDiscussions[discussionId].users
+        .filter(u => u.id.toString() !== user.id.toString());
+      
+
+      return { ...state, discussions: updateDiscussions };      
+    }
+
+
+    /**
+     * 
+     */
+    case OPERATION.RESET_REACTED_ARGUMENT: { 
+      const { discussionId } = action.payload;
+      
+      const updateDiscussions = {...state.discussions};
+
+      if (!updateDiscussions[discussionId]) 
+        updateDiscussions[discussionId] = {} as DiscussionState;
+      
+      updateDiscussions[discussionId].currentArgumentModified = undefined;
+
+      return { ...state, discussions: updateDiscussions };      
+    }
 
     /**
      * Default case: Returns the current state if no matching action type is found.

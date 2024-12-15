@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import { Navbar } from "../shared/navbar";
 import { cn } from "@/lib/utils";
-
-import { IoIosArrowDropright } from "react-icons/io";
 import { useDisclosure } from "@/hooks/use-disclosure";
 
 interface LayoutProps {
@@ -18,45 +16,48 @@ export const MainLayout = ({
   RightSidebar,
   children,
   className,
-  contentStyle
+  contentStyle,
 }: LayoutProps) => {
   const { isOpen, toggle } = useDisclosure();
 
   return (
     <div className="pt-[5rem]">
-      <Navbar />
-
-      <div className="fixed left-0 md:hidden"> 
-        <IoIosArrowDropright 
-          onClick={toggle}
-        />
-      </div>
-
+      <Navbar 
+        toggleSidebar={toggle}
+      />
       <main
         className={cn(
-          `z-10 bg-background flex flex-row p-3 sm:p-6 gap-6 max-w-[1536px] mx-auto`,
+          `z-10 bg-background flex flex-row p-3 sm:p-6 gap-0 md:gap-6  max-w-[1536px] mx-auto`,
           className,
         )}
         style={{ minHeight: "calc(100vh - 4rem)" }}
       >
-        <div className={`fixed ${isOpen ? 'translate-x-0' : '-translate-x-[200%]'} md:translate-x-0`}>
+        <div
+          className={cn(
+            "fixed inset-y-0 left-50 z-40  transform overflow-y-auto bg-background md:p-2 transition-transform duration-300 ease-in-out md:translate-x-0",
+            isOpen ? "translate-x-0 top-16" : "-translate-x-full top-20"
+          )}
+        >
           {LeftSidebar && <LeftSidebar />}
         </div>
 
-        <div 
-          className={cn(`w-full
-              md:ml-[15.5rem] 
-              lg:mr-[17.5rem]
-              xl:mr-[19.5rem]`, contentStyle)}
+        <div
+          className={cn(
+            `w-full
+             md:ml-[16rem]
+             ${RightSidebar === undefined ? "md:mr-[16rem]" : ""}
+            `,
+            contentStyle,
+          )}
           style={{ minHeight: "calc(100vh - 8.5rem)" }}
         >
           {children}
         </div>
 
-        <div className="fixed right-4">
-          {RightSidebar && <RightSidebar />}
-        </div>
+        {/* <div className="fixed right-4">{RightSidebar && <RightSidebar />}</div> */}
+        <div className="hidden md:block">{RightSidebar && <RightSidebar />}</div>
       </main>
     </div>
   );
 };
+

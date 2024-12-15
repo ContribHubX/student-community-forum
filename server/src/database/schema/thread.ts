@@ -21,7 +21,7 @@ export const ThreadTable = mysqlTable("thread", {
     () => TopicTable.id,
   ),
   questionId: varchar("question_id", { length: 255 }).references(
-    () => QuestionTable.id,
+    () => QuestionTable.id, { onDelete: "cascade" }
   ),
 });
 

@@ -12,3 +12,4 @@ export * from "./study-room";
 export * from "./chat";
 export * from "./todo";
 export * from "./event";
+export * from "./saved-thread";

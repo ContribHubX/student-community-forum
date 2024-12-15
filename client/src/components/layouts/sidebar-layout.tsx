@@ -37,7 +37,7 @@ export const SidebarLayout = ({
 
   return (
     <aside
-      className={`overflow-y-auto  ${className} rounded-2xl`}
+      className={` ${className} rounded-2xl`}
       id="sidebar-container"
       style={{
         height: calculatedHeight,

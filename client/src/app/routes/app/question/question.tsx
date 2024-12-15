@@ -7,8 +7,7 @@ import { Questions } from "@/features/question/components/questions";
 export const QuestionRoute = () => {
   return (
     <MainLayout LeftSidebar={Aside} RightSidebar={Insight}>
-      <section className=""
-      >
+      <section className="">
         <Questions />
       </section>
     </MainLayout>

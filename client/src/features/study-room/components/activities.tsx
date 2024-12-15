@@ -14,21 +14,25 @@ export const Activities = ({ roomId }: ActivitiesProp) => {
 
   return (
     <div
-      className={`gap-3 p-3 md:bg-background rounded-2xl 
-        sm:h-[78svh]  md:h-[98vh]
-        grid grid-cols-1 
-        sm:grid-cols-2
-        md:grid-cols-1
-      `}
-      style={
-        {
-          // minHeight: "calc(100svh - 1rem)"
+      className="h-[70svh] sm:h-full overflow-y-auto"
+    > 
+      <div
+        className={`gap-3 p-3 md:bg-[#1e252b] rounded-2xl
+          sm:h-[78svh]  md:h-[98vh]
+          grid grid-cols-1
+          sm:grid-cols-2
+          md:grid-cols-1
+        `}
+        style={
+          {
+            // minHeight: "calc(100svh - 1rem)"
+          }
         }
-      }
-    >
-      <Timer roomId={roomId} />
-      <Todos userId={authState.user.id} />
-      <Chats userId={authState.user.id} roomId={roomId} />
+      >
+        <Timer roomId={roomId} />
+        <Todos userId={authState.user.id} />
+        <Chats userId={authState.user.id} roomId={roomId} />
+      </div>
     </div>
   );
 };

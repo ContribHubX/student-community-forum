@@ -1,17 +1,17 @@
 import { api } from "@/lib/axios";
 import { MutationConfig } from "@/lib/react-query";
-import { Reaction } from "@/types";
+import { Reaction, ReactionType } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
-export type CreateThreadType = {
-  type: Reaction;
-  createdBy: string;
+export type CreateReactionType = {
+  type: ReactionType;
+  userId: string;
   threadId: string;
 };
 
-const createReaction = async (data: any) => {
+const createReaction = async (data: CreateReactionType): Promise<Reaction> => {
   const response = await api.post(
-    "http://localhost:3000/api/thread/react",
+    "/api/thread/react",
     data,
     {},
   );
@@ -19,13 +19,13 @@ const createReaction = async (data: any) => {
   return response.data;
 };
 
-type CreateThreadMutationOption = {
+type CreateReactionMutationOption = {
   mutationConfig?: MutationConfig<typeof createReaction>;
 };
 
 export const useCreateReaction = ({
   mutationConfig,
-}: CreateThreadMutationOption) => {
+}: CreateReactionMutationOption) => {
   const { ...restConfig } = mutationConfig || {};
 
   return useMutation({

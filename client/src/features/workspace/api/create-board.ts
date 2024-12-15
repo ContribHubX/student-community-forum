@@ -13,7 +13,7 @@ export type CreateBoardType = z.infer<typeof createBoardSchema> & {
 };
 
 const createBoard = async (data: CreateBoardType): Promise<Board> => {
-  const response = await api.post("http://localhost:3000/api/board", data);
+  const response = await api.post("/api/board", data);
 
   return response.data;
 };

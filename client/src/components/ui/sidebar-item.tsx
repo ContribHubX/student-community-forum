@@ -22,14 +22,19 @@ export const SideBarItem = ({
   link,
   imgStyle,
   descStyle,
-  showDesc = true
+  showDesc = true,
 }: SidebarItemProps) => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}..` : text;
   };
   return (
     <Link to={link || ""}>
-      <div className={cn(`flex  gap-1 xs:gap-2 p-1 rounded-lg hover:bg-background items-center`, containerStyle)}>
+      <div
+        className={cn(
+          `flex  gap-1 xs:gap-2 p-1 rounded-lg hover:bg-background items-center`,
+          containerStyle,
+        )}
+      >
         <div
           className={`rounded-xl h-8 w-8 flex items-center justify-center`}
           style={{ backgroundColor: iconBgcolor }}
@@ -37,9 +42,11 @@ export const SideBarItem = ({
           <img src={icon} alt="" className={cn("h-5", imgStyle)} />
         </div>
 
-        <div className={cn("", descStyle)}>
-          <p className="text-sm">{truncateText(title, 15)}</p>
-          <p className={`text-xs text-muted-foreground font-light ${!showDesc && "hidden"}`}>
+        <div className={cn("text-sm", descStyle)}>
+          <p>{truncateText(title, 15)}</p>
+          <p
+            className={`text-xs text-muted-foreground font-light ${!showDesc && "hidden"}`}
+          >
             {truncateText(description, 22)}
           </p>
         </div>

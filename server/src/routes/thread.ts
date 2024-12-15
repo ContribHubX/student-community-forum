@@ -37,6 +37,8 @@ export default (app: Router) => {
     validateRequest(threadCommentSchema),
     threadReactionController.commentThreadHandler
   )
+  
+  router.post("/save", verifyAuth, threadController.saveThreadHandler);
 
   router.delete("/", verifyAuth, threadController.deleteThreadHandler);
 
@@ -45,6 +47,7 @@ export default (app: Router) => {
   router.get("/", verifyAuth, threadController.getAllThreadsHandler);
 
   router.get("/check", verifyAuth, threadReactionController.isAlreadyReactedHandler);
+
   
   router.get("/:threadId", verifyAuth, threadController.getSingleThreadHandler); 
 
@@ -53,5 +56,6 @@ export default (app: Router) => {
   router.get("/community/:communityId", verifyAuth, threadController.getAllThreadsByCommunityHandler); 
 
   router.get("/comment/:threadId", verifyAuth, threadReactionController.getCommentsHandler);
+
   
 } ;

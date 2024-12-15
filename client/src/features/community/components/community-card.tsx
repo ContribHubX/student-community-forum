@@ -13,7 +13,7 @@ export function CommunityCard({ community, rank }: CommunityCardProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center hover:text-accent-foreground text-primary-foreground space-x-4 p-4 bg-background hover:bg-accent transition-colors rounded-lg">
+    <div className="flex group items-center hover:text-accent-foreground text-primary-foreground space-x-4 p-4 bg-background hover:bg-accent transition-colors rounded-lg">
       <div className="relative flex-shrink-0">
         <img
           src={community.icon}
@@ -39,7 +39,7 @@ export function CommunityCard({ community, rank }: CommunityCardProps) {
         <Button
           variant={isJoined ? "outline" : "default"}
           size="sm"
-          className="text-accent-foreground"
+          className="text-accent-foreground group-hover:bg-background group-hover:text-primary-foreground"
         >
           {isJoined ? "Leave" : "Join"}
         </Button>

@@ -1,4 +1,4 @@
-import { IThreadFull, IThreadDto, IThreadUpdateDto, IThreadDeleteDto } from "@/domain/interfaces/IThread";
+import { IThreadFull, IThreadDto, IThreadUpdateDto, IThreadDeleteDto, IGetByIdDto, IGetByCommunityDto, IGetByTopicDto, ISaveThreadDto } from "@/domain/interfaces/IThread";
 import ThreadRepository from "@/domain/repository/thread";
 import { AppError } from "@/libs/app-error";
 import { Inject, Service } from "typedi";
@@ -83,9 +83,9 @@ class ThreadService {
    * @returns {Promise<IThreadFull | undefined>} - The thread object with the given ID or undefined if not found.
    * @throws {AppError} - Throws an error if the retrieval of the thread fails.
    */
-  public async getThreadById(threadId: string): Promise<IThreadFull | undefined> {
+  public async getThreadById(dto: IGetByIdDto): Promise<IThreadFull | undefined> {
     try {
-      return await this.threadRepo.findOneById(threadId);
+      return await this.threadRepo.findOneById(dto);
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Error getting thread");
@@ -96,9 +96,9 @@ class ThreadService {
    * 
    * @returns 
    */
-  public async getAllThread(): Promise<IThreadFull[] | undefined> {
+  public async getAllThread(userId: string): Promise<IThreadFull[] | undefined> {
     try {
-       return await this.threadRepo.getAll();
+       return await this.threadRepo.getAll(userId);
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Error getting threads");
@@ -110,9 +110,23 @@ class ThreadService {
    * 
    * @returns 
    */
-  public async getAllThreadByTopic(topicId: string): Promise<IThreadFull[] | undefined> {
+   public async saveThread(dto: ISaveThreadDto): Promise<ISaveThreadDto | undefined> {
     try {
-       return await this.threadRepo.getAllByTopic(topicId);
+       return await this.threadRepo.save(dto);
+    } catch (error: any) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error getting threads");
+    }
+    
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  public async getAllThreadByTopic(dto: IGetByTopicDto): Promise<IThreadFull[] | undefined> {
+    try {
+       return await this.threadRepo.getAllByTopic(dto);
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Error getting threads");
@@ -125,9 +139,9 @@ class ThreadService {
    * 
    * @returns 
    */
-  public async getAllThreadByCommunity(communityId: string): Promise<IThreadFull[] | undefined> {
+  public async getAllThreadByCommunity(dto: IGetByCommunityDto): Promise<IThreadFull[] | undefined> {
     try {
-       return await this.threadRepo.getAllByCommunity(communityId);
+       return await this.threadRepo.getAllByCommunity(dto);
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError("Error getting threads");

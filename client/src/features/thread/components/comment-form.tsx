@@ -28,7 +28,7 @@ export const CommentForm = ({
   onSubmitCallback,
 }: CommentFormProps) => {
   const [showEditor, setShowEditor] = useState(false);
-  
+
   const { authState } = useAuth();
 
   const [commentData, setCommentData] = useState<CreateThreadType>({

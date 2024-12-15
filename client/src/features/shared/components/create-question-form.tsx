@@ -23,24 +23,32 @@ import { handleFormErrors } from "@/utils";
 interface CreateQuestionFormProp {
   initialTopic?: Topic;
   initialTitleVal?: string;
+  initialContent?: string;
   userId: string;
   handleFormSubmit: (data: FormData) => void;
   taggable?: boolean;
+  action?: "edit" | "create";
 }
 
 export const CreateQuestionForm = ({
   initialTopic,
   handleFormSubmit,
   initialTitleVal,
+  initialContent,
   userId,
   taggable = false,
+  action = "create"
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const [tags, setTags] = useState<string[]>([]);
 
-  const { register, handleSubmit, setValue } = useForm<CreateThreadType>({
+  const { register, handleSubmit, setValue, watch } = useForm<CreateThreadType>({
     resolver: zodResolver(createThreadSchema),
   });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const content = watch("content", initialContent || "");
+
   const [selectedTopic, setSelectedTopic] = useState<string>(
     initialTopic?.id || "",
   );
@@ -163,7 +171,10 @@ export const CreateQuestionForm = ({
         <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
           Content
         </label>
-        <TextEditor handleChange={handleContentChange} />
+        <TextEditor 
+          handleChange={handleContentChange} 
+          initialContent={initialContent || ""}
+        />
         <input type="hidden" {...register("content")} />
         <input type="hidden" {...register("attachment")} />
       </div>
@@ -216,7 +227,7 @@ export const CreateQuestionForm = ({
           type="submit"
           className="bg-accent text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-accent-dark transition duration-300"
         >
-          Create
+          {action === "create" ? "Create" : "Edit"}
         </Button>
       </div>
     </form>

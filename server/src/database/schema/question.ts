@@ -26,7 +26,7 @@ export const QuestionVotesTable = mysqlTable("question_votes", {
         .references(() => UserTable.id)
         .notNull(),
     questionId: varchar("question_id", { length: 255 })
-        .references(() => QuestionTable.id)
+        .references(() => QuestionTable.id, { onDelete: "cascade" })
         .notNull(),
     vote: VoteType
 })
@@ -40,7 +40,7 @@ export const QuestionRequestTable = mysqlTable("question_request", {
         .references(() => UserTable.id)
         .notNull(),
     requestedTo: varchar("requested_to", { length: 255 })
-        .references(() => UserTable.id)
+        .references(() => UserTable.id, { onDelete: "cascade" })
         .notNull(),
     createdAt: timestamp("created_at").defaultNow(),
 })

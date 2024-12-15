@@ -6,7 +6,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { FaStar } from "react-icons/fa";
 import { FaRegPenToSquare } from "react-icons/fa6";
 
-
 interface QuestionCardListProp {
   questions: Question[];
 }

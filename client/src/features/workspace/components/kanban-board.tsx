@@ -3,10 +3,17 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { useParams } from "react-router-dom";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  
+} from "@/components/ui/select"
+
 import { FaPlus } from "react-icons/fa6";
-import { TiAttachmentOutline } from "react-icons/ti";
+import { TiEye, TiEyeOutline } from "react-icons/ti";
 import { FaExpandArrowsAlt } from "react-icons/fa";
-import { BsFillGridFill } from "react-icons/bs";
 import { LiaUserSolid } from "react-icons/lia";
 
 import { TaskColumn } from "./task-column";
@@ -56,6 +63,8 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
   const { state } = useBoardContext();
   const { isDark } = useTheme();
 
+  const [isRealTimeCursorVisible, setIsRealTimeCursorVisible] = useState(true);
+
   useEffect(() => {
     if (!socketState.socket || !socketState.socket.connected) return;
 
@@ -75,7 +84,7 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
     };
   }, [boardId, currentUser, socketState.socket]);
 
-  console.log(boardId)
+  console.log(boardId);
 
   useEffect(() => {
     if (!state || !boardId) return;
@@ -88,7 +97,7 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
 
   if (!taskData || !boardId) return <p>Loading...</p>;
 
-  console.log(taskData)
+  console.log(taskData);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -180,14 +189,32 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
             </Popover>
           </div>
 
-          <div className="flex items-center gap-3 text-xl text-primary-foreground">
-            <div className="flex items-center gap-3 ">
-              <TiAttachmentOutline className="hover:text-accent" />
-              <div className="h-[20px] w-[1px] bg-muted-foreground " />
-            </div>
-            <div className="hover:bg-accent w-[30px]  text-primary-foreground hover:text-white rounded-md h-[30px] flex items-center justify-center">
-              <BsFillGridFill className="rounded-md" />
-            </div>
+          <div className="flex items-center gap-2 text-xl text-primary-foreground">
+            <Select
+              onValueChange={(value) => {
+                setIsRealTimeCursorVisible(value === "true");
+              }}
+              value={isRealTimeCursorVisible.toString()}
+            >
+            <SelectTrigger className="flex border-none text-2xl w-8 items-center p-0 gap-3 [&>svg]:hidden">
+              <div className="flex items-center gap-3">
+                {isRealTimeCursorVisible ? (
+                  <TiEye className="text-green-500 hover:text-accent" />
+                ) : (
+                  <TiEyeOutline className="text-red-500 hover:text-accent" />
+                )}
+                <div className="h-[20px] w-[1px] bg-muted-foreground" />
+              </div>
+            </SelectTrigger>
+            <SelectContent className="rounded-md shadow-md">
+              <SelectItem value="true" className="hover:bg-accent hover:text-white">
+                Cursor Visible
+              </SelectItem>
+              <SelectItem value="false" className="hover:bg-accent hover:text-white">
+                Cursor Hidden
+              </SelectItem>
+            </SelectContent>
+            </Select>
             <div className="hover:bg-accent w-[30px] text-primary-foreground hover:text-white rounded-md h-[30px] flex items-center justify-center">
               <FaExpandArrowsAlt
                 className=" rounded-md"
@@ -198,35 +225,39 @@ export const KanbanBoard = ({ toggleNavbar, currentUser }: KanbanBoardProp) => {
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-3 max-w-[1000px] gap-4 mx-auto min-w-[800px] overflow-x-scroll">
-        {["todo", "doing", "finished"].map((type) => (
-          <Droppable key={type} droppableId={type}>
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="min-h-[500px] flex flex-col gap-4"
-              >
-                <TaskColumn
-                  currentUserId={currentUser.id}
-                  boardId={boardId}
-                  type={type as TaskStatusType}
-                  tasks={taskData
-                    .filter((task) => task.status === type)
-                    .sort((a, b) => a.sequence - b.sequence)}
-                />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
+      <div className="overflow-x-auto ">
+        <div className="mt-6 grid grid-cols-3 max-w-[1000px] gap-4 mx-auto min-w-[800px]">
+          {["todo", "doing", "finished"].map((type) => (
+            <Droppable key={type} droppableId={type}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="min-h-[500px] flex flex-col gap-4"
+                >
+                  <TaskColumn
+                    currentUserId={currentUser.id}
+                    boardId={boardId}
+                    type={type as TaskStatusType}
+                    tasks={taskData
+                      .filter((task) => task.status === type)
+                      .sort((a, b) => a.sequence - b.sequence)}
+                  />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
       </div>
 
-      <ActiveUsers
-        currentUser={currentUser}
-        boardId={boardId}
-        boardState={socketState.boards[boardId]}
-      />
+      <div className={`${!isRealTimeCursorVisible && "hidden"}`}>
+        <ActiveUsers
+          currentUser={currentUser}
+          boardId={boardId}
+          boardState={socketState.boards[boardId]}
+        />
+      </div>
     </DragDropContext>
   );
 };

@@ -1,6 +1,6 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import Container, { Service } from "typedi";
-import { IThreadDeleteDto, IThreadDto, IThreadFull, IThreadUpdateDto } from "../interfaces/IThread";
+import { IGetByCommunityDto, IGetByIdDto, IGetByTopicDto, ISaveThreadDto, IThreadDeleteDto, IThreadDto, IThreadFull, IThreadUpdateDto } from "../interfaces/IThread";
 import { ThreadTable, ThreadTagsTable } from "@/database/schema";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 import { AppError } from "@/libs/app-error";
@@ -21,13 +21,13 @@ class ThreadRepository {
    * @returns {Promise<IThreadFull | undefined>} The thread data or `undefined` if not found.
    * @throws {AppError} If the thread is not found or a database error occurs.
    */
-  public findOneById(threadId: string): Promise<IThreadFull | undefined> {
+  public findOneById(dto: IGetByIdDto): Promise<IThreadFull | undefined> {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await this.db.query.ThreadTable.findFirst({
-          where: eq(ThreadTable.id, threadId),
+          where: eq(ThreadTable.id, dto.threadId),
           extras: {
-            ...this.threadReactionExtras(),
+            ...this.threadReactionExtras(dto.userId),
           },
           with: {
             createdBy: true,
@@ -85,7 +85,7 @@ class ThreadRepository {
           );
         }
 
-        const threadCreated = await this.findOneById(threadId);
+        const threadCreated = await this.findOneById({userId: dto.createdBy, threadId: threadId});
 
         resolve(threadCreated);
       } catch (error: any) {
@@ -97,7 +97,7 @@ class ThreadRepository {
   public update(dto: IThreadUpdateDto): Promise<IThreadFull | undefined> {
     return new Promise(async (resolve, reject) => {
       try {
-        const thread = await this.findOneById(dto.threadId);
+        const thread = await this.findOneById({userId: dto.createdBy, threadId: dto.threadId});
         
         // check first if thread exist
         if (!thread) 
@@ -140,7 +140,7 @@ class ThreadRepository {
           );
         }
 
-        const threadCreated = await this.findOneById(dto.threadId);
+        const threadCreated = await this.findOneById({userId: dto.createdBy, threadId: dto.threadId});
 
         resolve(threadCreated);
       } catch (error: any) {
@@ -155,12 +155,12 @@ class ThreadRepository {
    * @returns {Promise<IThreadFull[]>} A list of all threads.
    * @throws {AppError} If a database error occurs.
    */
-  public getAll(): Promise<IThreadFull[]> {
+  public getAll(userId: string): Promise<IThreadFull[]> {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await this.db.query.ThreadTable.findMany({
           extras: {
-            ...this.threadReactionExtras(),
+            ...this.threadReactionExtras(userId),
           },
           with: {
             createdBy: true,
@@ -187,17 +187,17 @@ class ThreadRepository {
    * @returns {Promise<IThreadFull[]>} A list of all threads.
    * @throws {AppError} If a database error occurs.
    */
-  public getAllByTopic(topicId: string): Promise<IThreadFull[]> {
+  public getAllByTopic(dto: IGetByTopicDto): Promise<IThreadFull[]> {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await this.db.query.ThreadTable.findMany({
           extras: {
-            ...this.threadReactionExtras(),
+            ...this.threadReactionExtras(dto.userId),
           },
           with: {
             createdBy: true,
           },
-          where: eq(ThreadTable.topicId, topicId),
+          where: eq(ThreadTable.topicId, dto.topicId),
           orderBy: [desc(ThreadTable.createdAt)],
         });
 
@@ -214,17 +214,17 @@ class ThreadRepository {
    * @returns {Promise<IThreadFull[]>} A list of all threads.
    * @throws {AppError} If a database error occurs.
    */
-  public getAllByCommunity(communityId: string): Promise<IThreadFull[]> {
+  public getAllByCommunity(dto: IGetByCommunityDto): Promise<IThreadFull[]> {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await this.db.query.ThreadTable.findMany({
           extras: {
-            ...this.threadReactionExtras(),
+            ...this.threadReactionExtras(dto.userId),
           },
           with: {
             createdBy: true,
           },
-          where: eq(ThreadTable.communityId, communityId),
+          where: eq(ThreadTable.communityId, dto.communityId),
           orderBy: [desc(ThreadTable.createdAt)],
         });
 
@@ -239,7 +239,7 @@ class ThreadRepository {
     return new Promise(async (resolve, reject) => {
       try {
         // check if thread exist
-        const thread = await this.findOneById(dto.threadId);
+        const thread = await this.findOneById({userId: dto.userId, threadId: dto.threadId});
 
         if (!thread) return reject(new AppError("Thread not found", 404));
 
@@ -257,13 +257,46 @@ class ThreadRepository {
     });
   }
 
+  public save(dto: ISaveThreadDto): Promise<ISaveThreadDto> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // check if thread exist
+        const thread = await this.findOneById({userId: dto.userId, threadId: dto.threadId});
+
+        if (!thread) return reject(new AppError("Thread not found", 404));
+
+        // check if already saved 
+        const isSaved = await this.db
+          .query
+          .SavedThreadTable
+          .findFirst({
+            where: and(
+              eq(schema.SavedThreadTable.userId, dto.userId),
+              eq(schema.SavedThreadTable.threadId, dto.threadId)
+            )
+          })
+
+
+        if (isSaved) return reject(new AppError("Already saved", 400));
+
+        await this.db
+          .insert(schema.SavedThreadTable)
+          .values({...dto});
+
+        resolve(dto);
+      } catch (error: any) {
+        reject(new AppError(error || "Database error"));
+      }
+    });
+  }
+ 
   /**
    * Generates additional SQL columns for reaction and comment counts.
    * 
    * @private
    * @returns {Object} An object containing SQL expressions for like, dislike, and comment counts.
    */
-  private threadReactionExtras() {
+  private threadReactionExtras(userId: string) {
     return {
       likeCount: sql<number>`(
         SELECT COUNT(*) FROM thread_reaction 
@@ -279,6 +312,14 @@ class ThreadRepository {
         SELECT COUNT(*) FROM comment
         WHERE thread_id = ${ThreadTable.id} 
       )`.as("comment_count"),
+      isSaved: sql<boolean>`(
+        SELECT EXISTS (
+            SELECT 1 
+            FROM saved_thread
+            WHERE saved_thread.thread_id = ${ThreadTable.id} 
+              AND saved_thread.user_id = ${userId}
+        )
+      )`.as("is_saved"),
     };
   }
 }

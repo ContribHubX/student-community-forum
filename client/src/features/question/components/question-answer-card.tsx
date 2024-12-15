@@ -268,7 +268,9 @@ export const QuestionAnswerCard = ({ userId, thread }: ThreadCardProp) => {
           <ThreadMenu
             onEdit={() => navigate(`/thread-action/${thread.id}`)}
             onDelete={() => deleteThread({ threadId: thread.id, userId })}
-            isCurrentUserThread={userId.toString() === thread?.createdBy?.id.toString()}
+            isCurrentUserThread={
+              userId.toString() === thread?.createdBy?.id.toString()
+            }
           />
         </div>
       </CardFooter>

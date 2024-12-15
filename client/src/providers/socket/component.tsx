@@ -16,7 +16,10 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
   const { authState } = useAuth();
   const queryClient = useQueryClient();
 
-  const socket = useSocket("http://localhost:3000", {
+  //const hostname = window.location.hostname;
+  const uri = "http://localhost:3000";
+
+  const socket = useSocket(`${uri}`, {
     autoConnect: false,
     reconnectionDelay: 5000,
     reconnectionAttempts: 5,
@@ -153,6 +156,28 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             type: OPERATION.ADD_NEW_QUESTION,
             payload: {
               question: data,
+              queryClient,
+            },
+          });
+          break;
+
+        case "question--updated":
+          console.log(data);
+          socketDispatch({
+            type: OPERATION.UPDATE_QUESTION,
+            payload: {
+              question: data,
+              queryClient,
+            },
+          });
+          break;
+          
+        case "question--deleted":
+          console.log(data);
+          socketDispatch({
+            type: OPERATION.DELETE_QUESTION,
+            payload: {
+              questionId: data,
               queryClient,
             },
           });
@@ -375,6 +400,56 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
             payload: {
               communityId: data.communityId,
               queryClient,
+            },
+          });
+          break;
+
+        case "discussion-state--initial":
+          socketDispatch({
+            type: OPERATION.INIT_COMMUNITY_DISCUSSION,
+            payload: {
+              data,
+            },
+          });
+          break;
+
+        case "user-discussion--joined":
+          socketDispatch({
+            type: OPERATION.ADD_DISCUSSION_USER,
+            payload: {
+              user: data.user,
+              discussionId: data.discussionId
+            },
+          });
+          break;
+        
+        case "user-discussion--left":
+          console.log(data); 
+          socketDispatch({
+            type: OPERATION.REMOVE_DISCUSSION_USER,
+            payload: {
+              user: data.user,
+              discussionId: data.discussionId
+            },
+          });
+          break;
+
+        case "discussion-argument--new":
+          socketDispatch({  
+            type: OPERATION.ADD_DISCUSSION_ARGUMENT,
+            payload: {
+              argument : data.argument,
+              discussionId: data.discussionId
+            },
+          });
+          break;
+
+        case "discussion-argument--react":
+          socketDispatch({  
+            type: OPERATION.ADD_ARGUMENT_REACTION,
+            payload: {
+              argument : data.argument,
+              discussionId: data.discussionId
             },
           });
           break;

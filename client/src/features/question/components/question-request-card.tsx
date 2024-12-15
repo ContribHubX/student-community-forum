@@ -41,7 +41,7 @@ export const QuestionRequestCard = ({
   return (
     <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
       <CardContent className="p-6">
-        <div className="flex items-start space-x-6">
+        <div className="flex items-start space-x-3 sm:space-x-6">
           {/* Voting Section */}
           <div className="flex flex-col items-center space-y-2">
             <Button
@@ -68,7 +68,7 @@ export const QuestionRequestCard = ({
           {/* Question Details */}
           <div className="flex-1 space-y-4">
             {/* Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between">
               <div className="flex items-center space-x-4">
                 <Avatar className="h-10 w-10">
                   <AvatarImage
@@ -80,7 +80,7 @@ export const QuestionRequestCard = ({
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-start space-x-2">
                     <p className="text-sm font-medium text-primary-foreground">
                       <span className="text-accent font-semibold">
                         {requestedBy.name}
@@ -103,7 +103,7 @@ export const QuestionRequestCard = ({
               <Button
                 variant="outline"
                 size="sm"
-                className="text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
+                className="hidden xs:block text-xs sm:text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
                 onClick={() => navigate(`/question/${question.id}`)}
               >
                 Answer

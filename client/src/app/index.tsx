@@ -1,8 +1,6 @@
-
 import AppProvider from "./main-provider";
 import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const App = () => {
   return (

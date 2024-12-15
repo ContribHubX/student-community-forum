@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MainLayout } from "@/components/layouts/layout";
+import { HomeLayout } from "@/components/layouts/home-layout";
 import { CommunityCard } from "@/features/community/components/community-card";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -31,7 +31,7 @@ export const CommunitiesRoute = () => {
   });
 
   return (
-    <MainLayout>
+    <HomeLayout>
       <section className="container mx-auto px-4 py-8 max-w-3xl text-primary-foreground">
         <h1 className="text-3xl font-bold text-center mb-8">
           Explore Communities
@@ -77,6 +77,6 @@ export const CommunitiesRoute = () => {
           </p>
         )}
       </section>
-    </MainLayout>
+    </HomeLayout>
   );
 };

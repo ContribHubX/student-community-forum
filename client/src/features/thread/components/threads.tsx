@@ -8,12 +8,13 @@ import { SideBarItem } from "@/components/ui/sidebar-item";
 import newest from "@/assets/sidebar/newest.svg";
 import popular from "@/assets/sidebar/popular.svg";
 
-
 export const Threads = () => {
   const { authState } = useAuth();
   const { data: threads } = useGetThreads({});
 
   if (!authState.user) return <p>Loading...</p>;
+
+  console.log(threads);
 
   return (
     <div className="flex flex-col gap-4">
@@ -30,43 +31,41 @@ export const Threads = () => {
   );
 };
 
-
 const TabbedNav = () => {
-  
-
   return (
-      <div
-        className=" bg-primary text-primary-foreground rounded-2xl p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900
+    <div
+      className=" bg-primary text-primary-foreground rounded-2xl p-4 gap-4 shadow-slate-400 shadow-md dark:shadow-gray-900
           flex  justify-between
         "
-        id="sidebar"
-        >
-        <SideBarItem
-          title="Newest"
-          description="Find the latest updates"
-          icon={newest}
-          iconBgcolor="primary"
-          link={"/"}
-          showDesc={false}
-          containerStyle="text-2xl"
-        />
-        <SideBarItem
-          title="Popular"
-          description="Shots featured duringasjdkashduikasd"
-          icon={popular}
-          iconBgcolor="#EFF5F8"
-          link={"/popular"}
-          showDesc={false}
-
-        />
-        <SideBarItem
-          title="Popular"
-          description="Shots featured duringasjdkashduikasd"
-          icon={newest}
-          iconBgcolor="#EFF5F8"
-          showDesc={false}
-
-        />
-      </div>
-  )
-}
+      id="sidebar"
+    >
+      <SideBarItem
+        title="Newest"
+        description="Find the latest updates"
+        icon={newest}
+        iconBgcolor="primary"
+        link={"/"}
+        showDesc={false}
+        containerStyle="text-2xl"
+        descStyle="text-xs sm:text-sm"
+      />
+      <SideBarItem
+        title="Popular"
+        description="Shots featured duringasjdkashduikasd"
+        icon={popular}
+        iconBgcolor="#EFF5F8"
+        link={"/popular"}
+        showDesc={false}
+        descStyle="text-xs sm:text-sm"
+      />
+      <SideBarItem
+        title="Popular"
+        description="Shots featured duringasjdkashduikasd"
+        icon={newest}
+        iconBgcolor="#EFF5F8"
+        showDesc={false}
+        descStyle="text-xs sm:text-sm"
+      />
+    </div>
+  );
+};

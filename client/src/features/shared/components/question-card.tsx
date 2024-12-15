@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Question } from "@/types";
 
-import { ChevronUp, ChevronDown, MessageSquare, Eye } from "lucide-react";
+import { ChevronUp, ChevronDown, MessageSquare, Eye, MoreHorizontal } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +10,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useGetVotes } from "@/features/question/api/get-votes";
 import { useCreateVote } from "@/features/question/api/vote";
 import { Badge } from "@/components/ui/badge";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { FaTrashAlt } from "react-icons/fa";
+import { GrEdit } from "react-icons/gr";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { CreateQuestionForm } from "./create-question-form";
+import { useUpdateQuestion } from "@/features/question/api/update-question";
+import { formDataToObject } from "@/utils";
+import { useDeleteQuestion } from "@/features/question/api/delete-question";
+import { toast } from "react-toastify";
+import { useDisclosure } from "@/hooks/use-disclosure";
 
 interface QuestionCardProp {
   currentUserId: string;
@@ -18,11 +28,33 @@ interface QuestionCardProp {
 
 export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
   const navigate = useNavigate();
+  const { isOpen, setOpen } = useDisclosure();
+
+  const isCurrentUser = question.createdBy ? question.createdBy.id.toString() === currentUserId.toString() : false; 
+
   const { data: votes } = useGetVotes({
     data: { userId: currentUserId.toString(), questionId: question.id },
   });
-
+  
   const { mutate: createVote } = useCreateVote({});
+
+  const { mutate: updateQuestion } = useUpdateQuestion({
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success("Successfully edited");
+        setOpen(false);
+      },
+    }
+  });
+
+  const { mutate: deleteQuestion } = useDeleteQuestion({
+    mutationConfig: {
+      onSuccess: () => {
+        toast.success("Successfully deleted");
+      },
+    }
+  });
+
   const handleCreateVote = (vote: "up" | "down") => {
     createVote({
       userId: currentUserId,
@@ -30,6 +62,18 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
       vote,
     });
   };
+
+  const handleUpdateQuestion = (data: FormData) => {
+    const dto = formDataToObject(data);
+
+    // update 
+    updateQuestion({
+      id: question .id,
+      title: dto.title,
+      content: dto.content,
+      topicId: dto.topicId || null
+    })
+  }
 
   return (
     <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
@@ -60,7 +104,7 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
           {/* Question Details */}
           <div className="flex-1 space-y-4">
             {/* Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-start justify-between">
               <div className="flex items-start space-x-4">
                 <Avatar className="h-10 w-10">
                   <AvatarImage
@@ -72,39 +116,42 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="flex items-start sm:items-center flex-col sm:flex-row gap-2">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                     <p className="text-sm font-medium text-primary-foreground">
                       {question.createdBy.name}
                     </p>
                     {question?.topic && (
-                    <Badge
-                      variant="secondary"
-                      className="flex items-center gap-1 px-2 py-1 ml-auto dark:bg-background cursor-pointer"
-                      onClick={() => navigate(`/topic/${question.topic?.id}`)}
-                    >
-                      {question?.topic.attachment && (
-                        <img
-                          src={question.topic?.attachment}
-                          alt={`${question.topic?.name} icon`}
-                          className="w-4 h-4 rounded-full"
-                        />
-                      )}
-                      <span>{question?.topic.name}</span>
-                    </Badge>
+                      <Badge
+                        variant="secondary"
+                        className="flex items-center self-start gap-1 px-2 py-1  dark:bg-background cursor-pointer"
+                        onClick={() => navigate(`/topic/${question.topic?.id}`)}
+                      >
+                        {question?.topic.attachment && (
+                          <img
+                            src={question.topic?.attachment}
+                            alt={`${question.topic?.name} icon`}
+                            className="w-4 h-4 rounded-full"
+                          />
+                        )}
+                        <span className="hidden sm:block whitespace-nowrap">{question?.topic.name}</span>
+                      </Badge>
                     )}
                   </div>
                   <p className="text-xs text-gray-500">
-                    {new Date(question.createdAt || new Date()).toLocaleDateString(
-                      undefined,
-                      { year: "numeric", month: "short", day: "numeric" },
-                    )}
+                    {new Date(
+                      question.createdAt || new Date(),
+                    ).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
                   </p>
                 </div>
               </div>
               <Button
                 variant="outline"
                 size="sm"
-                className="text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
+                className="text-xs sm:text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
                 onClick={() => navigate(`/question/${question.id}`)}
               >
                 Answer
@@ -125,19 +172,104 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
             </div>
 
             {/* Footer */}
-            <div className="flex items-center space-x-6 text-sm text-gray-500">
-              <div className="flex items-center space-x-2">
-                <MessageSquare className="h-4 w-4 text-gray-400" />
-                <span>{question?.threads?.length || 0} answers</span>
+            <div className="flex items-end justify-between space-x-6 text-sm text-gray-500 ">
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-2">
+                  <MessageSquare className="h-4 w-4 text-gray-400" />
+                  <span>{question?.threads?.length || 0} answers</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Eye className="h-4 w-4 text-gray-400" />
+                  <span>10 views</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Eye className="h-4 w-4 text-gray-400" />
-                <span>10 views</span>
+              <div className="">
+                <QuestionMenu
+                  userId={currentUserId}
+                  question={question}
+                  onEdit={handleUpdateQuestion}
+                  onDelete={() => {
+                    deleteQuestion(question.id)
+                  }}
+                  isCurrentUserQuestion={isCurrentUser}
+                  showEditor={isOpen}
+                  setOpenEditor={setOpen}
+                />
               </div>
             </div>
           </div>
         </div>
       </CardContent>
     </Card>
+  );
+};
+
+
+interface QuestionMenuProp {
+  question: Question;
+  onEdit: (data: FormData) => void;
+  onDelete: () => void;
+  userId: string;
+  isCurrentUserQuestion: boolean;
+  showEditor: boolean;
+  setOpenEditor: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const QuestionMenu = ({
+  onEdit,
+  onDelete,
+  question,
+  userId,
+  isCurrentUserQuestion,
+  showEditor,
+  setOpenEditor
+}: QuestionMenuProp) => {
+
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <Button variant="ghost" size="icon" className="h-8 w-8">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[100px] p-0 bg-primary dark:bg-background dark:border-none">
+        <div className="p-2">
+          {isCurrentUserQuestion ? (
+            <>
+              <Dialog open={showEditor} onOpenChange={setOpenEditor}>
+                <DialogTrigger className="w-full">
+                  <span
+                    className="cursor-pointer rounded-md p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
+                    onClick={() => setOpenEditor(true)}
+                  >
+                    <GrEdit />
+                    <p className="text-sm">Edit</p>
+                  </span>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px] lg:max-w-[800px] bg-primary dark:border-none">
+                  <CreateQuestionForm
+                    initialTitleVal={question.title}
+                    initialTopic={question.topic}
+                    initialContent={question.content}
+                    userId={userId}
+                    handleFormSubmit={onEdit}
+                    action="edit"
+                  /> 
+                </DialogContent>
+              </Dialog>
+              <span
+                className="rounded-md cursor-pointer p-2 flex items-center gap-2 hover:bg-accent hover:text-accent-foreground"
+                onClick={onDelete}
+              >
+                <FaTrashAlt className="" />
+                <p className="text-sm">Delete</p>
+              </span>
+            </>
+          ) : (
+            <span>Hide</span>
+          )}
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };

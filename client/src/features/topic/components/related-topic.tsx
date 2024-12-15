@@ -10,8 +10,8 @@ export const RelatedTopics = () => {
   return (
     <SidebarLayout
       className="hidden flex-col gap-6 lg:flex 
-        lg:w-[270px]
-        xl:w-[300px]
+        lg:w-[245px]
+        xl:w-[290px]
       "
       height={"full"}
       position="right-6"

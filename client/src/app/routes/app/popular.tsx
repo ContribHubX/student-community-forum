@@ -1,12 +1,11 @@
-import { PopularLayout } from "@/components/layouts/popular-layout";
 import { LeftSidebar } from "@/components/shared/left-sidebar";
-import { RightSidebar } from "@/components/shared/right-sidebar";
-
 import { ThreadCardList } from "@/features/shared/components/thread-card-list";
 import { useGetThreads } from "@/features/thread/api/get-all-threads";
 import { Rooms } from "@/features/study-room/components/rooms";
 
 import { useAuth } from "@/hooks/use-auth";
+import { MainLayout } from "@/components/layouts/layout";
+import { Thread } from "@/types";
 
 export const PopularRoute = () => {
   const { authState } = useAuth();
@@ -14,19 +13,29 @@ export const PopularRoute = () => {
 
   if (!authState?.user?.id) return <p>Loading...</p>;
 
+  const sortedThreads = (threads || []).sort(
+    (a: Thread, b: Thread) => 
+      (b.likeCount + b.dislikeCount) - (a.likeCount + a.dislikeCount)
+  );
+
+
   return (
-    <PopularLayout LeftSidebar={LeftSidebar} RightSidebar={RightSidebar}>
+    <MainLayout 
+      LeftSidebar={LeftSidebar}
+      // RightSidebar={} 
+      className="overflow-x-hidden"
+    >
       <section
-        className="bg-background border-3 border-black
-      md:ml-[16rem] overflow-x-hidden"
+        className="bg-background border-3 border-black 
+      "
       >
         <div>
           <Rooms />
         </div>
         <div className="lg:mr-[22rem] mt-4 ">
-          <ThreadCardList threads={threads || []} />
+          <ThreadCardList threads={sortedThreads || []} />
         </div>
       </section>
-    </PopularLayout>
+    </MainLayout>
   );
 };

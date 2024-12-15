@@ -72,6 +72,42 @@ export default {
             next(new AppError(error));
         }
     },
+    
+     /**
+     * Handler to update a question.
+     * 
+     * @route PUT /questions/:questionId
+     */
+     async updateQuestionHandler(req: Request, res: Response, next: NextFunction) {
+        const questionId = req.params.questionId;
+        const dto = req.body;
+
+        try {
+            const questionService = Container.get(QuestionService);
+            const updatedQuestion = await questionService.updateQuestion({id: questionId, ...dto});
+            res.status(200).json(updatedQuestion);
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
+
+    
+    /**
+     * Handler to delete a question.
+     * 
+     * @route DELETE /questions/:questionId
+     */
+    async deleteQuestionHandler(req: Request, res: Response, next: NextFunction) {
+        const questionId = req.params.questionId;
+
+        try {
+            const questionService = Container.get(QuestionService);
+            await questionService.deleteQuestion(questionId);
+            res.status(204).send();
+        } catch (error: any) {
+            next(new AppError(error));
+        }
+    },
 
     /**
      * Handler to retrieve all questions requested to a specific user.
@@ -100,7 +136,7 @@ export default {
 
         try {
             const questionService = Container.get(QuestionService);
-            const response = await questionService.getThreadsByQuestionId(questionId);
+            const response = await questionService.getThreadsByQuestionId({userId: req.currentUser.id, questionId});
             res.status(200).json(response);
         } catch (error: any) {
             next(new AppError(error));

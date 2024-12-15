@@ -27,6 +27,8 @@ class EventManager {
     socketClient.client.on("user--join", data => this.link(data));
     
     socketClient.client.on("user-room--join", data => this.link(data));
+
+    socketClient.client.on("user-discussion--join", (data) => this.link(data));
   }
 
   /**
@@ -87,7 +89,7 @@ class EventManager {
 
   /**
    * 
-   */
+   */ 
   link(data: any): void {
     const client = this.clients.get(data.user.id.toString())!;
     
@@ -98,6 +100,8 @@ class EventManager {
 
     if (data.boardId)
       this.roomManager.joinKanban({...data, userId: data.user.id.toString(), client});
+    else if (data.community)  
+      this.roomManager.joinDiscussionRoom({...data, client});
     else 
       this.roomManager.joinStudyRoom({...data, userId: data.user.id.toString(), client});
   }

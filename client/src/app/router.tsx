@@ -140,6 +140,15 @@ const createAppRouter = () =>
           },
         },
         {
+          path: "/community/live-discussion/:communityId",
+          lazy: async () => {
+            const { LiveDiscussionRoute } = await import(
+              "./routes/app/community/live-discussion"
+            );
+            return { Component: LiveDiscussionRoute };
+          },
+        },
+        {
           path: "/workspace",
           lazy: async () => {
             const { WorkspaceRoute } = await import(
