@@ -13674,3 +13674,1452 @@
 2024-12-15T11:12:16.828Z error: 🔥 Error attaching user to req: %o
 2024-12-15T11:12:37.323Z error: 🔥 Error attaching user to req: %o
 2024-12-15T11:12:37.333Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:57:00.211Z info: ✌️ Dependencies injected into container
+2024-12-15T20:57:00.226Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-15T20:59:08.749Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:59:08.755Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:59:12.472Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:59:12.480Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:59:12.482Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:59:12.485Z error: 🔥 Error attaching user to req: %o
+2024-12-15T20:59:12.490Z error: 🔥 Error attaching user to req: %o
+2024-12-15T21:07:01.903Z error: 🔥 Error attaching user to req: %o
+2024-12-15T21:07:01.906Z error: 🔥 Error attaching user to req: %o
+2024-12-15T21:10:50.809Z info: Starting focus timer for 30 minutes.
+2024-12-15T21:10:50.816Z info: Starting focus timer for 30 minutes.
+2024-12-15T21:14:00.161Z info: No users left in the room. Stopping video playback.
+2024-12-15T21:14:00.163Z info: Timer stopped.
+2024-12-15T21:14:55.990Z error: User failed to remove, cause it doenst exist
+2024-12-15T21:40:50.828Z info: Starting break timer for 10 minutes.
+2024-12-15T21:50:50.850Z info: Starting focus timer for 30 minutes.
+2024-12-15T22:07:24.049Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:24.054Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:36.444Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:36.452Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:37.736Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:37.741Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:37.759Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:37.765Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:37.767Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:42.126Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:07:42.139Z error: 🔥 Error attaching user to req: %o
+2024-12-15T22:20:50.875Z info: Starting break timer for 10 minutes.
+2024-12-15T22:30:50.881Z info: Starting focus timer for 30 minutes.
+2024-12-15T23:00:50.893Z info: Starting break timer for 10 minutes.
+2024-12-15T23:08:00.052Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:00.057Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:00.058Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:23.922Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:23.925Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:24.748Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:24.813Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:24.840Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:24.887Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:24.920Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:28.967Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:08:28.972Z error: 🔥 Error attaching user to req: %o
+2024-12-15T23:10:50.893Z info: Starting focus timer for 30 minutes.
+2024-12-15T23:40:50.902Z info: Starting break timer for 10 minutes.
+2024-12-15T23:50:50.919Z info: Starting focus timer for 30 minutes.
+2024-12-16T01:33:46.763Z info: ✌️ Dependencies injected into container
+2024-12-16T01:33:46.786Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T01:34:16.110Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:34:16.112Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:34:20.016Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:34:20.030Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:34:20.068Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:34:20.077Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:34:20.081Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:35:29.169Z error: 🔥 Error attaching user to req: %o
+2024-12-16T01:35:29.174Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:41:53.948Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:41:53.954Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:41:53.956Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:41:53.957Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:42:00.533Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:42:00.537Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:42:13.166Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:42:13.168Z error: 🔥 Error attaching user to req: %o
+2024-12-16T02:58:08.944Z error: Client socket not found
+2024-12-16T03:01:06.931Z error: Client socket not found
+2024-12-16T03:02:49.570Z error: Client socket not found
+2024-12-16T03:04:40.991Z error: User failed to remove, cause it doenst exist
+2024-12-16T03:18:01.479Z error: Client socket not found
+2024-12-16T03:18:01.595Z error: Client socket not found
+2024-12-16T03:18:21.252Z error: Client socket not found
+2024-12-16T03:18:21.268Z error: Client socket not found
+2024-12-16T03:19:23.721Z error: Client socket not found
+2024-12-16T03:19:23.730Z error: Client socket not found
+2024-12-16T03:22:16.593Z error: Client socket not found
+2024-12-16T03:22:16.613Z error: Client socket not found
+2024-12-16T03:22:28.389Z error: Client socket not found
+2024-12-16T03:22:28.403Z error: Client socket not found
+2024-12-16T03:33:16.211Z info: Starting focus timer for 30 minutes.
+2024-12-16T03:33:16.212Z info: Starting focus timer for 30 minutes.
+2024-12-16T03:43:19.002Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:43:42.246Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:44:22.045Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:44:23.538Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:44:32.442Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:44:41.949Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:44:51.662Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:14.414Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:14.418Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:15.106Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:15.116Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:15.128Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:15.203Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:15.210Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:20.509Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:20.511Z error: 🔥 Error attaching user to req: %o
+2024-12-16T03:45:37.492Z info: Starting focus timer for 30 minutes.
+2024-12-16T03:45:37.493Z info: Starting focus timer for 30 minutes.
+2024-12-16T03:54:25.165Z info: ✌️ Dependencies injected into container
+2024-12-16T03:54:25.188Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T03:54:39.856Z info: Starting focus timer for 30 minutes.
+2024-12-16T03:54:39.857Z info: Starting focus timer for 30 minutes.
+2024-12-16T04:12:13.722Z info: No users left in the room. Stopping video playback.
+2024-12-16T04:12:13.723Z info: Timer stopped.
+2024-12-16T05:18:56.380Z info: ✌️ Dependencies injected into container
+2024-12-16T05:18:56.397Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T05:20:06.028Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:06.036Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:07.744Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:07.750Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:07.756Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:07.760Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:07.767Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:30.360Z error: 🔥 Error attaching user to req: %o
+2024-12-16T05:20:30.375Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.095Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.107Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.111Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.113Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.125Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.412Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.414Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.415Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.417Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.418Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.421Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.423Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.426Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.428Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.429Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.432Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.436Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.438Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.439Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.440Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.442Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.444Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.445Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.447Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.449Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.452Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.453Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.454Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.456Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.460Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.462Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.466Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.467Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.479Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.484Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.494Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.497Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.499Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.501Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.503Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.504Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.506Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.508Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.510Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.511Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.513Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.515Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.517Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.518Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.520Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.522Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.524Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:32.525Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:34.447Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:34.453Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:35.959Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:35.965Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:36.382Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:36.424Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:36.437Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:39.855Z error: 🔥 Error attaching user to req: %o
+2024-12-16T06:38:39.871Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:18:06.685Z info: Starting focus timer for 30 minutes.
+2024-12-16T07:18:06.686Z info: Starting focus timer for 30 minutes.
+2024-12-16T07:18:16.441Z info: No users left in the room. Stopping video playback.
+2024-12-16T07:18:16.442Z info: Timer stopped.
+2024-12-16T07:39:17.640Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:39:21.360Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:05.982Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:05.991Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:08.323Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:08.325Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:09.462Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:09.464Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:09.476Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:09.479Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:09.562Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:14.708Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:40:14.716Z error: 🔥 Error attaching user to req: %o
+2024-12-16T07:48:06.716Z info: Starting break timer for 10 minutes.
+2024-12-16T07:58:06.734Z info: Starting focus timer for 30 minutes.
+2024-12-16T08:16:58.164Z info: No users left in the room. Stopping video playback.
+2024-12-16T08:16:58.165Z info: Timer stopped.
+2024-12-16T08:28:06.739Z info: Starting break timer for 10 minutes.
+2024-12-16T08:38:06.756Z info: Starting focus timer for 30 minutes.
+2024-12-16T08:41:00.721Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:09.359Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:09.361Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.711Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.714Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.726Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.727Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.730Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.731Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.734Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.735Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.737Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.746Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.899Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.909Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.910Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:38.996Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.000Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.005Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.012Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.016Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.019Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.026Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.028Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.045Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.060Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.070Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.081Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.099Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.185Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.205Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.310Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.324Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.327Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.331Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.333Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.336Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.341Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.343Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.345Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.347Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.349Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.351Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.353Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.358Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.360Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.361Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.363Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.364Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.367Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.368Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.369Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.373Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.376Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.377Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.379Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.381Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.383Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.385Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.386Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:41:39.390Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.765Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.781Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.783Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.788Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.802Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.806Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.872Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.875Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.876Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.877Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.878Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.880Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.886Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.889Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.985Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.987Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.988Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.989Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.990Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:31.991Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.108Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.110Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.113Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.114Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.116Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.117Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.120Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.121Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.123Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.124Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.126Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.127Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.128Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.130Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.131Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.133Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.134Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.135Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.137Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.139Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.140Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.141Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.142Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.144Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.145Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.146Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.147Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.149Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.150Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.151Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.153Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.166Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.185Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.208Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.311Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.347Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.370Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.388Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:32.411Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:34.682Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:34.687Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:34.763Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:34.801Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.747Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.753Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.756Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.767Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.770Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.832Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.834Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.836Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.837Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.838Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.840Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.841Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.842Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.845Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.847Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.849Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.868Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.874Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.878Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.881Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.886Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.890Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.896Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.907Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.935Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.938Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.945Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.953Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.956Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.958Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.967Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.973Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.979Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.981Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:35.986Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.004Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.007Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.014Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.016Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.018Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.030Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.033Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.036Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.038Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.044Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.052Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.055Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.057Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.064Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.073Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.076Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.078Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.081Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.083Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.085Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.109Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.121Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.135Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:36.142Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.113Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.119Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.122Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.126Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.140Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.154Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.157Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.160Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.163Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.168Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.173Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.180Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.187Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.194Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.200Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.205Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.209Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.243Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.250Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.258Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.261Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.266Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.278Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.281Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.283Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.286Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.295Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.298Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.302Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.306Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.310Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.317Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.322Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.327Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.334Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.339Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.345Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.347Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.350Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.378Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.380Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.384Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.392Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.395Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.400Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.404Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.416Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.420Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.423Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.426Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.430Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.493Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.494Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.496Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.515Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.530Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.534Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:40.539Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.831Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.842Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.846Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.849Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.854Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.872Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.877Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.882Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.887Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.899Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.971Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.973Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.974Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.976Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.977Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.979Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.982Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.984Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.986Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:45.997Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.000Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.006Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.009Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.017Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.020Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.036Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.043Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.045Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.047Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.049Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.052Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.054Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.057Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.062Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.065Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.068Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.107Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.109Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.111Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.116Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.124Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.127Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.130Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.132Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.136Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.140Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.142Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.144Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.147Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.152Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.155Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.158Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.160Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.162Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.166Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.168Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.170Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.173Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:46.176Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.586Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.598Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.604Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.609Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.613Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.619Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.633Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.638Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.647Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.651Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.664Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.676Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.706Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.710Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.717Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.724Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.729Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.735Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.742Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.751Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.760Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.767Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.770Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.775Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.781Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.784Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.786Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.791Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.795Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.798Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.808Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.810Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.839Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.843Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.847Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.850Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.860Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.865Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.869Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.875Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.877Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.882Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.890Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.896Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.901Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.905Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.908Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.911Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.914Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.917Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.919Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.922Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.924Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.926Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.928Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.931Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:50.933Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:42:51.060Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.581Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.589Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.603Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.609Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.688Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.689Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.691Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.692Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.693Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.695Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.699Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.703Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.706Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.717Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.829Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.830Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.833Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.835Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.837Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.838Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.840Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.841Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.842Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.843Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.844Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.845Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.847Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.849Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.852Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.853Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.854Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.855Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.869Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.871Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.872Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.874Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.875Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.877Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.878Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.922Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.924Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.927Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.928Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.930Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.932Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.935Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.936Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.937Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.938Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.939Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.941Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.942Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.943Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:43:13.944Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:44:20.340Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:46:12.034Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:46:29.135Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:46:40.199Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:48:13.233Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:48:19.364Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:49:34.243Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.597Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.614Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.635Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.636Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.641Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.666Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.675Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.683Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.685Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.720Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.758Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.760Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.762Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.765Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.769Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.772Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.921Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.922Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.924Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.926Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.927Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.928Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.929Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.932Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.934Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.937Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.938Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.939Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.940Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.941Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.943Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.944Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.945Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.946Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.948Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.950Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.951Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.952Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.953Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.954Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.957Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.958Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.959Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.960Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.961Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.962Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.964Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.965Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.966Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.967Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.969Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.970Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.994Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.995Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.996Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:28.997Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:29.076Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:29.084Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:29.087Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:41.359Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:41.368Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:42.511Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:46.689Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:54:46.711Z error: 🔥 Error attaching user to req: %o
+2024-12-16T08:55:52.996Z info: No users left in the room. Stopping video playback.
+2024-12-16T08:55:53.001Z info: Timer stopped.
+2024-12-16T08:56:47.554Z error: User failed to remove, cause it doenst exist
+2024-12-16T09:08:06.750Z info: Starting break timer for 10 minutes.
+2024-12-16T09:18:06.769Z info: Starting focus timer for 30 minutes.
+2024-12-16T09:48:06.773Z info: Starting break timer for 10 minutes.
+2024-12-16T09:56:35.986Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:35.990Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:35.997Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.005Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.012Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.015Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.024Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.038Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.043Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.048Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.052Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.104Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.111Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.114Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.121Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.125Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.128Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.130Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.133Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.136Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.141Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.145Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.148Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.150Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.152Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.155Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.157Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.160Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.164Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.176Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.179Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.261Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.262Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.264Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.266Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.267Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.269Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.270Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.272Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.273Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.275Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.277Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.279Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.283Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.286Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.288Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.289Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.290Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.292Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.293Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.294Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.295Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:36.297Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.203Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.215Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.219Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.222Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.233Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.237Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.244Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.250Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.255Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.258Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.299Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.308Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.316Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.324Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.328Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.337Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.339Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.341Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.343Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.346Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.349Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.351Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.353Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.356Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.362Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.367Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.370Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.381Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.386Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.389Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.402Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.439Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.442Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.452Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.462Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.465Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.470Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.480Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.486Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.492Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.494Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.502Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.505Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.523Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.527Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.531Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.558Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.574Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.577Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.579Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.582Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.584Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:41.586Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.855Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.861Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.864Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.871Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.878Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.886Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.889Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.899Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.904Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.908Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.919Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.923Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.927Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.929Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.932Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.960Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.963Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.972Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.978Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.981Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:53.988Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.001Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.007Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.012Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.015Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.017Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.019Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.026Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.029Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.032Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.040Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.041Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.046Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.048Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.072Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.079Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.083Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.085Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.087Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.092Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.108Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.130Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.141Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.151Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.158Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.161Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.164Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.167Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.169Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.170Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.171Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.173Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:56:54.176Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.232Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.235Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.240Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.246Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.253Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.261Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.263Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.273Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.276Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.284Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.288Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.291Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.302Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.327Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.336Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.338Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.342Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.345Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.348Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.352Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.355Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.358Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.362Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.367Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.370Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.373Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.378Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.382Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.387Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.391Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.393Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.399Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.406Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.408Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.415Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.417Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.421Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.425Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.430Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.432Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.455Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.459Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.462Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.468Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.472Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.477Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.484Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.487Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.489Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.491Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.493Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.495Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:28.497Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.810Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.822Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.845Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.847Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.859Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.861Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.864Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.872Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.878Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.882Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.902Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.911Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.914Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.922Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.930Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.932Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.942Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.946Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.955Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.961Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.965Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.973Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.977Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.982Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.985Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.994Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:39.998Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.000Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.003Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.007Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.011Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.015Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.018Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.022Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.024Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.028Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.031Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.034Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.038Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.043Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.071Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.076Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.081Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.087Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.093Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.098Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.118Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.128Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.135Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.140Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.142Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.152Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:57:40.157Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:58:06.785Z info: Starting focus timer for 30 minutes.
+2024-12-16T09:59:31.571Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:31.577Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:31.592Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:31.659Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:32.380Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:32.455Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.460Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.465Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.474Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.486Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.487Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.494Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.499Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.501Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.505Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.510Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.518Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.520Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.528Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.555Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.562Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.565Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.571Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.578Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.581Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.587Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.597Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.599Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.606Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.615Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.617Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.623Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.633Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.637Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.641Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.647Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.653Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.657Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.683Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.685Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.692Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.696Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.698Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.701Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.703Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.705Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.707Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.709Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.711Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.713Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.715Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.722Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.726Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.729Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.734Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.736Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.739Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.745Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.747Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.753Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.756Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.759Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.765Z error: 🔥 Error attaching user to req: %o
+2024-12-16T09:59:56.888Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:02.774Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:02.779Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:02.792Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:02.798Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:02.801Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:02.820Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:08.363Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:18.708Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:18.714Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:23.438Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:23.443Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:23.463Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:23.466Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:27.048Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:00:27.050Z error: 🔥 Error attaching user to req: %o
+2024-12-16T10:28:06.799Z info: Starting break timer for 10 minutes.
+2024-12-16T10:38:06.810Z info: Starting focus timer for 30 minutes.
+2024-12-16T10:41:25.467Z info: No users left in the room. Stopping video playback.
+2024-12-16T10:41:25.468Z info: Timer stopped.
+2024-12-16T10:53:35.382Z info: Starting focus timer for 30 minutes.
+2024-12-16T10:53:35.384Z info: Starting focus timer for 30 minutes.
+2024-12-16T10:53:39.993Z error: User failed to remove, because it doesn't exist.
+2024-12-16T10:53:39.994Z info: No users left in the room. Stopping video playback.
+2024-12-16T10:53:39.994Z info: Timer stopped.
+2024-12-16T10:53:42.681Z info: Starting focus timer for 30 minutes.
+2024-12-16T10:53:45.648Z info: No users left in the room. Stopping video playback.
+2024-12-16T10:53:45.649Z info: Timer stopped.
+2024-12-16T10:53:45.649Z error: User failed to remove, because it doesn't exist.
+2024-12-16T10:53:45.649Z error: User failed to remove, because it doesn't exist.
+2024-12-16T11:03:40.334Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:03:40.337Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:03:40.344Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:03:53.574Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:03:53.582Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:03:53.584Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:06:21.653Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:06:21.663Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:06:21.742Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:06:46.084Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:06:46.090Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:06:46.098Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:08:56.217Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:08:56.220Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:08:56.227Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:27.155Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:27.159Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:27.162Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:29.079Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:29.082Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:30.304Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:58.735Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:10:58.739Z error: 🔥 Error attaching user to req: %o
+2024-12-16T11:23:35.409Z info: Starting break timer for 10 minutes.
+2024-12-16T11:23:42.698Z info: Starting break timer for 10 minutes.
+2024-12-16T11:33:35.425Z info: Starting focus timer for 30 minutes.
+2024-12-16T13:45:18.066Z info: ✌️ Dependencies injected into container
+2024-12-16T13:45:18.112Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T13:45:18.343Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:45:18.352Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:45:34.021Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:45:34.462Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:45:35.375Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:45:35.407Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:45:35.441Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:48:51.879Z error: 🔥 Error attaching user to req: %o
+2024-12-16T13:48:51.889Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:00:30.882Z info: ✌️ Dependencies injected into container
+2024-12-16T14:00:30.927Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:03:07.547Z info: ✌️ Dependencies injected into container
+2024-12-16T14:03:07.563Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:04:21.466Z info: ✌️ Dependencies injected into container
+2024-12-16T14:04:21.483Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:08:30.538Z info: ✌️ Dependencies injected into container
+2024-12-16T14:08:30.554Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:09:39.355Z info: ✌️ Dependencies injected into container
+2024-12-16T14:09:39.371Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:11:40.227Z info: ✌️ Dependencies injected into container
+2024-12-16T14:11:40.246Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:13:11.659Z info: ✌️ Dependencies injected into container
+2024-12-16T14:13:11.675Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:47:52.099Z info: ✌️ Dependencies injected into container
+2024-12-16T14:47:52.129Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T14:51:49.786Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.791Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.795Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.796Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.799Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.806Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.814Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.816Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.817Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.820Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.831Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.833Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.835Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.837Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.839Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.840Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.842Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.852Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.855Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.857Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.858Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.860Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.867Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.870Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.879Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.887Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.890Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.901Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.909Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.911Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.918Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.920Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.933Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.940Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.948Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.950Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.963Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:49.989Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.010Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.032Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.046Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.059Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.075Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.089Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.102Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.121Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.134Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.145Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.156Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.160Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.162Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.164Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.168Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.171Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.173Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.176Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.180Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.186Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:51:50.188Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:52:06.613Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:52:06.616Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:52:06.619Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:52:06.621Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:52:06.629Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:52:06.673Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:23.354Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:34.431Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:34.440Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:35.167Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:35.173Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:35.178Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:35.179Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:35.181Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:37.711Z error: 🔥 Error attaching user to req: %o
+2024-12-16T14:53:37.941Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:03.425Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:03.428Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:04.178Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:04.182Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:04.184Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:04.185Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:04.188Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:07.874Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:26:07.876Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:31:16.986Z error: User failed to remove, cause it doenst exist
+2024-12-16T15:31:19.141Z error: User failed to remove, cause it doenst exist
+2024-12-16T15:31:19.145Z error: User failed to remove, cause it doenst exist
+2024-12-16T15:55:13.344Z error: 🔥 Error attaching user to req: %o
+2024-12-16T15:55:13.347Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:09:39.856Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:09:39.890Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:30:08.223Z info: ✌️ Dependencies injected into container
+2024-12-16T16:30:08.266Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T16:34:16.910Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:34:16.914Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:34:17.413Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:34:17.415Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:34:22.907Z error: 🔥 Error attaching user to req: %o
+2024-12-16T16:34:22.912Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:01:45.418Z info: ✌️ Dependencies injected into container
+2024-12-16T17:01:45.433Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T17:02:38.032Z info: ✌️ Dependencies injected into container
+2024-12-16T17:02:38.050Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T17:13:18.059Z info: Starting focus timer for 30 minutes.
+2024-12-16T17:13:18.062Z info: Starting focus timer for 30 minutes.
+2024-12-16T17:14:11.423Z info: new host: Harvie Purgatorio
+2024-12-16T17:14:29.819Z error: User failed to remove, because it doesn't exist.
+2024-12-16T17:16:36.377Z info: new host: ShinjiCodeEVA
+2024-12-16T17:17:50.500Z info: No users left in the room. Stopping video playback.
+2024-12-16T17:17:50.506Z info: Timer stopped.
+2024-12-16T17:30:24.247Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.251Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.254Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.255Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.257Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.258Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.342Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.344Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.345Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.347Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.349Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.351Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.352Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.354Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.355Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.357Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.358Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.360Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.363Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.365Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.367Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.368Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.370Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.372Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.373Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.376Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.377Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.379Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.380Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.382Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.383Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.386Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.468Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.473Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.565Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.567Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.580Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.584Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.596Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.615Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.652Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.727Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.741Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.750Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.755Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.763Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.769Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.772Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.778Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.782Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.785Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.786Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.788Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:24.790Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:29.745Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:38.887Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:38.892Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:39.539Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:44.123Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:30:44.136Z error: 🔥 Error attaching user to req: %o
+2024-12-16T17:43:18.065Z info: Starting break timer for 10 minutes.
+2024-12-16T17:53:18.082Z info: Starting focus timer for 30 minutes.
+2024-12-16T23:01:41.427Z info: ✌️ Dependencies injected into container
+2024-12-16T23:01:41.443Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-16T23:05:52.685Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:52.775Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:53.462Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:53.502Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:56.387Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:56.399Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:56.402Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:56.404Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:05:56.406Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:06:03.430Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:06:03.443Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:06:04.994Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:06:05.105Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:06:05.231Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:09:41.429Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:09:41.439Z error: 🔥 Error attaching user to req: %o
+2024-12-16T23:24:25.874Z error: Client socket not found
+2024-12-16T23:27:07.366Z error: Client socket not found
+2024-12-16T23:27:07.375Z error: Client socket not found
+2024-12-16T23:38:23.641Z info: Starting focus timer for 30 minutes.
+2024-12-16T23:38:23.643Z info: Starting focus timer for 30 minutes.
+2024-12-16T23:42:36.557Z info: No users left in the room. Stopping video playback.
+2024-12-16T23:42:36.558Z info: Timer stopped.
+2024-12-17T00:08:23.655Z info: Starting break timer for 10 minutes.
+2024-12-17T00:18:23.657Z info: Starting focus timer for 30 minutes.
+2024-12-17T00:18:43.651Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:19:44.569Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:19:44.572Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:19:46.043Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:19:56.098Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:19:56.103Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:58.609Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:58.615Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:59.177Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:59.178Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:59.181Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:59.182Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:24:59.185Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:25:02.241Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:25:02.243Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:36:43.266Z info: ✌️ Dependencies injected into container
+2024-12-17T00:36:43.283Z info: 
+            ################################################
+                🛡️  Server listening on port: 3000 🛡️
+            ################################################      
+        
+2024-12-17T00:37:32.327Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:37:32.334Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:37:39.102Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:37:39.125Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:22.246Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:22.251Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:23.007Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:23.012Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:23.016Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:23.018Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:23.021Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:27.323Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:39:27.338Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:02.935Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:02.948Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:06.179Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:06.181Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:06.190Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:06.192Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:40:06.194Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:42:08.931Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:42:08.939Z error: 🔥 Error attaching user to req: %o
+2024-12-17T00:54:53.612Z info: Starting focus timer for 30 minutes.
+2024-12-17T00:54:53.614Z info: Starting focus timer for 30 minutes.
+2024-12-17T01:04:36.486Z error: User failed to remove, because it doesn't exist.
+2024-12-17T01:04:46.881Z info: No users left in the room. Stopping video playback.
+2024-12-17T01:04:46.899Z info: Timer stopped.
+2024-12-17T01:20:25.317Z error: 🔥 Error attaching user to req: %o
+2024-12-17T01:20:25.402Z error: 🔥 Error attaching user to req: %o
+2024-12-17T01:23:31.415Z error: 🔥 Error attaching user to req: %o
+2024-12-17T01:23:31.418Z error: 🔥 Error attaching user to req: %o
+2024-12-17T01:24:53.897Z info: Starting break timer for 10 minutes.
+2024-12-17T01:34:53.910Z info: Starting focus timer for 30 minutes.
+2024-12-17T02:04:53.912Z info: Starting break timer for 10 minutes.
+2024-12-17T02:14:53.748Z info: Starting focus timer for 30 minutes.
+2024-12-17T02:33:15.445Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:35:22.903Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:21.300Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:21.304Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:23.249Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:23.256Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:23.312Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:23.346Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:37:23.373Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:38:08.712Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:38:08.723Z error: 🔥 Error attaching user to req: %o
+2024-12-17T02:44:53.754Z info: Starting break timer for 10 minutes.
+2024-12-17T02:54:53.768Z info: Starting focus timer for 30 minutes.
+2024-12-17T03:23:55.815Z error: Client socket not found
+2024-12-17T03:24:53.110Z error: Client socket not found
+2024-12-17T03:24:53.118Z error: Client socket not found
+2024-12-17T03:24:54.059Z info: Starting break timer for 10 minutes.
+2024-12-17T03:26:44.295Z error: Client socket not found
+2024-12-17T03:34:07.492Z error: User failed to remove, cause it doenst exist
+2024-12-17T03:34:54.061Z info: Starting focus timer for 30 minutes.
+2024-12-17T03:38:01.658Z info: No users left in the room. Stopping video playback.
+2024-12-17T03:38:01.659Z info: Timer stopped.
+2024-12-17T04:04:54.082Z info: Starting break timer for 10 minutes.

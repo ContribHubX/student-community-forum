@@ -62,7 +62,7 @@ interface ThreadCardProp {
 export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   const queryClient = useQueryClient();
   const [isImageExpanded, setIsImageExpanded] = useState(false);
-
+  
   const { mutate: addReaction } = useCreateReaction({
     mutationConfig: createReactionMutationConfig(queryClient, userId, thread),
   });
@@ -116,7 +116,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
   };
 
   return (
-    <Card className="w-full hover:shadow-lg transition-shadow duration-300  bg-primary dark:border-none">
+    <Card className="w-full hover:shadow-lg transition-shadow duration-300  bg-primary dark:border-none relative ">
       <CardHeader className="xs:-space-y-3">
         <div className="flex flex-row items-start space-y-0 gap-4 ">
           <Avatar className="w-10 h-10">
@@ -140,7 +140,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                   }}
                 >
                   {formatDistanceToNow(
-                    new Date(thread.createdAt || new Date()),
+                    new Date(thread?.createdAt || new Date()),
                     {
                       addSuffix: true,
                     },
@@ -150,7 +150,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
               {community && (
                 <Badge
                   variant="secondary"
-                  className="flex self-start w-max items-center gap-1 pl-2 md:pr-6 py-1 ml-auto dark:bg-background cursor-pointer"
+                  className="mr-6 xs:mr-0 flex self-start w-max items-center gap-1 pl-2 md:pr-6 py-1 ml-auto dark:bg-background cursor-pointer"
                   onClick={() => navigate(`/community/${community.id}`)}
                 >
                   {community.icon && (
@@ -237,7 +237,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                     disabled={reactionFlag("LIKE") || reactionFlag("DISLIKE")}
                   >
                     <TbArrowBigDown
-                      className="text-3xl rotate-180  text-white"
+                      className="text-4xl rotate-180  text-white scale-110"
                       style={{
                         color:
                           isDark || isUpHovered || reactionFlag("LIKE")
@@ -259,7 +259,7 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
                     disabled={reactionFlag("LIKE") || reactionFlag("DISLIKE")}
                   >
                     <TbArrowBigDown
-                      className="text-2xl"
+                      className="text-2xl  scale-110"
                       style={{
                         color:
                           isDark || isDownHovered || reactionFlag("DISLIKE")
@@ -306,8 +306,8 @@ export const ThreadCard = ({ userId, thread }: ThreadCardProp) => {
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
-                  size="icon"
-                  className={`${thread.isSaved && "bg-accent text-accent-foreground"} disabled:opacity-100`}
+                  size="sm"
+                  className={`${thread.isSaved && "bg-accent text-accent-foreground"} disabled:opacity-100 p-2`}
                   onClick={() =>
                     saveThread({
                       userId,
@@ -348,8 +348,8 @@ export const ThreadMenu = ({
 }: ThreadMenuProp) => {
   return (
     <Popover>
-      <PopoverTrigger>
-        <Button variant="ghost" size="icon">
+      <PopoverTrigger className="absolute top-4 right-4 xs:top-0 xs:right-0  xs:relative ">
+        <Button variant="ghost" size="sm" className="p-2">
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </PopoverTrigger>

@@ -11,9 +11,10 @@ import {
 
 interface CreateBoardFormProp {
   userId: string | undefined;
+  onSuccessCb: () => void;
 }
 
-export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
+export const CreateBoardForm = ({ userId, onSuccessCb }: CreateBoardFormProp) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
@@ -23,7 +24,13 @@ export const CreateBoardForm = ({ userId }: CreateBoardFormProp) => {
   } = useForm<CreateBoardType>({
     resolver: zodResolver(createBoardSchema),
   });
-  const { mutate: createBoard } = useCreateBoard({});
+  const { mutate: createBoard } = useCreateBoard({
+    mutationConfig: {
+      onSuccess: () => {
+        onSuccessCb();
+      }
+    }
+  });
 
   const onSubmit: SubmitHandler<CreateBoardType> = async (
     data: CreateBoardType,

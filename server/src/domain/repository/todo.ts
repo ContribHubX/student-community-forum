@@ -4,7 +4,7 @@ import { ITodo, ITodoDto, ITodoUpdateDto } from "../interfaces/ITodo";
 import { AppError } from "@/libs/app-error";
 import * as schema from "@/database/schema";
 import { TodoTable } from "@/database/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 @Service()
 class TodoRepository {
@@ -106,6 +106,7 @@ class TodoRepository {
             try {
                 const todos = await this.db.query.TodoTable.findMany({
                     where: eq(TodoTable.createdBy, userId),
+                    orderBy: desc(TodoTable.createdAt)
                 });
 
                 if (!todos || todos.length === 0) return reject(new AppError("No TODOs found for the user", 404));

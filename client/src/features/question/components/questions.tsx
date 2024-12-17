@@ -13,6 +13,8 @@ export const Questions = () => {
   const { isVisible, showIndicator, handleIndicatorClick } =
     useNewPostIndicator({ elementRef: questionsRef });
   const { socketState } = useSocketProvider();
+  
+  console.log(questions);
 
   useEffect(() => {
     if (

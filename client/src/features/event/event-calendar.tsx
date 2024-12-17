@@ -29,6 +29,7 @@ export const EventCalendar = ({
   userId,
 }: EventCalendarProps) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [showForm, setShowForm] = useState(false);
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const firstDayOfMonth = startOfMonth(currentDate);
@@ -115,14 +116,18 @@ export const EventCalendar = ({
         </div>
 
         <div className="mt-6 flex justify-end">
-          <Dialog>
+          <Dialog open={showForm} onOpenChange={setShowForm}>
             <DialogTrigger asChild>
               <Button className="text-sm text-accent-foreground">
                 <Plus className="mr-0 h-4 w-4" /> Add Event
               </Button>
             </DialogTrigger>
-            <DialogContent className=" dark:border-none">
-              <CreateEventForm communityId={communityId} userId={userId} />
+            <DialogContent className=" dark:border-none bg-primary">
+              <CreateEventForm 
+                communityId={communityId} 
+                userId={userId} 
+                onSuccessCb={() => setShowForm(false)}
+              />
             </DialogContent>
           </Dialog>
         </div>

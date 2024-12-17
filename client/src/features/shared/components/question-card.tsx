@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Question } from "@/types";
 
-import { ChevronUp, ChevronDown, MessageSquare, Eye, MoreHorizontal } from "lucide-react";
+import { ChevronUp, ChevronDown, MessageSquare, MoreHorizontal, PencilLine } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
@@ -104,7 +104,7 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
           {/* Question Details */}
           <div className="flex-1 space-y-4">
             {/* Header */}
-            <div className="flex items-start justify-between">
+            <div className="flex items-start gap-2 justify-between">
               <div className="flex items-start space-x-4">
                 <Avatar className="h-10 w-10">
                   <AvatarImage
@@ -151,10 +151,10 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
               <Button
                 variant="outline"
                 size="sm"
-                className="text-xs sm:text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
+                className="text-xs  sm:text-sm sm:px-4 px-2 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
                 onClick={() => navigate(`/question/${question.id}`)}
               >
-                Answer
+                 <PencilLine />
               </Button>
             </div>
 
@@ -178,10 +178,10 @@ export const QuestionCard = ({ question, currentUserId }: QuestionCardProp) => {
                   <MessageSquare className="h-4 w-4 text-gray-400" />
                   <span>{question?.threads?.length || 0} answers</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <Eye className="h-4 w-4 text-gray-400" />
-                  <span>10 views</span>
-                </div>
+                {/* <div className="flex items-center space-x-2">
+                  <ChevronDown className="h-4 w-4" />
+                  <span>{votes?.downvoteCount || 0} </span>
+                </div> */}
               </div>
               <div className="">
                 <QuestionMenu

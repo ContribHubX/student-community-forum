@@ -4,6 +4,7 @@ import upcomingEventsData from "@/features/shared/data/upcoming-events-data";
 
 import { useGetEvents } from "@/features/event/api/get-events";
 import { CommunityEvent } from "@/types";
+import { Calendar } from "lucide-react";
 
 export interface UpcomingEventsListProp {
   communityId?: string
@@ -48,7 +49,7 @@ interface UpcomingEventProps {
   event: CommunityEvent
 }
 
-const defaultIcon = 'https://via.placeholder.com/150'; 
+// const defaultIcon = 'https://via.placeholder.com/150'; 
 const defaultLocation = 'Online';
 
 const UpcomingEvent = ({ event }: UpcomingEventProps) => {
@@ -76,11 +77,10 @@ const UpcomingEvent = ({ event }: UpcomingEventProps) => {
             <p className="text-sm">{truncateText(name, 23)}</p>
           </div>
           <div className="flex items-center gap-2">
-            <img
-              src={defaultIcon}
-              alt="Event Icon"
-              className="h-5 w-5 rounded-full"
-            />
+             {/* Default Event Icon */}
+             <div className="h-5 w-5 flex items-center justify-center rounded-full bg-background border-none">
+              <Calendar className="h-4 w-4 text-green-400" />
+            </div>
             <p className="text-xs text-muted-foreground mb-2">
               {truncateText(defaultLocation, 22)}
             </p>

@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
-  SelectContent,
+SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
@@ -39,7 +39,11 @@ export const TopicCard = ({
   createThread,
 }: TopicCardProp) => {
   const { data: followers } = useGetTopicFollowers({ topicId: topic.id });
-  const { mutate: follow } = useFollowTopic({});
+  const { mutate: follow } = useFollowTopic({
+    mutationConfig: {
+      
+    }
+  });
   const [postType, setPostType] = useState("thread");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<

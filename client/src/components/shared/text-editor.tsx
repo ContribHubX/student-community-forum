@@ -58,7 +58,6 @@ export const TextEditor = ({
     parseHtml();
   }, [value]);
 
-  console.log("value: ", value);
   useEffect(() => {
     handleChange(contentData);
   }, [contentData]);

@@ -18,14 +18,10 @@ interface CollaborativeWhiteboardProps {
 
 type Tool = "brush" | "eraser";
 
-export const CollaborativeWhiteboard = ({
-  handleClose,
-}: CollaborativeWhiteboardProps) => {
+export const CollaborativeWhiteboard = ({ handleClose }: CollaborativeWhiteboardProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [startPos, setStartPos] = useState<{ x: number; y: number } | null>(
-    null,
-  );
+  const isDrawingRef = useRef(false);
+  const startPosRef = useRef<{ x: number; y: number } | null>(null);
   const [tool, setTool] = useState<Tool>("brush");
   const [color, setColor] = useState("#000000");
   const [brushSize, setBrushSize] = useState(2);
@@ -34,6 +30,27 @@ export const CollaborativeWhiteboard = ({
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
+
+    const resizeCanvas = () => {
+      const rect = canvas.getBoundingClientRect();
+      const scale = window.devicePixelRatio || 1;
+
+      const tempCanvas = document.createElement("canvas");
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const tempContext = tempCanvas.getContext("2d");
+      if (tempContext) {
+        tempContext.drawImage(canvas, 0, 0);
+      }
+
+      canvas.width = rect.width * scale;
+      canvas.height = rect.height * scale;
+      context.scale(scale, scale);
+
+      if (tempContext) {
+        context.drawImage(tempCanvas, 0, 0);
+      }
+    };
 
     const drawLine = (x0: number, y0: number, x1: number, y1: number) => {
       context.beginPath();
@@ -46,68 +63,68 @@ export const CollaborativeWhiteboard = ({
       context.closePath();
     };
 
+    const getMousePos = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    };
+
     const onMouseDown = (e: MouseEvent) => {
-      setIsDrawing(true);
-      setStartPos({ x: e.offsetX, y: e.offsetY });
+      const { x, y } = getMousePos(e);
+      isDrawingRef.current = true;
+      startPosRef.current = { x, y };
     };
 
     const onMouseMove = (e: MouseEvent) => {
-      if (!isDrawing || !startPos) return;
-
-      const { offsetX, offsetY } = e;
-      drawLine(startPos.x, startPos.y, offsetX, offsetY);
-      setStartPos({ x: offsetX, y: offsetY });
-
-      // Uncomment for socket transactions
-      // socketState.socket?.emit("draw", { x0: startPos.x, y0: startPos.y, x1: offsetX, y1: offsetY, color, brushSize, tool, roomId });
+      if (!isDrawingRef.current || !startPosRef.current) return;
+      const { x, y } = getMousePos(e);
+      drawLine(startPosRef.current.x, startPosRef.current.y, x, y);
+      startPosRef.current = { x, y };
     };
 
     const onMouseUp = () => {
-      setIsDrawing(false);
-      setStartPos(null);
+      isDrawingRef.current = false;
+      startPosRef.current = null;
     };
 
     canvas.addEventListener("mousedown", onMouseDown);
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mouseup", onMouseUp);
     canvas.addEventListener("mouseout", onMouseUp);
+    window.addEventListener("resize", resizeCanvas);
 
-    // Uncomment for socket transactions
-    // socketState.socket.on("draw", ({ x0, y0, x1, y1, color, brushSize, tool }) => {
-    //   context.strokeStyle = tool === "eraser" ? "#FFFFFF" : color;
-    //   context.lineWidth = brushSize;
-    //   drawLine(x0, y0, x1, y1);
-    // });
+    resizeCanvas();
 
     return () => {
       canvas.removeEventListener("mousedown", onMouseDown);
       canvas.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("mouseup", onMouseUp);
       canvas.removeEventListener("mouseout", onMouseUp);
-
-      // Uncomment for socket transactions
-      // socketState.socket?.off("draw");
+      window.removeEventListener("resize", resizeCanvas);
     };
-  }, [isDrawing, startPos, color, brushSize, tool]);
+  }, [tool, color, brushSize]);
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
-
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    if (canvas && context) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
   };
 
   const downloadCanvas = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const dataURL = canvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.download = "whiteboard.png";
-    link.href = dataURL;
-    link.click();
+    if (canvas) {
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.download = "whiteboard.png";
+      link.href = dataURL;
+      link.click();
+    }
   };
+
 
   return (
     <div className="bg-white pt-2 pb-6 px-6 rounded-lg shadow-lg">

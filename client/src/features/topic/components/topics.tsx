@@ -10,8 +10,6 @@ import { useCreateThread } from "@/features/shared/api/create-thread";
 import { useGetQuestions } from "@/features/shared/api/get-all-question";
 import { CreateQuestionType } from "@/features/shared/api/create-question";
 
-import { Modal } from "@/components/ui/modal";
-import { useDisclosure } from "@/hooks/use-disclosure";
 import { TopicCard } from "./topic-card";
 import { useGetTopic } from "../api/get-topic";
 import { formDataToObject } from "@/utils";
@@ -19,6 +17,7 @@ import { useGetThreadsByTopic } from "../api/get-threads-by-topic";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { MyLoader } from "@/components/shared/loader";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface TopicsProp {
   userId: string;
@@ -29,13 +28,15 @@ type ActiveTabType = "Read" | "Answer";
 export const Topics = ({ userId }: TopicsProp) => {
   const { topicId } = useParams();
   const [activeTab, setActiveTab] = useState<ActiveTabType>("Answer");
-  const { isOpen: isModalOpen, close: closeModal } = useDisclosure();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const { mutate: createQuestion } = useCreateQuestion({
     mutationConfig: {
       onSuccess: () => {
-        toast.success("question submitted");
+        toast.success("Question created");
+        setModalOpen(false);
       },
+      
       onError: (error) => {
         if (error instanceof AxiosError) {
           ///error
@@ -98,12 +99,14 @@ export const Topics = ({ userId }: TopicsProp) => {
         />
       </div>
 
-      <div className="mt-4 h-full">
+      <div className="mt-4 h-ful">
         {activeTab === "Answer" ? (
           questions && questions.length > 0 ? (
             <QuestionCardList questions={questions} />
           ) : (
-            <Insight />
+            <div className="s flex items-center justify-center h-fit"> 
+              <Insight />
+            </div>
           )
         ) : (
           <ThreadCardList threads={threads || []} />
@@ -111,16 +114,17 @@ export const Topics = ({ userId }: TopicsProp) => {
       </div>
 
       <div>
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          className="p-5 w-[1200px]  max-h-[600px] bg-red-400"
+        <Dialog
+          open={isModalOpen}
+          onOpenChange={setModalOpen}
         >
-          <CreateQuestionForm
-            userId={userId}
-            handleFormSubmit={handleCreateQuestion}
-          />
-        </Modal>
+          <DialogContent className="p-5 w-[1200px]  max-h-[600px] bg-red-400">
+            <CreateQuestionForm
+              userId={userId}
+              handleFormSubmit={handleCreateQuestion}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

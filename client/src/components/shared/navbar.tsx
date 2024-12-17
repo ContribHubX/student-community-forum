@@ -26,7 +26,7 @@ import { Thread } from "@/types";
 import { MdWorkspaces } from "react-icons/md";
 
 import { Logo } from "../ui/logo";
-import { Menu } from "lucide-react";
+import { Menu } from 'lucide-react';
 
 interface NavbarProp {
   toggleSidebar?: () => void;
@@ -79,7 +79,7 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
   }, []);
 
   return (
-    <nav className="fixed top-0 bg-primary px-3 md:px-6   py-4 flex items-center justify-between  w-full z-50 text-primary-foreground">
+    <nav className="fixed  top-0 bg-primary px-2 sm:px-3 md:px-6 py-3  sm:py-4 flex items-center justify-between w-full z-50 text-primary-foreground">
       <div className="flex items-center gap-2">
         <button
           onClick={toggleSidebar}
@@ -92,8 +92,8 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
           className="flex items-center justify-center gap-3 cursor-pointer"
           onClick={() => navigate("/")}
         >
-          <Logo className="w-6 h-6 text-accent" />
-          <h1 className="font-medium text-lg hidden sm:block">StudentHub</h1>
+          <Logo className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
+          <h1 className="font-medium text-base sm:text-lg hidden xs:block">StudentHub</h1>
         </div>
       </div>
 
@@ -120,7 +120,7 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
           )}
         </div>
 
-        <div className="flex items-center gap-2  md:gap-4">
+        <div className="flex items-center gap-1 xs:gap-2 md:gap-4">
           <div className="flex gap-2">
             <ThemeToggle />
           </div>
@@ -128,21 +128,21 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
           <Button
             variant="ghost"
             size="icon"
-            className="text-2xl"
+            className="text-xl sm:text-2xl p-1 sm:p-2"
             onClick={() => navigate("/workspace")}
           >
-            <MdWorkspaces className="text-3xl" />
+            <MdWorkspaces className="text-2xl sm:text-3xl scale-110" />
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-2xl">
-                <MdDashboard className="text-3xl" />
+              <Button variant="ghost" size="icon" className="text-xl sm:text-2xl p-1 sm:p-2">
+                <MdDashboard className="text-2xl sm:text-3xl scale-110" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-primary dark:bg-background dark:border-muted-foreground">
+            <DropdownMenuContent className="w-56 bg-primary dark:bg-background dark:border-gray-600">
               <DropdownMenuLabel>Create</DropdownMenuLabel>
-              <DropdownMenuSeparator className="dark:bg-muted-foreground" />
+              <DropdownMenuSeparator className="dark:bg-gray-600" />
               <DropdownMenuItem
                 onClick={() => navigate("/thread-action/create")}
               >
@@ -160,7 +160,7 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="cursor-pointer">
-                <Avatar className="p-[4px] bg-accent">
+                <Avatar className="p-[2px] sm:p-[4px] bg-accent w-9 h-9 sm:w-10 sm:h-10">
                   <AvatarImage
                     src={authState.user?.attachment}
                     className="rounded-full"
@@ -202,3 +202,4 @@ export const Navbar = ({ toggleSidebar }: NavbarProp) => {
     </nav>
   );
 };
+

@@ -9,6 +9,8 @@ import {
   useCreateComment,
 } from "@/features/thread/api/create-comment";
 import { useAuth } from "@/hooks/use-auth";
+import { useUpdateComment } from "../api/update-comment";
+
 
 interface CommentFormProps {
   threadId: string | undefined;
@@ -17,6 +19,10 @@ interface CommentFormProps {
   isComment?: boolean;
   isReply?: boolean;
   onSubmitCallback?: () => void;
+  onCancelCallback?: () => void;
+  isUpdate?: boolean;
+  commentId?: string;
+  updateContent?: string;
 }
 
 export const CommentForm = ({
@@ -25,14 +31,18 @@ export const CommentForm = ({
   placeholder,
   isComment = false,
   isReply,
+  isUpdate = false,
+  commentId,
+  updateContent,
   onSubmitCallback,
+  onCancelCallback
 }: CommentFormProps) => {
-  const [showEditor, setShowEditor] = useState(false);
+  const [showEditor, setShowEditor] = useState(isUpdate ? isUpdate : false);
 
   const { authState } = useAuth();
 
   const [commentData, setCommentData] = useState<CreateThreadType>({
-    content: "",
+    content: updateContent || "",
     createdBy: "",
   });
 
@@ -54,6 +64,15 @@ export const CommentForm = ({
     },
   });
 
+  const { mutate: updateComment } = useUpdateComment({
+   mutationConfig: {
+    onSuccess: () => {
+      toast.success("Comment Updated");
+      onCancelCallback?.()
+    }
+   }
+  });  
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = {
@@ -62,7 +81,15 @@ export const CommentForm = ({
       threadId: threadId,
       parentId: parentId ? parentId : null,
     };
-    createComment(data);
+
+    if (!isUpdate)  
+      createComment(data);
+    else {
+      updateComment({ id: commentId || "", 
+                      content: commentData.content,
+                      updatedBy: authState.user?.id.toString() || ""
+      })
+    }
 
     if (onSubmitCallback) onSubmitCallback();
   };
@@ -79,6 +106,7 @@ export const CommentForm = ({
       }
     }
     setShowEditor(false);
+    onCancelCallback?.();
   };
 
   const handleContentChange = (data: Partial<CreateThreadType>) => {
@@ -124,7 +152,7 @@ export const CommentForm = ({
                   commentData.content === "<p><br></p>"
                 }
               >
-                Post
+                {isUpdate ? "Update": "Create"}
               </Button>
             </div>
           </motion.div>

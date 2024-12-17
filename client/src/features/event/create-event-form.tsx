@@ -31,11 +31,13 @@ import { toast } from "react-toastify";
 interface CreateEventFormProp {
   communityId: string;
   userId: string | undefined;
+  onSuccessCb: () => void;
 }
 
 export const CreateEventForm = ({
   communityId,
   userId,
+  onSuccessCb
 }: CreateEventFormProp) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(createEventSchema),
@@ -47,6 +49,7 @@ export const CreateEventForm = ({
   const { mutate: createEvent } = useCreateEvent({
     mutationConfig: {
       onSuccess: () => {
+        onSuccessCb();
         toast.success("Event created successfully!");
       },
       onError: (error) => {

@@ -4,7 +4,7 @@ import * as schema from "@/database/schema";
 import { IAlreadyReactedDto, IThreadReaction, IThreadReactionDto } from "../interfaces/IThread";
 import { AppError } from "@/libs/app-error";
 import { and, desc, eq } from "drizzle-orm";
-import { IComment, ICommentDto } from "../interfaces/IComment";
+import { IComment, ICommentDto, IUpdateCommentDto } from "../interfaces/IComment";
 import { IUser } from "../interfaces/IUser";
 import { ThreadReactionType } from "@/types";
 
@@ -79,6 +79,41 @@ class ThreadInteractionRepository {
                     .CommentTable
                     .findFirst({
                         where: eq(schema.CommentTable.id, insertedId),
+                        with: {
+                            createdBy: true
+                        }
+                    });
+
+                resolve(createdComment as unknown as IComment);
+            } catch (error: any) {
+                reject(new AppError(error));
+            }
+        });
+    }
+
+    /**
+     * Edit comment
+     * 
+     * @param dto 
+     * @returns {Promise<IComment | undefined>}
+     */
+    public editComment(dto: IUpdateCommentDto): Promise<IComment | undefined> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.db
+                    .update(schema.CommentTable)
+                    .set({
+                        content: dto.content
+                    })
+                    .where(eq(schema.CommentTable.id, dto.id));
+
+                if (!result) return reject(new AppError("Comment updated"));
+
+                const createdComment = await this.db
+                    .query
+                    .CommentTable
+                    .findFirst({
+                        where: eq(schema.CommentTable.id, dto.id),
                         with: {
                             createdBy: true
                         }

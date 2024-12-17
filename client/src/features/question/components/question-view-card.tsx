@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useGetVotes } from "../api/get-votes";
 import { useCreateVote } from "../api/vote";
+import { toast } from "react-toastify";
 
 interface QuestionViewCardProp {
   currentUser: User;
@@ -38,6 +39,8 @@ export const QuestionViewCard = ({
   question,
 }: QuestionViewCardProp) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [openRequestModal, setOpenRequestModal] = useState(false);
+
   const { data: votes } = useGetVotes({
     data: { userId: currentUser.id.toString(), questionId: question.id },
   });
@@ -52,8 +55,8 @@ export const QuestionViewCard = ({
   };
 
   return (
-    <Card className="w-full bg-card  shadow-lg hover:shadow-xl dark:border-none transition-shadow duration-300">
-      <CardContent className="p-6 bg-primary rounded-t-lg">
+    <Card className="w-full bg-primary shadow-lg hover:shadow-xl dark:border-none transition-shadow duration-300">
+      <CardContent className="p-4 md:p-6 bg-primary rounded-t-lg">
         <div className="flex items-start space-x-4">
           <div className="flex flex-col items-center space-y-2">
             <TooltipProvider>
@@ -94,7 +97,7 @@ export const QuestionViewCard = ({
             </TooltipProvider>
           </div>
           <div className="flex-grow">
-            <h2 className="text-2xl font-bold text-primary-foreground mb-2">
+            <h2 className="text-xl md:text-2xl font-bold text-primary-foreground mb-2">
               {question.title}
             </h2>
             <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -160,11 +163,14 @@ export const QuestionViewCard = ({
         sm:flex-row sm:items-center
       ">
         <div className="flex space-x-2">
-          <Dialog>
+          <Dialog 
+            open={openRequestModal}
+            onOpenChange={setOpenRequestModal}
+          >
             <DialogTrigger asChild>
               <Button
                 variant="default"
-                className="rounded-full text-sm bg-background"
+                className="rounded-full text-sm bg-background hover:bg-accent hover:text-accent-foreground"
               >
                 Request Answer
               </Button>
@@ -173,6 +179,7 @@ export const QuestionViewCard = ({
               <SelectRequest
                 questionId={question.id}
                 currentUserId={currentUser.id}
+                onSuccessCb={() => setOpenRequestModal(false)}
               />
             </DialogContent>
           </Dialog>
@@ -204,10 +211,13 @@ interface AnswerPromptProps {
 
 const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   const queryClient = useQueryClient();
+  const [openAnswerForm, setOpenAnswerForm] = useState(false);
 
   const { mutate: createThread } = useCreateThread({
     mutationConfig: {
       onSuccess: (data) => {
+        toast.success("Answer submitted");
+        setOpenAnswerForm(false);
         console.log("new thread answer: " + JSON.stringify(data, null, 2));
         queryClient.invalidateQueries({
           queryKey: getQuestionQueryOptions(data.questionId || "").queryKey,
@@ -222,18 +232,18 @@ const AnswerPrompt = ({ user, question }: AnswerPromptProps) => {
   };
 
   return (
-    <div className="flex items-center space-x-4 bg-background rounded-full px-4 py-2 hover:bg-secondary transition-colors duration-200
+    <div className="flex items-center space-x-4 bg-background rounded-full px-4  py-2 hover:bg-secondary transition-colors duration-200
     ">
       <Avatar className="h-8 w-8 ring-2 ring-primary">
         <AvatarImage src={user.attachment} alt={user.name} />
         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
       </Avatar>
       <div className="flex-grow">
-        <p className="font-medium text-primary-foreground text-sm">
+        <p className="md:font-medium text-primary-foreground text-sm font-regular hidden xs:block">
           {user.name}, share your expertise
         </p>
       </div>
-      <Dialog>
+      <Dialog open={openAnswerForm} onOpenChange={setOpenAnswerForm}>
         <DialogTrigger asChild>
           <Button
             variant="default"

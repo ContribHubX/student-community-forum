@@ -8,12 +8,15 @@ export const createThreadSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   content: z.string().min(6, "Content must be at least 6 characters"),
   attachment: z
-    .instanceof(File, {
-      message: "Attachment must be a valid file",
-    })
+    .union([
+      z.instanceof(File, {
+        message: "Attachment must be a valid file",
+      }),
+      z.string().url("Attachment must be a valid URL string"),
+    ])
     .nullable()
     .optional()
-    .default(null),
+    .default(null)
 });
 
 export type CreateThreadType = z.infer<typeof createThreadSchema> & {

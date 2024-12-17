@@ -5,7 +5,7 @@ import { getUserReactionQueryOptions } from "../api/get-reaction";
 import { getThreadByIdQueryOptions } from "../api/get-thread";
 import { CreateReactionType } from "../api/create-reaction";
 import { getThreadsByCommunityQueryOptions } from "@/features/community/api/get-threads";
-import { formDataToObject } from "@/utils";
+import { getThreadsByTopicQueryOptions } from "@/features/topic/api/get-threads-by-topic";
 
 // TODO add js doc
 
@@ -28,10 +28,13 @@ export const createReactionMutationConfig = (
     }).queryKey;
     const threadReactionsQKey = getThreadByIdQueryOptions(thread.id).queryKey;
     const generalThreadsQKey = getThreadsQueryOptions().queryKey;
+    const topicReactions = getThreadsByTopicQueryOptions(thread.topicId || "").queryKey;
 
     await queryClient.cancelQueries({ queryKey: userReactionQKey });
     await queryClient.cancelQueries({ queryKey: threadReactionsQKey });
     await queryClient.cancelQueries({ queryKey: generalThreadsQKey });
+    await queryClient.cancelQueries({ queryKey: topicReactions });
+
 
     // Snapshot previous value
     const previousReactions = queryClient.getQueryData(userReactionQKey);
@@ -70,6 +73,29 @@ export const createReactionMutationConfig = (
 
     queryClient.setQueryData(
       generalThreadsQKey,
+      (currentThreads: Thread[] | undefined) => {
+        if (!currentThreads) return currentThreads;
+        return currentThreads.map((currentThread) => {
+          if (currentThread.id === thread.id) {
+            return {
+              ...currentThread,
+              likeCount:
+                newReaction.type === "LIKE"
+                  ? currentThread.likeCount + 1
+                  : currentThread.likeCount,
+              dislikeCount:
+                newReaction.type === "DISLIKE"
+                  ? currentThread.dislikeCount + 1
+                  : currentThread.dislikeCount,
+            };
+          }
+          return currentThread;
+        });
+      },
+    );
+
+    queryClient.setQueryData(
+      topicReactions,
       (currentThreads: Thread[] | undefined) => {
         if (!currentThreads) return currentThreads;
         return currentThreads.map((currentThread) => {
@@ -141,6 +167,25 @@ export const saveThreadMutationConfig = (
         },
       );
     }
+
+    if (thread.topicId) {
+      const topicThreadsQKey = getThreadsByTopicQueryOptions(
+        thread.topicId,
+      ).queryKey;
+
+      queryClient.setQueryData(
+        topicThreadsQKey,
+        (currentThreads: Thread[] | undefined) => {
+          if (!currentThreads) return currentThreads;
+          return currentThreads.map((currentThread) => {
+            if (currentThread.id === saveThread.threadId) {
+              return { ...currentThread, isSaved: true };
+            }
+            return currentThread;
+          });
+        },
+      );
+    }
   },
 });
 
@@ -148,12 +193,51 @@ export const updateThreadMutationConfig = (
   queryClient: QueryClient,
   onSuccessCallback: () => void,
 ) => ({
-  onMutate: async (data: FormData) => {
-    const thread = formDataToObject(data) as Thread;
+  onMutate: async () => {
+    //const thread = formDataToObject(data) as Thread;
 
+    // const generalThreadsQKey = getThreadsQueryOptions().queryKey;
+
+    // await queryClient.cancelQueries({ queryKey: generalThreadsQKey });
+
+    // queryClient.setQueryData(
+    //   generalThreadsQKey,
+    //   (currentThreads: Thread[] | undefined) => {
+    //     if (!currentThreads) return currentThreads;
+    //     return currentThreads.map((currentThread) => {
+    //       if (currentThread.id === thread.id) {
+    //         return thread;
+    //       }
+    //       return currentThread;
+    //     });
+    //   },
+    // );
+
+    // if (thread.communityId) {
+    //   const communityThreadsQKey = getThreadsByCommunityQueryOptions(
+    //     thread.communityId,
+    //   ).queryKey;
+
+    //   queryClient.setQueryData(
+    //     communityThreadsQKey,
+    //     (currentThreads: Thread[] | undefined) => {
+    //       if (!currentThreads) return currentThreads;
+    //       return currentThreads.map((currentThread) => {
+    //         if (currentThread.id === thread.id) {
+    //           return thread;
+    //         }
+    //         return currentThread;
+    //       });
+    //     },
+    //   );
+    // }
+  },
+  onSuccess: ({thread}:  {message: string, thread: Thread} ) => {
     const generalThreadsQKey = getThreadsQueryOptions().queryKey;
 
-    await queryClient.cancelQueries({ queryKey: generalThreadsQKey });
+    //await queryClient.cancelQueries({ queryKey: generalThreadsQKey });
+
+    console.log(thread);
 
     queryClient.setQueryData(
       generalThreadsQKey,
@@ -186,8 +270,6 @@ export const updateThreadMutationConfig = (
         },
       );
     }
-  },
-  onSuccess: () => {
     onSuccessCallback();
   },
 });

@@ -101,7 +101,7 @@ const LobbyHeader = ({ handleShowPanel, name }: LobbyHeaderProp) => {
             <FaEllipsis className="cursor-pointer text-lg text-accent-foreground" />
           </div>
         </SelectTrigger>
-        <SelectContent className="bg-[#1e252b] border-none">
+        <SelectContent className="bg-[#1e252b] text-white border-none">
           <SelectItem value="true">
             Show panels
           </SelectItem>

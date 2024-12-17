@@ -1,4 +1,4 @@
-import { IComment, ICommentDto } from "@/domain/interfaces/IComment";
+import { IComment, ICommentDto, IUpdateCommentDto } from "@/domain/interfaces/IComment";
 import {
   IAlreadyReactedDto,
   IThreadReaction,
@@ -97,6 +97,23 @@ class ThreadInteractionService {
     } catch (error: any) {
       if (error instanceof AppError) throw error;
       throw new AppError(error);
+    }
+  }
+
+  /**
+   * 
+   */
+  public async updateComment(dto: IUpdateCommentDto): Promise<IComment | undefined> {
+    try {
+      const result = await this.threadInteractionRepo.editComment(dto);
+     
+      if (result) 
+        this.eventManager.publishToMany<{threadId: string}>("comment--update", {threadId: result.threadId});
+
+      return result;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      throw new AppError("Error editing comment");
     }
   }
 

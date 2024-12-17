@@ -37,7 +37,7 @@ export const CreateQuestionForm = ({
   initialContent,
   userId,
   taggable = false,
-  action = "create"
+  action = "create",
 }: CreateQuestionFormProp) => {
   const [, setThreadData] = useState<CreateThreadType>({} as CreateThreadType);
   const [tags, setTags] = useState<string[]>([]);

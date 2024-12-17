@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 
 export const LoginForm = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { authDispatch } = useAuth();
@@ -92,7 +93,7 @@ export const LoginForm = () => {
               id="email"
               type="email"
               placeholder="john@example.com"
-              className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
+              className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0 dark:border-none dark:shadow-md"
               {...register("email")}
             />
             {errors.email && (
@@ -105,7 +106,7 @@ export const LoginForm = () => {
             <Input
               id="password"
               type="password"
-              className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0"
+              className="bg-[#eff5f8]  focus-visible:ring-[#533de0] focus-visible:ring-offset-0 dark:border-none dark:shadow-md"
               placeholder="Enter your password"
               {...register("password")}
             />
@@ -116,7 +117,7 @@ export const LoginForm = () => {
 
           <Button
             type="submit"
-            className="w-full text-white"
+            className="w-full text-white shadow-md hover:opacity-90"
             disabled={isPending}
           >
             {isPending ? "Logging in..." : "Log in"}
@@ -127,7 +128,7 @@ export const LoginForm = () => {
         <div className="space-y-4 ">
           <Button
             variant="outline"
-            className="w-full bg-[#eff5f8] border-slate-500"
+            className="w-full bg-[#eff5f8] dark:border-none dark:shadow-md"
             onClick={() => loginSocialProvider("google")}
           >
             <svg viewBox="0 0 24 24" className="mr-2 h-6 w-6">
@@ -154,7 +155,7 @@ export const LoginForm = () => {
 
           <Button
             variant="outline"
-            className="w-full text-white"
+            className="w-full  dark:text-white dark:border-none dark:shadow-md"
             onClick={() => loginSocialProvider("github")}
           >
             <Github className="mr-2 h-5 w-5" />

@@ -3,13 +3,7 @@ import { useGetTopics, useCreateTopic, createTopicSchema } from "../api";
 import { TopicLibraryCard } from "./topic-library-card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select"
+
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { motion, AnimatePresence } from "framer-motion";
@@ -42,7 +36,7 @@ export const TopicResource = () => {
   const { mutate: createTopic } = useCreateTopic({
     mutationConfig: {
       onSuccess: () => {
-        console.log("topic created!!!");
+        console.log("created")
       },
       onError: (error) => {
         console.log(error);
@@ -70,9 +64,9 @@ export const TopicResource = () => {
         attachment: values.attachment,
         createdBy: authState.user.id.toString(),
       });
+      form.reset();
       toast.success("Topic created successfully!");
       setIsDialogOpen(false);
-      form.reset();
     } catch (error) {
       console.error("Failed to create topic:", error);
     }
@@ -125,7 +119,7 @@ export const TopicResource = () => {
               Create Topic
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] text-primary-foreground">
+          <DialogContent className="sm:max-w-[425px] text-primary-foreground bg-primary dark:border-none">
             <DialogHeader>
               <DialogTitle>Create New Topic</DialogTitle>
               <DialogDescription>

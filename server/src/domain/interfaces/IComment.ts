@@ -16,3 +16,9 @@ export interface ICommentDto {
     threadId: string,
     parentId: string | null,
 }
+
+export interface IUpdateCommentDto {
+    id: string;
+    content: string,
+    updatedBy: string,
+}

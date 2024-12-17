@@ -14,27 +14,30 @@ import { tasks } from "../data/tasks";
 import { useGetTodos, getTodosQueryOptions } from "../api/get-todos";
 import { useCreateTodo } from "../api/create-todo";
 import { useQueryClient } from "@tanstack/react-query";
-import { Todo } from "@/types";
+import { Todo, User } from "@/types";
 import { useUpdateTodo } from "../api/update-todo";
 
 interface TodosProp {
-  userId: string;
+  user: User;
 }
 
-export const Todos = ({ userId }: TodosProp) => {
+export const Todos = ({ user }: TodosProp) => {
   const queryClient = useQueryClient();
-  const { data: todos } = useGetTodos({ userId: userId || "" });
+  const { data: todos } = useGetTodos({ userId: user.id || "" });
 
   const { mutate: createTodo } = useCreateTodo({
     mutationConfig: {
-      onSuccess: (data) => {
+      onMutate: (data) => {
         queryClient.setQueryData(
           getTodosQueryOptions(data.createdBy.toString()).queryKey,
           (oldTodos: Todo[] | undefined) => {
-            return oldTodos ? [data, ...oldTodos] : undefined;
+            return oldTodos ? [{ id: Date.now().toString(), name: data.name, createdBy: user, isDone: false   }, ...oldTodos] : undefined;
           },
         );
       },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: getTodosQueryOptions(user?.id.toString()).queryKey })
+      }
     },
   });
 
@@ -42,14 +45,17 @@ export const Todos = ({ userId }: TodosProp) => {
 
   const { mutate: updateTodo } = useUpdateTodo({
     mutationConfig: {
-      onSuccess: (data) => {
+      onMutate: (data) => {
         queryClient.setQueryData(
-          getTodosQueryOptions(userId.toString()).queryKey,
+          getTodosQueryOptions(user.id.toString()).queryKey,
           (oldTodos: Todo[] | undefined) => {
-            return oldTodos?.map((todo) => {
-              if (todo.id === data.id) todo = { ...data };
-              return todo;
-            });
+              if (!oldTodos) return undefined;
+
+              return oldTodos.map(todo => {
+                if (todo.id === data.todoId)
+                    todo = {...todo, isDone: data.isDone};
+                return todo;
+              })
           },
         );
       },
@@ -57,7 +63,7 @@ export const Todos = ({ userId }: TodosProp) => {
   });
 
   const handleSubmit = (name: string) => {
-    createTodo({ name, createdBy: userId.toString() });
+    createTodo({ name, createdBy: user?.id.toString() });
   };
 
   const handleCheckboxChange = (taskId: string, currentStatus: boolean) => {
@@ -81,9 +87,9 @@ export const Todos = ({ userId }: TodosProp) => {
         </Select>
       </div>
 
-      <div className="p-4">
+      <div className="px-4 py-3">
         <ScrollArea className="  ">
-          <div className="max-h-[170px] flex flex-col gap-3 ">
+          <div className="max-h-[110px] flex flex-col gap-3 ">
             {[...(todos || []), ...tasks].map((task) => (
               <div
                 key={task.id}
@@ -107,7 +113,7 @@ export const Todos = ({ userId }: TodosProp) => {
             ))}
           </div>
         </ScrollArea>
-        <div className="mt-2">
+        <div className="mt-1">
           <TodoForm handleSubmit={handleSubmit} />
         </div>
       </div>

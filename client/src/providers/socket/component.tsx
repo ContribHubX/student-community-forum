@@ -19,7 +19,7 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
   //const hostname = window.location.hostname;
   const uri = "http://localhost:3000";
 
-  const socket = useSocket(`${uri}`, {
+  const socket = useSocket(uri, {
     autoConnect: false,
     reconnectionDelay: 5000,
     reconnectionAttempts: 5,
@@ -120,6 +120,13 @@ const SocketContextComponent = ({ children }: PropsWithChildren) => {
         case "comment--delete":
           socketDispatch({
             type: OPERATION.DELETE_COMMENT,
+            payload: { threadId: data.threadId, queryClient },
+          });
+          break;
+
+        case "comment--update":
+          socketDispatch({
+            type: OPERATION.UPDATE_COMMENT,
             payload: { threadId: data.threadId, queryClient },
           });
           break;

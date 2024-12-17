@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-// import cover from "@/assets/590-removebg-preview.png";
 import { LoginForm } from "@/features/auth/components/login-form";
 import { SignUpForm } from "@/features/auth/components/signup-form";
 import { Logo } from "@/components/ui/logo";
+import { AnimatedShapes } from "@/components/ui/animated-shapes";
+import { StudentHubIllustration } from "@/components/ui/student-hub-illustration";
 
 export const LoginRoute = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,9 +24,21 @@ export const LoginRoute = () => {
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="hidden lg:block lg:w-1/2 bg-blue-100"
+          className="hidden lg:flex lg:w-1/2 bg-blue-100 flex-col items-center justify-center p-12 relative overflow-hidden"
         >
-          {/* <img src={cover} alt="Campus" className="object-cover w-full h-full" /> */}
+          <StudentHubIllustration />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="text-center z-10"
+          >
+            <h2 className="text-3xl font-bold text-accent mb-4">Collaborate & Join</h2>
+            <p className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 max-w-xs">
+              Connect, collaborate, and grow with your fellow students in our vibrant community.
+            </p>
+          </motion.div>
+          <AnimatedShapes />
         </motion.div>
 
         {/* LOGIN/SIGNUP SECTION */}
@@ -65,3 +78,4 @@ export const LoginRoute = () => {
     </section>
   );
 };
+

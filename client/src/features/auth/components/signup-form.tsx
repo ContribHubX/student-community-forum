@@ -122,7 +122,7 @@ export const SignUpForm = () => {
           }}
         />
       </div>
-      <Button type="submit" className="w-full" disabled={isLoading}>
+      <Button type="submit" className="w-full text-accent-foreground" disabled={isLoading}>
         {isLoading ? "Signing up..." : "Sign up"}
       </Button>
     </motion.form>

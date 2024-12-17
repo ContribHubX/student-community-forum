@@ -30,7 +30,7 @@ export const Activities = ({ roomId }: ActivitiesProp) => {
         }
       >
         <Timer roomId={roomId} />
-        <Todos userId={authState.user.id} />
+        <Todos user={authState.user} />
         <Chats userId={authState.user.id} roomId={roomId} />
       </div>
     </div>

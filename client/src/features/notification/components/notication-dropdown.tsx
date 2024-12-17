@@ -78,7 +78,7 @@ export const NotificationDropdown = ({ userId }: NotificationDropdownProp) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-80 p-0 dark:border-none dark:bg-background bg-primary"
+        className="w-80 p-0 dark:border-gray-600 dark:bg-background bg-primary"
         align="end"
       >
         <div className="flex items-center justify-between px-4 py-3 border-b dark:border-gray-600">
@@ -111,9 +111,9 @@ export const NotificationDropdown = ({ userId }: NotificationDropdownProp) => {
                   </Avatar>
                   <div className="flex-1 space-y-1">
                     <p className="text-sm group-hover:text-accent-foreground">
-                      <span className="font-medium">
-                        {notification.createdBy?.name}
-                      </span>{" "}
+                    <span className="font-medium">
+                      {notification.createdBy?.id === userId ? "You" : notification.createdBy?.name}
+                    </span>{" "}
                       {notification.message}
                     </p>
                     <p className="text-xs text-muted-foreground">

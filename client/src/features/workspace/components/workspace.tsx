@@ -20,7 +20,13 @@ interface WorkspaceProp {
 
 export const Workspace = ({ userId }: WorkspaceProp) => {
   const { state } = useBoardContext();
-  
+  const [openBoardForm, setOpenBoardForm] = useState(false); 
+
+  const onSuccessCreateCb = useCallback(() => {
+    toast.success("Board created"); 
+    setOpenBoardForm(false);
+  }, [])
+
   return (
     <div>
       <FlexContainer className="justify-between  text-sm text-primary-foreground">
@@ -48,13 +54,18 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
             lg:grid-cols-4
         `}
       >
-        <Dialog>
-          <DialogTrigger>
-            <CreateBoardCard />
+        <Dialog open={openBoardForm} onOpenChange={setOpenBoardForm}>
+          <DialogTrigger  
+            onClick={() => setOpenBoardForm(true)} 
+          >
+            <CreateBoardCard  />
           </DialogTrigger>
           <DialogContent className="p-0 w-[300px] bg-primary dark:border-0">
             <div className="mt-4" />
-            <CreateBoardForm userId={userId} />
+            <CreateBoardForm 
+              userId={userId}
+              onSuccessCb={onSuccessCreateCb}   
+            />
           </DialogContent>
         </Dialog>
         {state.boards?.map((board) => <Board key={board.id} board={board} />)}
@@ -92,6 +103,8 @@ export const Workspace = ({ userId }: WorkspaceProp) => {
 
 import { Plus } from "lucide-react";
 import { motion } from "framer-motion";
+import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
 
 const CreateBoardCard = () => {
   return (

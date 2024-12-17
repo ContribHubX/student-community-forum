@@ -19,8 +19,8 @@ export const ThreadActionForm = ({ user, community }: ThreadActionFormProp) => {
   }, [community]);
 
   return (
-    <div className="flex p-6 gap-6 rounded-xl bg-primary  shadow-slate-400 shadow-md dark:shadow-gray-900">
-      <div className="w-full flex gap-4 items-center">
+    <div className="flex p-3 sm:p-4 gap-2 md:gap-4 rounded-xl bg-primary  shadow-slate-400 shadow-md dark:shadow-gray-900">
+      <div className="w-full flex gap-2 sm:gap-4 items-center">
         <Avatar className="h-10 w-10">
           <AvatarImage src={user?.attachment} className="rounded-full " />
         </Avatar>
@@ -35,9 +35,9 @@ export const ThreadActionForm = ({ user, community }: ThreadActionFormProp) => {
       <button
         onClick={() => navigate(`/thread-action/${route}`)}
         type="submit"
-        className="shrink-0 bg-accent text-accent-foreground py-3 px-4 text-sm rounded-md hidden xs:block"
+        className="shrink-0 bg-accent text-accent-foreground px-2 xs:px-3 sm:py-3 sm:px-4  text-xs xs:text-sm rounded-md  xs:block"
       >
-        Create Thread
+        Create
       </button>
     </div>
   );

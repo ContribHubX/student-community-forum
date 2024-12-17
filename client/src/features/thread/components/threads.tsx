@@ -11,18 +11,19 @@ import { MyLoader } from "@/components/shared/loader";
 
 export const Threads = () => {
   const { authState } = useAuth();
-  const { data: threads, isFetching } = useGetThreads({});
+  const { data: threads } = useGetThreads({});
 
   if (!authState.user) return <p>Loading...</p>;
 
-  if (isFetching) {
+  if (!threads) {
     return <MyLoader />;
   }
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="md:hidden">
+      {/* <div className="md:hidden">
         <TabbedNav />
-      </div>
+      </div> */}
       <div>
         <ThreadActionForm user={authState.user} />
       </div>
@@ -33,6 +34,7 @@ export const Threads = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars 
 const TabbedNav = () => {
   return (
     <div

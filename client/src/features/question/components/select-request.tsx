@@ -11,17 +11,20 @@ import { toast } from "react-toastify";
 interface SelectRequestProp {
   questionId: string;
   currentUserId: string;
+  onSuccessCb: () => void;
 }
 
 export const SelectRequest = ({
   questionId,
   currentUserId,
+  onSuccessCb
 }: SelectRequestProp) => {
   const { data: users } = useGetUsers({});
   const { mutate: createRequest } = useCreateRequest({
     mutationConfig: {
-      onSuccess: (response) => {
-        toast.success(response.message);
+      onSuccess: () => {
+        toast.success("User successfully requested");
+        onSuccessCb();
       },
     },
   });

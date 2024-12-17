@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 interface MasonryLayoutProps {
@@ -6,7 +6,24 @@ interface MasonryLayoutProps {
 }
 
 export const MasonryLayout = ({ children }: MasonryLayoutProps) => {
-  const columns = 4
+  const [columns, setColumns] = useState(4)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth
+      if (width >= 1200) setColumns(4)
+      else if (width >= 992) setColumns(3)
+      else if (width >= 768) setColumns(2)
+      else setColumns(1)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const columnWrapperStyle: React.CSSProperties = {
     display: 'flex',
@@ -23,7 +40,7 @@ export const MasonryLayout = ({ children }: MasonryLayoutProps) => {
   }
 
   const childrenArray = React.Children.toArray(children)
-  const columnsContent = Array.from({ length: columns }, (_, index) => 
+  const columnsContent = Array.from({ length: columns }, (_, index) =>
     childrenArray.filter((_, i) => i % columns === index)
   )
 
@@ -46,4 +63,3 @@ export const MasonryLayout = ({ children }: MasonryLayoutProps) => {
     </div>
   )
 }
-

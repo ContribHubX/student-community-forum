@@ -146,7 +146,7 @@ interface IndicatorProp {
 const Indicator = ({ user }: IndicatorProp) => {
   return (
     <div className="px-2 py-1 bg-[#50373b] border-l-4 border-[#bd8322]">
-      <p>{user.name} joined the room</p>
+      <p>{user.name} joined the room 👋</p>
     </div>
   );
 };

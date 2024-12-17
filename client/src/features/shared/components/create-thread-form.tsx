@@ -25,6 +25,8 @@ import { handleFormErrors } from "@/utils";
 import { useGetTopics } from "@/features/topic/api";
 import { CreateThreadPreview } from "@/features/thread/components/create-thread-preview";
 
+// import { NewTextEditor } from "@/components/shared/new-text-editor";
+
 interface ThreadFormProp {
   thread?: Thread;
   initialTitleVal?: string;
@@ -146,7 +148,6 @@ export const ThreadForm = ({
     }
   };
 
-  console.log("selected topic: ", selectedTopic);
   // md:grid-cols-[2.5fr_1fr]
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2.5fr_1fr]  gap-4 rounded-lg py-2">
@@ -272,6 +273,7 @@ export const ThreadForm = ({
             <TextEditor
               initialContent={thread?.content || ""}
               handleChange={handleContentChange}
+              placeholder="Write something..."
             />
             {/* Hidden Inputs */}
             <input type="hidden" {...register("content")} />

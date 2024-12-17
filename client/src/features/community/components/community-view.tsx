@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import { users } from "@/features/shared/data/users";
 import { useJoinCommunity } from "../api/join-community";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 interface CommunityViewProps {
   community: CommunityWithMembers;
@@ -27,9 +28,18 @@ export const CommunityView = ({
   isJoined
 }: CommunityViewProps) => {
   const [scrollY, setScrollY] = useState(0);
-  const { mutate: joinCommunity } = useJoinCommunity({});
+  const [sliceVal, setSliceVal] = useState(5);
 
- 
+  const { mutate: joinCommunity } = useJoinCommunity({});
+  const isSmall = useMediaQuery("(max-width: 442px)");
+
+  useEffect(() => {
+    if (isSmall)
+      setSliceVal(3);
+    else 
+      setSliceVal(5);
+  }, [isSmall])
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -79,7 +89,7 @@ export const CommunityView = ({
         <div className="md:px-8 mt-24 w-full px-4  md:w-[86%] max-w-[1400px]">
           <div className="flex justify-between items-center">
             <div className="flex -space-x-3">
-              {users.slice(0, 5).map((member, index) => (
+              {users.slice(0, sliceVal).map((member, index) => (
                 <Avatar
                   key={index}
                   className="h-12 w-12 border-2 border-background transition-transform hover:scale-110"
@@ -97,12 +107,12 @@ export const CommunityView = ({
               )}
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-0 sm:gap-4">
               <Button variant="outline" size="icon" className="rounded-full">
                 <PiDotsThreeOutlineFill className="text-2xl" />
               </Button>
               <Button
-                className={`bg-accent text-accent-foreground px-8 py-2 rounded-full  font-medium hover:bg-accent/90 transition-colors
+                className={`bg-accent text-accent-foreground px-4 sm:px-8 py-2 rounded-full  font-medium hover:bg-accent/90 transition-colors
                             ${isJoined && "dark:bg-primary text-primary-foreground dark:border-background bg-background border-2 border-accent"}  
                 `}
                 onClick={() =>
@@ -118,7 +128,7 @@ export const CommunityView = ({
           </div>
 
           <nav className="mt-8 flex gap-8  border-primary-foreground/10">
-            {["Threads", "Events", "Members", "Media"].map((item) => (
+            {["Threads", "Events", "Members"].map((item) => (
               <Button
                 key={item}
                 variant="ghost"

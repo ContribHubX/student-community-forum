@@ -19,15 +19,19 @@ import { useCommentContext } from "../hooks/use-comment-context";
 import { useDeleteComment } from "../api/delete-comment";
 
 interface CommentItemProps {
+  currentUserId: string;
   comment: Comment;
   depth?: number;
 }
 
-export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
+export const CommentItem = ({ currentUserId, comment, depth = 0 }: CommentItemProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [showReplies, setShowReplies] = useState(true);
+  const [isEditing, setEditing] = useState(false);
+
   const { state } = useCommentContext();
+
   const { mutate: deleteComment } = useDeleteComment({});
 
   if (!comment) return <p>Loading...</p>;
@@ -47,7 +51,7 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
       className={`relative ${depth > 0 ? "ml-6" : ""}`}
-    >
+    >{!isEditing ? (
       <Card className="overflow-hidden duration-300 bg-gradient-to-br from-primary to-primary/80 shadow-md dark:bg-primary dark:border-none  hover:shadow-lg transition-all border border-primary/10">
         <CardContent className="p-4">
           <div className="flex items-start gap-4">
@@ -86,13 +90,27 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
                     align="end"
                     className="bg-background/95 backdrop-blur-sm border border-primary/20"
                   >
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => deleteComment({ commentId: comment.id })}
-                    >
-                      Delete
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>Report</DropdownMenuItem>
+                    {currentUserId.toString() === comment.createdBy?.id.toString() ? (
+                      <>
+                        <DropdownMenuItem
+                          onClick={() => setEditing(true)}
+                        >
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => deleteComment({ commentId: comment.id })}
+                          >
+                          Delete
+                        </DropdownMenuItem>
+                      </>
+                    ): (
+                      <DropdownMenuItem
+                        onClick={() => deleteComment({ commentId: comment.id })}
+                      >
+                        No option
+                      </DropdownMenuItem>
+                    )}
+                   
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -137,6 +155,31 @@ export const CommentItem = ({ comment, depth = 0 }: CommentItemProps) => {
           <span className="text-xs text-muted-foreground">5 likes</span>
         </CardFooter>
       </Card>
+    ): (
+      <div>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="mt-4"
+          >
+            <CommentForm
+              threadId={comment.threadId}
+              parentId={comment.id}
+              placeholder="Edit your comment..."
+              onSubmitCallback={() => setShowReplyForm(false)}
+              commentId={comment.id}
+              isUpdate
+              updateContent={comment.content}
+              onCancelCallback={() => { setEditing(false) }}
+            />
+          </motion.div>
+      </AnimatePresence>
+      </div>
+    )}
+      
       <AnimatePresence>
         {showReplyForm && (
           <motion.div

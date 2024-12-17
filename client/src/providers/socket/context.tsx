@@ -19,7 +19,7 @@ import { getQuestionAnswersQueryOptions } from "@/features/question/api/get-ques
 import { getBoardMembersQueryOptions } from "@/features/workspace/api/get-board-members";
 import { getCommunityByIdQueryOptions } from "@/features/community/api/get-community";
 import { getEventsQueryOptions } from "@/features/event/api/get-events";
-import { getThreadsByCommunityQueryOptions, useGetThreadsByCommunity } from "@/features/community/api/get-threads";
+import { getThreadsByCommunityQueryOptions } from "@/features/community/api/get-threads";
 import { getThreadsByTopicQueryOptions } from "@/features/topic/api/get-threads-by-topic";
 
 export type SocketContextState = {
@@ -45,6 +45,7 @@ export enum OPERATION {
   DELETE_THREAD,
   ADD_NEW_COMMENT,
   DELETE_COMMENT,
+  UPDATE_COMMENT,
   ADD_NEW_REACTION,
   ADD_NEW_REQUEST,
   ADD_NEW_QUESTION,
@@ -103,6 +104,10 @@ type Actions =
     }
   | {
     type: OPERATION.DELETE_COMMENT;
+    payload: { threadId: string; queryClient: QueryClient };
+  }
+  | {
+    type: OPERATION.UPDATE_COMMENT;
     payload: { threadId: string; queryClient: QueryClient };
   }
   | {
@@ -405,6 +410,15 @@ export const socketReducer = (state: SocketContextState, action: Actions): Socke
 
       return { ...state };
     }
+
+    case OPERATION.UPDATE_COMMENT: {
+      const { threadId, queryClient } = action.payload;
+
+      queryClient.invalidateQueries({ queryKey: getCommentsQueryOptions(threadId).queryKey }); 
+
+    return { ...state };
+    }
+
 
     /**
      * Adds a new reaction (like/dislike) to a thread and updates the user's reaction state.

@@ -18,6 +18,7 @@ import { Board as BoardType } from "@/types";
 import { useDeleteBoard } from "../api/delete-board";
 import { useQueryClient } from "@tanstack/react-query";
 import { getBoardsQueryOptions } from "../api/get-all-boards";
+import { toast } from "react-toastify";
 
 interface BoardProp {
   board: BoardType;
@@ -34,6 +35,7 @@ export const Board = ({ board }: BoardProp) => {
         queryClient.invalidateQueries({
           queryKey: getBoardsQueryOptions(board.createdBy.id).queryKey,
         });
+        toast.success("Board deleted");
       },
     },
   });

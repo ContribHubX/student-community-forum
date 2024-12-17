@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Question, User } from "@/types";
 
-import { ChevronUp, ChevronDown, MessageSquare, Eye } from "lucide-react";
+import { ChevronUp, ChevronDown, MessageSquare, Eye, PencilLine } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
@@ -41,7 +41,7 @@ export const QuestionRequestCard = ({
   return (
     <Card className="w-full hover:shadow-2xl transition-shadow bg-primary duration-300 rounded-lg overflow-hidden dark:border-none text-primary-foreground">
       <CardContent className="p-6">
-        <div className="flex items-start space-x-3 sm:space-x-6">
+        <div className="flex items-start space-x-0 sm:space-x-6">
           {/* Voting Section */}
           <div className="flex flex-col items-center space-y-2">
             <Button
@@ -69,8 +69,8 @@ export const QuestionRequestCard = ({
           <div className="flex-1 space-y-4">
             {/* Header */}
             <div className="flex items-start justify-between">
-              <div className="flex items-center space-x-4">
-                <Avatar className="h-10 w-10">
+              <div className="flex items-start flex-col sm:flex-row space-x-4">
+                <Avatar className="h-10 w-10 hidden sm:flex">
                   <AvatarImage
                     src={requestedBy.attachment}
                     alt={requestedBy.name}
@@ -80,20 +80,20 @@ export const QuestionRequestCard = ({
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="flex items-start space-x-2">
+                  <div className="flex items-start flex-col md:flex-row space-x-2">
                     <p className="text-sm font-medium text-primary-foreground">
                       <span className="text-accent font-semibold">
                         {requestedBy.name}
                       </span>
                       <span> requested you to answer this question</span>
                     </p>
-                    <span className="px-2 py-1 text-xs font-medium text-white bg-accent rounded-full">
+                    <span className="px-2 py-1 my-1 md:my-0  text-xs font-medium text-white bg-accent rounded-full">
                       Request
                     </span>
                   </div>
 
                   <p className="text-xs text-gray-500">
-                    {new Date(question.createdAt).toLocaleDateString(
+                    {new Date(question.createdAt!).toLocaleDateString(
                       undefined,
                       { year: "numeric", month: "short", day: "numeric" },
                     )}
@@ -103,16 +103,16 @@ export const QuestionRequestCard = ({
               <Button
                 variant="outline"
                 size="sm"
-                className="hidden xs:block text-xs sm:text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
+                className=" text-xs sm:text-sm px-4 py-1 bg-background text-primary-foreground hover:bg-accent border-primary transition-all"
                 onClick={() => navigate(`/question/${question.id}`)}
               >
-                Answer
+                <PencilLine />
               </Button>
             </div>
 
             {/* Question Content */}
             <div>
-              <h3 className="text-xl font-semibold text-primary-foreground leading-snug mb-2">
+              <h3 className="text-lg md:text-xl font-semibold text-primary-foreground leading-snug mb-2">
                 {question.title}
               </h3>
               <p

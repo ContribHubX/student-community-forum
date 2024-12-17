@@ -1,5 +1,5 @@
 import arrowbutton from "@/assets/sidebar/arrow-button.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SidebarLayout } from "@/components/layouts/sidebar-layout";
 import { UpcomingEventsList } from "@/features/thread/components/upcoming-events";
 import { useGetThreads } from "@/features/thread/api/get-all-threads";
@@ -52,6 +52,7 @@ interface RecentThreadProps {
 }
 
 const RecentThread = ({ thread }: RecentThreadProps) => {
+  const navigate = useNavigate();
   const attachment =
     thread.attachment !== null && thread.attachment !== "null"
       ? thread.attachment
@@ -60,7 +61,10 @@ const RecentThread = ({ thread }: RecentThreadProps) => {
   if (!thread) return <p>Loading...</p>;
 
   return (
-    <div className="flex gap-4">
+    <div 
+      className="flex gap-4 cursor-pointer"
+      onClick={() => navigate(`/thread/${thread.id}`)}
+    >
       <div
         className={`rounded-lg flex w-[80px] h-[60px] items-center justify-center bg-container`}
       >

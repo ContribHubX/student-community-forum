@@ -8,10 +8,21 @@ import { CreateQuestionType, useCreateQuestion } from "../api/create-question";
 import { useAuth } from "@/hooks/use-auth";
 import { formDataToObject } from "@/utils";
 import askIllustration from "@/assets/question/ask-1.svg";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const Insight = () => {
   const { authState } = useAuth();
-  const { mutate: createQuestion } = useCreateQuestion({});
+  const { mutate: createQuestion } = useCreateQuestion({
+    mutationConfig: {
+      onSuccess: () => {
+        console.log("hey");
+        toast.success("Question created");
+        setOpenQForm(false);
+      }
+    }
+  });
+  const [openQForm, setOpenQForm] = useState(false);
 
   const handleCreateQuestion = (data: FormData) => {
     createQuestion(formDataToObject(data) as CreateQuestionType);
@@ -45,7 +56,10 @@ export const Insight = () => {
               topic.
             </p>
           </div>
-          <Dialog>
+          <Dialog
+            open={openQForm}
+            onOpenChange={setOpenQForm}
+          >
             <DialogTrigger asChild>
               <Button className="w-full text-accent-foreground" size="sm">
                 <HelpCircle className="mr-2 h-4 w-4" />

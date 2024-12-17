@@ -18,6 +18,19 @@ export default (app: Router) => {
     threadController.createThreadHandler,
   );
 
+  
+  router.post("/react", 
+    verifyAuth,
+    validateRequest(threadReactionSchema),
+    threadReactionController.reactThreadHandler
+  );
+  
+  router.post("/comment", 
+    verifyAuth,
+    validateRequest(threadCommentSchema),
+    threadReactionController.commentThreadHandler
+  )
+  
   router.put(
     "/",
     verifyAuth,
@@ -26,18 +39,12 @@ export default (app: Router) => {
     threadController.updateThreadHandler,
   );
 
-  router.post("/react", 
+  router.put(
+    "/comment/:commentId",
     verifyAuth,
-    validateRequest(threadReactionSchema),
-    threadReactionController.reactThreadHandler
+    threadReactionController.updateCommentHandler,
   );
 
-  router.post("/comment", 
-    verifyAuth,
-    validateRequest(threadCommentSchema),
-    threadReactionController.commentThreadHandler
-  )
-  
   router.post("/save", verifyAuth, threadController.saveThreadHandler);
 
   router.delete("/", verifyAuth, threadController.deleteThreadHandler);

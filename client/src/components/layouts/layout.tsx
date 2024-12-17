@@ -25,14 +25,14 @@ export const MainLayout = ({
       <Navbar toggleSidebar={toggle} />
       <main
         className={cn(
-          `z-10 bg-background flex flex-row p-3 sm:p-6 gap-0 md:gap-6  max-w-[1536px] mx-auto`,
+          `z-10 bg-background flex flex-row p-3 gap-0 md:gap-6  max-w-[1536px] mx-auto -mt-4 sm:mt-0 md:mt-3`,
           className,
         )}
         style={{ minHeight: "calc(100vh - 4rem)" }}
       >
         <div
           className={cn(
-            "fixed inset-y-0 left-50 z-40  transform overflow-y-auto bg-background md:p-2 transition-transform duration-300 ease-in-out md:translate-x-0",
+            "fixed inset-y-0 left-50 z-40 transform overflow-y-auto bg-background md:p-2 transition-transform duration-300 ease-in-out md:translate-x-0",
             isOpen ? "translate-x-0 top-16" : "-translate-x-full top-20",
           )}
         >
@@ -53,7 +53,7 @@ export const MainLayout = ({
         </div>
 
         {/* <div className="fixed right-4">{RightSidebar && <RightSidebar />}</div> */}
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           {RightSidebar && <RightSidebar />}
         </div>
       </main>
